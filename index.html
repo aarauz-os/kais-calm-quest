@@ -197,6 +197,8 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .knob img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
 .meter{position:relative;width:10px;height:100%;border-radius:6px;background:rgba(255,255,255,.1);overflow:hidden}
 .meter i{position:absolute;left:0;right:0;bottom:0;height:0;border-radius:6px;transition:height .06s}
+.meter .pitch{position:absolute;left:-5px;right:-5px;height:3px;border-radius:3px;background:#FFE3A0;box-shadow:0 0 8px #FFD37A;transition:bottom .08s}
+.sangchip{background:#FFF1D6!important;color:#6B4A0E}
 #dand{width:100px;height:120px;align-self:flex-start;opacity:.25;transition:opacity .5s;overflow:visible}
 #dand.show{opacity:1}
 #dand line{stroke:#F4EEDC;stroke-width:1}
@@ -521,7 +523,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
     </div>
     <div id="brPlay" hidden>
       <div class="stage" id="brStage">
-        <div class="meter" id="brMeter" hidden aria-hidden="true"><i></i></div>
+        <div class="meter" id="brMeter" hidden aria-hidden="true"><i></i><span class="pitch" id="brPitch" hidden></span></div>
         <div class="track" id="brTrack"><div class="fill" id="brFill"></div><div class="ghost" id="brGhost"></div><div class="knob" id="brKnob"><img src="img/luma-happy.jpg" alt="Luma"></div><div class="brhand" id="brHand" hidden aria-hidden="true">👆</div></div>
         <svg id="dand" viewBox="0 0 100 120" aria-hidden="true"></svg>
       </div>
@@ -678,6 +680,14 @@ const ELEM = {
   earth: { name: 'Earth', feeds: 'Earth holds Metal',    tone: 783.99, hue: '#F0B93A', glow: '#FFE8AC', body: 'belly', quiet: 'worried and unsettled', bright: 'steady and trusting' },
   metal: { name: 'Metal', feeds: 'Metal carries Water',  tone: 880.00, hue: '#DCE3E9', glow: '#FFFFFF', body: 'lungs', quiet: 'heavy in the chest', bright: 'clear and strong' },
   water: { name: 'Water', feeds: 'Water grows Wood',     tone: 523.25, hue: '#3C86C9', glow: '#B4DAF7', body: 'back and bones', quiet: 'jumpy and foggy', bright: 'calm and clear-headed' }
+};
+// Demaris's chart lists a sound per element. The out-breath is where it belongs.
+const SOUND = {
+  wood:  { verb: 'shout',   say: 'haaaaa',     tip: 'Open your mouth wide and let it out.', dir: 'Let it rise at the end — Wood moves up.' },
+  fire:  { verb: 'laugh',   say: 'ha-ha-haaa', tip: 'A soft laugh, not a shout.',           dir: 'Light, and let it fall at the end — Fire settles.' },
+  earth: { verb: 'hum',     say: 'mmmmmm',     tip: 'Lips closed, feel your face buzz.',    dir: 'Stay in the middle and even — Earth is steady.' },
+  metal: { verb: 'sigh',    say: 'ssssss',     tip: 'Like air leaving a tyre.',             dir: 'Long and low — Metal lets go.' },
+  water: { verb: 'low hum', say: 'whoooooo',   tip: 'As low as your voice goes.',           dir: 'Deep and quiet — Water sinks and cools.' }
 };
 const LEVELS = [
   { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 16, clouds: 6,
@@ -1350,9 +1360,26 @@ async function openMic() {
     const src = a.createMediaStreamSource(stream), an = a.createAnalyser();
     an.fftSize = 1024; src.connect(an);
     const buf = new Float32Array(an.fftSize);
+    const rate = a.sampleRate;
     return {
       floor: 0.004,
       level() { an.getFloatTimeDomainData(buf); let s = 0; for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i]; return Math.sqrt(s / buf.length); },
+      // a voice repeats at a pitch; breath alone does not. rough autocorrelation.
+      pitch() {
+        an.getFloatTimeDomainData(buf);
+        const n = buf.length;
+        let norm = 0; for (let i = 0; i < n; i++) norm += buf[i] * buf[i];
+        if (Math.sqrt(norm / n) < 0.008) return 0;
+        const lo = Math.floor(rate / 600), hi = Math.min(Math.floor(rate / 70), n - 1);
+        let best = -1, bestVal = 0;
+        for (let lag = lo; lag <= hi; lag += 1) {
+          let sum = 0;
+          for (let i = 0; i < n - lag; i += 2) sum += buf[i] * buf[i + lag];
+          const v = (sum * 2) / norm;
+          if (v > bestVal) { bestVal = v; best = lag; }
+        }
+        return bestVal > 0.45 && best > 0 ? rate / best : 0;
+      },
       close() { stream.getTracks().forEach(t => t.stop()); try { src.disconnect(); } catch (e) {} }
     };
   } catch (e) { return null; }
@@ -1430,14 +1457,22 @@ function followPhase(dir, secs, run, onTick) {
 function micExhale(secs, run) {
   return new Promise(res => {
     const thr = Math.max(0.012, micH.floor * 3), loud = 0.3;
-    let pos = 1, started = null, inBand = 0, total = 0, quietSince = null;
+    let pos = 1, started = null, inBand = 0, total = 0, quietSince = null, voiced = 0, pitchSum = 0, pitchN = 0;
     const step = 1 / (secs * 30);
-    const meter = $('#brMeter i');
+    const meter = $('#brMeter i'), el = ELEM[L.elem];
     const iv = setInterval(() => {
-      if (run !== brRun || !micH) { clearInterval(iv); return res(0); }
+      if (run !== brRun || !micH) { clearInterval(iv); return res({ q: 0, voiced: 0, hz: 0 }); }
       const v = micH.level(), now = performance.now();
+      const hz = micH.pitch ? micH.pitch() : 0;
+      const isVoice = hz > 70 && hz < 600 && v > thr;
       meter.style.height = `${clamp(v / loud, 0, 1) * 100}%`;
-      meter.style.background = v > loud ? '#F2A07B' : v > thr ? '#BFE8F5' : 'rgba(255,255,255,.35)';
+      meter.style.background = v > loud ? '#F2A07B' : isVoice ? el.hue : v > thr ? '#BFE8F5' : 'rgba(255,255,255,.35)';
+      if (isVoice) {
+        voiced++; pitchSum += hz; pitchN++;
+        const pm = $('#brPitch');
+        pm.hidden = false;
+        pm.style.bottom = `${clamp(Math.log2(hz / 80) / 2.6, 0, 1) * 100}%`;
+      }
       const blowing = v > thr;
       if (!started) { brUI(1, 1); if (blowing) started = now; else return; }
       const tt = Math.min(1, (now - started) / (secs * 1000));
@@ -1454,7 +1489,8 @@ function micExhale(secs, run) {
       if (stopped && pos > 0.05) brHint('Keep breathing out… long and slow.');
       if (pos <= 0 || stopped && now - quietSince > 2200 || now - started > secs * 2600) {
         clearInterval(iv);
-        res(clamp((inBand / Math.max(1, total)) * 0.4 + (1 - pos) * 0.6, 0, 1));
+        const vr = voiced / Math.max(1, total);
+        res({ q: clamp((inBand / Math.max(1, total)) * 0.3 + (1 - pos) * 0.45 + vr * 0.25, 0, 1), voiced: vr, hz: pitchN ? Math.round(pitchSum / pitchN) : 0 });
       }
     }, 33);
   });
@@ -1527,14 +1563,17 @@ async function runBreath() {
   // exhale
   $('#dand').classList.add('show');
   let qout;
+  const snd = SOUND[L.elem];
   if (micH) {
     $('#brMeter').hidden = false;
-    brText('Now breathe out slowly', 'Blow gently on the dandelion. Long and soft.');
-    qout = await micExhale(L.exhale, run);
+    brText(`Now ${snd.verb} it out: ${snd.say}`, `${snd.tip} ${snd.dir}`);
+    const r = await micExhale(L.exhale, run);
+    qout = r.q; lastVoiced = r.voiced; lastHz = r.hz;
   } else {
-    brText('Now breathe out slowly', 'Slide Luma back down with the light while you breathe out.');
+    brText('Now breathe out slowly', `Slide Luma down with the light. Say it out loud if you can: ${snd.say}`);
     brHand.className = 'brhand down'; brHand.hidden = !!S.tutDone;
     qout = await followPhase('down', L.exhale, run);
+    lastVoiced = 0; lastHz = 0;
   }
   closeMic();
   brHand.hidden = true;
@@ -1543,14 +1582,15 @@ async function runBreath() {
   showBreathResult(clamp(qin * 0.35 + qout * 0.65, 0, 1));
 }
 
-let pendingQ = null;
+let pendingQ = null, lastVoiced = 0, lastHz = 0;
 function breathPlan(q) {
   const cl = clouds().length, an = all().filter(t => t.type === L.elem && !t.cloud).length;
   const tier = q >= 0.72 ? 'deep' : q >= 0.4 ? 'nice' : 'small';
+  const sang = lastVoiced >= 0.45;
   const cloudsOff = Math.min(cl, tier === 'deep' ? 4 : tier === 'nice' ? 2 : 1);
   const orbs = 0;
-  const coins = (tier === 'deep' ? 20 : tier === 'nice' ? 10 : 3) * coinMult();
-  return { tier, cloudsOff, orbs, coins };
+  const coins = ((tier === 'deep' ? 20 : tier === 'nice' ? 10 : 3) + (sang ? 8 : 0)) * coinMult();
+  return { tier, cloudsOff: cloudsOff + (sang && cl > cloudsOff ? 1 : 0), orbs, coins, sang };
 }
 function showBreathResult(q) {
   pendingQ = q;
@@ -1558,10 +1598,13 @@ function showBreathResult(q) {
   $('#brPlay').hidden = true; $('#brResult').hidden = false;
   $('#brEyebrow').textContent = `${L.power} · Luma's breath`;
   const head = { deep: 'Deep breath.', nice: 'Nice breath.', small: 'A little breath.' }[p.tier];
-  const tip = { deep: 'Slow in, long and soft out. That clears the most clouds.', nice: 'Go even slower next time to blow away 4 clouds.', small: 'Stay with the light the whole way. Slow breaths blow away 4 clouds.' }[p.tier];
+  const tip = p.sang
+    ? { deep: `That is the ${ELEM[L.elem].name} sound. ${SOUND[L.elem].dir}`, nice: 'Good sound. Hold it longer next time.', small: `Nice try. Hold the ${SOUND[L.elem].say} longer and more clouds move.` }[p.tier]
+    : micH ? `Use your voice next time: ${SOUND[L.elem].say}. A real sound clears an extra cloud.`
+      : { deep: 'Slow in, long and soft out. That clears the most clouds.', nice: 'Go even slower next time to blow away 4 clouds.', small: 'Stay with the light the whole way. Slow breaths blow away 4 clouds.' }[p.tier];
   brText(head, tip);
   $('#brFeathers').innerHTML = [1, 2, 3].map(i => `<span class="${i <= ({ deep: 3, nice: 2, small: 1 })[p.tier] ? '' : 'off'}">❋</span>`).join('');
-  $('#brGains').innerHTML = `<span class="chip">☁ ${p.cloudsOff} ${p.cloudsOff === 1 ? 'cloud' : 'clouds'} blown away</span><span class="chip"><i class="coin"></i>+${p.coins}</span>`;
+  $('#brGains').innerHTML = `<span class="chip">☁ ${p.cloudsOff} ${p.cloudsOff === 1 ? 'cloud' : 'clouds'} blown away</span>${p.sang ? `<span class="chip sangchip">${ELEM[L.elem].name} sound${lastHz ? ` · ${lastHz} Hz` : ''}</span>` : ''}<span class="chip"><i class="coin"></i>+${p.coins}</span>`;
   chord(p.tier === 'deep' ? [523.25, 659.25, 783.99, 1046.5] : p.tier === 'nice' ? [523.25, 659.25, 783.99] : [523.25, 659.25], 0.12);
 }
 $('#brBack').addEventListener('click', async () => {
@@ -1959,7 +2002,7 @@ async function winLevel() {
   $('#wStars').innerHTML = '★'.repeat(stars) + `<span class="off">${'★'.repeat(3 - stars)}</span>`;
   $('#wCoins').textContent = coins;
   $('#wLeft').textContent = deepBreaths ? `${deepBreaths} deep ${deepBreaths === 1 ? 'breath' : 'breaths'}` : 'Third star: take one deep breath';
-  $('#pTitle').textContent = L.power;
+  $('#pTitle').textContent = `${L.power} · the ${SOUND[L.elem].verb}`;
   $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
   $('#pLine').textContent = L.line;
   addBal(L.elem, 2.5);
