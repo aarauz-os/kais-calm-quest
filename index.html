@@ -40,15 +40,15 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 
 /* ---------- map ---------- */
 #map{background:radial-gradient(120% 60% at 50% 0%,#FFF8E8 0,var(--parch) 55%,var(--parch2) 100%);overflow-y:auto;overflow-x:hidden}
-.maphead{padding:18px 16px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
-.hero{position:relative;padding:8px 16px 0;text-align:center}
+.maphead{flex:none;padding:18px 16px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hero{flex:none;position:relative;padding:8px 16px 0;text-align:center}
 .eyebrow{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
 .hero h1{margin:4px 0 2px;font-size:clamp(34px,10vw,44px);line-height:1;color:var(--teal);font-weight:400;text-wrap:balance}
 .hero p{margin:4px 0 0;color:var(--muted);font-weight:700}
 .heroart{display:flex;justify-content:center;align-items:flex-end;gap:0;margin-top:10px;height:170px}
 .heroart img{height:100%;mix-blend-mode:multiply;-webkit-mask-image:radial-gradient(closest-side,#000 70%,transparent);mask-image:radial-gradient(closest-side,#000 70%,transparent)}
 .heroart img.luma{height:92px;margin-left:-18px}
-.path{position:relative;padding:18px 16px 12px;display:flex;flex-direction:column;gap:14px}
+.path{flex:none;position:relative;padding:18px 16px 12px;display:flex;flex-direction:column;gap:14px}
 .path::before{content:"";position:absolute;left:50%;top:30px;bottom:40px;border-left:3px dashed rgba(184,134,47,.45)}
 .node{position:relative;display:flex;align-items:center;gap:12px;width:78%;padding:10px 14px 10px 10px;border-radius:20px;background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.06),0 6px 18px rgba(80,60,20,.08);text-align:left}
 .node:nth-child(even){align-self:flex-end}
@@ -58,7 +58,40 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .node .stars{margin-left:auto;color:var(--gold);font-size:15px;letter-spacing:1px;white-space:nowrap}
 .node.locked{opacity:.5;filter:saturate(.3)}
 .node.current{box-shadow:0 0 0 3px var(--gold2),0 6px 18px rgba(80,60,20,.15)}
-.balcard{display:block;text-align:left;margin:10px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.buddycard{flex:none;position:relative;display:flex;align-items:center;gap:12px;text-align:left;margin:12px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:#15302A;color:#FBF3E2;overflow:hidden;box-shadow:0 2px 0 rgba(0,0,0,.08)}
+.buddycard.empty{background:#FFFBF2;color:var(--ink);overflow:visible;align-items:center}
+.buddycard.empty .bt{font-size:15px;line-height:1.25}
+.buddycard .bring{position:absolute;left:-12%;top:-45%;width:62%;padding-bottom:62%;border-radius:50%;filter:blur(6px);opacity:.9;pointer-events:none}
+.buddycard img{position:relative;width:56px;height:56px;border-radius:50%;object-fit:cover;background:#F5EBD8;flex:none}
+.buddycard .bt{position:relative;flex:1;min-width:0;font-size:15px;font-weight:900}
+.buddycard .bt em{display:block;font-style:normal;font-size:12.5px;font-weight:700;opacity:.8}
+.buddycard.empty .bt em{color:var(--muted);opacity:1}
+.buddycard .bdays{position:relative;font-size:22px;font-weight:900;line-height:1;text-align:center}
+.buddycard .bdays i{display:block;font-style:normal;font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.75}
+.buddylist{display:grid;gap:8px;margin-top:12px}
+.buddyrow{display:flex;align-items:center;gap:12px;padding:10px;border-radius:14px;background:#FFFBF2;text-align:left;width:100%}
+.buddyrow img{width:52px;height:52px;border-radius:50%;object-fit:cover;background:var(--parch);flex:none}
+.buddyrow .brt{flex:1;min-width:0;font-size:14.5px;font-weight:900}
+.buddyrow .brt em{display:block;font-style:normal;font-size:12.5px;font-weight:700;color:var(--muted)}
+.buddyrow .brt i{display:block;font-style:normal;font-size:12px;font-weight:900;margin-top:3px}
+.buddyrow .ok{color:#2C5B2A}
+.buddyrow .need{color:var(--gold)}
+.buddyrow.locked{opacity:.62}
+.buddyrow.locked img{filter:grayscale(.85)}
+.buddyrow.on{box-shadow:inset 0 0 0 2px var(--gold2)}
+.wheelcard{flex:none;display:flex;align-items:center;gap:12px;text-align:left;margin:12px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:linear-gradient(#FFF7E4,#FBEDCB);box-shadow:0 2px 0 rgba(0,0,0,.05),inset 0 0 0 2px var(--gold2)}
+.wheelcard.done{background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.wheelcard .wo{position:relative;width:40px;height:40px;flex:none}
+.wheelcard .wo.spin{animation:wspin 2.4s linear infinite}
+@keyframes wspin{to{transform:rotate(360deg)}}
+.wheelcard .wt{flex:1;min-width:0;font-size:15px;font-weight:900}
+.wheelcard .wt em{display:block;font-style:normal;font-size:13px;font-weight:700;color:var(--muted)}
+.wheelcard .wgo{padding:8px 14px;border-radius:12px;background:var(--forest);color:#FBF3E2;font-weight:900;font-size:14px}
+.wheelface{width:120px;height:120px;margin:16px auto 0;position:relative}
+.wprize{display:inline-block;margin-top:6px;font-weight:900;color:var(--gold)}
+.todaychip{position:relative;z-index:3;align-self:center;margin:4px auto 0;display:flex;align-items:center;gap:6px;padding:4px 10px 4px 4px;border-radius:999px;background:rgba(14,26,24,.5);backdrop-filter:blur(6px);color:#FBF3E2;font-size:11.5px;font-weight:900}
+.todaychip .tco{position:relative;width:20px;height:20px;display:block}
+.balcard{flex:none;display:block;text-align:left;margin:10px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.05)}
 .balhead{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:15px}
 .balchip{display:inline-flex;gap:4px}
 .balchip i{width:12px;height:12px;border-radius:50%;display:block}
@@ -73,7 +106,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .light.dim .lo{opacity:.4;filter:saturate(.35)}
 .streakchip{background:#FFF1D6;color:#6B4A0E;font-weight:900;gap:4px;cursor:pointer}
 .streakchip.cold{background:rgba(31,74,61,.1);color:var(--muted)}
-.banner{margin:12px 16px 0;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.09);font-size:14px;font-weight:700;line-height:1.4;color:var(--forest)}
+.banner{flex:none;margin:12px 16px 0;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.09);font-size:14px;font-weight:700;line-height:1.4;color:var(--forest)}
 .banner.warn{background:#FFE9D2;color:#8A4A17;box-shadow:inset 0 0 0 2px #E9B27A}
 .banner.good{background:#E4F3DF;color:#2C5B2A}
 #streakov .card{display:flex;flex-direction:column}
@@ -91,8 +124,8 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .card.rewardcard h2{color:#FBF3E2;font-size:34px}
 .rwbig{font-size:19px;font-weight:900;color:var(--gold2);margin:6px 0 4px;line-height:1.35}
 .conf{position:absolute;width:9px;height:14px;border-radius:2px;pointer-events:none}
-.promise{margin:6px 16px 22px;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.07);font-size:13px;color:var(--forest);font-weight:700;text-align:center}
-.mapfoot{display:flex;gap:10px;justify-content:center;padding:0 16px}
+.promise{flex:none;margin:6px 16px 22px;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.07);font-size:13px;color:var(--forest);font-weight:700;text-align:center}
+.mapfoot{flex:none;display:flex;gap:10px;justify-content:center;padding:0 16px}
 
 /* ---------- game ---------- */
 #game{color:#FBF3E2}
@@ -451,6 +484,8 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       </div>
     </div>
     <div class="banner" id="streakBanner"></div>
+    <button class="buddycard empty" id="buddyCard"></button>
+    <button class="wheelcard" id="wheelCard"></button>
     <button class="balcard" id="balOpen" aria-label="Your five lights">
       <span class="balhead"><b>Your five lights</b><span class="balchip" id="balChip"></span></span>
       <span class="balsub" id="balTease"></span>
@@ -479,6 +514,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       <div class="stat" id="movesStat"><div><div class="lbl">Moves</div><div class="val" id="gMoves">20</div></div></div>
     </div>
     <div class="lanterns" id="lanterns" aria-label="Lanterns lit"></div>
+    <div class="todaychip" id="todayChip" hidden></div>
     <div class="flowbar" id="flowBar" hidden><span id="flowText"></span></div>
     <div class="boardwrap" id="boardwrap">
       <div id="board" aria-label="Puzzle board"></div>
@@ -541,6 +577,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
     <h2 class="display" id="wTitle">The storm has passed.</h2>
     <div class="streakrow" id="wStreak"></div>
     <div class="streakrow" id="wBalance"></div>
+    <div class="streakrow" id="wBuddy" hidden></div>
     <button class="btn gold" id="wClaim" hidden style="width:100%;margin-bottom:10px">Claim streak reward</button>
     <div class="bigstars" id="wStars"></div>
     <div class="row" style="justify-content:center;gap:8px"><span class="chip" style="background:#FFFBF2"><i class="coin"></i>+<span id="wCoins">0</span></span><span class="chip" style="background:#FFFBF2" id="wLeft"></span></div>
@@ -568,6 +605,26 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       <button class="btn" id="lRetry">Try again</button>
       <button class="btn ghost" id="lMap">Back to map</button>
     </div>
+  </div></div>
+
+  <div class="ov" id="buddyov" hidden><div class="card" role="dialog" aria-labelledby="buddyTitle">
+    <div class="eyebrow">Five Animal Frolics</div>
+    <h2 class="display" id="buddyTitle">Your spirit companion</h2>
+    <div class="row" style="flex-wrap:wrap;gap:6px" id="buddyStage"></div>
+    <p style="margin-top:10px">Each animal belongs to an element and an organ, the way qigong pairs them. Your companion's glow is your five lights, and it grows on the days you practise.</p>
+    <div class="buddylist" id="buddyList"></div>
+    <div class="stack">
+      <button class="btn gold" id="earlyPass" hidden>Early pass: all five now · $4.99</button>
+      <button class="btn" id="buddyClose">Close</button>
+    </div>
+    <div class="note">Preview: nothing is charged. Tiger opens at 30 practice days and Crane at 60, free. The pass only gets you there sooner.</div>
+  </div></div>
+
+  <div class="ov" id="wheelov" hidden style="align-items:center"><div class="card" role="dialog" aria-labelledby="wheelLabel" style="text-align:center">
+    <div class="eyebrow">Today's element</div>
+    <div class="wheelface" id="wheelFace"></div>
+    <p id="wheelLabel" style="margin-top:12px"></p>
+    <div class="stack"><button class="btn gold" id="wheelGo" hidden>Let's play</button></div>
   </div></div>
 
   <div class="ov" id="balov" hidden><div class="card" role="dialog" aria-labelledby="balTitle">
@@ -721,7 +778,20 @@ const CHEERS = ["Luma's glow is growing.", 'Nice match. Luma is filling up.', "S
 /* ---------- save state ---------- */
 const DEF = { unlocked: 1, stars: {}, coins: 150, hearts: 5, swirls: 1, lanterns: 1, boostUntil: 0,
   streak: 0, best: 0, lastDay: '', claimed: [], shields: 0, seals: 0, demoOffset: 0, comebackOn: '',
-  bal: { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 }, balDay: '', balBonusDay: '' };
+  bal: { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 }, balDay: '', balBonusDay: '',
+  wheelDay: '', todayElem: '', wheelPrize: null,
+  buddy: '', owned: ['fire', 'water', 'earth'], earlyPass: false, practiceDays: 0 };
+// The Five Animal Frolics (Wu Qin Xi) pair each animal with an organ, so the animals and the
+// elements stay one system: Tiger-liver-Wood, Monkey-heart-Fire, Bear-spleen-Earth,
+// Crane-lung-Metal, Deer-kidney-Water.
+const BUDDY = {
+  wood:  { animal: 'Tiger',  name: 'Rin',  unlock: 30, note: 'Wood cub. Turns anger into kindness.' },
+  fire:  { animal: 'Monkey', name: 'Pip',  unlock: 0,  note: 'Fire baby. Turns too-much into peace.' },
+  earth: { animal: 'Bear',   name: 'Momo', unlock: 0,  note: 'Earth cub. Turns worry into trust.' },
+  metal: { animal: 'Crane',  name: 'Sen',  unlock: 60, note: 'Metal chick. Turns sadness into strength.' },
+  water: { animal: 'Deer',   name: 'Nami', unlock: 0,  note: 'Water fawn. Turns fear into wisdom.' }
+};
+const STAGES = [{ at: 0, name: 'baby' }, { at: 10, name: 'child' }, { at: 30, name: 'grown' }, { at: 90, name: 'keeper' }];
 // The ladder: every rung is a multiple of 3, with the two days A named (40, 43) kept in.
 const MILES = [
   { d: 3, coins: 150, swirls: 1 },
@@ -899,6 +969,125 @@ function balanceBonus() {
   return gift;
 }
 
+/* ---------- companion ---------- */
+// Your companion wears your balance: the aura is your five lights, and it grows on practice
+// days. It never sickens on missed ones — sleepy is as sad as it gets.
+const stageOf = () => STAGES.slice().reverse().find(x => (S.practiceDays || 0) >= x.at);
+const owns = el => (S.owned || []).includes(el) || S.earlyPass;
+function checkBuddyUnlocks() {
+  let got = null;
+  TYPES.forEach(el => {
+    const need = BUDDY[el].unlock;
+    if (need > 0 && !(S.owned || []).includes(el) && (S.practiceDays || 0) >= need) { S.owned.push(el); got = el; }
+  });
+  if (got) save();
+  return got;
+}
+const buddyArt = el => `img/buddy-${el}.jpg`;
+function renderBuddy() {
+  const el = S.buddy, card = $('#buddyCard');
+  if (!el) {
+    card.className = 'buddycard empty';
+    card.innerHTML = `<span class="bt"><b>Choose your spirit companion</b><em>Three are waiting. Two more you earn.</em></span><span class="wgo">Choose</span>`;
+    return;
+  }
+  const st = balState(), stage = stageOf();
+  const lit = st.vals.filter(v => v.v >= 1);
+  const aura = lit.length
+    ? `radial-gradient(circle at 50% 55%, ${lit.map((v, i) => `${ELEM[v.t].glow}${i ? '55' : '99'} ${8 + i * 16}%`).join(', ')}, transparent 72%)`
+    : 'radial-gradient(circle at 50% 55%, rgba(255,255,255,.18), transparent 70%)';
+  const sleepy = st.low.v < 0.6;
+  card.className = 'buddycard';
+  card.innerHTML = `<span class="bring" style="background:${aura}"></span>
+    <img src="${buddyArt(el)}" alt="${BUDDY[el].name} the ${BUDDY[el].animal}">
+    <span class="bt"><b>${BUDDY[el].name} the ${BUDDY[el].animal}</b><em>${ELEM[el].name} · ${stage.name}${sleepy ? ` · ${ELEM[st.low.t].name} is sleepy` : ' · all lights awake'}</em></span>
+    <span class="bdays">${S.practiceDays || 0}<i>days</i></span>`;
+}
+function renderBuddyPicker() {
+  const stage = stageOf();
+  $('#buddyStage').innerHTML = `<span class="chip">${S.practiceDays || 0} practice days</span><span class="chip">stage: ${stage.name}</span>${S.earlyPass ? '<span class="chip">early pass</span>' : ''}`;
+  $('#buddyList').innerHTML = TYPES.map(el => {
+    const b = BUDDY[el], have = owns(el), left = Math.max(0, b.unlock - (S.practiceDays || 0));
+    return `<button class="buddyrow ${have ? '' : 'locked'} ${S.buddy === el ? 'on' : ''}" data-buddy="${el}">
+      <img src="${buddyArt(el)}" alt="">
+      <span class="brt"><b>${b.name} the ${b.animal}</b><em>${b.note}</em>${have ? `<i class="ok">${S.buddy === el ? 'with you now' : 'ready'}</i>` : `<i class="need">${left} more practice days, or the early pass</i>`}</span>
+    </button>`;
+  }).join('');
+  $('#earlyPass').hidden = S.earlyPass || TYPES.every(owns);
+}
+$('#buddyList').addEventListener('click', e => {
+  const b = e.target.closest('[data-buddy]'); if (!b) return;
+  const el = b.dataset.buddy;
+  if (!owns(el)) { toast(`${BUDDY[el].name} opens at ${BUDDY[el].unlock} practice days, or with the early pass.`); return; }
+  S.buddy = el; save();
+  elemSound(el);
+  renderBuddyPicker(); renderBuddy();
+  toast(`${BUDDY[el].name} is with you.`);
+});
+$('#earlyPass').addEventListener('click', () => {
+  S.earlyPass = true; S.owned = TYPES.slice(); save();
+  chord([523.25, 659.25, 783.99, 1046.5], 0.08);
+  toast('Preview: early pass unlocked, no charge. Loyal players still earn all five free.');
+  renderBuddyPicker(); renderBuddy();
+});
+$('#buddyCard').addEventListener('click', () => { renderBuddyPicker(); showOv('buddyov'); });
+$('#buddyClose').addEventListener('click', () => hideOv('buddyov'));
+
+/* ---------- daily element wheel ---------- */
+// One spin a day picks today's element. The wheel leans toward whichever light has gone
+// quiet, so the thing that pulls people back also pulls them toward balance.
+const WHEEL_PRIZES = [{ coins: 40 }, { coins: 60 }, { coins: 80 }, { swirls: 1 }, { lanterns: 1 }, { boost: 10 }];
+function pickTodayElem() {
+  const st = balState();
+  const weights = TYPES.map(t => ({ t, w: t === st.low.t ? 3 : (S.bal[t] || 0) < 1 ? 2 : 1 }));
+  let r = Math.random() * weights.reduce((a, b) => a + b.w, 0);
+  for (const x of weights) { r -= x.w; if (r <= 0) return x.t; }
+  return 'earth';
+}
+const spunToday = () => S.wheelDay === dayKey();
+function renderWheel() {
+  const card = $('#wheelCard');
+  if (spunToday()) {
+    const el = S.todayElem;
+    card.className = 'wheelcard done';
+    card.innerHTML = `<span class="wo">${orbHTML(el)}</span><span class="wt"><b>Today is ${ELEM[el].name}.</b><em>${ELEM[el].name} matches fill Luma 50% faster today.</em></span>`;
+    card.disabled = true;
+  } else {
+    card.className = 'wheelcard';
+    card.innerHTML = `<span class="wo spin">${orbHTML(TYPES[Math.floor(Math.random() * 5)])}</span><span class="wt"><b>Spin for today's element</b><em>One spin a day. Free.</em></span><span class="wgo">Spin</span>`;
+    card.disabled = false;
+  }
+}
+async function spinWheel() {
+  if (spunToday() || busy) return;
+  ac();
+  $('#wheelGo').hidden = true;
+  await showOv('wheelov');
+  const face = $('#wheelFace'), label = $('#wheelLabel');
+  const target = pickTodayElem();
+  label.textContent = 'Spinning…';
+  const order = ['wood', 'fire', 'earth', 'metal', 'water'];
+  let i = 0, delay = 70;
+  for (let n = 0; n < 22; n++) {
+    face.innerHTML = orbHTML(order[i++ % 5]);
+    boop(n % 6, 0.05);
+    await wait(delay);
+    if (n > 13) delay += 26;
+  }
+  while (order[(i - 1) % 5] !== target) { face.innerHTML = orbHTML(order[i++ % 5]); boop(4, 0.05); await wait(delay += 22); }
+  const prize = rnd(WHEEL_PRIZES);
+  S.wheelDay = dayKey(); S.todayElem = target; S.wheelPrize = prize; save();
+  grant(prize);
+  face.innerHTML = orbHTML(target);
+  face.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 420, easing: 'ease-out' });
+  chord([ELEM[target].tone, ELEM[target].tone * 1.5], 0.08);
+  elemSound(target);
+  label.innerHTML = `<b>${ELEM[target].name} day.</b> ${ELEM[target].name} matches fill Luma 50% faster today.<br><span class="wprize">Spin gift: ${rewardText(prize)}</span>`;
+  $('#wheelGo').hidden = false;
+  renderWheel(); renderBal(); syncWallet();
+}
+$('#wheelGo').addEventListener('click', () => hideOv('wheelov'));
+
 /* ---------- streak ---------- */
 const DAY = 864e5;
 const dayKey = (off = 0) => new Date(Date.now() + ((S.demoOffset || 0) + off) * DAY).toISOString().slice(0, 10);
@@ -983,6 +1172,7 @@ function showComeback(days) {
 }
 $('#streakChip').addEventListener('click', () => { renderStreak(); showOv('streakov'); });
 $('#balOpen').addEventListener('click', () => { renderBal(); showOv('balov'); });
+$('#wheelCard').addEventListener('click', spinWheel);
 $('#balClose').addEventListener('click', () => hideOv('balov'));
 $('#streakClose').addEventListener('click', () => hideOv('streakov'));
 $('#demoDay').addEventListener('click', () => {
@@ -1258,7 +1448,12 @@ async function popSet(set) {
   });
   if (arr.length) sparks(arr);
   arr.forEach(t => { if (t.type !== 'spirit') { turnTypes.add(t.type); levelTally[t.type]++; } });
-  if (!breathing) charge = Math.min(100, charge + arr.length * 15);
+  if (!breathing) {
+    const boostEl = spunToday() ? S.todayElem : null;
+    let gain = 0;
+    arr.forEach(t => { gain += t.type === boostEl ? 22.5 : 15; });
+    charge = Math.min(100, charge + gain);
+  }
   const n = Math.min(arr.length, 5);
   for (let i = 0; i < n; i++) setTimeout(() => boop(combo * 2 + i), i * 55);
   if (combo >= 1 && performance.now() - cheerAt > 2500) { cheerAt = performance.now(); say(rnd(CHEERS)); }
@@ -1693,6 +1888,9 @@ function hud() {
   const cl = clouds().length;
   const p = progress();
   $('#gClouds').textContent = cl;
+  const tc = $('#todayChip');
+  if (spunToday()) { tc.hidden = false; tc.innerHTML = `<span class="tco">${orbHTML(S.todayElem)}</span>${ELEM[S.todayElem].name} day · Luma fills faster`; }
+  else tc.hidden = true;
   $('#gCloudWord').textContent = cl === 1 ? 'cloud left' : 'clouds left';
   $('#gMoves').textContent = Math.max(0, moves);
   $('#movesStat').style.boxShadow = moves <= 3 ? 'inset 0 0 0 2px #F2A07B' : '';
@@ -1982,7 +2180,7 @@ function toMap() {
   running = false; busy = true;
   brRun++; closeMic(); breathing = false;
   tut = null; clearHints(); hideTip();
-  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal();
+  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal(); renderWheel(); renderBuddy();
 }
 $('#toMap').addEventListener('click', toMap);
 
@@ -2013,7 +2211,10 @@ async function winLevel() {
   bl.innerHTML = bonus ? `<b>All five lights are lit.</b> Balance bonus: ${rewardText(bonus)}.`
     : bst.lit >= 2 ? `<b>${ELEM[L.elem].name} is brighter.</b> Your quietest is ${ELEM[bst.low.t].name} — that is your ${ELEM[bst.low.t].body}.`
       : `<b>${ELEM[L.elem].name} is lit.</b> Four more elements to balance.`;
+  const newDay = S.lastDay !== dayKey();
   const note = markDay();
+  if (newDay) { S.practiceDays = (S.practiceDays || 0) + 1; save(); }
+  const freshBuddy = checkBuddyUnlocks();
   const mile = MILES.find(x => x.d === S.streak && !S.claimed.includes(x.d));
   const sr = $('#wStreak');
   sr.className = 'streakrow' + (mile ? ' gold' : '');
@@ -2023,7 +2224,18 @@ async function winLevel() {
       : `<b>Day ${S.streak} streak.</b> ${Math.max(0, nm.d - S.streak)} more to ${rewardText(nm)}.`;
   $('#wClaim').hidden = !mile;
   if (mile) $('#wClaim').onclick = () => celebrate(mile);
-  renderStreak(); renderBal(); teaseBal();
+  const br = $('#wBuddy');
+  if (freshBuddy) {
+    br.className = 'streakrow gold'; br.hidden = false;
+    br.innerHTML = `<b>${BUDDY[freshBuddy].name} the ${BUDDY[freshBuddy].animal} is yours.</b> ${S.practiceDays} practice days earned it.`;
+    chord([659.25, 880, 1174.66], 0.09);
+  } else if (S.buddy) {
+    const nx = STAGES.find(x => x.at > (S.practiceDays || 0));
+    br.className = 'streakrow'; br.hidden = false;
+    br.innerHTML = nx ? `<b>${BUDDY[S.buddy].name} is ${stageOf().name}.</b> ${nx.at - S.practiceDays} more practice days to ${nx.name}.`
+      : `<b>${BUDDY[S.buddy].name} is a keeper.</b> ${S.practiceDays} practice days together.`;
+  } else br.hidden = true;
+  renderStreak(); renderBal(); teaseBal(); renderBuddy();
   $('#wNext').hidden = n >= LEVELS.length;
   $('#wTitle').textContent = n >= LEVELS.length ? 'Every lantern is home.' : 'The storm has passed.';
   showOv('win');
@@ -2140,7 +2352,7 @@ $('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#wel
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
 $('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
 $('#cycleRow').innerHTML = ['wood', 'fire', 'earth', 'metal', 'water'].map(e => `<span class="eo">${orbHTML(e)}</span>`).join('<i>→</i>') + '<i>↻</i>';
-syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal();
+syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy();
 })();
 </script>
 
