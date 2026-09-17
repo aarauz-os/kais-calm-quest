@@ -117,6 +117,19 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .node .stars{margin-left:auto;color:var(--gold);font-size:15px;letter-spacing:1px;white-space:nowrap}
 .node.locked{opacity:.5;filter:saturate(.3)}
 .node.current{box-shadow:inset 0 2px 0 rgba(255,255,255,.9),inset 0 -3px 0 rgba(150,110,50,.25),0 0 0 3px var(--gold-hi),0 0 0 6px var(--wood),0 6px 0 var(--wood-d),0 0 26px rgba(255,200,110,.55)}
+.bedcard{flex:none;display:block;text-align:left;margin:12px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;color:#EAF2EE;
+  background:linear-gradient(#26424F,#152A33);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.2),inset 0 -3px 0 rgba(0,0,0,.4),0 0 0 3px var(--gold-mid),0 0 0 5px var(--wood),0 5px 0 var(--wood-d),0 10px 18px rgba(0,0,0,.35)}
+.bedcard .balsub{color:#B9CFD6}
+.bedmoon{font-size:22px;color:#FFE9A8;text-shadow:0 0 14px rgba(255,220,140,.8)}
+.card.bedcardov{background:linear-gradient(#16303B,#0B1A22);color:#EAF2EE;text-align:center;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.14),0 0 0 4px var(--gold-mid),0 0 0 8px var(--wood),0 10px 0 var(--wood-d),0 26px 60px rgba(0,0,0,.65)}
+.bedstage{position:relative;width:210px;height:210px;margin:14px auto 6px;display:grid;place-items:center}
+.bedring{position:absolute;inset:0;border-radius:50%;transform:scale(.45);
+  background:radial-gradient(circle,rgba(190,235,255,.5),rgba(140,200,230,.12) 60%,transparent 72%);
+  box-shadow:0 0 0 2px rgba(255,255,255,.5),0 0 50px rgba(160,215,245,.6)}
+.bedstage img{position:relative;width:128px;height:128px;border-radius:50%;object-fit:cover;background:#0E2028;
+  box-shadow:0 0 0 3px var(--gold-mid),0 0 0 6px var(--wood)}
 .babycard{flex:none;display:block;text-align:left;margin:12px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;
   background:linear-gradient(var(--paper),var(--paper-d));
   box-shadow:inset 0 2px 0 rgba(255,255,255,.9),inset 0 -3px 0 rgba(150,110,50,.25),0 0 0 3px var(--gold-mid),0 0 0 5px var(--wood),0 5px 0 var(--wood-d),0 10px 18px rgba(0,0,0,.3)}
@@ -419,18 +432,26 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 
 .gbot{position:relative;z-index:3;display:flex;align-items:flex-end;gap:10px;padding:6px 16px 14px}
 .kai{position:relative;flex:1;min-width:0;display:flex;align-items:flex-end;gap:6px}
-.kai #buddyGame{width:48px;height:48px;border-radius:50%;object-fit:contain;object-position:50% 50%;border:3px solid var(--bhue,#FBF3E2);flex:none;background:#FFEEDF;margin-left:-12px;animation:bob 3.4s ease-in-out infinite;box-shadow:0 0 12px var(--bglow,transparent)}
 @keyframes bob{50%{transform:translateY(-4px)}}
 @keyframes avatarIdle{0%,100%{transform:translateY(0) scale(1)}28%{transform:translateY(-1.5px) scale(1.025)}60%{transform:translateY(0) scale(1)}}
 @keyframes avatarCheer{0%{transform:translateY(0) scale(1) rotate(0)}25%{transform:translateY(-9px) scale(1.12) rotate(-4deg)}50%{transform:translateY(0) scale(.97) rotate(2deg)}75%{transform:translateY(-4px) scale(1.05) rotate(-1deg)}100%{transform:translateY(0) scale(1) rotate(0)}}
 @keyframes avatarWorry{0%,100%{transform:translateX(0)}20%{transform:translateX(-2px) rotate(-1.5deg)}40%{transform:translateX(2px) rotate(1.5deg)}60%{transform:translateX(-1.5px)}80%{transform:translateX(1.5px)}}
-.kai img.cheer{animation:avatarCheer .7s cubic-bezier(.3,1.4,.5,1)}
-.kai img.worry{animation:avatarWorry .6s ease-in-out}
-#buddyGame.cheer{animation:avatarCheer .7s cubic-bezier(.3,1.4,.5,1)}
-#buddyGame.hop{animation:hop .5s ease-out}
-@keyframes hop{30%{transform:translateY(-14px) scale(1.08)}60%{transform:translateY(0) scale(.98)}100%{transform:translateY(0) scale(1)}}
-.kai img{transform-origin:50% 90%;animation:avatarIdle 4.6s ease-in-out infinite;width:54px;height:54px;border-radius:50%;object-fit:cover;object-position:50% 20%;flex:none;background:#F5EBD8;
-  box-shadow:0 0 0 3px var(--gold-mid),0 0 0 6px var(--wood),0 4px 0 var(--wood-d)}
+
+@keyframes hop{30%{transform:translateY(-10px) scale(1.06)}60%{transform:translateY(0) scale(.98)}100%{transform:translateY(0) scale(1)}}
+.avwrap img.hop{animation:hop .5s ease-out}
+.avwrap{position:relative;width:56px;height:56px;border-radius:50%;overflow:hidden;flex:none;background:#F5EBD8;
+  box-shadow:0 0 0 3px var(--bhue,var(--gold-mid)),0 0 0 6px var(--wood),0 4px 0 var(--wood-d)}
+.avwrap img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 20%;
+  transform-origin:50% 88%;animation:faceIdle 4.8s ease-in-out infinite;transition:opacity .2s}
+.avwrap.buddy{width:48px;height:48px;margin-left:-10px}
+.avwrap.buddy img{object-fit:contain;background:#FFEEDF}
+.avwrap img.cheer{animation:faceCheer .7s cubic-bezier(.3,1.5,.5,1)}
+.avwrap img.big{animation:faceBig .9s cubic-bezier(.3,1.5,.5,1)}
+.avwrap img.worry{animation:faceWorry .6s ease-in-out}
+@keyframes faceIdle{0%,100%{transform:scale(1) translateY(0)}30%{transform:scale(1.03) translateY(-1px)}65%{transform:scale(1) translateY(0)}}
+@keyframes faceCheer{0%{transform:scale(1)}30%{transform:scale(1.14) translateY(-3px) rotate(-3deg)}60%{transform:scale(1.04) rotate(2deg)}100%{transform:scale(1)}}
+@keyframes faceBig{0%{transform:scale(1)}25%{transform:scale(1.22) translateY(-5px) rotate(-5deg)}55%{transform:scale(1.08) rotate(3deg)}80%{transform:scale(1.12) rotate(-1deg)}100%{transform:scale(1)}}
+@keyframes faceWorry{0%,100%{transform:translateX(0)}25%{transform:translateX(-2.5px) rotate(-2deg)}50%{transform:translateX(2.5px) rotate(2deg)}75%{transform:translateX(-1.5px)}}
 .bubble{position:relative;flex:1;min-width:0;padding:10px 13px;border-radius:16px 16px 16px 5px;color:#33281A;font-size:13.5px;font-weight:800;line-height:1.3;transition:opacity .25s;
   background:linear-gradient(#FFFDF4,#F1E1BE);text-shadow:0 1px 0 rgba(255,255,255,.7);
   box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 0 0 2.5px var(--gold-mid),0 0 0 5px var(--wood),0 4px 0 var(--wood-d),0 8px 16px rgba(0,0,0,.35)}
@@ -681,6 +702,10 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       </div>
     </div>
     <div class="banner" id="streakBanner"></div>
+    <button class="bedcard" id="bedOpen">
+      <span class="qhead"><b>Bedtime with Luma</b><span class="bedmoon">☾</span></span>
+      <span class="balsub">No game, no score. Just Luma breathing slowly for as long as you like.</span>
+    </button>
     <button class="babycard" id="babyToggle" aria-pressed="false">
       <span class="qhead"><b>Baby mode</b><span class="babysw"><i></i></span></span>
       <span class="balsub">For very small children: the game plays itself and Luma leads the breathing, over and over, until you switch it off.</span>
@@ -730,8 +755,8 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     </div>
     <div class="gbot">
       <div class="kai">
-        <img id="kaiFace" src="img/kai-3d.jpg" alt="Kai">
-        <img id="buddyGame" alt="" hidden>
+        <span class="avwrap"><img id="kaiFace" src="img/kai-3d.jpg" alt="Kai"></span>
+        <span class="avwrap buddy" id="buddyWrap" hidden><img id="buddyGame" alt=""></span>
         <div class="bubble" id="bubble">Swap two orbs to make a line of three.</div>
       </div>
       <div class="tools">
@@ -815,6 +840,18 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       <button class="btn" id="lRetry">Try again</button>
       <button class="btn ghost" id="lMap">Back to map</button>
     </div>
+  </div></div>
+
+  <div class="ov" id="bedov" hidden style="align-items:center"><div class="card bedcardov" role="dialog" aria-labelledby="bedText">
+    <div class="eyebrow" style="color:var(--gold2)">Bedtime</div>
+    <div class="bedstage">
+      <div class="bedring" id="bedRing"></div>
+      <img id="bedLuma" src="img/luma-3d.jpg" alt="Luma breathing">
+      <span class="airin" id="bedIn"></span><span class="airout" id="bedOut"></span>
+    </div>
+    <div class="btext" id="bedText">Breathe in…</div>
+    <p class="small" id="bedCount" style="color:#CFE3DA;margin-top:4px"></p>
+    <div class="stack"><button class="btn" id="bedStop">Goodnight</button></div>
   </div></div>
 
   <div class="ov" id="sealov" hidden><div class="card" role="dialog" aria-labelledby="sealTitle">
@@ -1170,6 +1207,7 @@ function decayBal() {
   S.balDay = today; save();
 }
 function addBal(el, amount) {
+  if (babyOn()) return;
   decayBal();
   S.bal[el] = Math.min(BAL_FULL, (S.bal[el] || 0) + amount);
   save();
@@ -1314,6 +1352,40 @@ $('#babyToggle').addEventListener('click', () => {
 });
 $('#babyStop').addEventListener('click', () => { setBaby(false); toast('Baby mode off. Your turn.'); });
 
+/* ---------- bedtime: only Luma, only breathing ---------- */
+// No board, no score, no way to lose. A parent can hand this to a toddler at bedtime, or
+// use it themselves. Nothing here is recorded.
+let bedRun = 0;
+async function bedtime() {
+  const run = ++bedRun;
+  ac();
+  $('#bedCount').textContent = '';
+  await showOv('bedov');
+  const img = $('#bedLuma'), ring = $('#bedRing'), txt = $('#bedText'), ai = $('#bedIn'), ao = $('#bedOut');
+  const IN = 4, HOLD = 1, OUT = 6;
+  let n = 0;
+  while (run === bedRun) {
+    n++;
+    img.src = LUMA.in; ai.classList.add('on'); ao.classList.remove('on');
+    txt.textContent = 'Breathe in…';
+    ring.style.transition = `transform ${IN}s cubic-bezier(.35,0,.3,1)`; ring.style.transform = 'scale(1)';
+    breathSound('in', IN); bell(392, 0, 0.05);
+    await wait(IN * 1000); if (run !== bedRun) break;
+    txt.textContent = 'Hold…';
+    await wait(HOLD * 1000); if (run !== bedRun) break;
+    img.src = LUMA.out; ai.classList.remove('on'); ao.classList.add('on');
+    txt.textContent = 'And out…';
+    ring.style.transition = `transform ${OUT}s cubic-bezier(.4,0,.3,1)`; ring.style.transform = 'scale(.45)';
+    breathSound('out', OUT); bell(261.63, 0, 0.04);
+    await wait(OUT * 1000);
+    $('#bedCount').textContent = `${n} breath${n === 1 ? '' : 's'} together`;
+  }
+  ai.classList.remove('on'); ao.classList.remove('on');
+  img.src = LUMA.idle;
+}
+$('#bedOpen').addEventListener('click', bedtime);
+$('#bedStop').addEventListener('click', async () => { bedRun++; breathSound('out', 0.4); await hideOv('bedov'); });
+
 /* ---------- the seal book ---------- */
 const sealGlyph = sl => sl.elem ? GLYPH[sl.elem] : ({
   first: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg>',
@@ -1326,6 +1398,7 @@ const sealGlyph = sl => sl.elem ? GLYPH[sl.elem] : ({
 }[sl.id] || GLYPH.spirit);
 const sealCount = () => Object.keys(S.sealsEarned || {}).length;
 function awardSeal(id) {
+  if (babyOn()) return null;
   if (!S.sealsEarned) S.sealsEarned = {};
   if (S.sealsEarned[id]) return null;
   const sl = SEALS.find(x => x.id === id);
@@ -1344,6 +1417,7 @@ async function showSealWin(sl) {
 }
 $('#sealWinGo').addEventListener('click', () => hideOv('sealwin'));
 function bumpTally(key, n = 1) {
+  if (babyOn()) return;
   if (!S.tally) S.tally = { harmony: 0, flow3: 0, voiced: 0 };
   S.tally[key] = (S.tally[key] || 0) + n; save();
   const sl = SEALS.find(x => x.count === key);
@@ -1392,6 +1466,7 @@ function ensureQuests() {
   return S.quests;
 }
 function questBump(id, amount = 1, elem) {
+  if (babyOn()) return;                 // baby mode is for the baby, not the record
   const q = ensureQuests();
   let changed = false;
   q.items.forEach(it => {
@@ -1568,6 +1643,7 @@ function rewardText(m) {
   return bits.join(' · ');
 }
 function grant(m) {
+  if (babyOn()) return;
   S.coins += m.coins || 0;
   S.swirls += m.swirls || 0;
   S.lanterns += m.lanterns || 0;
@@ -1579,6 +1655,7 @@ function grant(m) {
 }
 // finishing a level is the day's practice
 function markDay() {
+  if (babyOn()) return null;
   const today = dayKey();
   if (S.lastDay === today) return null;
   const gap = S.lastDay ? daysBetween(S.lastDay, today) : 999;
@@ -1925,7 +2002,7 @@ async function popSet(set) {
   }
   const n = Math.min(arr.length, 5);
   for (let i = 0; i < n; i++) setTimeout(() => boop(combo * 2 + i), i * 55);
-  if (arr.length >= 5) avatarReact('happy');
+  if (arr.length >= 4) avatarReact('happy', arr.length + combo * 2);
   if (combo >= 1 && performance.now() - cheerAt > 2500) { cheerAt = performance.now(); say(rnd(CHEERS)); }
   hud();
   await wait(reduce ? 40 : 250);
@@ -2375,17 +2452,16 @@ function say(msg) {
   bubbleT = setTimeout(() => { b.textContent = msg; b.classList.remove('fade'); }, 180);
 }
 function paintBuddyGame() {
-  const el = S.buddy, img = $('#buddyGame');
-  if (!el) { img.hidden = true; return; }
-  img.hidden = false;
+  const el = S.buddy, img = $('#buddyGame'), wrap = $('#buddyWrap');
+  if (!el) { wrap.hidden = true; return; }
+  wrap.hidden = false;
   if (!img.src.includes(`buddy-${el}`)) img.src = buddyArt(el);
-  img.style.setProperty('--bhue', ELEM[el].hue);
-  img.style.setProperty('--bglow', ELEM[el].glow + '99');
+  wrap.style.setProperty('--bhue', ELEM[el].hue);
   img.alt = `${BUDDY[el].name} the ${BUDDY[el].animal}`;
 }
 function buddyHop() {
   const img = $('#buddyGame');
-  if (img.hidden) return;
+  if ($('#buddyWrap').hidden) return;
   img.classList.remove('hop'); void img.offsetWidth; img.classList.add('hop');
   setTimeout(() => img.classList.remove('hop'), 520);
 }
@@ -2399,16 +2475,25 @@ function kaiFace(kind, hold = 1800) {
   clearTimeout(faceTimer);
   if (kind !== 'calm') faceTimer = setTimeout(() => set(FACES.calm), hold);
 }
-function avatarReact(kind) {
+// joy scales with the move: 4 in a row is happy, 5+ or a cascade is a cheer, and a run of
+// good moves keeps the face lit for longer
+let joyRun = 0, joyTimer = null;
+function avatarReact(kind, size = 0) {
   const img = $('#kaiFace'), bud = $('#buddyGame');
-  const cls = kind === 'worry' ? 'worry' : 'cheer';
-  [img, bud].forEach(el => {
-    if (!el || el.hidden) return;
-    el.classList.remove('cheer', 'worry'); void el.offsetWidth; el.classList.add(cls);
-    setTimeout(() => el.classList.remove(cls), 760);
+  if (kind === 'worry') { joyRun = 0; playFace([img, bud], 'worry', 620); return; }
+  joyRun++;
+  clearTimeout(joyTimer);
+  joyTimer = setTimeout(() => { joyRun = 0; }, 6000);
+  const big = size >= 5 || joyRun >= 3 || kind === 'cheer';
+  playFace([img, bud], big ? 'big' : 'cheer', big ? 920 : 760);
+  kaiFace(big ? 'cheer' : 'happy', big ? 2600 : 1800);
+}
+function playFace(els, cls, hold) {
+  els.forEach(el => {
+    if (!el || el.closest('[hidden]')) return;
+    el.classList.remove('cheer', 'big', 'worry'); void el.offsetWidth; el.classList.add(cls);
+    setTimeout(() => el.classList.remove(cls), hold);
   });
-  if (kind === 'cheer') kaiFace('cheer');
-  else if (kind === 'happy') kaiFace('happy');
 }
 function hud() {
   const cl = clouds().length;
@@ -2594,7 +2679,7 @@ function harmony(types) {
   avatarReact('cheer');
   questBump('harmony');
   bumpTally('harmony');
-  S.coins += 2; save();
+  if (!babyOn()) { S.coins += 2; save(); }
   hud();
 }
 // rain
