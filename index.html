@@ -58,6 +58,26 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .node .stars{margin-left:auto;color:var(--gold);font-size:15px;letter-spacing:1px;white-space:nowrap}
 .node.locked{opacity:.5;filter:saturate(.3)}
 .node.current{box-shadow:0 0 0 3px var(--gold2),0 6px 18px rgba(80,60,20,.15)}
+.streakchip{background:#FFF1D6;color:#6B4A0E;font-weight:900;gap:4px;cursor:pointer}
+.streakchip.cold{background:rgba(31,74,61,.1);color:var(--muted)}
+.banner{margin:12px 16px 0;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.09);font-size:14px;font-weight:700;line-height:1.4;color:var(--forest)}
+.banner.warn{background:#FFE9D2;color:#8A4A17;box-shadow:inset 0 0 0 2px #E9B27A}
+.banner.good{background:#E4F3DF;color:#2C5B2A}
+#streakov .card{display:flex;flex-direction:column}
+#streakov .stack{flex:none}
+.ladder{display:grid;gap:6px;margin-top:12px;flex:1 1 auto;min-height:120px;overflow-y:auto}
+.rung{display:grid;grid-template-columns:58px 1fr auto;gap:10px;align-items:center;padding:9px 11px;border-radius:12px;background:#FFFBF2;font-size:13.5px;font-weight:700;opacity:.62}
+.rung b{font-weight:900}
+.rung i{font-style:normal;font-size:12px;font-weight:900;color:var(--gold);white-space:nowrap}
+.rung.done{opacity:1;background:#E4F3DF}
+.rung.done i{color:#2C5B2A}
+.rung.next{opacity:1;background:#FFF4DE;box-shadow:inset 0 0 0 2px var(--gold2)}
+.streakrow{margin:6px 0 10px;padding:10px 12px;border-radius:12px;background:rgba(31,74,61,.08);font-size:14px;font-weight:700}
+.streakrow.gold{background:linear-gradient(#FFEFC8,#F6DDA0);box-shadow:inset 0 0 0 2px var(--gold2)}
+.card.rewardcard{background:#15302A;color:#FBF3E2;text-align:center;overflow:hidden;position:relative}
+.card.rewardcard h2{color:#FBF3E2;font-size:34px}
+.rwbig{font-size:19px;font-weight:900;color:var(--gold2);margin:6px 0 4px;line-height:1.35}
+.conf{position:absolute;width:9px;height:14px;border-radius:2px;pointer-events:none}
 .promise{margin:6px 16px 22px;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.07);font-size:13px;color:var(--forest);font-weight:700;text-align:center}
 .mapfoot{display:flex;gap:10px;justify-content:center;padding:0 16px}
 
@@ -122,6 +142,17 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 @keyframes born{0%{transform:scale(.4)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
 .tile.breathing .orb{animation:breathe 2.2s ease-in-out infinite}
 @keyframes breathe{50%{transform:scale(1.16);box-shadow:0 0 0 2px #fff,0 0 22px 8px var(--l)}}
+.fx{position:absolute;pointer-events:none;z-index:5;border-radius:50%;transform:translate(-50%,-50%)}
+.f-fire{background:radial-gradient(circle,#FFF0C2 0 18%,#FFA24B 45%,rgba(224,75,66,0) 72%);filter:blur(.3px)}
+.f-ring{border-radius:50%;background:none;box-shadow:0 0 0 2.5px rgba(180,218,247,.9),0 0 14px rgba(60,134,201,.7)}
+.f-ring.metalring{box-shadow:0 0 0 2px rgba(255,255,255,.95),0 0 16px rgba(220,227,233,.9)}
+.f-drop{background:radial-gradient(circle,#EAF6FF 0 35%,#3C86C9 90%)}
+.f-leaf{border-radius:60% 10% 60% 10%;background:linear-gradient(150deg,#CDF0A6,#4E9B32)}
+.f-dust{background:radial-gradient(circle,#FFE8AC 0 40%,#C08C1C 95%)}
+.f-gleam{border-radius:0;background:
+  linear-gradient(to right,transparent 46%,rgba(255,255,255,.95) 50%,transparent 54%),
+  linear-gradient(to bottom,transparent 46%,rgba(255,255,255,.95) 50%,transparent 54%)}
+.bloom{filter:blur(1px)}
 .spark{position:absolute;width:8px;height:8px;border-radius:50%;background:#FFF1C2;pointer-events:none;box-shadow:0 0 8px #FFD37A;z-index:5}
 
 .tile.clouded .orb{filter:saturate(.25) brightness(.72)}
@@ -389,6 +420,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
         <span class="chip"><span class="heart">♥</span><span data-hearts>5</span></span>
       </div>
       <div class="row">
+        <button class="chip streakchip" id="streakChip" aria-label="Your streak">🔥 <span id="streakNum">0</span></button>
         <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
         <button class="iconbtn" id="howOpen" aria-label="How to play">?</button>
         <button class="iconbtn" id="shopOpen1" aria-label="Open shop">+</button>
@@ -403,6 +435,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
         <img class="luma" src="img/luma-heart.jpg" alt="Luma the spirit fox floating">
       </div>
     </div>
+    <div class="banner" id="streakBanner"></div>
     <div class="path" id="path"></div>
     <div class="mapfoot"><button class="btn gold" id="playNext">Play</button></div>
     <div class="promise">Free to play, always. No forced ads. Only extras like power-ups are for sale.</div>
@@ -487,6 +520,8 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
   <div class="ov" id="win" hidden><div class="card" role="dialog" aria-labelledby="wTitle">
     <div class="eyebrow" id="wEyebrow">The Root Grounds</div>
     <h2 class="display" id="wTitle">The storm has passed.</h2>
+    <div class="streakrow" id="wStreak"></div>
+    <button class="btn gold" id="wClaim" hidden style="width:100%;margin-bottom:10px">Claim streak reward</button>
     <div class="bigstars" id="wStars"></div>
     <div class="row" style="justify-content:center;gap:8px"><span class="chip" style="background:#FFFBF2"><i class="coin"></i>+<span id="wCoins">0</span></span><span class="chip" style="background:#FFFBF2" id="wLeft"></span></div>
     <div class="practice">
@@ -515,6 +550,34 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
     </div>
   </div></div>
 
+  <div class="ov" id="streakov" hidden><div class="card" role="dialog" aria-labelledby="stTitle">
+    <div class="eyebrow">One level a day</div>
+    <h2 class="display" id="stTitle">Your streak</h2>
+    <div class="row" style="flex-wrap:wrap;gap:6px" id="streakStats"></div>
+    <p style="margin-top:10px">Miss a day and the streak drops to zero. A Streak Shield covers one missed day.</p>
+    <div class="ladder" id="ladder"></div>
+    <div class="stack">
+      <button class="btn ghost" id="demoDay">Demo: skip to tomorrow</button>
+      <button class="btn" id="streakClose">Close</button>
+    </div>
+  </div></div>
+
+  <div class="ov" id="reward" hidden style="align-items:center"><div class="card rewardcard" role="dialog" aria-labelledby="rwDay">
+    <div class="eyebrow" style="color:var(--gold2)">Streak reward</div>
+    <h2 class="display" id="rwDay">Day 3</h2>
+    <div class="rwbig" id="rwText"></div>
+    <p id="rwSub" style="color:#D8E6DF"></p>
+    <div class="stack"><button class="btn gold" id="rwGo">Collect</button></div>
+  </div></div>
+
+  <div class="ov" id="comeback" hidden style="align-items:center"><div class="card" role="dialog" aria-labelledby="cbTitle">
+    <div class="row" style="gap:12px;align-items:center"><img src="img/luma-heart.jpg" alt="Luma" style="width:74px;height:74px;border-radius:50%;object-fit:cover"><div><div class="eyebrow">Welcome back</div><h2 class="display" id="cbTitle" style="margin:0">Luma waited.</h2></div></div>
+    <p id="cbText" style="margin-top:12px"></p>
+    <div class="goalline"><b id="cbGift"></b></div>
+    <p class="small" style="text-align:left">Play one level today and your streak starts again.</p>
+    <div class="stack"><button class="btn gold" id="cbGo">Take the gift</button></div>
+  </div></div>
+
   <div class="ov" id="shop" hidden><div class="card" role="dialog" aria-labelledby="sTitle">
     <div class="eyebrow">Free to play · No forced ads</div>
     <h2 class="display" id="sTitle">Luma's Shop</h2>
@@ -525,6 +588,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       <button class="pack" data-buy="swirls"><span class="bigic">↻</span><span class="amt">5 Luma's Swirls<small>Each stirs the board into new matches</small></span><span class="price">$0.99</span></button>
       <button class="pack" data-buy="hearts"><span class="bigic heart">♥</span><span class="amt">Full hearts<small>Back to 5 tries right away</small></span><span class="price">$0.99</span></button>
       <button class="pack" data-buy="boost"><span class="bigic">✺</span><span class="amt">Calm Boost<small>Double coins for 30 minutes</small></span><span class="price">$1.99</span></button>
+      <button class="pack" data-buy="shields"><span class="bigic">🛡</span><span class="amt">2 Streak Shields<small>Each covers a day you miss</small></span><span class="price">$0.99</span></button>
     </div>
     <h3 class="shoph">Or watch a short video, if you want to</h3>
     <div class="stack" style="margin-top:6px">
@@ -579,11 +643,11 @@ const TYPES = ['wood', 'fire', 'earth', 'metal', 'water'];
 const CREATES = { wood: 'fire', fire: 'earth', earth: 'metal', metal: 'water', water: 'wood' };
 const CONTROLS = { wood: 'earth', earth: 'water', water: 'fire', fire: 'metal', metal: 'wood' };
 const ELEM = {
-  wood: { name: 'Wood', feeds: 'Wood feeds Fire' },
-  fire: { name: 'Fire', feeds: 'Fire makes Earth' },
-  earth: { name: 'Earth', feeds: 'Earth holds Metal' },
-  metal: { name: 'Metal', feeds: 'Metal carries Water' },
-  water: { name: 'Water', feeds: 'Water grows Wood' }
+  wood:  { name: 'Wood',  feeds: 'Wood feeds Fire',      tone: 587.33, hue: '#6FBF4A', glow: '#CDF0A6' },
+  fire:  { name: 'Fire',  feeds: 'Fire makes Earth',     tone: 659.25, hue: '#E04B42', glow: '#FFB8A2' },
+  earth: { name: 'Earth', feeds: 'Earth holds Metal',    tone: 783.99, hue: '#F0B93A', glow: '#FFE8AC' },
+  metal: { name: 'Metal', feeds: 'Metal carries Water',  tone: 880.00, hue: '#DCE3E9', glow: '#FFFFFF' },
+  water: { name: 'Water', feeds: 'Water grows Wood',     tone: 523.25, hue: '#3C86C9', glow: '#B4DAF7' }
 };
 const LEVELS = [
   { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 16, clouds: 6,
@@ -615,7 +679,23 @@ const LEVELS = [
 const CHEERS = ["Luma's glow is growing.", 'Nice match. Luma is filling up.', "Sorin: \"That's it. Nice and slow.\""];
 
 /* ---------- save state ---------- */
-const DEF = { unlocked: 1, stars: {}, coins: 150, hearts: 5, swirls: 1, lanterns: 1, boostUntil: 0 };
+const DEF = { unlocked: 1, stars: {}, coins: 150, hearts: 5, swirls: 1, lanterns: 1, boostUntil: 0,
+  streak: 0, best: 0, lastDay: '', claimed: [], shields: 0, seals: 0, demoOffset: 0, comebackOn: '' };
+// The ladder: every rung is a multiple of 3, with the two days A named (40, 43) kept in.
+const MILES = [
+  { d: 3, coins: 150, swirls: 1 },
+  { d: 6, coins: 300, lanterns: 1, shields: 1 },
+  { d: 9, coins: 600, seals: 1, boost: 30 },
+  { d: 18, coins: 1200, lanterns: 2, swirls: 2 },
+  { d: 27, coins: 1800, shields: 2 },
+  { d: 36, coins: 3000, seals: 1, boost: 60 },
+  { d: 40, coins: 4000, lanterns: 3 },
+  { d: 43, coins: 5000, seals: 1 },
+  { d: 54, coins: 7000, shields: 3 },
+  { d: 72, coins: 9000, seals: 1, boost: 120 },
+  { d: 90, coins: 12000, lanterns: 5, swirls: 5 },
+  { d: 108, coins: 20000, seals: 1, title: 'Keeper of Flow' }
+];
 let S;
 try { S = Object.assign({}, DEF, JSON.parse(localStorage.getItem('kcq-v1')) || {}); } catch (e) { S = { ...DEF }; }
 function save() { try { localStorage.setItem('kcq-v1', JSON.stringify(S)); } catch (e) {} }
@@ -712,7 +792,121 @@ async function showOv(id) { const o = $('#' + id); o.hidden = false; void o.offs
 async function hideOv(id) { const o = $('#' + id); o.classList.remove('show'); await wait(250); o.hidden = true; }
 function bump(el) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
 
-/* ---------- map ---------- */
+/* ---------- streak ---------- */
+const DAY = 864e5;
+const dayKey = (off = 0) => new Date(Date.now() + ((S.demoOffset || 0) + off) * DAY).toISOString().slice(0, 10);
+const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / DAY);
+const nextMile = () => MILES.find(m => m.d > S.streak) || MILES[MILES.length - 1];
+function rewardText(m) {
+  const bits = [];
+  if (m.coins) bits.push(`${m.coins.toLocaleString()} coins`);
+  if (m.swirls) bits.push(`${m.swirls} Swirl${m.swirls > 1 ? 's' : ''}`);
+  if (m.lanterns) bits.push(`${m.lanterns} Lantern${m.lanterns > 1 ? 's' : ''}`);
+  if (m.shields) bits.push(`${m.shields} Streak Shield${m.shields > 1 ? 's' : ''}`);
+  if (m.seals) bits.push('a Spirit Seal');
+  if (m.boost) bits.push(`${m.boost} min double coins`);
+  if (m.title) bits.push(`the title "${m.title}"`);
+  return bits.join(' · ');
+}
+function grant(m) {
+  S.coins += m.coins || 0;
+  S.swirls += m.swirls || 0;
+  S.lanterns += m.lanterns || 0;
+  S.shields += m.shields || 0;
+  S.seals += m.seals || 0;
+  if (m.boost) S.boostUntil = Math.max(Date.now(), S.boostUntil || 0) + m.boost * 60000;
+  if (m.d && !S.claimed.includes(m.d)) S.claimed.push(m.d);
+  save(); syncWallet();
+}
+// finishing a level is the day's practice
+function markDay() {
+  const today = dayKey();
+  if (S.lastDay === today) return null;
+  const gap = S.lastDay ? daysBetween(S.lastDay, today) : 999;
+  let note = null;
+  if (gap === 1) S.streak++;
+  else if (gap === 2 && S.shields > 0) { S.shields--; S.streak++; note = 'shield'; }
+  else { if (S.lastDay && gap >= 7) note = 'back'; S.streak = 1; }
+  S.lastDay = today;
+  S.best = Math.max(S.best || 0, S.streak);
+  save();
+  return note;
+}
+// opening the map breaks a dead streak and offers the comeback gift
+function streakOnOpen() {
+  const today = dayKey();
+  if (S.lastDay) {
+    const gap = daysBetween(S.lastDay, today);
+    if (gap === 2 && S.shields > 0 && S.streak > 0) { S.shields--; save(); toast('A Streak Shield covered yesterday.'); }
+    else if (gap > 1 && S.streak > 0) { S.lost = S.streak; S.streak = 0; save(); }
+    if (gap >= 7 && S.comebackOn !== today) { S.comebackOn = today; save(); showComeback(gap); }
+  }
+  renderStreak();
+}
+function renderStreak() {
+  const today = dayKey(), playedToday = S.lastDay === today;
+  $('#streakNum').textContent = S.streak;
+  $('#streakChip').classList.toggle('cold', !S.streak);
+  const m = nextMile(), left = Math.max(0, m.d - S.streak);
+  const banner = $('#streakBanner');
+  if (playedToday) {
+    banner.className = 'banner good';
+    banner.innerHTML = `<b>Day ${S.streak} done.</b> ${left} more day${left === 1 ? '' : 's'} to ${rewardText(m)}.`;
+  } else if (S.streak > 0) {
+    banner.className = 'banner warn';
+    banner.innerHTML = `<b>Your ${S.streak}-day streak ends tonight.</b> One level keeps it${left <= 2 ? `, and day ${m.d} pays ${rewardText(m)}` : ''}.`;
+  } else {
+    banner.className = 'banner';
+    banner.innerHTML = S.lost
+      ? `<b>Your ${S.lost}-day streak ended.</b> Start again today — day 3 pays ${rewardText(MILES[0])}.`
+      : `<b>Play one level a day.</b> Day 3 pays ${rewardText(MILES[0])}.`;
+  }
+  $('#ladder').innerHTML = MILES.map(x => {
+    const done = S.claimed.includes(x.d) || S.streak >= x.d, next = x.d === m.d && !done;
+    return `<div class="rung ${done ? 'done' : ''} ${next ? 'next' : ''}"><b>Day ${x.d}</b><span>${rewardText(x)}</span><i>${done ? '✓' : next ? `${left} to go` : ''}</i></div>`;
+  }).join('');
+  $('#streakStats').innerHTML = `<span class="chip">🔥 ${S.streak} day${S.streak === 1 ? '' : 's'}</span><span class="chip">best ${S.best || 0}</span><span class="chip">🛡 ${S.shields}</span><span class="chip">◈ ${S.seals} seal${S.seals === 1 ? '' : 's'}</span>`;
+}
+function showComeback(days) {
+  $('#cbText').textContent = `You have been away ${days} days. Luma kept your lantern lit the whole time.`;
+  const gift = { coins: 300, lanterns: 1, swirls: 1, shields: 1 };
+  $('#cbGift').textContent = rewardText(gift);
+  $('#cbGo').onclick = async () => { grant(gift); chord([523.25, 659.25, 783.99, 1046.5], 0.1); await hideOv('comeback'); renderStreak(); };
+  showOv('comeback');
+}
+$('#streakChip').addEventListener('click', () => { renderStreak(); showOv('streakov'); });
+$('#streakClose').addEventListener('click', () => hideOv('streakov'));
+$('#demoDay').addEventListener('click', () => {
+  S.demoOffset = (S.demoOffset || 0) + 1; save();
+  streakOnOpen();
+  toast(`Demo: a new day. Play a level to claim it.`);
+});
+async function celebrate(m) {
+  $('#rwDay').textContent = `Day ${m.d}`;
+  $('#rwText').textContent = rewardText(m);
+  $('#rwSub').textContent = m.d >= 9 ? 'This is what showing up every day pays.' : 'Same time tomorrow keeps it going.';
+  grant(m);
+  $('#wClaim').hidden = true;
+  await showOv('reward');
+  chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.11);
+  confetti();
+  renderStreak();
+}
+$('#rwGo').addEventListener('click', () => hideOv('reward'));
+function confetti() {
+  if (reduce) return;
+  const box = $('#reward .card');
+  for (let i = 0; i < 26; i++) {
+    const d = document.createElement('div');
+    d.className = 'conf';
+    d.style.cssText = `left:${10 + Math.random() * 80}%;top:-6%;background:${['#E7C27A', '#6FBF4A', '#E04B42', '#3C86C9', '#F0B93A'][i % 5]}`;
+    box.appendChild(d);
+    d.animate([{ transform: 'translateY(0) rotate(0deg)', opacity: 1 }, { transform: `translateY(${240 + Math.random() * 180}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }],
+      { duration: 1400 + Math.random() * 700, easing: 'cubic-bezier(.3,.7,.4,1)' }).onfinish = () => d.remove();
+  }
+}
+
+/* ---------- map screen ---------- */
 function renderMap() {
   syncWallet();
   $('#path').innerHTML = LEVELS.map((L, i) => {
@@ -757,6 +951,7 @@ let board = [], ids = new Map(), nid = 1, T = 44;
 let busy = false, sel = null, drag = null, moves = 0, charge = 0, combo = 0, mode = null, cheerAt = 0, running = false;
 let deepBreaths = 0, breathing = false, wasReady = false;
 let lastElem = null, flow = 0;
+let turnTypes = new Set();
 const progress = () => L ? 1 - clouds().length / L.clouds : 0;
 
 const rnd = a => a[Math.floor(Math.random() * a.length)];
@@ -893,11 +1088,13 @@ async function trySwap(a, b) {
       busy = false; return;
     }
     useMove();
+    turnTypes = new Set();
     const counts = {};
     m.clear.forEach(t => { if (t.type !== 'spirit') counts[t.type] = (counts[t.type] || 0) + 1; });
     const led = Object.keys(counts).sort((x, y) => counts[y] - counts[x])[0];
     await resolve(m.clear, m.groups, [a, b]);
-    flowStep(led);
+    if (turnTypes.size >= 2 && combo >= 2) harmony([...turnTypes].slice(0, 3));
+    else flowStep(led);
   }
   await settle();
 }
@@ -950,6 +1147,7 @@ async function popSet(set) {
     setTimeout(() => t.el.remove(), 280);
   });
   if (arr.length) sparks(arr);
+  arr.forEach(t => { if (t.type !== 'spirit') turnTypes.add(t.type); });
   if (!breathing) charge = Math.min(100, charge + arr.length * 15);
   const n = Math.min(arr.length, 5);
   for (let i = 0; i < n; i++) setTimeout(() => boop(combo * 2 + i), i * 55);
@@ -1368,18 +1566,112 @@ function hud() {
   syncWallet();
 }
 function flash() { if (reduce) return; const f = $('#flash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go'); }
-function sparks(arr) {
+// Each element clears in its own character: fire rises, water ripples, wood sprouts,
+// earth settles, metal rings. Two elements in one turn harmonise.
+function bit(cls, x, y, size) {
+  const d = document.createElement('div');
+  d.className = 'fx ' + cls;
+  d.style.cssText = `left:${x}px;top:${y}px;width:${size}px;height:${size}px`;
+  boardEl.appendChild(d);
+  return d;
+}
+const gone = a => { a.onfinish = () => a.effect.target.remove(); };
+function fxFor(type, tiles) {
   if (reduce) return;
-  arr.slice(0, 10).forEach(t => {
-    for (let i = 0; i < 3; i++) {
-      const s = document.createElement('div'); s.className = 'spark';
-      const x = t.c * T + T / 2, y = t.r * T + T / 2;
-      s.style.left = x + 'px'; s.style.top = y + 'px';
-      boardEl.appendChild(s);
-      const a = Math.random() * Math.PI * 2, d = T * (0.5 + Math.random() * 0.7);
-      s.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * d}px), calc(-50% + ${Math.sin(a) * d}px)) scale(.2)`, opacity: 0 }], { duration: 480, easing: 'ease-out' }).onfinish = () => s.remove();
+  tiles.slice(0, 8).forEach(t => {
+    const x = t.c * T + T / 2, y = t.r * T + T / 2;
+    if (type === 'fire') {
+      for (let i = 0; i < 4; i++) {
+        const p = bit('f-fire', x, y, T * (0.3 + Math.random() * 0.3));
+        gone(p.animate([{ transform: 'translate(-50%,-50%) scale(.6)', opacity: .95 },
+          { transform: `translate(calc(-50% + ${(Math.random() - .5) * T}px), calc(-50% - ${T * (0.7 + Math.random())}px)) scale(.15)`, opacity: 0 }],
+          { duration: 620 + Math.random() * 220, easing: 'cubic-bezier(.25,.8,.4,1)' }));
+      }
+    } else if (type === 'water') {
+      const r = bit('f-ring', x, y, T * 0.8);
+      gone(r.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: .9 }, { transform: 'translate(-50%,-50%) scale(2.2)', opacity: 0 }], { duration: 700, easing: 'ease-out' }));
+      for (let i = 0; i < 3; i++) {
+        const p = bit('f-drop', x, y, T * 0.16);
+        gone(p.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: .9 },
+          { transform: `translate(calc(-50% + ${(Math.random() - .5) * T * 1.2}px), calc(-50% + ${T * (0.5 + Math.random() * 0.6)}px)) scale(.4)`, opacity: 0 }],
+          { duration: 560, easing: 'cubic-bezier(.4,0,.7,1)' }));
+      }
+    } else if (type === 'wood') {
+      for (let i = 0; i < 4; i++) {
+        const p = bit('f-leaf', x, y, T * 0.26);
+        const a = -Math.PI / 2 + (Math.random() - .5) * 2.2, d = T * (0.6 + Math.random() * 0.5);
+        gone(p.animate([{ transform: 'translate(-50%,-50%) rotate(0deg) scale(.5)', opacity: .95 },
+          { transform: `translate(calc(-50% + ${Math.cos(a) * d}px), calc(-50% + ${Math.sin(a) * d}px)) rotate(${(Math.random() - .5) * 420}deg) scale(1)`, opacity: 0 }],
+          { duration: 700, easing: 'cubic-bezier(.2,.7,.3,1)' }));
+      }
+    } else if (type === 'earth') {
+      for (let i = 0; i < 5; i++) {
+        const p = bit('f-dust', x, y, T * 0.14);
+        gone(p.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: .95 },
+          { transform: `translate(calc(-50% + ${(Math.random() - .5) * T * 1.1}px), calc(-50% + ${T * (0.4 + Math.random() * 0.5)}px)) scale(.3)`, opacity: 0 }],
+          { duration: 620, easing: 'cubic-bezier(.3,.6,.4,1)' }));
+      }
+      boardEl.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 160 });
+    } else if (type === 'metal') {
+      const g = bit('f-gleam', x, y, T * 1.5);
+      gone(g.animate([{ transform: 'translate(-50%,-50%) rotate(0deg) scale(.2)', opacity: 1 }, { transform: 'translate(-50%,-50%) rotate(90deg) scale(1)', opacity: 0 }], { duration: 520, easing: 'ease-out' }));
+      const r = bit('f-ring metalring', x, y, T * 0.7);
+      gone(r.animate([{ transform: 'translate(-50%,-50%) scale(.4)', opacity: .8 }, { transform: 'translate(-50%,-50%) scale(1.8)', opacity: 0 }], { duration: 520, easing: 'ease-out' }));
     }
   });
+}
+function sparks(arr) {
+  const by = {};
+  arr.forEach(t => { if (t.type !== 'spirit') (by[t.type] = by[t.type] || []).push(t); });
+  Object.keys(by).forEach(type => { fxFor(type, by[type]); elemSound(type); });
+}
+function elemSound(type) {
+  const a = ac(); if (!a || muted) return;
+  const t = a.currentTime, f = (ELEM[type] || {}).tone || 660;
+  if (type === 'fire') {
+    const s = noise(), flt = a.createBiquadFilter(), g = a.createGain();
+    flt.type = 'bandpass'; flt.Q.value = 1.1;
+    flt.frequency.setValueAtTime(700, t); flt.frequency.exponentialRampToValueAtTime(2600, t + 0.22);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+    s.connect(flt).connect(g).connect(a.destination); s.start(t); s.stop(t + 0.32);
+    bell(f, 0, 0.05);
+  } else if (type === 'water') {
+    const o = a.createOscillator(), g = a.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(f * 1.6, t); o.frequency.exponentialRampToValueAtTime(f * 0.7, t + 0.35);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.09, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
+    o.connect(g).connect(a.destination); o.start(t); o.stop(t + 0.42);
+  } else if (type === 'wood') {
+    const o = a.createOscillator(), g = a.createGain();
+    o.type = 'triangle'; o.frequency.setValueAtTime(f, t);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.1, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.28);
+    o.connect(g).connect(a.destination); o.start(t); o.stop(t + 0.3);
+  } else if (type === 'earth') {
+    const o = a.createOscillator(), g = a.createGain();
+    o.type = 'sine'; o.frequency.setValueAtTime(f / 2, t); o.frequency.exponentialRampToValueAtTime(f / 2.6, t + 0.2);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.11, t + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.34);
+    o.connect(g).connect(a.destination); o.start(t); o.stop(t + 0.36);
+  } else bell(f, 0, 0.09);
+}
+// two or more elements clearing in one turn ring together
+function harmony(types) {
+  const list = [...types];
+  chord(list.map(t => ELEM[t].tone).sort((a, b) => a - b), 0.05);
+  if (!reduce) {
+    const w = boardEl.clientWidth, h = boardEl.clientHeight;
+    const b = document.createElement('div');
+    b.className = 'fx bloom';
+    b.style.cssText = `left:${w / 2}px;top:${h / 2}px;width:${w * 0.9}px;height:${w * 0.9}px;background:radial-gradient(circle, ${ELEM[list[0]].glow}cc 0%, ${ELEM[list[1]].hue}55 45%, transparent 70%)`;
+    boardEl.appendChild(b);
+    gone(b.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: .85, offset: .35 }, { transform: 'translate(-50%,-50%) scale(1.5)', opacity: 0 }], { duration: 900, easing: 'ease-out' }));
+  }
+  const chip = $('#flowBar');
+  chip.innerHTML = `<span>${list.map(t => ELEM[t].name).join(' + ')} · <b>harmony</b> · Luma +15</span>`;
+  chip.hidden = false;
+  chip.animate([{ transform: 'scale(.85)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
+  clearTimeout(chip._t); chip._t = setTimeout(() => { chip.hidden = true; chip.innerHTML = '<span id="flowText"></span>'; }, 3500);
+  charge = Math.min(100, charge + 15);
+  S.coins += 2; save();
+  hud();
 }
 // rain
 const rc = $('#rain'), rx = rc.getContext('2d');
@@ -1546,7 +1838,7 @@ function toMap() {
   running = false; busy = true;
   brRun++; closeMic(); breathing = false;
   tut = null; clearHints(); hideTip();
-  $('#game').hidden = true; $('#map').hidden = false; renderMap();
+  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak();
 }
 $('#toMap').addEventListener('click', toMap);
 
@@ -1569,6 +1861,17 @@ async function winLevel() {
   $('#pTitle').textContent = L.power;
   $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
   $('#pLine').textContent = L.line;
+  const note = markDay();
+  const mile = MILES.find(x => x.d === S.streak && !S.claimed.includes(x.d));
+  const sr = $('#wStreak');
+  sr.className = 'streakrow' + (mile ? ' gold' : '');
+  const nm = nextMile();
+  sr.innerHTML = note === 'shield' ? `<b>A Streak Shield saved you.</b> Day ${S.streak} counted.`
+    : mile ? `<b>Day ${S.streak} streak.</b> Reward unlocked.`
+      : `<b>Day ${S.streak} streak.</b> ${Math.max(0, nm.d - S.streak)} more to ${rewardText(nm)}.`;
+  $('#wClaim').hidden = !mile;
+  if (mile) $('#wClaim').onclick = () => celebrate(mile);
+  renderStreak();
   $('#wNext').hidden = n >= LEVELS.length;
   $('#wTitle').textContent = n >= LEVELS.length ? 'Every lantern is home.' : 'The storm has passed.';
   showOv('win');
@@ -1605,6 +1908,7 @@ $('#shop').addEventListener('click', async e => {
     if (k === 'swirls') { S.swirls += 5; toast("Preview: 5 Luma's Swirls added. No charge."); }
     if (k === 'hearts') { S.hearts = 5; toast('Preview: hearts are full. No charge.'); $('#lRetry').textContent = 'Try again · uses a heart'; }
     if (k === 'boost') { S.boostUntil = Math.max(Date.now(), S.boostUntil || 0) + 30 * 60000; toast('Preview: double coins for 30 minutes. No charge.'); }
+    if (k === 'shields') { S.shields += 2; toast('Preview: 2 Streak Shields added. No charge.'); renderStreak(); }
     save(); syncWallet(); chord([783.99, 1046.5, 1318.5], 0.06);
     return;
   }
@@ -1675,16 +1979,16 @@ $('#gDone').addEventListener('click', () => { guideRun++; breathSound('out', 0.3
 /* ---------- boot ---------- */
 $$('[data-play]').forEach(b => b.addEventListener('click', () => {
   ac();
-  $('#welcome').hidden = true; $('#map').hidden = false; renderMap();
+  $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak();
   openLevel(0);
 }));
 $('#retut').addEventListener('click', () => { S.tutDone = false; save(); toast('The guided walkthrough will play on level 1.'); });
-$('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); });
+$('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); });
 $('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#welcome').hidden = false; $('#welcome').scrollTop = 0; });
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
 $('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
 $('#cycleRow').innerHTML = ['wood', 'fire', 'earth', 'metal', 'water'].map(e => `<span class="eo">${orbHTML(e)}</span>`).join('<i>→</i>') + '<i>↻</i>';
-syncMute(); renderMap();
+syncMute(); renderMap(); streakOnOpen();
 })();
 </script>
 
