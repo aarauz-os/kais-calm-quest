@@ -58,6 +58,21 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .node .stars{margin-left:auto;color:var(--gold);font-size:15px;letter-spacing:1px;white-space:nowrap}
 .node.locked{opacity:.5;filter:saturate(.3)}
 .node.current{box-shadow:0 0 0 3px var(--gold2),0 6px 18px rgba(80,60,20,.15)}
+.questcard{flex:none;display:block;text-align:left;margin:12px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.qhead{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:15px;font-weight:900}
+.qtease{font-size:13px;font-weight:800;color:var(--muted)}
+.questlist{display:grid;gap:8px;margin-top:12px}
+.quest{display:grid;grid-template-columns:1fr auto;gap:4px 10px;padding:10px 12px;border-radius:14px;background:#FFFBF2;font-size:14px;font-weight:800}
+.quest.done{background:#E4F3DF}
+.quest .qt{min-width:0}
+.quest .qbar{display:block;height:7px;border-radius:5px;background:rgba(31,74,61,.12);margin-top:6px;overflow:hidden}
+.quest .qbar i{display:block;height:100%;border-radius:5px;background:var(--forest);transition:width .4s}
+.quest.done .qbar i{background:#2C5B2A}
+.quest .qr{font-variant-numeric:tabular-nums;font-weight:900;color:var(--gold)}
+.quest.done .qr{color:#2C5B2A}
+.quest .qw{grid-column:1/-1;font-size:12.5px;font-weight:700;color:var(--muted)}
+.quest.chest{background:linear-gradient(#FFF7E4,#F8E7BE)}
+.quest.chest.done{background:#E4F3DF}
 .buddycard{flex:none;position:relative;display:flex;align-items:center;gap:12px;text-align:left;margin:12px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:#15302A;color:#FBF3E2;overflow:hidden;box-shadow:0 2px 0 rgba(0,0,0,.08)}
 .buddycard.empty{background:#FFFBF2;color:var(--ink);overflow:visible;align-items:center}
 .buddycard.empty .bt{font-size:15px;line-height:1.25}
@@ -252,6 +267,13 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 
 .gbot{position:relative;z-index:3;display:flex;align-items:flex-end;gap:10px;padding:6px 16px 14px}
 .kai{position:relative;flex:1;min-width:0;display:flex;align-items:flex-end;gap:8px}
+.kai #buddyGame{width:50px;height:50px;border-radius:50%;object-fit:cover;border:3px solid var(--bhue,#FBF3E2);flex:none;background:#F5EBD8;margin-left:-14px;animation:bob 3.4s ease-in-out infinite;box-shadow:0 0 12px var(--bglow,transparent)}
+@keyframes bob{50%{transform:translateY(-4px)}}
+#buddyGame.hop{animation:hop .5s ease-out}
+@keyframes hop{30%{transform:translateY(-14px) scale(1.08)}60%{transform:translateY(0) scale(.98)}100%{transform:translateY(0) scale(1)}}
+.brbuddy{position:absolute;left:0;bottom:0;z-index:0;width:62px;height:62px;border-radius:50%;object-fit:cover;background:#F5EBD8;border:3px solid rgba(255,255,255,.75);box-shadow:0 0 22px var(--bglow,rgba(255,255,255,.4));transform:scale(.9);transition:transform 1s ease}
+.brbuddy.inhale{transform:scale(1.16)}
+.brbuddy.exhale{transform:scale(.88)}
 .kai img{width:62px;height:62px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:3px solid #FBF3E2;flex:none;background:#F5EBD8}
 .bubble{position:relative;flex:1;min-width:0;padding:9px 12px;border-radius:16px 16px 16px 4px;background:#FFFBF2;color:var(--ink);font-size:13.5px;font-weight:700;line-height:1.3;box-shadow:0 4px 14px rgba(0,0,0,.2);transition:opacity .25s}
 .bubble.fade{opacity:0}
@@ -484,6 +506,9 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       </div>
     </div>
     <div class="banner" id="streakBanner"></div>
+    <button class="questcard" id="questCard">
+      <span class="qhead"><b>Today's practice quests</b><span class="qtease" id="questTease"></span></span>
+    </button>
     <button class="buddycard empty" id="buddyCard"></button>
     <button class="wheelcard" id="wheelCard"></button>
     <button class="balcard" id="balOpen" aria-label="Your five lights">
@@ -522,6 +547,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
     <div class="gbot">
       <div class="kai">
         <img id="kaiFace" src="img/kai-worried.jpg" alt="Kai">
+        <img id="buddyGame" alt="" hidden>
         <div class="bubble" id="bubble">Swap two orbs to make a line of three.</div>
       </div>
       <div class="tools">
@@ -561,6 +587,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       <div class="stage" id="brStage">
         <div class="meter" id="brMeter" hidden aria-hidden="true"><i></i><span class="pitch" id="brPitch" hidden></span></div>
         <div class="track" id="brTrack"><div class="fill" id="brFill"></div><div class="ghost" id="brGhost"></div><div class="knob" id="brKnob"><img src="img/luma-happy.jpg" alt="Luma"></div><div class="brhand" id="brHand" hidden aria-hidden="true">👆</div></div>
+        <img id="brBuddy" class="brbuddy" alt="" hidden>
         <svg id="dand" viewBox="0 0 100 120" aria-hidden="true"></svg>
       </div>
       <div class="row" style="justify-content:center;margin-top:8px"><button class="linkbtn" id="brSwitch">Use my finger instead</button></div>
@@ -605,6 +632,14 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       <button class="btn" id="lRetry">Try again</button>
       <button class="btn ghost" id="lMap">Back to map</button>
     </div>
+  </div></div>
+
+  <div class="ov" id="questov" hidden><div class="card" role="dialog" aria-labelledby="questTitle">
+    <div class="eyebrow">Three small asks</div>
+    <h2 class="display" id="questTitle">Today's quests</h2>
+    <div class="questlist" id="questList"></div>
+    <div class="stack"><button class="btn" id="questClose">Close</button></div>
+    <div class="note">New quests every day. The first one always points at the element that has gone quiet.</div>
   </div></div>
 
   <div class="ov" id="buddyov" hidden><div class="card" role="dialog" aria-labelledby="buddyTitle">
@@ -780,7 +815,8 @@ const DEF = { unlocked: 1, stars: {}, coins: 150, hearts: 5, swirls: 1, lanterns
   streak: 0, best: 0, lastDay: '', claimed: [], shields: 0, seals: 0, demoOffset: 0, comebackOn: '',
   bal: { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 }, balDay: '', balBonusDay: '',
   wheelDay: '', todayElem: '', wheelPrize: null,
-  buddy: '', owned: ['fire', 'water', 'earth'], earlyPass: false, practiceDays: 0 };
+  buddy: '', owned: ['fire', 'water', 'earth'], earlyPass: false, practiceDays: 0,
+  quests: null, questChest: '' };
 // The Five Animal Frolics (Wu Qin Xi) pair each animal with an organ, so the animals and the
 // elements stay one system: Tiger-liver-Wood, Monkey-heart-Fire, Bear-spleen-Earth,
 // Crane-lung-Metal, Deer-kidney-Water.
@@ -968,6 +1004,70 @@ function balanceBonus() {
   grant(gift);
   return gift;
 }
+
+/* ---------- daily quests ---------- */
+// Three small asks a day. One of them always points at the element that has gone quiet.
+const QUEST_KINDS = [
+  { id: 'harmony', goal: 2, reward: { coins: 80 }, text: 'Make 2 harmonies' },
+  { id: 'deep', goal: 2, reward: { coins: 70 }, text: 'Take 2 deep breaths' },
+  { id: 'sound', goal: 1, reward: { swirls: 1 }, text: 'Use your voice on a breath' },
+  { id: 'win', goal: 1, reward: { coins: 50 }, text: 'Finish a place' },
+  { id: 'flow', goal: 1, reward: { lanterns: 1 }, text: 'Reach flow ×3' },
+  { id: 'clouds', goal: 6, reward: { coins: 60 }, text: 'Blow away 6 storm clouds' }
+];
+function newQuests() {
+  const low = balState().low.t;
+  const pool = QUEST_KINDS.slice().sort(() => Math.random() - 0.5).slice(0, 2);
+  const items = [
+    { id: 'elem', elem: low, goal: 14, n: 0, done: false, reward: { coins: 60 }, text: `Clear 14 ${ELEM[low].name} orbs` },
+    ...pool.map(q => ({ ...q, n: 0, done: false }))
+  ];
+  return { day: dayKey(), items };
+}
+function ensureQuests() {
+  if (!S.quests || S.quests.day !== dayKey()) { S.quests = newQuests(); save(); }
+  return S.quests;
+}
+function questBump(id, amount = 1, elem) {
+  const q = ensureQuests();
+  let changed = false;
+  q.items.forEach(it => {
+    if (it.done) return;
+    if (it.id !== id) return;
+    if (id === 'elem' && elem !== it.elem) return;
+    it.n += amount;
+    if (it.n >= it.goal) {
+      it.done = true; changed = true;
+      grant(it.reward);
+      toast(`Quest done: ${it.text}. ${rewardText(it.reward)}.`);
+      chord([659.25, 880], 0.07);
+    }
+  });
+  save();
+  if (q.items.every(i => i.done) && S.questChest !== dayKey()) {
+    S.questChest = dayKey();
+    const chest = { coins: 150 * coinMult(), seals: 1 };
+    grant(chest);
+    toast(`All three quests done. Chest: ${rewardText(chest)}.`);
+    chord([523.25, 659.25, 783.99, 1046.5], 0.1);
+  }
+  if (changed) renderQuests();
+  renderQuests();
+}
+function renderQuests() {
+  const q = ensureQuests();
+  const done = q.items.filter(i => i.done).length;
+  $('#questTease').textContent = done === 3 ? 'All three done. Chest collected.' : `${done} of 3 done today.`;
+  $('#questList').innerHTML = q.items.map(it => {
+    const pct = Math.min(100, Math.round((it.n / it.goal) * 100));
+    return `<div class="quest ${it.done ? 'done' : ''}">
+      <span class="qt"><b>${it.text}</b><span class="qbar"><i style="width:${pct}%"></i></span></span>
+      <span class="qr">${it.done ? '✓' : `${Math.min(it.n, it.goal)}/${it.goal}`}</span>
+      <span class="qw">${rewardText(it.reward)}</span></div>`;
+  }).join('') + `<div class="quest chest ${S.questChest === dayKey() ? 'done' : ''}"><span class="qt"><b>All three: a chest</b></span><span class="qr">${S.questChest === dayKey() ? '✓' : `${done}/3`}</span><span class="qw">150 coins · a Spirit Seal</span></div>`;
+}
+$('#questCard').addEventListener('click', () => { renderQuests(); showOv('questov'); });
+$('#questClose').addEventListener('click', () => hideOv('questov'));
 
 /* ---------- companion ---------- */
 // Your companion wears your balance: the aura is your five lights, and it grows on practice
@@ -1447,7 +1547,7 @@ async function popSet(set) {
     setTimeout(() => t.el.remove(), 280);
   });
   if (arr.length) sparks(arr);
-  arr.forEach(t => { if (t.type !== 'spirit') { turnTypes.add(t.type); levelTally[t.type]++; } });
+  arr.forEach(t => { if (t.type !== 'spirit') { turnTypes.add(t.type); levelTally[t.type]++; questBump('elem', 1, t.type); } });
   if (!breathing) {
     const boostEl = spunToday() ? S.todayElem : null;
     let gain = 0;
@@ -1500,6 +1600,8 @@ function flowStep(el) {
   bar.hidden = false;
   bar.animate([{ transform: 'scale(.85)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
   chord(flow >= 3 ? [659.25, 880, 1174.66] : [587.33, 783.99], 0.07);
+  buddyHop();
+  if (flow >= 3) questBump('flow');
   say(flow >= 3 ? 'The whole cycle is flowing. Luma filled up fast.' : `${ELEM[prevOf(el)].feeds}. Luma filled faster.`);
   clearTimeout(bar._t); bar._t = setTimeout(() => { bar.hidden = true; }, 4500);
   hud();
@@ -1739,8 +1841,18 @@ async function runBreath() {
   }
   $('#brSwitch').textContent = S.breathMode === 'mic' ? 'Use my finger instead' : 'Blow on a dandelion instead';
 
+  // the companion breathes along
+  const bb = $('#brBuddy');
+  if (S.buddy) {
+    bb.hidden = false;
+    bb.src = buddyArt(S.buddy);
+    bb.style.setProperty('--bglow', ELEM[S.buddy].glow + 'aa');
+    bb.className = 'brbuddy';
+  } else bb.hidden = true;
+
   // inhale
-  brText('Breathe in through your nose', 'Press and hold Luma, then slide her up slowly, staying with the glowing ring.');
+  brText('Breathe in through your nose', `Press and hold Luma, then slide her up slowly, staying with the glowing ring.${S.buddy ? ` ${BUDDY[S.buddy].name} breathes with you.` : ''}`);
+  if (S.buddy) { bb.style.transitionDuration = `${L.inhale}s`; bb.className = 'brbuddy inhale'; }
   bell(523.25, 0, 0.06);
   const brHand = $('#brHand');
   brHand.className = 'brhand up'; brHand.hidden = !!S.tutDone;
@@ -1751,6 +1863,7 @@ async function runBreath() {
 
   // little pause at the top
   brHand.hidden = true;
+  if (S.buddy) bb.className = 'brbuddy inhale';
   brText('Hold it…', 'Feel your belly full of air.');
   await wait(900);
   if (run !== brRun) return;
@@ -1759,6 +1872,7 @@ async function runBreath() {
   $('#dand').classList.add('show');
   let qout;
   const snd = SOUND[L.elem];
+  if (S.buddy) { bb.style.transitionDuration = `${L.exhale}s`; bb.className = 'brbuddy exhale'; }
   if (micH) {
     $('#brMeter').hidden = false;
     brText(`Now ${snd.verb} it out: ${snd.say}`, `${snd.tip} ${snd.dir}`);
@@ -1772,6 +1886,7 @@ async function runBreath() {
   }
   closeMic();
   brHand.hidden = true;
+  bb.className = 'brbuddy';
   if (run !== brRun) return;
   seeds(1);
   showBreathResult(clamp(qin * 0.35 + qout * 0.65, 0, 1));
@@ -1812,7 +1927,9 @@ $('#brBack').addEventListener('click', async () => {
 async function applyBreath(q) {
   const p = breathPlan(q);
   glowGoal(false);
-  if (p.tier === 'deep') deepBreaths++;
+  if (p.tier === 'deep') { deepBreaths++; questBump('deep'); }
+  if (p.sang) questBump('sound');
+  if (p.cloudsOff) questBump('clouds', p.cloudsOff);
   S.coins += p.coins; save();
   charge = 0; hud();
   flash();
@@ -1883,6 +2000,21 @@ function say(msg) {
   b.classList.add('fade');
   clearTimeout(bubbleT);
   bubbleT = setTimeout(() => { b.textContent = msg; b.classList.remove('fade'); }, 180);
+}
+function paintBuddyGame() {
+  const el = S.buddy, img = $('#buddyGame');
+  if (!el) { img.hidden = true; return; }
+  img.hidden = false;
+  if (!img.src.includes(`buddy-${el}`)) img.src = buddyArt(el);
+  img.style.setProperty('--bhue', ELEM[el].hue);
+  img.style.setProperty('--bglow', ELEM[el].glow + '99');
+  img.alt = `${BUDDY[el].name} the ${BUDDY[el].animal}`;
+}
+function buddyHop() {
+  const img = $('#buddyGame');
+  if (img.hidden) return;
+  img.classList.remove('hop'); void img.offsetWidth; img.classList.add('hop');
+  setTimeout(() => img.classList.remove('hop'), 520);
 }
 function hud() {
   const cl = clouds().length;
@@ -2011,6 +2143,8 @@ function harmony(types) {
   chip.animate([{ transform: 'scale(.85)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
   clearTimeout(chip._t); chip._t = setTimeout(() => { chip.hidden = true; chip.innerHTML = '<span id="flowText"></span>'; }, 3500);
   charge = Math.min(100, charge + 15);
+  buddyHop();
+  questBump('harmony');
   S.coins += 2; save();
   hud();
 }
@@ -2169,9 +2303,12 @@ function startLevel() {
   deepBreaths = 0; breathing = false;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on');
+  paintBuddyGame();
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); hud();
-    say('Swipe to match 3 of the same element. Each match fills Luma.');
+    say(S.buddy === L.elem
+      ? `${BUDDY[S.buddy].name} is at home here. Match 3 of the same element to fill Luma.`
+      : 'Swipe to match 3 of the same element. Each match fills Luma.');
     if (!running) { running = true; rainLoop(); }
     setTimeout(() => { busy = false; coachStart(); }, 700);
   }, 30);
@@ -2180,7 +2317,7 @@ function toMap() {
   running = false; busy = true;
   brRun++; closeMic(); breathing = false;
   tut = null; clearHints(); hideTip();
-  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal(); renderWheel(); renderBuddy();
+  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests();
 }
 $('#toMap').addEventListener('click', toMap);
 
@@ -2203,6 +2340,7 @@ async function winLevel() {
   $('#pTitle').textContent = `${L.power} · the ${SOUND[L.elem].verb}`;
   $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
   $('#pLine').textContent = L.line;
+  if (S.buddy === L.elem) { S.coins += 15 * coinMult(); save(); }
   addBal(L.elem, 2.5);
   TYPES.forEach(t => { if (t !== L.elem && levelTally[t] > 0) addBal(t, Math.min(1, levelTally[t] / 26)); });
   const bonus = balanceBonus();
@@ -2211,6 +2349,7 @@ async function winLevel() {
   bl.innerHTML = bonus ? `<b>All five lights are lit.</b> Balance bonus: ${rewardText(bonus)}.`
     : bst.lit >= 2 ? `<b>${ELEM[L.elem].name} is brighter.</b> Your quietest is ${ELEM[bst.low.t].name} — that is your ${ELEM[bst.low.t].body}.`
       : `<b>${ELEM[L.elem].name} is lit.</b> Four more elements to balance.`;
+  questBump('win');
   const newDay = S.lastDay !== dayKey();
   const note = markDay();
   if (newDay) { S.practiceDays = (S.practiceDays || 0) + 1; save(); }
@@ -2352,7 +2491,7 @@ $('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#wel
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
 $('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
 $('#cycleRow').innerHTML = ['wood', 'fire', 'earth', 'metal', 'water'].map(e => `<span class="eo">${orbHTML(e)}</span>`).join('<i>→</i>') + '<i>↻</i>';
-syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy();
+syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests();
 })();
 </script>
 
