@@ -58,6 +58,19 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .node .stars{margin-left:auto;color:var(--gold);font-size:15px;letter-spacing:1px;white-space:nowrap}
 .node.locked{opacity:.5;filter:saturate(.3)}
 .node.current{box-shadow:0 0 0 3px var(--gold2),0 6px 18px rgba(80,60,20,.15)}
+.balcard{display:block;text-align:left;margin:10px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.balhead{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:15px}
+.balchip{display:inline-flex;gap:4px}
+.balchip i{width:12px;height:12px;border-radius:50%;display:block}
+.balchip.even{box-shadow:0 0 0 2px var(--gold2);border-radius:999px;padding:3px 5px;margin:-3px -5px}
+.balsub{display:block;margin-top:4px;font-size:13px;font-weight:700;color:var(--muted);line-height:1.35}
+.lights{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}
+.light{display:grid;justify-items:center;gap:6px}
+.light .lo{position:relative;display:block;width:34px;height:34px}
+.light .lbar{display:block;width:16px;height:86px;border-radius:9px;background:rgba(31,74,61,.12);position:relative;overflow:hidden}
+.light .lbar i{position:absolute;left:0;right:0;bottom:0;border-radius:9px;transition:height .5s ease}
+.light .ln{font-size:11px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.light.dim .lo{opacity:.4;filter:saturate(.35)}
 .streakchip{background:#FFF1D6;color:#6B4A0E;font-weight:900;gap:4px;cursor:pointer}
 .streakchip.cold{background:rgba(31,74,61,.1);color:var(--muted)}
 .banner{margin:12px 16px 0;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.09);font-size:14px;font-weight:700;line-height:1.4;color:var(--forest)}
@@ -436,6 +449,10 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       </div>
     </div>
     <div class="banner" id="streakBanner"></div>
+    <button class="balcard" id="balOpen" aria-label="Your five lights">
+      <span class="balhead"><b>Your five lights</b><span class="balchip" id="balChip"></span></span>
+      <span class="balsub" id="balTease"></span>
+    </button>
     <div class="path" id="path"></div>
     <div class="mapfoot"><button class="btn gold" id="playNext">Play</button></div>
     <div class="promise">Free to play, always. No forced ads. Only extras like power-ups are for sale.</div>
@@ -521,6 +538,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
     <div class="eyebrow" id="wEyebrow">The Root Grounds</div>
     <h2 class="display" id="wTitle">The storm has passed.</h2>
     <div class="streakrow" id="wStreak"></div>
+    <div class="streakrow" id="wBalance"></div>
     <button class="btn gold" id="wClaim" hidden style="width:100%;margin-bottom:10px">Claim streak reward</button>
     <div class="bigstars" id="wStars"></div>
     <div class="row" style="justify-content:center;gap:8px"><span class="chip" style="background:#FFFBF2"><i class="coin"></i>+<span id="wCoins">0</span></span><span class="chip" style="background:#FFFBF2" id="wLeft"></span></div>
@@ -548,6 +566,18 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       <button class="btn" id="lRetry">Try again</button>
       <button class="btn ghost" id="lMap">Back to map</button>
     </div>
+  </div></div>
+
+  <div class="ov" id="balov" hidden><div class="card" role="dialog" aria-labelledby="balTitle">
+    <div class="eyebrow">Balance, not more</div>
+    <h2 class="display" id="balTitle">Your five lights</h2>
+    <div class="lights" id="lights"></div>
+    <p id="balNote" style="margin-top:12px"></p>
+    <div class="stack">
+      <button class="btn gold" id="balGo" hidden></button>
+      <button class="btn" id="balClose">Close</button>
+    </div>
+    <div class="note">Play one element and its light grows. Leave it alone and it fades. Light all five in the same week for a balance bonus.</div>
   </div></div>
 
   <div class="ov" id="streakov" hidden><div class="card" role="dialog" aria-labelledby="stTitle">
@@ -643,11 +673,11 @@ const TYPES = ['wood', 'fire', 'earth', 'metal', 'water'];
 const CREATES = { wood: 'fire', fire: 'earth', earth: 'metal', metal: 'water', water: 'wood' };
 const CONTROLS = { wood: 'earth', earth: 'water', water: 'fire', fire: 'metal', metal: 'wood' };
 const ELEM = {
-  wood:  { name: 'Wood',  feeds: 'Wood feeds Fire',      tone: 587.33, hue: '#6FBF4A', glow: '#CDF0A6' },
-  fire:  { name: 'Fire',  feeds: 'Fire makes Earth',     tone: 659.25, hue: '#E04B42', glow: '#FFB8A2' },
-  earth: { name: 'Earth', feeds: 'Earth holds Metal',    tone: 783.99, hue: '#F0B93A', glow: '#FFE8AC' },
-  metal: { name: 'Metal', feeds: 'Metal carries Water',  tone: 880.00, hue: '#DCE3E9', glow: '#FFFFFF' },
-  water: { name: 'Water', feeds: 'Water grows Wood',     tone: 523.25, hue: '#3C86C9', glow: '#B4DAF7' }
+  wood:  { name: 'Wood',  feeds: 'Wood feeds Fire',      tone: 587.33, hue: '#6FBF4A', glow: '#CDF0A6', body: 'arms and legs', quiet: 'stiff and quick to snap', bright: 'loose and kind' },
+  fire:  { name: 'Fire',  feeds: 'Fire makes Earth',     tone: 659.25, hue: '#E04B42', glow: '#FFB8A2', body: 'heart', quiet: 'flat and restless', bright: 'warm and steady' },
+  earth: { name: 'Earth', feeds: 'Earth holds Metal',    tone: 783.99, hue: '#F0B93A', glow: '#FFE8AC', body: 'belly', quiet: 'worried and unsettled', bright: 'steady and trusting' },
+  metal: { name: 'Metal', feeds: 'Metal carries Water',  tone: 880.00, hue: '#DCE3E9', glow: '#FFFFFF', body: 'lungs', quiet: 'heavy in the chest', bright: 'clear and strong' },
+  water: { name: 'Water', feeds: 'Water grows Wood',     tone: 523.25, hue: '#3C86C9', glow: '#B4DAF7', body: 'back and bones', quiet: 'jumpy and foggy', bright: 'calm and clear-headed' }
 };
 const LEVELS = [
   { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 16, clouds: 6,
@@ -680,7 +710,8 @@ const CHEERS = ["Luma's glow is growing.", 'Nice match. Luma is filling up.', "S
 
 /* ---------- save state ---------- */
 const DEF = { unlocked: 1, stars: {}, coins: 150, hearts: 5, swirls: 1, lanterns: 1, boostUntil: 0,
-  streak: 0, best: 0, lastDay: '', claimed: [], shields: 0, seals: 0, demoOffset: 0, comebackOn: '' };
+  streak: 0, best: 0, lastDay: '', claimed: [], shields: 0, seals: 0, demoOffset: 0, comebackOn: '',
+  bal: { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 }, balDay: '', balBonusDay: '' };
 // The ladder: every rung is a multiple of 3, with the two days A named (40, 43) kept in.
 const MILES = [
   { d: 3, coins: 150, swirls: 1 },
@@ -792,6 +823,72 @@ async function showOv(id) { const o = $('#' + id); o.hidden = false; void o.offs
 async function hideOv(id) { const o = $('#' + id); o.classList.remove('show'); await wait(250); o.hidden = true; }
 function bump(el) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
 
+/* ---------- five lights: balance across the elements ---------- */
+// Demaris's rule: more chi is not the goal, balanced chi is. Practise one element and it
+// brightens; leave one alone and it fades, and the game asks for that one by name.
+const BAL_FULL = 6;
+function decayBal() {
+  const today = dayKey();
+  if (!S.balDay) { S.balDay = today; save(); return; }
+  let gap = daysBetween(S.balDay, today);
+  if (gap <= 0) return;
+  gap = Math.min(gap, 30);
+  const keep = Math.pow(0.82, gap);
+  TYPES.forEach(t => { S.bal[t] = Math.max(0, +((S.bal[t] || 0) * keep).toFixed(3)); });
+  S.balDay = today; save();
+}
+function addBal(el, amount) {
+  decayBal();
+  S.bal[el] = Math.min(BAL_FULL, (S.bal[el] || 0) + amount);
+  save();
+}
+function balState() {
+  decayBal();
+  const vals = TYPES.map(t => ({ t, v: S.bal[t] || 0 })).sort((a, b) => b.v - a.v);
+  const lit = vals.filter(x => x.v >= 1).length;
+  return { vals, top: vals[0], low: vals[vals.length - 1], lit, even: lit === 5 && vals[0].v - vals[4].v <= 2.5 };
+}
+const levelOf = el => LEVELS.findIndex(l => l.elem === el);
+function renderBal() {
+  const st = balState();
+  $('#lights').innerHTML = TYPES.map(t => {
+    const v = S.bal[t] || 0, pct = Math.round((v / BAL_FULL) * 100);
+    return `<div class="light ${v < 1 ? 'dim' : ''}"><span class="lo">${orbHTML(t)}</span><span class="lbar"><i style="height:${Math.max(6, pct)}%;background:${ELEM[t].hue}"></i></span><span class="ln">${ELEM[t].name}</span></div>`;
+  }).join('');
+  const low = st.low, lvl = levelOf(low.t), locked = lvl + 1 > S.unlocked;
+  const note = $('#balNote'), go = $('#balGo');
+  if (st.lit === 0) {
+    note.innerHTML = '<b>Your five lights start dark.</b> Each place you play brightens one of them.';
+    go.hidden = true;
+  } else if (st.even) {
+    note.innerHTML = `<b>All five are lit.</b> ${S.balBonusDay === dayKey() ? 'Balance bonus collected today.' : 'Balanced chi is the goal, not more chi.'}`;
+    go.hidden = true;
+  } else {
+    note.innerHTML = `<b>Your ${ELEM[low.t].name} has gone quiet.</b> That is your ${ELEM[low.t].body}. Low ${ELEM[low.t].name} feels ${ELEM[low.t].quiet}; bring it back and it feels ${ELEM[low.t].bright}.`;
+    go.hidden = false;
+    go.textContent = locked ? `${ELEM[low.t].name} opens at ${LEVELS[lvl].place}` : `Play ${LEVELS[lvl].place} for ${ELEM[low.t].name}`;
+    go.disabled = locked;
+    go.onclick = () => { if (!locked) { hideOv('balov'); openLevel(lvl); } };
+  }
+  const chip = $('#balChip');
+  chip.innerHTML = TYPES.map(t => `<i style="background:${ELEM[t].hue};opacity:${(S.bal[t] || 0) >= 1 ? 1 : 0.22}"></i>`).join('');
+  chip.classList.toggle('even', st.even);
+}
+function teaseBal() {
+  const st = balState();
+  $('#balTease').textContent = st.lit === 0 ? 'Every place you play lights one element. Light all five.'
+    : st.even ? 'All five lit. This is balance.'
+      : `${ELEM[st.low.t].name} has gone quiet — that is your ${ELEM[st.low.t].body}.`;
+}
+function balanceBonus() {
+  const st = balState();
+  if (!st.even || S.balBonusDay === dayKey()) return null;
+  S.balBonusDay = dayKey();
+  const gift = { coins: 200 * coinMult(), seals: 1 };
+  grant(gift);
+  return gift;
+}
+
 /* ---------- streak ---------- */
 const DAY = 864e5;
 const dayKey = (off = 0) => new Date(Date.now() + ((S.demoOffset || 0) + off) * DAY).toISOString().slice(0, 10);
@@ -875,6 +972,8 @@ function showComeback(days) {
   showOv('comeback');
 }
 $('#streakChip').addEventListener('click', () => { renderStreak(); showOv('streakov'); });
+$('#balOpen').addEventListener('click', () => { renderBal(); showOv('balov'); });
+$('#balClose').addEventListener('click', () => hideOv('balov'));
 $('#streakClose').addEventListener('click', () => hideOv('streakov'));
 $('#demoDay').addEventListener('click', () => {
   S.demoOffset = (S.demoOffset || 0) + 1; save();
@@ -952,6 +1051,7 @@ let busy = false, sel = null, drag = null, moves = 0, charge = 0, combo = 0, mod
 let deepBreaths = 0, breathing = false, wasReady = false;
 let lastElem = null, flow = 0;
 let turnTypes = new Set();
+let levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
 const progress = () => L ? 1 - clouds().length / L.clouds : 0;
 
 const rnd = a => a[Math.floor(Math.random() * a.length)];
@@ -1147,7 +1247,7 @@ async function popSet(set) {
     setTimeout(() => t.el.remove(), 280);
   });
   if (arr.length) sparks(arr);
-  arr.forEach(t => { if (t.type !== 'spirit') turnTypes.add(t.type); });
+  arr.forEach(t => { if (t.type !== 'spirit') { turnTypes.add(t.type); levelTally[t.type]++; } });
   if (!breathing) charge = Math.min(100, charge + arr.length * 15);
   const n = Math.min(arr.length, 5);
   for (let i = 0; i < n; i++) setTimeout(() => boop(combo * 2 + i), i * 55);
@@ -1826,6 +1926,7 @@ function startLevel() {
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
   moves = L.moves; charge = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
   deepBreaths = 0; breathing = false;
+  levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on');
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); hud();
@@ -1838,7 +1939,7 @@ function toMap() {
   running = false; busy = true;
   brRun++; closeMic(); breathing = false;
   tut = null; clearHints(); hideTip();
-  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak();
+  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal();
 }
 $('#toMap').addEventListener('click', toMap);
 
@@ -1861,6 +1962,14 @@ async function winLevel() {
   $('#pTitle').textContent = L.power;
   $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
   $('#pLine').textContent = L.line;
+  addBal(L.elem, 2.5);
+  TYPES.forEach(t => { if (t !== L.elem && levelTally[t] > 0) addBal(t, Math.min(1, levelTally[t] / 26)); });
+  const bonus = balanceBonus();
+  const bst = balState(), bl = $('#wBalance');
+  bl.className = 'streakrow' + (bonus ? ' gold' : '');
+  bl.innerHTML = bonus ? `<b>All five lights are lit.</b> Balance bonus: ${rewardText(bonus)}.`
+    : bst.lit >= 2 ? `<b>${ELEM[L.elem].name} is brighter.</b> Your quietest is ${ELEM[bst.low.t].name} — that is your ${ELEM[bst.low.t].body}.`
+      : `<b>${ELEM[L.elem].name} is lit.</b> Four more elements to balance.`;
   const note = markDay();
   const mile = MILES.find(x => x.d === S.streak && !S.claimed.includes(x.d));
   const sr = $('#wStreak');
@@ -1871,7 +1980,7 @@ async function winLevel() {
       : `<b>Day ${S.streak} streak.</b> ${Math.max(0, nm.d - S.streak)} more to ${rewardText(nm)}.`;
   $('#wClaim').hidden = !mile;
   if (mile) $('#wClaim').onclick = () => celebrate(mile);
-  renderStreak();
+  renderStreak(); renderBal(); teaseBal();
   $('#wNext').hidden = n >= LEVELS.length;
   $('#wTitle').textContent = n >= LEVELS.length ? 'Every lantern is home.' : 'The storm has passed.';
   showOv('win');
@@ -1988,7 +2097,7 @@ $('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#wel
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
 $('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
 $('#cycleRow').innerHTML = ['wood', 'fire', 'earth', 'metal', 'water'].map(e => `<span class="eo">${orbHTML(e)}</span>`).join('<i>→</i>') + '<i>↻</i>';
-syncMute(); renderMap(); streakOnOpen();
+syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal();
 })();
 </script>
 
