@@ -1,0 +1,1637 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}
+body{margin:0;font-size:14px}
+img{max-width:100%}
+</style>
+<meta name="description" content="Kai's Calm Quest, a MorQi Kids puzzle game where kids clear a storm by actually breathing. Playable prototype.">
+<title>Kai's Calm Quest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Nunito:wght@500;700;800;900&display=swap">
+<style>
+:root{
+  --parch:#F5EBD8; --parch2:#EADBBE; --forest:#1F4A3D; --teal:#0F4C4F;
+  --gold:#B8862F; --gold2:#E7C27A; --ink:#2B2A24; --muted:#6E6653;
+  --night:#16231F; --line:rgba(31,74,61,.18);
+}
+html,body{height:100%}
+[hidden]{display:none!important}
+body{background:var(--night);color:var(--ink);font-family:Nunito,ui-rounded,"SF Pro Rounded",system-ui,sans-serif;overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
+.display{font-family:"Marcellus SC","Cinzel",Georgia,serif;letter-spacing:.02em}
+#app{position:relative;max-width:460px;height:100%;margin:0 auto;overflow:hidden;background:var(--parch)}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column}
+
+/* ---------- chips / buttons ---------- */
+.chip{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:rgba(255,255,255,.72);font-weight:800;font-size:14px;font-variant-numeric:tabular-nums;box-shadow:0 1px 0 rgba(0,0,0,.06)}
+.coin{width:16px;height:16px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF1B8,#E3B24A 60%,#A87820);box-shadow:inset 0 0 0 1.5px rgba(120,80,10,.35)}
+.heart{color:#D5566F;font-size:15px;line-height:1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border-radius:16px;font-weight:900;font-size:16px;background:var(--forest);color:#FBF3E2;box-shadow:0 3px 0 #0E2A22;transition:transform .1s}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #0E2A22}
+.btn.gold{background:linear-gradient(#EFCB7E,#D5A548);color:#3B2A08;box-shadow:0 3px 0 #9C7424}
+.btn.ghost{background:transparent;color:var(--forest);box-shadow:inset 0 0 0 2px var(--line)}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.iconbtn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.72);font-size:18px;font-weight:900}
+
+/* ---------- map ---------- */
+#map{background:radial-gradient(120% 60% at 50% 0%,#FFF8E8 0,var(--parch) 55%,var(--parch2) 100%);overflow-y:auto;overflow-x:hidden}
+.maphead{padding:18px 16px 0;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.hero{position:relative;padding:8px 16px 0;text-align:center}
+.eyebrow{font-size:12px;font-weight:900;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+.hero h1{margin:4px 0 2px;font-size:clamp(34px,10vw,44px);line-height:1;color:var(--teal);font-weight:400;text-wrap:balance}
+.hero p{margin:4px 0 0;color:var(--muted);font-weight:700}
+.heroart{display:flex;justify-content:center;align-items:flex-end;gap:0;margin-top:10px;height:170px}
+.heroart img{height:100%;mix-blend-mode:multiply;-webkit-mask-image:radial-gradient(closest-side,#000 70%,transparent);mask-image:radial-gradient(closest-side,#000 70%,transparent)}
+.heroart img.luma{height:92px;margin-left:-18px}
+.path{position:relative;padding:18px 16px 12px;display:flex;flex-direction:column;gap:14px}
+.path::before{content:"";position:absolute;left:50%;top:30px;bottom:40px;border-left:3px dashed rgba(184,134,47,.45)}
+.node{position:relative;display:flex;align-items:center;gap:12px;width:78%;padding:10px 14px 10px 10px;border-radius:20px;background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.06),0 6px 18px rgba(80,60,20,.08);text-align:left}
+.node:nth-child(even){align-self:flex-end}
+.node .orbicon{flex:none;width:52px;height:52px;position:relative}
+.node .name{font-weight:900;font-size:16px;line-height:1.15}
+.node .shift{font-size:13px;color:var(--muted);font-weight:700}
+.node .stars{margin-left:auto;color:var(--gold);font-size:15px;letter-spacing:1px;white-space:nowrap}
+.node.locked{opacity:.5;filter:saturate(.3)}
+.node.current{box-shadow:0 0 0 3px var(--gold2),0 6px 18px rgba(80,60,20,.15)}
+.promise{margin:6px 16px 22px;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.07);font-size:13px;color:var(--forest);font-weight:700;text-align:center}
+.mapfoot{display:flex;gap:10px;justify-content:center;padding:0 16px}
+
+/* ---------- game ---------- */
+#game{color:#FBF3E2}
+.scene{position:absolute;inset:0;overflow:hidden;z-index:0}
+.sky{position:absolute;inset:0;background:linear-gradient(#F7E6C4,#E9CF9C 55%,#9DB58E)}
+.hills{position:absolute;left:-10%;right:-10%;bottom:0;height:38%;background:
+  radial-gradient(60% 70% at 20% 100%,#3E6B4F 60%,transparent 61%),
+  radial-gradient(55% 60% at 80% 100%,#2F5A44 60%,transparent 61%),
+  radial-gradient(90% 45% at 50% 100%,#24493A 60%,transparent 61%)}
+.storm{position:absolute;inset:0;background:linear-gradient(#1D2530,#2E3A46 60%,#1E2A2A);opacity:.85;transition:opacity 1.2s ease}
+#rain{position:absolute;inset:0;width:100%;height:100%}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+.flash.go{animation:flash .5s ease-out}
+@keyframes flash{10%{opacity:.35}100%{opacity:0}}
+.gtop{position:relative;z-index:2;display:flex;align-items:center;gap:8px;padding:12px 16px 4px}
+.gtop .place{flex:1;min-width:0}
+.gtop .place b{display:block;font-size:17px;font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 6px rgba(0,0,0,.35)}
+.gtop .place span{font-size:12px;font-weight:800;opacity:.85}
+.gtop .iconbtn{background:rgba(255,255,255,.16);color:#FBF3E2;backdrop-filter:blur(6px)}
+.stats{position:relative;z-index:2;display:flex;gap:8px;padding:4px 16px}
+.stat{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:16px;background:rgba(14,26,24,.42);backdrop-filter:blur(8px)}
+.stat .lbl{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.stat .val{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1}
+.stat .mini{width:28px;height:28px;position:relative;flex:none}
+.bump{animation:bump .3s}
+@keyframes bump{50%{transform:scale(1.18)}}
+.lanterns{position:relative;z-index:2;display:flex;justify-content:center;gap:18px;padding:8px 0 2px}
+.lantern{width:22px;height:30px;position:relative;opacity:.45;transition:opacity .6s,filter .6s}
+.lantern::before{content:"";position:absolute;left:50%;top:-6px;height:6px;border-left:1.5px solid rgba(255,255,255,.6)}
+.lantern i{position:absolute;inset:0;border-radius:40% 40% 45% 45%;background:#5A4A30;box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}
+.lantern.lit{opacity:1;filter:drop-shadow(0 0 10px #FFD27A)}
+.lantern.lit i{background:radial-gradient(circle at 50% 55%,#FFF4C8,#F2B544 60%,#C9771E)}
+.boardwrap{position:relative;z-index:2;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:6px 16px}
+#board{position:relative;border-radius:22px;background:rgba(251,243,226,.16);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22);backdrop-filter:blur(3px);touch-action:none;user-select:none;-webkit-user-select:none}
+#board.aiming{box-shadow:inset 0 0 0 3px var(--gold2),0 0 24px rgba(231,194,122,.5)}
+
+.tile{position:absolute;left:0;top:0;width:var(--t);height:var(--t);transition:transform .2s cubic-bezier(.3,.7,.4,1.12);will-change:transform}
+.orb{position:absolute;inset:7%;border-radius:50%;display:grid;place-items:center;color:var(--g);
+  background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.9) 0 7%,var(--l) 16%,var(--b) 62%,var(--d) 100%);
+  box-shadow:inset 0 -3px 6px rgba(0,0,0,.2),0 2px 3px rgba(20,15,5,.3);transition:transform .15s}
+.orb svg{width:54%;height:54%;overflow:visible}
+.t-tiger{--b:#EE8A2E;--l:#FFCB85;--d:#B45714;--g:#6E2C05}
+.t-crane{--b:#8CC6E4;--l:#EEF9FF;--d:#4F8DB0;--g:#1E4E6A}
+.t-monkey{--b:#F2C232;--l:#FFF0A6;--d:#C28E0B;--g:#6A4C00}
+.t-bear{--b:#8E5C3C;--l:#D9AC84;--d:#5A3520;--g:#FBEBD6}
+.t-deer{--b:#E590A9;--l:#FFE0EA;--d:#B85C79;--g:#6E1F3A}
+.t-spirit .orb{background:conic-gradient(from 0deg,#EE8A2E,#F2C232,#8CC6E4,#E590A9,#8E5C3C,#EE8A2E);color:#fff;animation:spin 3s linear infinite}
+.t-spirit .orb::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#fff 0,rgba(255,255,255,.75) 45%,rgba(255,255,255,0) 72%)}
+.t-spirit .orb svg{position:relative;color:#E0A93A}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sp-row .orb,.sp-col .orb{box-shadow:inset 0 0 0 3px #FFE3A0,0 0 10px 2px rgba(255,210,122,.8)}
+.sp-row .orb::after,.sp-col .orb::after{content:"";position:absolute;background:rgba(255,246,214,.9);border-radius:3px}
+.sp-row .orb::after{left:-6%;right:-6%;top:calc(50% - 2px);height:4px}
+.sp-col .orb::after{top:-6%;bottom:-6%;left:calc(50% - 2px);width:4px}
+.tile.sel .orb{transform:scale(1.13);box-shadow:0 0 0 3px #FFF6DE,0 0 16px 5px rgba(255,214,130,.9)}
+.tile.pop .orb{animation:pop .26s ease-out forwards}
+@keyframes pop{35%{transform:scale(1.32)}100%{transform:scale(0);opacity:0}}
+.tile.born .orb{animation:born .45s ease-out}
+@keyframes born{0%{transform:scale(.4)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
+.tile.breathing .orb{animation:breathe 2.2s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.16);box-shadow:0 0 0 2px #fff,0 0 22px 8px var(--l)}}
+.spark{position:absolute;width:8px;height:8px;border-radius:50%;background:#FFF1C2;pointer-events:none;box-shadow:0 0 8px #FFD37A;z-index:5}
+
+.tile.clouded .orb{filter:saturate(.25) brightness(.72)}
+.tile.clouded::after{content:"";position:absolute;inset:-4% -6%;pointer-events:none;
+  background:radial-gradient(circle at 30% 58%,#C9D1D8 0 22%,transparent 23%),radial-gradient(circle at 55% 42%,#DCE2E7 0 27%,transparent 28%),radial-gradient(circle at 75% 60%,#BAC3CC 0 20%,transparent 21%),radial-gradient(ellipse at 50% 68%,#AEB8C2 0 36%,transparent 37%);
+  filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));opacity:.93}
+.tile.clouded.breathing .orb{animation:none}
+.tile.clouded.breathing::after{animation:drift 2.2s ease-in-out infinite}
+@keyframes drift{50%{transform:translateX(6%) scale(1.05);opacity:.7}}
+.cloudicon{background:radial-gradient(circle at 32% 60%,#DCE2E7 0 24%,transparent 25%),radial-gradient(circle at 58% 44%,#EEF2F5 0 29%,transparent 30%),radial-gradient(ellipse at 50% 68%,#C9D1D8 0 38%,transparent 39%)}
+.stat small{font-size:13px;font-weight:800;opacity:.85;white-space:nowrap}
+.stat.goal{flex:2}
+.stat.goal .mini{width:40px;height:40px}
+.stat.warn{box-shadow:inset 0 0 0 2px #F2A07B}
+.stat.warn small{color:#FFC7A8;opacity:1}
+.linkbtn{font-weight:800;font-size:13px;color:var(--gold2);text-decoration:underline;text-underline-offset:3px;padding:6px 2px}
+.card.bcard{background:#15302A;color:#FBF3E2}
+.card.bcard h2{color:#FBF3E2}
+.card.bcard p{color:#D8E6DF;min-height:2.9em}
+.bcard .eyebrow{color:var(--gold2)}
+.bcard .pack{color:var(--ink)}
+.bigic{width:30px;text-align:center;font-size:26px;color:var(--forest)}
+.stage{position:relative;display:flex;justify-content:center;align-items:flex-end;gap:18px;height:min(330px,44vh);margin-top:6px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}
+.track{position:relative;width:78px;height:100%;border-radius:40px;background:linear-gradient(rgba(191,232,245,.18),rgba(191,232,245,.05));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.2)}
+.fill{position:absolute;left:0;right:0;bottom:0;border-radius:40px;background:linear-gradient(rgba(191,232,245,.55),rgba(191,232,245,.15))}
+.ghost,.knob{position:absolute;left:50%;bottom:0;width:70px;height:70px;margin-left:-35px;border-radius:50%}
+.ghost{box-shadow:0 0 0 3px rgba(255,236,170,.9),0 0 26px 8px rgba(255,220,130,.55);background:radial-gradient(circle,rgba(255,240,190,.35),transparent 70%)}
+.knob{box-shadow:0 6px 16px rgba(0,0,0,.35),0 0 0 3px #FBF3E2;overflow:hidden;background:#F5EBD8}
+.knob img{width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+.meter{position:relative;width:10px;height:100%;border-radius:6px;background:rgba(255,255,255,.1);overflow:hidden}
+.meter i{position:absolute;left:0;right:0;bottom:0;height:0;border-radius:6px;transition:height .06s}
+#dand{width:100px;height:120px;align-self:flex-start;opacity:.25;transition:opacity .5s;overflow:visible}
+#dand.show{opacity:1}
+#dand line{stroke:#F4EEDC;stroke-width:1}
+#dand .stem{stroke:#8FB29A;stroke-width:2.2}
+#dand .core{fill:#D9C98F}
+#dand circle{fill:#FFFDF4}
+#dand .seed{transition:transform 1.4s ease-out,opacity 1.4s ease-out}
+#dand .seed.fly{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}
+.feathers{text-align:center;font-size:40px;letter-spacing:8px;color:var(--gold2);margin:4px 0 8px}
+.feathers .off{opacity:.2}
+.gains{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.gains .chip{color:var(--ink)}
+.ringbox{display:grid;place-items:center;gap:10px;text-align:center}
+.bring{width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(206,238,248,.55),rgba(140,198,228,.2) 60%,rgba(140,198,228,0) 72%);box-shadow:0 0 0 2px rgba(255,255,255,.6),0 0 40px rgba(170,225,245,.7);transform:scale(.45)}
+.bring.inhale{transform:scale(1);transition:transform 3s cubic-bezier(.35,0,.3,1)}
+.bring.exhale{transform:scale(.4);transition:transform 3.4s cubic-bezier(.4,0,.3,1)}
+.btext{font-weight:900;font-size:20px;text-shadow:0 2px 10px rgba(0,0,0,.55)}
+
+.gbot{position:relative;z-index:3;display:flex;align-items:flex-end;gap:10px;padding:6px 16px 14px}
+.kai{position:relative;flex:1;min-width:0;display:flex;align-items:flex-end;gap:8px}
+.kai img{width:62px;height:62px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:3px solid #FBF3E2;flex:none;background:#F5EBD8}
+.bubble{position:relative;flex:1;min-width:0;padding:9px 12px;border-radius:16px 16px 16px 4px;background:#FFFBF2;color:var(--ink);font-size:13.5px;font-weight:700;line-height:1.3;box-shadow:0 4px 14px rgba(0,0,0,.2);transition:opacity .25s}
+.bubble.fade{opacity:0}
+.tools{display:flex;flex-direction:column;align-items:center;gap:6px}
+.breathbtn{position:relative;width:76px;height:76px;border-radius:50%;padding:0;touch-action:none;background:conic-gradient(#BFE8F5 calc(var(--c,0)*1%),rgba(255,255,255,.18) 0);box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.breathbtn img{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);border-radius:50%;object-fit:cover;object-position:50% 30%;background:#F5EBD8}
+.breathbtn.ready{animation:ready 1.8s ease-in-out infinite}
+@keyframes ready{50%{box-shadow:0 0 0 6px rgba(191,232,245,.35),0 0 28px 8px rgba(191,232,245,.8)}}
+.breathlbl{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;text-align:center;line-height:1.2}
+.boosters{display:flex;gap:6px}
+.boost{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:52px;padding:6px 6px 5px;border-radius:14px;background:rgba(14,26,24,.5);backdrop-filter:blur(6px);font-size:11px;font-weight:900}
+.boost .ic{font-size:19px;line-height:1.1}
+.boost .cost{display:flex;align-items:center;gap:3px;font-variant-numeric:tabular-nums}
+.boost .cost .coin{width:11px;height:11px}
+.boost.on{box-shadow:inset 0 0 0 2px var(--gold2)}
+
+/* ---------- overlays ---------- */
+.ov{position:absolute;inset:0;z-index:20;display:flex;align-items:flex-end;justify-content:center;background:rgba(12,20,18,.55);backdrop-filter:blur(3px);padding:16px;opacity:0;transition:opacity .25s}
+.ov.show{opacity:1}
+.card{width:100%;max-height:100%;overflow-y:auto;background:var(--parch);color:var(--ink);border-radius:26px;padding:20px 18px 18px;box-shadow:0 20px 50px rgba(0,0,0,.35);transform:translateY(24px);transition:transform .3s cubic-bezier(.2,.8,.3,1)}
+.ov.show .card{transform:none}
+.card h2{margin:2px 0 6px;font-size:28px;font-weight:400;line-height:1.1;color:var(--teal);text-wrap:balance}
+.card p{margin:0 0 10px;line-height:1.45;font-weight:600;color:#4A4536}
+.row{display:flex;gap:10px;align-items:center}
+.stack{display:flex;flex-direction:column;gap:10px;margin-top:14px}
+.who{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:18px;background:#FFFBF2;margin-top:10px}
+.who img{width:58px;height:58px;border-radius:50%;object-fit:cover;flex:none;background:var(--parch)}
+.who b{display:block;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:2px}
+.who p{margin:0;font-size:15px}
+.goalline{display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 12px;border-radius:14px;background:rgba(31,74,61,.08);font-weight:800}
+.goalline .mini{width:36px;height:36px;position:relative;flex:none}
+.bigstars{font-size:38px;color:var(--gold);letter-spacing:4px;text-align:center;margin:4px 0}
+.bigstars .off{color:rgba(184,134,47,.25)}
+.practice{margin-top:12px;padding:14px;border-radius:18px;background:#1F4A3D;color:#FBF3E2}
+.practice .eyebrow{color:var(--gold2)}
+.practice h3{margin:2px 0 8px;font-size:22px;font-weight:400}
+.practice ol{margin:0;padding-left:20px;display:grid;gap:5px;font-weight:700;line-height:1.35}
+.practice .line{margin-top:10px;font-style:italic;opacity:.85;font-weight:600}
+.pack{display:flex;align-items:center;gap:12px;padding:12px;border-radius:16px;background:#FFFBF2;text-align:left;width:100%}
+.pack .amt{flex:1;font-weight:900}
+.pack .amt small{display:block;font-weight:700;color:var(--muted)}
+.pack .price{padding:8px 12px;border-radius:12px;background:var(--forest);color:#FBF3E2;font-weight:900;font-variant-numeric:tabular-nums}
+.shoph{margin:16px 0 0;font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.pack .bigic.heart{color:#D5566F}
+.price.free{background:#E7C27A;color:#3B2A08}
+.price.coinprice{display:inline-flex;align-items:center;gap:4px}
+.price.coinprice .coin{width:12px;height:12px}
+.adpack{background:#F3EEE2}
+.adbar{height:8px;border-radius:6px;background:rgba(31,74,61,.12);overflow:hidden;margin:14px 0 6px}
+.adbar i{display:block;height:100%;width:0;background:var(--forest);transition:width 1s linear}
+.boost .own{font-weight:900;color:#FFE3A0}
+.boostchip{background:#E7C27A!important;color:#3B2A08!important}
+#shopOpen2{cursor:pointer}
+.stickyclose{position:sticky;bottom:-18px;margin:14px -18px -18px;padding:12px 18px 18px;background:linear-gradient(rgba(245,235,216,0),var(--parch) 30%)}
+.note{font-size:12.5px;color:var(--muted);font-weight:700;text-align:center;margin-top:12px}
+#guide .card{background:#15302A;color:#FBF3E2;text-align:center}
+#guide h2{color:#FBF3E2}
+#guide .bring{margin:18px auto;width:190px;height:190px}
+.toast{position:absolute;left:16px;right:16px;top:14px;z-index:40;padding:11px 14px;border-radius:14px;background:#FFFBF2;color:var(--ink);font-weight:800;font-size:14px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(-120%);transition:transform .3s}
+.toast.show{transform:none}
+/* welcome */
+#welcome{background:radial-gradient(120% 50% at 50% 0%,#FFF8E8 0,var(--parch) 45%,var(--parch2) 100%);overflow-y:auto;overflow-x:hidden}
+.wwrap{padding:24px 16px 28px;display:flex;flex-direction:column;gap:22px}
+.whero{text-align:center}
+.whero h1{margin:6px 0 4px;font-size:clamp(34px,10vw,44px);line-height:1;color:var(--teal);font-weight:400;text-wrap:balance}
+.lede{margin:6px auto 0;max-width:30ch;font-size:18px;font-weight:800;line-height:1.35;color:#3F3A2C;text-wrap:balance}
+.btn.big{min-height:56px;padding:0 34px;font-size:18px;margin-top:14px}
+.small{font-size:13px;font-weight:700;color:var(--muted);margin:8px 0 0}
+.wsec h2{margin:0 0 8px;font-size:24px;font-weight:400;color:var(--teal)}
+.wsec h3{margin:0 0 4px;font-size:16px;font-weight:900}
+.wsec ul{margin:0;padding-left:18px;display:grid;gap:7px;font-weight:600;line-height:1.45;color:#3F3A2C}
+.steps{display:grid;gap:10px}
+.step{display:grid;grid-template-columns:88px 1fr;gap:12px;align-items:center;padding:12px;border-radius:18px;background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.04)}
+.step p{margin:0;font-size:14px;line-height:1.45;color:#4A4536;font-weight:600}
+.step .vis{height:70px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:14px;background:linear-gradient(#3A4652,#2A3A36)}
+.n{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--forest);color:#FBF3E2;font-size:12px;margin-right:7px;vertical-align:1px}
+.orbrow{display:flex;gap:1px}
+.orbrow span{position:relative;display:block;width:25px;height:25px}
+.minil{width:48px;height:48px;border-radius:50%;padding:4px;background:conic-gradient(#BFE8F5 75%,rgba(255,255,255,.2) 0);box-shadow:0 0 16px rgba(191,232,245,.8)}
+.minil img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:50% 30%;display:block}
+.minitrack{position:relative;width:24px;height:58px;border-radius:14px;background:rgba(191,232,245,.2);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+.minitrack img{position:absolute;left:1px;width:22px;height:22px;border-radius:50%;object-fit:cover;animation:mini 4s ease-in-out infinite}
+.minitrack i{position:absolute;left:0;width:24px;height:24px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,236,170,.9);animation:mini 4s ease-in-out infinite}
+@keyframes mini{0%,100%{bottom:1px}45%,55%{bottom:35px}}
+.wave{font-size:10px;font-weight:900;color:#FBF3E2;line-height:1.3}
+.cloudrow{display:flex;gap:2px}
+.cloudrow .mini{display:block;width:26px;height:26px}
+.tipbox{margin-top:10px;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.09);font-size:14px;line-height:1.45;font-weight:600;color:var(--forest)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.twocol>div{padding:12px;border-radius:16px;background:#FFFBF2}
+.twocol ul{padding-left:16px;font-size:14px;gap:5px}
+@media (max-width:360px){.twocol{grid-template-columns:1fr}}
+.linkbtn.dark{color:var(--forest)}
+/* coach */
+#coach{position:absolute;inset:0;pointer-events:none;z-index:15}
+#hand,.brhand{position:absolute;left:0;top:0;font-size:36px;line-height:1;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4));user-select:none}
+.coachtip{position:absolute;left:12px;right:112px;bottom:10px;padding:12px 14px;border-radius:16px;background:#FFFBF2;color:var(--ink);font-weight:700;font-size:15px;line-height:1.4;box-shadow:0 12px 30px rgba(0,0,0,.4),0 0 0 2px var(--gold2);pointer-events:auto}
+.coachtip .k{display:block;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.tile.hint .orb{animation:hintp 1.1s ease-in-out infinite}
+@keyframes hintp{50%{transform:scale(1.14);box-shadow:0 0 0 3px #fff,0 0 18px 7px rgba(255,230,150,.95)}}
+.breathbtn.point{animation:ready 1s ease-in-out infinite}
+.brhand{left:calc(50% + 6px);top:auto;bottom:6%;pointer-events:none;z-index:2}
+.brhand.up{animation:hup 3.2s ease-in-out infinite}
+.brhand.down{animation:hdown 4s ease-in-out infinite}
+@keyframes hup{0%{bottom:4%;opacity:0}15%{opacity:1}80%{bottom:72%;opacity:1}100%{bottom:72%;opacity:0}}
+@keyframes hdown{0%{bottom:72%;opacity:0}15%{opacity:1}80%{bottom:4%;opacity:1}100%{bottom:4%;opacity:0}}
+
+@media (prefers-reduced-motion:reduce){
+  .tile{transition-duration:.01s}
+  .t-spirit .orb,.breathbtn.ready,.tile.breathing .orb,.tile.clouded.breathing::after{animation:none}
+  #dand .seed{transition:none}
+}
+</style>
+
+<div id="app">
+  <!-- MAP -->
+  <section class="screen" id="welcome">
+    <div class="wwrap">
+      <div class="whero">
+        <div class="eyebrow">MorQi Kids · playable prototype</div>
+        <h1 class="display">Kai's Calm Quest</h1>
+        <p class="lede">A puzzle game where kids clear a storm by actually breathing.</p>
+        <div class="heroart">
+          <img src="img/kai-full.jpg" alt="Kai, the game's hero">
+          <img class="luma" src="img/luma-heart.jpg" alt="Luma, the spirit fox">
+        </div>
+        <button class="btn gold big" data-play>Play the demo</button>
+        <p class="small">Takes about 2 minutes. Best on a phone with the sound on.</p>
+      </div>
+
+      <div class="wsec" id="how">
+        <h2 class="display">How to play</h2>
+        <p class="small" style="text-align:left;margin:0 0 10px">The first level walks you through all of this with a guiding hand.</p>
+        <div class="steps">
+          <div class="step">
+            <div class="vis"><div class="orbrow" data-types="bear bear bear"></div></div>
+            <div><h3><b class="n">1</b>Match 3</h3><p>Slide an orb onto the one next to it so three of the same color line up. They pop.</p></div>
+          </div>
+          <div class="step">
+            <div class="vis"><div class="minil"><img src="img/luma-happy.jpg" alt=""></div></div>
+            <div><h3><b class="n">2</b>Fill Luma</h3><p>Every match fills Luma, the fox in the bottom corner. When her ring is full she glows. Tap her.</p></div>
+          </div>
+          <div class="step">
+            <div class="vis"><div class="minitrack"><i></i><img src="img/luma-happy.jpg" alt=""></div><span class="wave">↑ in<br>↓ out</span></div>
+            <div><h3><b class="n">3</b>Breathe with her</h3><p><b>Breathe in:</b> press Luma and slide her up slowly with the glowing ring. <b>Breathe out:</b> slide her back down, or turn on the mic and blow gently on the dandelion. Going too fast doesn't work.</p></div>
+          </div>
+          <div class="step">
+            <div class="vis"><div class="cloudrow"><i class="mini cloudicon"></i><i class="mini cloudicon"></i><i class="mini cloudicon"></i></div></div>
+            <div><h3><b class="n">4</b>Clear the storm</h3><p>A slow, deep breath blows away 4 clouds. A rushed one blows away 1. Clear every cloud to win the level.</p></div>
+          </div>
+        </div>
+        <div class="tipbox"><b>On a laptop?</b> Use the mouse to drag orbs and Luma. When the game asks how to breathe out, pick <b>Trace it with a finger</b>.</div>
+      </div>
+
+      <div class="wsec">
+        <h2 class="display">Why this matters</h2>
+        <ul>
+          <li>Kids are told to "calm down" and never shown how. Here the breath is the only way to win, so every level is practice.</li>
+          <li>The game scores the breath itself. Slow, long breaths win, so kids learn the pace that actually settles the body.</li>
+          <li>It's built on Demaris's qigong practice and the MorQi Kids story world: Kai, Luma, Sorin, and five animal practices (Bear Root, Tiger Breath, Monkey Shake, Crane Flow, Deer Heart).</li>
+          <li>Every level ends with a real practice kids can do off the screen, with a guided breath from Sorin.</li>
+        </ul>
+      </div>
+
+      <div class="wsec">
+        <h2 class="display">How it makes money</h2>
+        <ul>
+          <li><b>The game is free, always.</b> No price to download and no paywall on levels.</li>
+          <li><b>No forced ads.</b> Nothing interrupts a level. Parents can trust it and kids just play.</li>
+          <li><b>We sell extras:</b> power-up bundles, heart refills, and time-limited boosts like double coins for 30 minutes. Demo prices ($0.99 to $1.99) are placeholders, and nothing is charged.</li>
+          <li><b>Optional reward videos:</b> a player can choose to watch a short video for a free heart, power-up, or boost.</li>
+          <li>Good breaths earn coins too, so kids who practice can keep playing without paying.</li>
+        </ul>
+      </div>
+
+      <div class="wsec">
+        <h2 class="display">What's built, and what's next</h2>
+        <div class="twocol">
+          <div><h3>In this demo</h3><ul><li>5 levels in 5 places</li><li>Breath game with finger or mic</li><li>Guided first level</li><li>Shop with power-ups, hearts, boosts, and optional reward videos</li><li>A guided practice after each level</li></ul></div>
+          <div><h3>With funding</h3><ul><li>Full art and animation for Kai, Luma, and Sorin</li><li>Hundreds of levels, released in seasons</li><li>Sorin's voice guiding each breath</li><li>A parent view of practice minutes</li><li>Linked to the MorQi adult app: "How's your kid today?"</li><li>Versions for schools and programs</li></ul></div>
+        </div>
+      </div>
+
+      <div class="whero" style="padding-bottom:8px">
+        <button class="btn gold big" data-play>Play the demo</button>
+        <div class="row" style="justify-content:center;gap:14px;margin-top:10px">
+          <button class="linkbtn dark" id="toMapFromWelcome">Pick a level</button>
+          <button class="linkbtn dark" id="retut">Replay the walkthrough</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="screen" id="map" hidden>
+    <div class="maphead">
+      <div class="row">
+        <span class="chip"><i class="coin"></i><span data-coins>0</span></span>
+        <span class="chip"><span class="heart">♥</span><span data-hearts>5</span></span>
+      </div>
+      <div class="row">
+        <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
+        <button class="iconbtn" id="howOpen" aria-label="How to play">?</button>
+        <button class="iconbtn" id="shopOpen1" aria-label="Open shop">+</button>
+      </div>
+    </div>
+    <div class="hero">
+      <div class="eyebrow">MorQi Kids</div>
+      <h1 class="display">Kai's Calm Quest</h1>
+      <p>Every breath is a superpower.</p>
+      <div class="heroart">
+        <img src="img/kai-full.jpg" alt="Kai standing in his green MorQi outfit">
+        <img class="luma" src="img/luma-heart.jpg" alt="Luma the spirit fox floating">
+      </div>
+    </div>
+    <div class="path" id="path"></div>
+    <div class="mapfoot"><button class="btn gold" id="playNext">Play</button></div>
+    <div class="promise">Free to play, always. No forced ads. Only extras like power-ups are for sale.</div>
+  </section>
+
+  <!-- GAME -->
+  <section class="screen" id="game" hidden>
+    <div class="scene">
+      <div class="sky" id="sky"></div>
+      <div class="hills"></div>
+      <div class="storm" id="storm"></div>
+      <canvas id="rain"></canvas>
+      <div class="flash" id="flash"></div>
+    </div>
+    <div class="gtop">
+      <button class="iconbtn" id="toMap" aria-label="Back to map">‹</button>
+      <div class="place"><b class="display" id="gPlace">The Root Grounds</b><span id="gShift">worry → safe</span></div>
+      <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
+    </div>
+    <div class="stats">
+      <div class="stat goal" id="cloudStat"><div class="mini cloudicon"></div><div><div class="lbl">Clear the storm</div><div class="val"><span id="gClouds">0</span> <small id="gCloudWord">clouds left</small></div></div></div>
+      <div class="stat" id="movesStat"><div><div class="lbl">Moves</div><div class="val" id="gMoves">20</div></div></div>
+    </div>
+    <div class="lanterns" id="lanterns" aria-label="Lanterns lit"></div>
+    <div class="boardwrap" id="boardwrap">
+      <div id="board" aria-label="Puzzle board"></div>
+    </div>
+    <div class="gbot">
+      <div class="kai">
+        <img id="kaiFace" src="img/kai-worried.jpg" alt="Kai">
+        <div class="bubble" id="bubble">Swap two orbs to make a line of three.</div>
+      </div>
+      <div class="tools">
+        <button class="breathbtn" id="breathBtn" aria-label="Luma's breath: fill it with matches, then tap to breathe with Luma"><img src="img/luma-happy.jpg" alt=""></button>
+        <div class="breathlbl" id="breathLbl">Luma's<br>breath</div>
+      </div>
+    </div>
+    <div class="gbot" style="padding-top:0;justify-content:space-between">
+      <div class="boosters">
+        <button class="boost" id="bShuffle"><span class="ic">↻</span>Swirl<span class="cost" id="cShuffle"></span></button>
+        <button class="boost" id="bLantern"><span class="ic">✦</span>Lantern<span class="cost" id="cLantern"></span></button>
+      </div>
+      <div class="row" style="gap:6px"><span class="chip boostchip" id="boostChip" hidden>2× coins <span id="boostLeft"></span></span><button class="chip" id="shopOpen2" style="background:rgba(14,26,24,.5);color:#FBF3E2"><i class="coin"></i><span data-coins>0</span> +</button></div>
+    </div>
+  </section>
+
+  <!-- OVERLAYS -->
+  <div class="ov" id="intro" hidden><div class="card" role="dialog" aria-labelledby="iTitle">
+    <div class="eyebrow" id="iEyebrow">Place 1 of 5</div>
+    <h2 class="display" id="iTitle">The Root Grounds</h2>
+    <div class="who"><img id="iKai" src="img/kai-worried.jpg" alt="Kai looking worried"><div><b>Kai</b><p id="iProblem"></p></div></div>
+    <div class="who"><img src="img/sorin-calm.jpg" alt="Sorin smiling calmly"><div><b>Sorin</b><p id="iSorin"></p></div></div>
+    <div class="goalline"><div class="mini cloudicon"></div><div id="iGoal"></div></div>
+    <div class="goalline" style="background:rgba(140,198,228,.18)"><img src="img/luma-happy.jpg" alt="" style="width:36px;height:36px;border-radius:50%;object-fit:cover"><div id="iPower"></div></div>
+    <div class="stack"><button class="btn gold" id="iGo">Begin</button></div>
+  </div></div>
+
+  <div class="ov" id="breathe" hidden><div class="card bcard" role="dialog" aria-labelledby="brTitle">
+    <div class="row" style="justify-content:space-between;gap:8px"><div class="eyebrow" id="brEyebrow">Luma's breath</div><button class="linkbtn" id="brCancel">Not now</button></div>
+    <h2 class="display" id="brTitle">Breathe in</h2>
+    <p id="brSub" aria-live="polite">Press Luma and slide her up with the glowing light.</p>
+    <div id="brChoose" class="stack">
+      <button class="pack" data-mode="mic"><span class="bigic">✿</span><span class="amt">Blow on a dandelion<small>Uses the microphone to hear your out-breath. Only how strong it is. Nothing is recorded.</small></span></button>
+      <button class="pack" data-mode="touch"><span class="bigic">☝</span><span class="amt">Trace it with a finger<small>Slide Luma down slowly while you breathe out.</small></span></button>
+    </div>
+    <div id="brPlay" hidden>
+      <div class="stage" id="brStage">
+        <div class="meter" id="brMeter" hidden aria-hidden="true"><i></i></div>
+        <div class="track" id="brTrack"><div class="fill" id="brFill"></div><div class="ghost" id="brGhost"></div><div class="knob" id="brKnob"><img src="img/luma-happy.jpg" alt="Luma"></div><div class="brhand" id="brHand" hidden aria-hidden="true">👆</div></div>
+        <svg id="dand" viewBox="0 0 100 120" aria-hidden="true"></svg>
+      </div>
+      <div class="row" style="justify-content:center;margin-top:8px"><button class="linkbtn" id="brSwitch">Use my finger instead</button></div>
+    </div>
+    <div id="brResult" hidden>
+      <div class="feathers" id="brFeathers"></div>
+      <div class="gains" id="brGains"></div>
+      <div class="stack"><button class="btn gold" id="brBack">Back to the storm</button></div>
+    </div>
+  </div></div>
+
+  <div class="ov" id="win" hidden><div class="card" role="dialog" aria-labelledby="wTitle">
+    <div class="eyebrow" id="wEyebrow">The Root Grounds</div>
+    <h2 class="display" id="wTitle">The storm has passed.</h2>
+    <div class="bigstars" id="wStars"></div>
+    <div class="row" style="justify-content:center;gap:8px"><span class="chip" style="background:#FFFBF2"><i class="coin"></i>+<span id="wCoins">0</span></span><span class="chip" style="background:#FFFBF2" id="wLeft"></span></div>
+    <div class="practice">
+      <div class="row" style="align-items:flex-start;gap:12px">
+        <img src="img/sorin-humor.jpg" alt="Sorin" style="width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none">
+        <div><div class="eyebrow">Today's practice</div><h3 class="display" id="pTitle">Bear Root</h3></div>
+      </div>
+      <ol id="pSteps"></ol>
+      <div class="line" id="pLine"></div>
+    </div>
+    <div class="stack">
+      <button class="btn gold" id="wPractice">Try it with Sorin</button>
+      <button class="btn" id="wNext">Next place</button>
+      <button class="btn ghost" id="wMap">Back to map</button>
+    </div>
+  </div></div>
+
+  <div class="ov" id="lose" hidden><div class="card" role="dialog" aria-labelledby="lTitle">
+    <div class="row" style="gap:12px"><img src="img/kai-worried.jpg" alt="Kai" style="width:58px;height:58px;border-radius:50%;object-fit:cover"><div><div class="eyebrow">Out of moves</div><h2 class="display" id="lTitle" style="margin:0">The storm is still here.</h2></div></div>
+    <p id="lText" style="margin-top:12px"></p>
+    <div class="stack">
+      <button class="btn gold" id="lMore">+5 moves · <i class="coin"></i> 60</button>
+      <button class="btn ghost" id="lAd">▶ Watch a short video for +5 moves (optional)</button>
+      <button class="btn" id="lRetry">Try again</button>
+      <button class="btn ghost" id="lMap">Back to map</button>
+    </div>
+  </div></div>
+
+  <div class="ov" id="shop" hidden><div class="card" role="dialog" aria-labelledby="sTitle">
+    <div class="eyebrow">Free to play · No forced ads</div>
+    <h2 class="display" id="sTitle">Luma's Shop</h2>
+    <p>The game is free. Only extras are for sale: power-ups, hearts, and boosts.</p>
+    <h3 class="shoph">Power-ups and extras</h3>
+    <div class="stack" style="margin-top:6px">
+      <button class="pack" data-buy="lanterns"><span class="bigic">✦</span><span class="amt">3 Sorin's Lanterns<small>Each clears a whole row of orbs</small></span><span class="price">$0.99</span></button>
+      <button class="pack" data-buy="swirls"><span class="bigic">↻</span><span class="amt">5 Luma's Swirls<small>Each stirs the board into new matches</small></span><span class="price">$0.99</span></button>
+      <button class="pack" data-buy="hearts"><span class="bigic heart">♥</span><span class="amt">Full hearts<small>Back to 5 tries right away</small></span><span class="price">$0.99</span></button>
+      <button class="pack" data-buy="boost"><span class="bigic">✺</span><span class="amt">Calm Boost<small>Double coins for 30 minutes</small></span><span class="price">$1.99</span></button>
+    </div>
+    <h3 class="shoph">Or watch a short video, if you want to</h3>
+    <div class="stack" style="margin-top:6px">
+      <button class="pack adpack" data-ad="heart"><span class="bigic">▶</span><span class="amt">+1 heart<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
+      <button class="pack adpack" data-ad="lantern"><span class="bigic">▶</span><span class="amt">+1 Sorin's Lantern<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
+      <button class="pack adpack" data-ad="boost"><span class="bigic">▶</span><span class="amt">Double coins for 10 minutes<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
+    </div>
+    <div class="stack" style="margin-top:14px"><button class="pack" data-hearts><span class="bigic heart">♥</span><span class="amt">Refill hearts with coins<small>Coins come from breathing and winning</small></span><span class="price coinprice"><i class="coin"></i> 90</span></button></div>
+    <div class="note">Preview: nothing is charged and no real video plays. Prices are placeholders. Tapping an item gives it to you so you can try it.</div>
+    <div class="stack stickyclose"><button class="btn" data-close>Close</button></div>
+  </div></div>
+
+  <div class="ov" id="adov" hidden style="align-items:center"><div class="card" role="dialog" aria-labelledby="adTitle" style="text-align:center">
+    <div class="eyebrow">Optional video · preview</div>
+    <h2 class="display" id="adTitle">A short video would play here</h2>
+    <p>Only when the player chooses it. Never in the middle of a level.</p>
+    <div class="adbar"><i id="adFill"></i></div>
+    <p class="small" id="adLeft">3</p>
+  </div></div>
+
+  <div class="ov" id="guide" hidden><div class="card" role="dialog" aria-labelledby="gTitle">
+    <div class="eyebrow" style="color:var(--gold2)" id="gEyebrow">Bear Root</div>
+    <h2 class="display" id="gTitle">Breathe with Sorin</h2>
+    <div class="bring" id="gRing"></div>
+    <div class="btext" id="gText">Get ready…</div>
+    <p id="gSub" style="color:#D8E6DF;margin-top:6px">Three slow breaths.</p>
+    <div class="stack"><button class="btn gold" id="gDone">Done</button></div>
+  </div></div>
+
+  <div id="coach" aria-live="polite"><div id="hand" hidden aria-hidden="true">👆</div><div class="coachtip" id="coachTip" hidden></div></div>
+  <div class="toast" id="toast" role="status"></div>
+</div>
+
+<script>
+(() => {
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- content ---------- */
+const GLYPH = {
+  tiger: '<svg viewBox="0 0 24 24"><path d="M6.5 4.5c1.8 4.2 1.9 9.6-.2 15M12 3.5c1.9 5.3 1.9 11.6 0 17M17.5 4.5c1.8 4.2 1.9 9.6-.2 15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>',
+  crane: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.5 3.5C12 4 5.8 9.6 5.6 17.2L4 20l1.2.9 2-2.4C15 18 20.2 11.8 19.5 3.5z"/><path d="M7.6 17.6 15.5 8.5" stroke="rgba(255,255,255,.75)" stroke-width="1.3" stroke-linecap="round"/></svg>',
+  monkey: '<svg viewBox="0 0 24 24"><path d="M12.4 11.6a1.4 1.4 0 1 0-1.3 1.9 3.2 3.2 0 1 0 3.3-3.6 5 5 0 1 0-5 5.6 6.6 6.6 0 0 0 7.2-3.2" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>',
+  bear: '<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="15.6" rx="4.8" ry="3.9"/><circle cx="5.9" cy="10.4" r="2"/><circle cx="9.6" cy="6.9" r="2.1"/><circle cx="14.4" cy="6.9" r="2.1"/><circle cx="18.1" cy="10.4" r="2"/></svg>',
+  deer: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 20.5s-7.6-4.6-7.6-10.6A4.2 4.2 0 0 1 12 7.1a4.2 4.2 0 0 1 7.6 2.8c0 6-7.6 10.6-7.6 10.6z"/></svg>',
+  spirit: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5l2.2 6.8 7.1.1-5.8 4.2 2.2 6.9L12 16.3l-5.7 4.2 2.2-6.9-5.8-4.2 7.1-.1z"/></svg>'
+};
+const TYPES = ['tiger', 'crane', 'monkey', 'bear', 'deer'];
+const LEVELS = [
+  { place: 'The Root Grounds', animal: 'bear', power: 'Bear Root', shift: 'worried → safe', moves: 16, clouds: 6,
+    problem: "Kai's tummy feels tight and the ground won't stop rumbling. He wants everyone to stop talking.",
+    sorin: "That tight feeling is looking for the ground. Where is the feeling trying to go? Let's help it land.",
+    steps: ['Stand with your feet wide, like a big bear.', 'Put both hands on your belly.', 'Breathe in slowly and feel your belly grow.', 'Breathe out long and let your feet get heavy.'],
+    line: 'Your body can feel safe again.', inhale: 4, exhale: 6 },
+  { place: 'Whispering Forest', animal: 'tiger', power: 'Tiger Breath', shift: 'scared → brave', moves: 16, clouds: 8,
+    problem: 'The shadows in the forest are whispering. Kai wants to run and hide behind a tree.',
+    sorin: "Scared is power that doesn't know where to go yet. Let's give it a direction.",
+    steps: ['Plant your feet like a tiger ready to walk.', 'Make tiger claws with your hands.', 'Breathe in and open your chest wide.', 'Breathe out with a big soft roar: haaaa.'],
+    line: 'Breath gives your power a direction.', inhale: 4, exhale: 5 },
+  { place: 'Valley of Echoes', animal: 'monkey', power: 'Monkey Shake', shift: 'stressed → playful', moves: 18, clouds: 10,
+    problem: 'Every sound in the valley bounces back louder. Kai feels buzzy, stuck, and ready to yell.',
+    sorin: "All that buzz needs somewhere to move. Let's shake it loose together.",
+    steps: ['Shake your hands like you are flicking off water.', 'Now shake your arms, your shoulders, your legs.', 'Bounce on your toes and let a laugh out.', 'Stop. Stand still. Feel the tingles.'],
+    line: 'Energy needs to move.', inhale: 3, exhale: 5 },
+  { place: 'Sky Temple', animal: 'crane', power: 'Crane Flow', shift: 'busy mind → still', moves: 20, clouds: 12,
+    problem: "Kai's thoughts are spinning faster than the wind around the temple. He can't stop thinking.",
+    sorin: "Your mind is flying fast. Let's slow the wings down, one breath at a time.",
+    steps: ['Stand tall and lift your arms like wings.', 'Lift one knee slowly if you can.', 'Breathe in while your wings rise.', 'Breathe out while they float down.'],
+    line: 'Stillness helps you notice.', inhale: 4, exhale: 6 },
+  { place: 'Lantern River', animal: 'deer', power: 'Deer Heart', shift: 'sad → close', moves: 22, clouds: 14,
+    problem: 'Kai misses his friend. The river has gone dark and the lanterns have floated away.',
+    sorin: "Sad feelings want company. Let's bring the lanterns home.",
+    steps: ['Put both hands on your heart.', 'Feel it beating under your hands.', 'Breathe in and think of someone you love.', 'Breathe out and send them a soft hello.'],
+    line: 'Softness is strength.', inhale: 4, exhale: 6 }
+];
+const CHEERS = ["Luma's glow is growing.", 'Nice match. Luma is filling up.', "Sorin: \"That's it. Nice and slow.\""];
+
+/* ---------- save state ---------- */
+const DEF = { unlocked: 1, stars: {}, coins: 150, hearts: 5, swirls: 1, lanterns: 1, boostUntil: 0 };
+let S;
+try { S = Object.assign({}, DEF, JSON.parse(localStorage.getItem('kcq-v1')) || {}); } catch (e) { S = { ...DEF }; }
+function save() { try { localStorage.setItem('kcq-v1', JSON.stringify(S)); } catch (e) {} }
+
+/* ---------- audio ---------- */
+let AC = null, muted = false;
+try { muted = localStorage.getItem('kcq-mute') === '1'; } catch (e) {}
+function ac() {
+  if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
+  if (AC.state === 'suspended') AC.resume();
+  return AC;
+}
+const PENTA = [392, 440, 523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.5, 1568, 1760];
+function boop(step = 0, vol = 0.16) {
+  const a = ac(); if (!a || muted) return;
+  const t = a.currentTime, f = PENTA[Math.min(step, PENTA.length - 1)];
+  const o = a.createOscillator(), g = a.createGain();
+  o.type = 'sine';
+  o.frequency.setValueAtTime(f * 1.6, t);
+  o.frequency.exponentialRampToValueAtTime(f, t + 0.05);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(vol, t + 0.008);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+  o.connect(g).connect(a.destination); o.start(t); o.stop(t + 0.22);
+}
+function bell(f, delay = 0, vol = 0.1) {
+  const a = ac(); if (!a || muted) return;
+  const t = a.currentTime + delay;
+  [[1, vol], [2.76, vol * 0.3], [5.4, vol * 0.12]].forEach(([m, v]) => {
+    const o = a.createOscillator(), g = a.createGain();
+    o.type = 'sine'; o.frequency.value = f * m;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(v, t + 0.01);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6 / m);
+    o.connect(g).connect(a.destination); o.start(t); o.stop(t + 1.7);
+  });
+}
+const chord = (fs, gap = 0.1) => fs.forEach((f, i) => bell(f, i * gap));
+let noiseBuf = null;
+function noise() {
+  const a = ac(); if (!a) return null;
+  if (!noiseBuf) {
+    noiseBuf = a.createBuffer(1, a.sampleRate * 2, a.sampleRate);
+    const d = noiseBuf.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  const s = a.createBufferSource(); s.buffer = noiseBuf; s.loop = true; return s;
+}
+function swish() {
+  const a = ac(); if (!a || muted) return;
+  const s = noise(), f = a.createBiquadFilter(), g = a.createGain(), t = a.currentTime;
+  f.type = 'bandpass'; f.Q.value = 1.2;
+  f.frequency.setValueAtTime(900, t); f.frequency.exponentialRampToValueAtTime(2400, t + 0.15);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.05, t + 0.03); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+  s.connect(f).connect(g).connect(a.destination); s.start(t); s.stop(t + 0.2);
+}
+let bNode = null;
+function breathSound(phase, secs) {
+  const a = ac(); if (!a || muted) return;
+  const t = a.currentTime;
+  if (phase === 'in') {
+    const s = noise(), f = a.createBiquadFilter(), g = a.createGain();
+    f.type = 'lowpass'; f.frequency.setValueAtTime(250, t); f.frequency.exponentialRampToValueAtTime(1400, t + secs);
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.09, t + secs);
+    s.connect(f).connect(g).connect(a.destination); s.start(t);
+    bNode = { s, f, g };
+  } else if (bNode) {
+    const { s, f, g } = bNode; bNode = null;
+    f.frequency.cancelScheduledValues(t); g.gain.cancelScheduledValues(t);
+    f.frequency.setValueAtTime(f.frequency.value, t); g.gain.setValueAtTime(Math.max(g.gain.value, 0.0001), t);
+    f.frequency.exponentialRampToValueAtTime(200, t + secs);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + secs);
+    s.stop(t + secs + 0.05);
+  }
+}
+function syncMute() {
+  $$('[data-mute]').forEach(b => { b.textContent = muted ? '♪̸' : '♪'; b.setAttribute('aria-label', muted ? 'Sound off' : 'Sound on'); b.style.opacity = muted ? .55 : 1; });
+}
+$$('[data-mute]').forEach(b => b.addEventListener('click', () => {
+  muted = !muted; try { localStorage.setItem('kcq-mute', muted ? '1' : '0'); } catch (e) {}
+  syncMute(); if (!muted) boop(4);
+}));
+
+/* ---------- ui helpers ---------- */
+function orbHTML(type) { return `<div class="tile t-${type}" style="--t:100%;transform:none;position:absolute;inset:0;width:100%;height:100%"><div class="orb">${GLYPH[type]}</div></div>`; }
+let toastT;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2400); }
+function syncWallet() {
+  if (typeof syncBoosts === 'function' && $('#cShuffle')) syncBoosts();
+  $$('[data-coins]').forEach(e => e.textContent = S.coins.toLocaleString());
+  $$('[data-hearts]').forEach(e => e.textContent = S.hearts);
+}
+async function showOv(id) { const o = $('#' + id); o.hidden = false; void o.offsetWidth; await wait(20); o.classList.add('show'); }
+async function hideOv(id) { const o = $('#' + id); o.classList.remove('show'); await wait(250); o.hidden = true; }
+function bump(el) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
+
+/* ---------- map ---------- */
+function renderMap() {
+  syncWallet();
+  $('#path').innerHTML = LEVELS.map((L, i) => {
+    const n = i + 1, locked = n > S.unlocked, st = S.stars[n] || 0;
+    const cur = n === Math.min(S.unlocked, LEVELS.length);
+    return `<button class="node ${locked ? 'locked' : ''} ${cur ? 'current' : ''}" data-lv="${i}" ${locked ? 'aria-disabled="true"' : ''}>
+      <span class="orbicon">${orbHTML(L.animal)}</span>
+      <span><span class="name">${L.place}</span><br><span class="shift">${L.power} · ${L.shift}</span></span>
+      <span class="stars">${locked ? '🔒' : '★'.repeat(st) + '<span style="opacity:.25">' + '★'.repeat(3 - st) + '</span>'}</span>
+    </button>`;
+  }).join('');
+}
+$('#path').addEventListener('click', e => {
+  const b = e.target.closest('.node'); if (!b) return;
+  ac();
+  if (b.classList.contains('locked')) { toast('Finish the place before this one to open it.'); return; }
+  openLevel(+b.dataset.lv);
+});
+$('#playNext').addEventListener('click', () => { ac(); openLevel(Math.min(S.unlocked, LEVELS.length) - 1); });
+$('#shopOpen1').addEventListener('click', () => showOv('shop'));
+
+/* ---------- level intro ---------- */
+let LI = 0, L = LEVELS[0];
+function openLevel(i) {
+  if (S.hearts <= 0) { toast('Out of hearts. Refill them in the shop, or wait for them to come back.'); showOv('shop'); return; }
+  LI = i; L = LEVELS[i];
+  $('#iEyebrow').textContent = `Place ${i + 1} of ${LEVELS.length} · ${L.shift}`;
+  $('#iTitle').textContent = L.place;
+  $('#iProblem').textContent = L.problem;
+  $('#iSorin').textContent = L.sorin;
+  $('#iGoal').innerHTML = `<b>Blow away ${L.clouds} storm clouds.</b> You have ${L.moves} moves.`;
+  $('#iPower').innerHTML = `<b>1.</b> Match 3 of a color to fill Luma's glow.<br><b>2.</b> When she glows, tap her and breathe with her.<br>Slow breaths blow away more clouds.`;
+  showOv('intro');
+  bell(523.25);
+}
+$('#iGo').addEventListener('click', async () => { await hideOv('intro'); startLevel(); });
+
+/* ---------- board ---------- */
+const R = 8, C = 7;
+const boardEl = $('#board'), wrap = $('#boardwrap');
+let board = [], ids = new Map(), nid = 1, T = 44;
+let busy = false, sel = null, drag = null, moves = 0, charge = 0, combo = 0, mode = null, cheerAt = 0, running = false;
+let deepBreaths = 0, breathing = false, wasReady = false;
+const progress = () => L ? 1 - clouds().length / L.clouds : 0;
+
+const rnd = a => a[Math.floor(Math.random() * a.length)];
+function newTile(type, sp = null) {
+  const el = document.createElement('div');
+  const t = { id: nid++, type, sp, el, r: 0, c: 0 };
+  el.dataset.id = t.id;
+  el.innerHTML = '<div class="orb"></div>';
+  paint(t); boardEl.appendChild(el); ids.set(String(t.id), t);
+  return t;
+}
+function paint(t) {
+  t.el.className = `tile t-${t.type}${t.sp ? ' sp-' + t.sp : ''}${t.cloud ? ' clouded' : ''}`;
+  t.el.firstChild.innerHTML = GLYPH[t.type];
+  t.el.setAttribute('aria-label', t.type === 'spirit' ? 'spirit star' : t.type + (t.sp ? ' lantern' : '') + (t.cloud ? ' under a storm cloud' : ''));
+}
+function place(t, r, c, anim = true) {
+  t.r = r; t.c = c;
+  if (!anim) t.el.style.transition = 'none';
+  t.el.style.transform = `translate(${c * T}px,${r * T}px)`;
+  if (!anim) { void t.el.offsetWidth; t.el.style.transition = ''; }
+}
+function drop(t, fromRow, r, c) {
+  place(t, fromRow, c, false);
+  place(t, r, c, true);
+}
+function all() { return board.flat().filter(Boolean); }
+function sizeBoard() {
+  const w = wrap.clientWidth - 32, h = wrap.clientHeight - 12;
+  T = Math.max(30, Math.floor(Math.min(w / C, h / R)));
+  boardEl.style.width = T * C + 'px'; boardEl.style.height = T * R + 'px';
+  boardEl.style.setProperty('--t', T + 'px');
+  all().forEach(t => place(t, t.r, t.c, false));
+}
+addEventListener('resize', () => { if (!$('#game').hidden) { sizeBoard(); sizeRain(); } });
+
+function same(a, b) { return a && b && a.type === b.type && a.type !== 'spirit' && !a.cloud && !b.cloud; }
+const clouds = () => all().filter(t => t.cloud);
+function addClouds(n, quiet) {
+  const pool = all().filter(t => !t.cloud && t.type !== 'spirit').sort(() => Math.random() - 0.5);
+  pool.slice(0, n).forEach((t, i) => {
+    t.cloud = true;
+    if (quiet) { paint(t); return; }
+    setTimeout(() => { paint(t); t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460); }, i * 120);
+  });
+}
+function findMatches() {
+  const clear = new Set(), groups = [];
+  for (let r = 0; r < R; r++) for (let c = 0; c < C;) {
+    let k = c + 1; while (k < C && same(board[r][k], board[r][c])) k++;
+    if (k - c >= 3 && board[r][c] && board[r][c].type !== 'spirit') {
+      const cells = board[r].slice(c, k); groups.push({ cells, dir: 'row' }); cells.forEach(x => clear.add(x));
+    }
+    c = k;
+  }
+  for (let c = 0; c < C; c++) for (let r = 0; r < R;) {
+    let k = r + 1; while (k < R && same(board[k][c], board[r][c])) k++;
+    if (k - r >= 3 && board[r][c] && board[r][c].type !== 'spirit') {
+      const cells = []; for (let i = r; i < k; i++) cells.push(board[i][c]);
+      groups.push({ cells, dir: 'col' }); cells.forEach(x => clear.add(x));
+    }
+    r = k;
+  }
+  return { clear, groups };
+}
+function fill() {
+  boardEl.innerHTML = ''; ids.clear();
+  board = Array.from({ length: R }, () => Array(C).fill(null));
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    let type;
+    do { type = rnd(TYPES); } while (
+      (c >= 2 && board[r][c - 1].type === type && board[r][c - 2].type === type) ||
+      (r >= 2 && board[r - 1][c].type === type && board[r - 2][c].type === type));
+    const t = newTile(type); board[r][c] = t;
+    drop(t, r - R - 1, r, c);
+  }
+  if (!hasMove()) { fill(); return; }
+  addClouds(L.clouds, true);
+}
+function hasMove() {
+  if (all().some(t => t.type === 'spirit')) return true;
+  const sw = (r1, c1, r2, c2) => { const x = board[r1][c1]; board[r1][c1] = board[r2][c2]; board[r2][c2] = x; };
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    for (const [dr, dc] of [[0, 1], [1, 0]]) {
+      const r2 = r + dr, c2 = c + dc; if (r2 >= R || c2 >= C) continue;
+      if (board[r][c].cloud || board[r2][c2].cloud) continue;
+      sw(r, c, r2, c2); const ok = findMatches().clear.size > 0; sw(r, c, r2, c2);
+      if (ok) return true;
+    }
+  }
+  return false;
+}
+async function shuffle() {
+  const tiles = all().filter(t => t.type !== 'spirit' && !t.cloud);
+  for (let tries = 0; tries < 40; tries++) {
+    const types = tiles.map(t => t.type).sort(() => Math.random() - 0.5);
+    tiles.forEach((t, i) => t.type = types[i]);
+    if (!findMatches().clear.size && hasMove()) break;
+  }
+  tiles.forEach(t => { paint(t); t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460); });
+  swish(); chord([659.25, 783.99, 1046.5], 0.05);
+  await wait(460);
+}
+
+/* ---------- turn resolution ---------- */
+function useMove() { moves--; hud(); bump($('#movesStat')); }
+function swapCells(a, b) {
+  const { r: ar, c: ac_ } = a, { r: br, c: bc } = b;
+  board[ar][ac_] = b; board[br][bc] = a;
+  place(a, br, bc); place(b, ar, ac_);
+}
+const adjacent = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
+
+async function trySwap(a, b) {
+  if (moves <= 0) { say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
+  if (a.cloud || b.cloud) { say("That orb is stuck under a storm cloud. Only Luma's breath can blow it away."); bump((a.cloud ? a : b).el); return; }
+  busy = true; swish();
+  swapCells(a, b);
+  await wait(220);
+  if (a.type === 'spirit' || b.type === 'spirit') {
+    useMove();
+    const sp = a.type === 'spirit' ? a : b, other = sp === a ? b : a;
+    const color = other.type === 'spirit' ? L.animal : other.type;
+    sp.fired = true;
+    const set = new Set([sp, ...all().filter(t => t.type === color)]);
+    if (other.type === 'spirit') { other.fired = true; set.add(other); }
+    flash(); chord([523.25, 659.25, 783.99, 1046.5], 0.06);
+    await resolve(set, [], null);
+  } else {
+    const m = findMatches();
+    if (!m.clear.size) {
+      swapCells(a, b); await wait(220);
+      say('Those two don\'t make a line. Try another swap.');
+      busy = false; return;
+    }
+    useMove();
+    await resolve(m.clear, m.groups, [a, b]);
+  }
+  await settle();
+}
+
+function expand(clear) {
+  const q = [...clear];
+  while (q.length) {
+    const t = q.pop(); let extra = [];
+    if (t.sp === 'row') extra = board[t.r];
+    else if (t.sp === 'col') extra = board.map(row => row[t.c]);
+    else if (t.type === 'spirit' && !t.fired) { t.fired = true; extra = all().filter(x => x.type === L.animal); }
+    for (const x of extra) if (x && !clear.has(x)) { clear.add(x); q.push(x); }
+  }
+}
+
+async function resolve(clear, groups, moved) {
+  combo = 0;
+  while (clear.size) {
+    const makes = [];
+    for (const g of groups || []) {
+      if (g.cells.length < 4) continue;
+      const free = g.cells.filter(x => !x.sp && x.type !== 'spirit' && !makes.some(m => m.t === x));
+      const anchor = free.find(x => moved && moved.includes(x)) || free[Math.floor(free.length / 2)];
+      if (anchor) makes.push({ t: anchor, kind: g.cells.length >= 5 ? 'spirit' : g.dir });
+    }
+    const hadSpecial = [...clear].some(t => t.sp || t.type === 'spirit');
+    expand(clear);
+    if (hadSpecial) flash();
+    makes.forEach(m => clear.delete(m.t));
+    await popSet(clear);
+    makes.forEach(m => {
+      if (m.kind === 'spirit') { m.t.type = 'spirit'; m.t.sp = null; } else m.t.sp = m.kind;
+      paint(m.t); m.t.el.classList.add('born'); setTimeout(() => m.t.el.classList.remove('born'), 460);
+      bell(m.kind === 'spirit' ? 1046.5 : 783.99, 0, 0.09);
+      say(m.kind === 'spirit' ? 'A spirit star! Swap it with any orb to clear that whole color.' : 'Four in a row makes a lantern. Match it to light up the whole line.');
+    });
+    gravity();
+    await wait(reduce ? 60 : 280);
+    const m = findMatches(); clear = m.clear; groups = m.groups; moved = null; combo++;
+  }
+}
+
+async function popSet(set) {
+  const arr = [...set];
+  arr.forEach(t => {
+    if (board[t.r][t.c] === t) board[t.r][t.c] = null;
+    ids.delete(String(t.id));
+    t.el.classList.remove('breathing', 'sel');
+    t.el.classList.add('pop');
+    setTimeout(() => t.el.remove(), 280);
+  });
+  if (arr.length) sparks(arr);
+  if (!breathing) charge = Math.min(100, charge + arr.length * 15);
+  const n = Math.min(arr.length, 5);
+  for (let i = 0; i < n; i++) setTimeout(() => boop(combo * 2 + i), i * 55);
+  if (combo >= 1 && performance.now() - cheerAt > 2500) { cheerAt = performance.now(); say(rnd(CHEERS)); }
+  hud();
+  await wait(reduce ? 40 : 250);
+}
+
+function gravity() {
+  for (let c = 0; c < C; c++) {
+    let w = R - 1;
+    for (let r = R - 1; r >= 0; r--) {
+      const t = board[r][c];
+      if (t) { if (r !== w) { board[w][c] = t; board[r][c] = null; place(t, w, c); } w--; }
+    }
+    const n = w + 1;
+    for (let r = w; r >= 0; r--) {
+      const t = newTile(rnd(TYPES)); board[r][c] = t;
+      drop(t, r - n, r, c);
+    }
+  }
+}
+
+async function settle() {
+  hud();
+  const cl = clouds().length;
+  if (!cl) { busy = true; await winLevel(); return; }
+  if (moves <= 0 && charge < 100) { busy = true; await wait(400); loseLevel(); return; }
+  if (!hasMove()) { say('No swaps left, so Luma is stirring the orbs.'); await shuffle(); }
+  busy = false;
+  coachAfterTurn();
+}
+
+/* ---------- input ---------- */
+function clearSel() { if (sel) sel.el.classList.remove('sel'); sel = null; }
+boardEl.addEventListener('pointerdown', e => {
+  const el = e.target.closest('.tile'); if (!el || busy) return;
+  const t = ids.get(el.dataset.id); if (!t) return;
+  ac();
+  if (mode === 'lantern') { useLantern(t); return; }
+  drag = { t, x: e.clientX, y: e.clientY, moved: false };
+  try { boardEl.setPointerCapture(e.pointerId); } catch (err) {}
+});
+boardEl.addEventListener('pointermove', e => {
+  if (!drag || drag.moved || busy) return;
+  const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+  if (Math.max(Math.abs(dx), Math.abs(dy)) < T * 0.35) return;
+  drag.moved = true;
+  const [dr, dc] = Math.abs(dx) > Math.abs(dy) ? [0, Math.sign(dx)] : [Math.sign(dy), 0];
+  const r2 = drag.t.r + dr, c2 = drag.t.c + dc;
+  if (r2 < 0 || r2 >= R || c2 < 0 || c2 >= C) return;
+  clearSel(); trySwap(drag.t, board[r2][c2]);
+});
+const endDrag = () => {
+  if (!drag) return;
+  const d = drag; drag = null;
+  if (d.moved || busy) return;
+  if (sel && sel !== d.t && adjacent(sel, d.t)) { const a = sel; clearSel(); trySwap(a, d.t); }
+  else if (sel === d.t) clearSel();
+  else if (d.t.cloud) { clearSel(); say("That orb is stuck under a storm cloud. Only Luma's breath can blow it away."); bump(d.t.el); }
+  else { clearSel(); sel = d.t; sel.el.classList.add('sel'); boop(0, 0.06); }
+};
+boardEl.addEventListener('pointerup', endDrag);
+boardEl.addEventListener('pointercancel', () => { drag = null; });
+
+/* ---------- breath game ---------- */
+// Inhale: slide Luma up with the rising light (can't rush it).
+// Exhale: blow on the dandelion (mic loudness only, never recorded) or trace Luma back down.
+const bBtn = $('#breathBtn');
+const brStage = $('#brStage'), brTrack = $('#brTrack'), brKnob = $('#brKnob'), brGhost = $('#brGhost'), brFill = $('#brFill');
+let brRun = 0, micH = null;
+const ease = x => 0.5 - Math.cos(Math.PI * x) / 2;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+function glowGoal(on) { all().forEach(t => t.el.classList.toggle('breathing', on && (t.type === L.animal || t.cloud))); }
+
+async function openMic() {
+  try {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) return null;
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+    const a = ac(); if (!a) { stream.getTracks().forEach(t => t.stop()); return null; }
+    const src = a.createMediaStreamSource(stream), an = a.createAnalyser();
+    an.fftSize = 1024; src.connect(an);
+    const buf = new Float32Array(an.fftSize);
+    return {
+      floor: 0.004,
+      level() { an.getFloatTimeDomainData(buf); let s = 0; for (let i = 0; i < buf.length; i++) s += buf[i] * buf[i]; return Math.sqrt(s / buf.length); },
+      close() { stream.getTracks().forEach(t => t.stop()); try { src.disconnect(); } catch (e) {} }
+    };
+  } catch (e) { return null; }
+}
+function closeMic() { if (micH) { micH.close(); micH = null; } }
+
+function brUI(pos, ghost) {
+  const H = brTrack.clientHeight, K = brKnob.offsetHeight;
+  brKnob.style.transform = `translateY(${-(pos * (H - K))}px)`;
+  brGhost.style.transform = `translateY(${-(ghost * (H - K))}px)`;
+  brFill.style.height = `${(pos * (H - K) + K / 2)}px`;
+}
+function brText(title, sub) { if (title != null) $('#brTitle').textContent = title; if (sub != null) $('#brSub').textContent = sub; }
+let hintAt = 0;
+function brHint(msg) { const n = performance.now(); if (n - hintAt < 1400) return; hintAt = n; $('#brSub').textContent = msg; }
+function seeds(frac) {
+  $$('#dand .seed').forEach((s, i, arr) => s.classList.toggle('fly', i < Math.round(frac * arr.length)));
+}
+function buildDandelion() {
+  let h = '';
+  for (let i = 0; i < 22; i++) {
+    const a = (i / 22) * Math.PI * 2, x = 50 + Math.cos(a) * 30, y = 46 + Math.sin(a) * 30;
+    const dx = 60 + Math.random() * 60, dy = -30 - Math.random() * 50;
+    h += `<g class="seed" style="--dx:${dx}px;--dy:${dy}px;--r:${Math.round(Math.random() * 120 - 60)}deg;transition-delay:${(Math.random() * 0.15).toFixed(2)}s"><line x1="50" y1="46" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="3.2"/></g>`;
+  }
+  $('#dand').innerHTML = `<line class="stem" x1="50" y1="48" x2="50" y2="118"/><circle class="core" cx="50" cy="46" r="5"/>${h}`;
+}
+
+// Follow the light with a finger. Returns quality 0..1.
+function followPhase(dir, secs, run, onTick) {
+  return new Promise(res => {
+    const from = dir === 'up' ? 0 : 1, to = 1 - from;
+    let pos = from, target = from, pressing = false, started = null, good = 0, total = 0;
+    const down = e => {
+      pressing = true; try { brStage.setPointerCapture(e.pointerId); } catch (err) {}
+      move(e);
+      if (!started) { started = performance.now(); if (!micH) breathSound(dir === 'up' ? 'in' : 'out', secs); }
+    };
+    const move = e => { if (!pressing) return; const r = brTrack.getBoundingClientRect(); target = clamp(1 - (e.clientY - r.top) / r.height, 0, 1); };
+    const up = () => { pressing = false; };
+    brStage.addEventListener('pointerdown', down);
+    brStage.addEventListener('pointermove', move);
+    brStage.addEventListener('pointerup', up);
+    brStage.addEventListener('pointercancel', up);
+    const done = q => {
+      clearInterval(iv);
+      brStage.removeEventListener('pointerdown', down);
+      brStage.removeEventListener('pointermove', move);
+      brStage.removeEventListener('pointerup', up);
+      brStage.removeEventListener('pointercancel', up);
+      res(q);
+    };
+    const iv = setInterval(() => {
+      if (run !== brRun) return done(0);
+      const now = performance.now();
+      if (onTick) onTick();
+      if (!started) { brUI(pos, from); return; }
+      const tt = Math.min(1, (now - started) / (secs * 1000));
+      const g = from + (to - from) * ease(tt);
+      const lead = 0.1;
+      const rushing = pressing && (dir === 'up' ? target > g + lead : target < g - lead);
+      if (pressing) pos = dir === 'up' ? Math.min(target, g + lead) : Math.max(target, g - lead);
+      total++;
+      if (pressing && !rushing && Math.abs(pos - g) < 0.14) good++;
+      if (rushing) brHint('Slower… stay with the light.');
+      else if (!pressing && tt < 1) brHint(dir === 'up' ? 'Keep holding Luma and keep breathing in.' : 'Keep holding Luma and keep breathing out.');
+      if (dir === 'down' && !micH) seeds(1 - pos);
+      brUI(pos, g);
+      if (tt >= 1 && (Math.abs(pos - to) < 0.12 || now - started > secs * 1000 + 1500)) done(total ? good / total : 0);
+    }, 33);
+  });
+}
+
+// Exhale into the mic. Steady, gentle air moves Luma down at breathing pace; blowing hard does not go faster.
+function micExhale(secs, run) {
+  return new Promise(res => {
+    const thr = Math.max(0.012, micH.floor * 3), loud = 0.3;
+    let pos = 1, started = null, inBand = 0, total = 0, quietSince = null;
+    const step = 1 / (secs * 30);
+    const meter = $('#brMeter i');
+    const iv = setInterval(() => {
+      if (run !== brRun || !micH) { clearInterval(iv); return res(0); }
+      const v = micH.level(), now = performance.now();
+      meter.style.height = `${clamp(v / loud, 0, 1) * 100}%`;
+      meter.style.background = v > loud ? '#F2A07B' : v > thr ? '#BFE8F5' : 'rgba(255,255,255,.35)';
+      const blowing = v > thr;
+      if (!started) { brUI(1, 1); if (blowing) started = now; else return; }
+      const tt = Math.min(1, (now - started) / (secs * 1000));
+      total++;
+      if (blowing) {
+        quietSince = null;
+        if (v > loud) { pos -= step * 0.3; brHint('Softer… like cooling hot soup.'); }
+        else { pos -= step; inBand++; }
+      } else if (quietSince == null) quietSince = now;
+      pos = Math.max(0, pos);
+      seeds(1 - pos);
+      brUI(pos, 1 - ease(tt));
+      const stopped = quietSince != null && now - quietSince > 1300;
+      if (stopped && pos > 0.05) brHint('Keep breathing out… long and slow.');
+      if (pos <= 0 || stopped && now - quietSince > 2200 || now - started > secs * 2600) {
+        clearInterval(iv);
+        res(clamp((inBand / Math.max(1, total)) * 0.4 + (1 - pos) * 0.6, 0, 1));
+      }
+    }, 33);
+  });
+}
+
+async function openBreath() {
+  ac();
+  if (busy) return;
+  if (charge < 100) { say(`Luma is ${Math.round(charge)}% full. Make matches to fill her up.`); bump(bBtn); return; }
+  busy = true;
+  coachBreathOpened();
+  $('#brChoose').hidden = !!S.breathMode ? true : false;
+  $('#brPlay').hidden = !S.breathMode;
+  $('#brResult').hidden = true;
+  $('#brEyebrow').textContent = `${L.power} · Luma's breath`;
+  brText('How will you breathe out?', 'Clouds only leave when you breathe.');
+  await showOv('breathe');
+  if (S.breathMode) runBreath();
+}
+$$('#brChoose [data-mode]').forEach(b => b.addEventListener('click', () => {
+  S.breathMode = b.dataset.mode; save();
+  $('#brChoose').hidden = true; $('#brPlay').hidden = false;
+  runBreath();
+}));
+$('#brSwitch').addEventListener('click', () => {
+  S.breathMode = S.breathMode === 'mic' ? 'touch' : 'mic'; save();
+  runBreath();
+});
+$('#brCancel').addEventListener('click', async () => {
+  brRun++; breathing = false; closeMic(); breathSound('out', 0.3);
+  await hideOv('breathe'); glowGoal(false);
+  busy = false;
+  say('The clouds are still waiting. Breathe with Luma when you are ready.');
+});
+
+async function runBreath() {
+  const run = ++brRun;
+  closeMic();
+  breathing = true;
+  $('#brResult').hidden = true; $('#brPlay').hidden = false;
+  buildDandelion(); seeds(0);
+  $('#dand').classList.remove('show');
+  $('#brMeter').hidden = true;
+  glowGoal(true);
+  brUI(0, 0);
+  if (S.breathMode === 'mic') {
+    brText('Getting the dandelion ready…', 'Your phone may ask to use the microphone. It only listens for how strong your breath is. Nothing is recorded.');
+    micH = await openMic();
+    if (run !== brRun) { closeMic(); return; }
+    if (!micH) { S.breathMode = 'touch'; save(); toast("The microphone isn't available here, so trace the breath with your finger."); }
+  }
+  $('#brSwitch').textContent = S.breathMode === 'mic' ? 'Use my finger instead' : 'Blow on a dandelion instead';
+
+  // inhale
+  brText('Breathe in through your nose', 'Press and hold Luma, then slide her up slowly, staying with the glowing ring.');
+  bell(523.25, 0, 0.06);
+  const brHand = $('#brHand');
+  brHand.className = 'brhand up'; brHand.hidden = !!S.tutDone;
+  let floorSum = 0, floorN = 0;
+  const qin = await followPhase('up', L.inhale, run, () => { if (micH) { floorSum += micH.level(); floorN++; } });
+  if (run !== brRun) return;
+  if (micH && floorN) micH.floor = Math.max(0.004, floorSum / floorN);
+
+  // little pause at the top
+  brHand.hidden = true;
+  brText('Hold it…', 'Feel your belly full of air.');
+  await wait(900);
+  if (run !== brRun) return;
+
+  // exhale
+  $('#dand').classList.add('show');
+  let qout;
+  if (micH) {
+    $('#brMeter').hidden = false;
+    brText('Now breathe out slowly', 'Blow gently on the dandelion. Long and soft.');
+    qout = await micExhale(L.exhale, run);
+  } else {
+    brText('Now breathe out slowly', 'Slide Luma back down with the light while you breathe out.');
+    brHand.className = 'brhand down'; brHand.hidden = !!S.tutDone;
+    qout = await followPhase('down', L.exhale, run);
+  }
+  closeMic();
+  brHand.hidden = true;
+  if (run !== brRun) return;
+  seeds(1);
+  showBreathResult(clamp(qin * 0.35 + qout * 0.65, 0, 1));
+}
+
+let pendingQ = null;
+function breathPlan(q) {
+  const cl = clouds().length, an = all().filter(t => t.type === L.animal && !t.cloud).length;
+  const tier = q >= 0.72 ? 'deep' : q >= 0.4 ? 'nice' : 'small';
+  const cloudsOff = Math.min(cl, tier === 'deep' ? 4 : tier === 'nice' ? 2 : 1);
+  const orbs = 0;
+  const coins = (tier === 'deep' ? 20 : tier === 'nice' ? 10 : 3) * coinMult();
+  return { tier, cloudsOff, orbs, coins };
+}
+function showBreathResult(q) {
+  pendingQ = q;
+  const p = breathPlan(q);
+  $('#brPlay').hidden = true; $('#brResult').hidden = false;
+  $('#brEyebrow').textContent = `${L.power} · Luma's breath`;
+  const head = { deep: 'Deep breath.', nice: 'Nice breath.', small: 'A little breath.' }[p.tier];
+  const tip = { deep: 'Slow in, long and soft out. That clears the most clouds.', nice: 'Go even slower next time to blow away 4 clouds.', small: 'Stay with the light the whole way. Slow breaths blow away 4 clouds.' }[p.tier];
+  brText(head, tip);
+  $('#brFeathers').innerHTML = [1, 2, 3].map(i => `<span class="${i <= ({ deep: 3, nice: 2, small: 1 })[p.tier] ? '' : 'off'}">❋</span>`).join('');
+  $('#brGains').innerHTML = `<span class="chip">☁ ${p.cloudsOff} ${p.cloudsOff === 1 ? 'cloud' : 'clouds'} blown away</span><span class="chip"><i class="coin"></i>+${p.coins}</span>`;
+  chord(p.tier === 'deep' ? [523.25, 659.25, 783.99, 1046.5] : p.tier === 'nice' ? [523.25, 659.25, 783.99] : [523.25, 659.25], 0.12);
+}
+$('#brBack').addEventListener('click', async () => {
+  if (pendingQ == null) return;
+  const q = pendingQ; pendingQ = null;
+  await hideOv('breathe');
+  applyBreath(q);
+});
+
+async function applyBreath(q) {
+  const p = breathPlan(q);
+  glowGoal(false);
+  if (p.tier === 'deep') deepBreaths++;
+  S.coins += p.coins; save();
+  charge = 0; hud();
+  flash();
+  const cl = clouds().sort(() => Math.random() - 0.5).slice(0, p.cloudsOff);
+  cl.forEach((t, i) => setTimeout(() => {
+    t.cloud = false; paint(t);
+    t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460);
+    boop(3 + i, 0.1);
+  }, i * 90));
+  await wait(cl.length * 90 + 300);
+  const left = clouds().length;
+  say(left ? `${p.cloudsOff === 1 ? 'One cloud' : p.cloudsOff + ' clouds'} blew away. ${left} left. Match orbs to fill Luma again.` : 'The last cloud blew away.');
+  const orbs = all().filter(t => t.type === L.animal && !t.cloud).sort(() => Math.random() - 0.5).slice(0, p.orbs);
+  if (orbs.length) await resolve(new Set(orbs), [], null);
+  breathing = false;
+  charge = 0; hud();
+  await settle();
+  coachBreathDone();
+}
+bBtn.addEventListener('click', openBreath);
+
+/* ---------- boosters ---------- */
+function spend(n) {
+  if (S.coins < n) { toast('Not enough coins yet. Luma\'s shop has more.'); showOv('shop'); return false; }
+  S.coins -= n; save(); syncWallet(); return true;
+}
+function syncBoosts() {
+  const cost = (n, c) => n > 0 ? `<b class="own">×${n}</b>` : `<i class="coin"></i>${c}`;
+  $('#cShuffle').innerHTML = cost(S.swirls, 40);
+  $('#cLantern').innerHTML = cost(S.lanterns, 80);
+  const left = (S.boostUntil || 0) - Date.now();
+  $('#boostChip').hidden = left <= 0;
+  if (left > 0) $('#boostLeft').textContent = `${Math.floor(left / 60000)}:${String(Math.floor(left / 1000) % 60).padStart(2, '0')}`;
+}
+setInterval(syncBoosts, 1000);
+const coinMult = () => (S.boostUntil || 0) > Date.now() ? 2 : 1;
+function usePower(kind, cost) {
+  if (S[kind] > 0) { S[kind]--; save(); syncBoosts(); return true; }
+  return spend(cost);
+}
+$('#shopOpen2').addEventListener('click', () => showOv('shop'));
+$('#bShuffle').addEventListener('click', async () => {
+  if (busy) return;
+  if (!usePower('swirls', 40)) return;
+  busy = true; say('Luma swirls the orbs into a new pattern.');
+  await shuffle(); busy = false;
+});
+$('#bLantern').addEventListener('click', () => {
+  if (busy) return;
+  if (mode === 'lantern') { mode = null; boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on'); return; }
+  if (S.lanterns <= 0 && S.coins < 80) { spend(80); return; }
+  mode = 'lantern'; boardEl.classList.add('aiming'); $('#bLantern').classList.add('on');
+  say("Tap any orb. Sorin's lantern will clear its whole row.");
+});
+async function useLantern(t) {
+  mode = null; boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on');
+  if (!usePower('lanterns', 80)) return;
+  busy = true; flash(); chord([659.25, 880, 1174.66], 0.05);
+  await resolve(new Set(board[t.r].filter(Boolean)), [], null);
+  await settle();
+}
+
+/* ---------- hud / scene ---------- */
+const kai = $('#kaiFace');
+let bubbleT;
+function say(msg) {
+  const b = $('#bubble');
+  b.classList.add('fade');
+  clearTimeout(bubbleT);
+  bubbleT = setTimeout(() => { b.textContent = msg; b.classList.remove('fade'); }, 180);
+}
+function hud() {
+  const cl = clouds().length;
+  const p = progress();
+  $('#gClouds').textContent = cl;
+  $('#gCloudWord').textContent = cl === 1 ? 'cloud left' : 'clouds left';
+  $('#gMoves').textContent = Math.max(0, moves);
+  $('#movesStat').style.boxShadow = moves <= 3 ? 'inset 0 0 0 2px #F2A07B' : '';
+  $('#storm').style.opacity = (0.85 * (1 - p)).toFixed(3);
+  $$('#lanterns .lantern').forEach((l, i) => l.classList.toggle('lit', p >= (i + 1) / 5));
+  const face = p >= 0.8 ? 'kai-joy' : p >= 0.35 ? 'kai-calm' : 'kai-worried';
+  if (!kai.src.includes(face)) kai.src = `img/${face}.jpg`;
+  bBtn.style.setProperty('--c', charge);
+  const ready = charge >= 100;
+  bBtn.classList.toggle('ready', ready);
+  $('#breathLbl').innerHTML = ready ? 'Tap me<br>to breathe' : `Filling<br>${Math.round(charge)}%`;
+  if (ready && !wasReady && !breathing) { say('Luma is ready. Tap her and breathe with her.'); coachReady(); }
+  wasReady = ready;
+  syncWallet();
+}
+function flash() { if (reduce) return; const f = $('#flash'); f.classList.remove('go'); void f.offsetWidth; f.classList.add('go'); }
+function sparks(arr) {
+  if (reduce) return;
+  arr.slice(0, 10).forEach(t => {
+    for (let i = 0; i < 3; i++) {
+      const s = document.createElement('div'); s.className = 'spark';
+      const x = t.c * T + T / 2, y = t.r * T + T / 2;
+      s.style.left = x + 'px'; s.style.top = y + 'px';
+      boardEl.appendChild(s);
+      const a = Math.random() * Math.PI * 2, d = T * (0.5 + Math.random() * 0.7);
+      s.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * d}px), calc(-50% + ${Math.sin(a) * d}px)) scale(.2)`, opacity: 0 }], { duration: 480, easing: 'ease-out' }).onfinish = () => s.remove();
+    }
+  });
+}
+// rain
+const rc = $('#rain'), rx = rc.getContext('2d');
+let drops = [];
+function sizeRain() { const r = rc.getBoundingClientRect(); rc.width = r.width * devicePixelRatio; rc.height = r.height * devicePixelRatio; }
+function rainLoop() {
+  if (!running) return;
+  const W = rc.width, H = rc.height, p = progress();
+  const want = reduce ? 0 : Math.round(140 * (1 - p));
+  while (drops.length < want) drops.push({ x: Math.random() * W, y: Math.random() * H, v: (6 + Math.random() * 6) * devicePixelRatio, l: (10 + Math.random() * 14) * devicePixelRatio });
+  if (drops.length > want) drops.length = want;
+  rx.clearRect(0, 0, W, H);
+  rx.strokeStyle = 'rgba(200,220,235,.35)'; rx.lineWidth = 1.2 * devicePixelRatio;
+  rx.beginPath();
+  for (const d of drops) {
+    rx.moveTo(d.x, d.y); rx.lineTo(d.x - d.l * 0.25, d.y + d.l);
+    d.y += d.v; d.x -= d.v * 0.25;
+    if (d.y > H) { d.y = -d.l; d.x = Math.random() * W * 1.2; }
+  }
+  rx.stroke();
+  if (p >= 1) {
+    // fireflies once the storm clears
+    const t = performance.now() / 1000;
+    for (let i = 0; i < 14; i++) {
+      const x = (Math.sin(t * 0.3 + i * 1.7) * 0.45 + 0.5) * W, y = (Math.cos(t * 0.25 + i * 2.3) * 0.35 + 0.45) * H;
+      const g = rx.createRadialGradient(x, y, 0, x, y, 9 * devicePixelRatio);
+      g.addColorStop(0, 'rgba(255,236,160,.9)'); g.addColorStop(1, 'rgba(255,236,160,0)');
+      rx.fillStyle = g; rx.beginPath(); rx.arc(x, y, 9 * devicePixelRatio, 0, 7); rx.fill();
+    }
+  }
+  if (!reduce && p < 0.3 && Math.random() < 0.0025) flash();
+  requestAnimationFrame(rainLoop);
+}
+
+/* ---------- coach: guided first level + idle hints ---------- */
+// tut: null | 'swap' | 'luma' | 'breath' | 'loop'
+const appEl = $('#app'), handEl = $('#hand'), tipEl = $('#coachTip');
+let tut = null, handAnim = null, idleAt = performance.now(), hintShown = false;
+function findSwap() {
+  const sw = (r1, c1, r2, c2) => { const x = board[r1][c1]; board[r1][c1] = board[r2][c2]; board[r2][c2] = x; };
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    for (const [dr, dc] of [[0, 1], [1, 0]]) {
+      const r2 = r + dr, c2 = c + dc; if (r2 >= R || c2 >= C) continue;
+      if (!board[r][c] || !board[r2][c2] || board[r][c].cloud || board[r2][c2].cloud) continue;
+      sw(r, c, r2, c2); const ok = findMatches().clear.size > 0; sw(r, c, r2, c2);
+      if (ok) return [board[r][c], board[r2][c2]];
+    }
+  }
+  return null;
+}
+function centerOf(el) {
+  const a = appEl.getBoundingClientRect(), r = el.getBoundingClientRect();
+  return { x: r.left - a.left + r.width / 2, y: r.top - a.top + r.height / 2, top: r.top - a.top, bottom: r.bottom - a.top };
+}
+function clearHints() {
+  $$('.tile.hint').forEach(t => t.classList.remove('hint'));
+  bBtn.classList.remove('point');
+  if (handAnim) { handAnim.cancel(); handAnim = null; }
+  handEl.hidden = true;
+}
+function hideTip() { tipEl.hidden = true; }
+function tip(step, text, y, button) {
+  tipEl.innerHTML = `${step ? `<span class="k">${step}</span>` : ''}${text}${button ? `<button class="btn gold" id="tipBtn" style="margin-top:10px;min-height:40px;width:100%">${button}</button>` : ''}`;
+  tipEl.hidden = false;
+  return button ? new Promise(res => $('#tipBtn').addEventListener('click', () => res(), { once: true })) : null;
+}
+// fingertip of the emoji sits about 8px right of centre, 4px from the top
+const handAt = (x, y) => `translate(${x - 18}px, ${y - 4}px)`;
+function showSwapHint() {
+  clearHints();
+  const pair = findSwap(); if (!pair) return false;
+  const [a, b] = pair;
+  a.el.classList.add('hint'); b.el.classList.add('hint');
+  const p1 = centerOf(a.el), p2 = centerOf(b.el);
+  handEl.hidden = false;
+  handAnim = handEl.animate([
+    { transform: handAt(p1.x, p1.y), opacity: 0 },
+    { transform: handAt(p1.x, p1.y), opacity: 1, offset: 0.2 },
+    { transform: handAt(p2.x, p2.y), opacity: 1, offset: 0.7 },
+    { transform: handAt(p2.x, p2.y), opacity: 0 }
+  ], { duration: 1700, iterations: Infinity, easing: 'ease-in-out' });
+  return true;
+}
+function showLumaHint() {
+  clearHints();
+  bBtn.classList.add('point');
+  const p = centerOf(bBtn);
+  handEl.hidden = false;
+  handAnim = handEl.animate([
+    { transform: handAt(p.x, p.y + 30) },
+    { transform: handAt(p.x, p.y + 8), offset: 0.5 },
+    { transform: handAt(p.x, p.y + 30) }
+  ], { duration: 1100, iterations: Infinity, easing: 'ease-in-out' });
+}
+
+function coachStart() {
+  idleAt = performance.now(); hintShown = false;
+  if (LI !== 0 || S.tutDone) { tut = null; clearHints(); hideTip(); return; }
+  tut = 'swap';
+  showSwapHint();
+  tip('Step 1 of 3 · Match', 'Slide the glowing orb onto its neighbor, like the hand shows. Three of the same color in a row is a match.', 0);
+}
+// called after every finished turn
+function coachAfterTurn() {
+  idleAt = performance.now(); hintShown = false;
+  if (tut === 'swap') {
+    if (charge >= 100) return;
+    showSwapHint();
+    tip('Step 1 of 3 · Match', `Nice. That match filled Luma's glow to ${Math.round(charge)}%. Make another match to fill her up.`, 0);
+  } else if (tut === 'loop') {
+    clearHints();
+  } else if (!tut) clearHints();
+}
+function coachReady() {
+  if (tut !== 'swap') return;
+  tut = 'luma';
+  showLumaHint();
+  tip('Step 2 of 3 · Breathe', 'Luma is full and glowing. Tap her to breathe with her. Breathing is the only thing that blows clouds away.', 0);
+}
+function coachBreathOpened() {
+  clearHints(); hideTip();
+  if (tut === 'luma') tut = 'breath';
+}
+async function coachBreathDone() {
+  if (tut !== 'breath') return;
+  tut = 'loop';
+  const left = clouds().length;
+  const wait1 = tip('Step 3 of 3 · Repeat', `That's the whole game. Match to fill Luma, then breathe. ${left ? `${left} ${left === 1 ? 'cloud' : 'clouds'} to go.` : ''} Slow breaths clear 4 clouds at once.`, 0, 'Got it, let me play');
+  await wait1;
+  hideTip(); tut = null;
+  S.tutDone = true; save();
+  idleAt = performance.now();
+}
+// idle hints on every level, so nobody sits there stuck
+setInterval(() => {
+  if ($('#game').hidden || busy || tut || hintShown || $$('.ov').some(o => !o.hidden)) return;
+  if (performance.now() - idleAt < 7000) return;
+  hintShown = true;
+  if (charge >= 100) { showLumaHint(); say('Luma is ready. Tap her and breathe with her.'); }
+  else if (showSwapHint()) say('Here is a match you can make.');
+}, 500);
+$('#game').addEventListener('pointerdown', () => {
+  idleAt = performance.now();
+  if (hintShown) { hintShown = false; if (!tut) clearHints(); }
+}, true);
+addEventListener('resize', () => { if (tut === 'swap') showSwapHint(); else if (tut === 'luma') showLumaHint(); });
+
+/* ---------- level flow ---------- */
+function startLevel() {
+  $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
+  $('#gPlace').textContent = L.place; $('#gShift').textContent = `${L.power} · ${L.shift}`;
+  $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
+  moves = L.moves; charge = 0; wasReady = false; combo = 0; mode = null; busy = true; sel = null;
+  deepBreaths = 0; breathing = false;
+  boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on');
+  setTimeout(() => {
+    sizeBoard(); sizeRain(); fill(); hud();
+    say('Swipe to match 3 of the same color. Each match fills Luma.');
+    if (!running) { running = true; rainLoop(); }
+    setTimeout(() => { busy = false; coachStart(); }, 700);
+  }, 30);
+}
+function toMap() {
+  running = false; busy = true;
+  brRun++; closeMic(); breathing = false;
+  tut = null; clearHints(); hideTip();
+  $('#game').hidden = true; $('#map').hidden = false; renderMap();
+}
+$('#toMap').addEventListener('click', toMap);
+
+async function winLevel() {
+  glowGoal(false); clearHints(); hideTip();
+  chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.13);
+  say('The storm passed. Kai can breathe again.');
+  await wait(1400);
+  const n = LI + 1;
+  const stars = 1 + (moves >= 4 ? 1 : 0) + (deepBreaths > 0 ? 1 : 0);
+  const coins = (30 + moves * 5) * coinMult();
+  S.stars[n] = Math.max(S.stars[n] || 0, stars);
+  S.unlocked = Math.max(S.unlocked, Math.min(LEVELS.length, n + 1));
+  if (n === LEVELS.length) S.unlocked = LEVELS.length + 1;
+  S.coins += coins; save();
+  $('#wEyebrow').textContent = `${L.place} · ${L.shift}`;
+  $('#wStars').innerHTML = '★'.repeat(stars) + `<span class="off">${'★'.repeat(3 - stars)}</span>`;
+  $('#wCoins').textContent = coins;
+  $('#wLeft').textContent = deepBreaths ? `${deepBreaths} deep ${deepBreaths === 1 ? 'breath' : 'breaths'}` : 'Third star: take one deep breath';
+  $('#pTitle').textContent = L.power;
+  $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
+  $('#pLine').textContent = L.line;
+  $('#wNext').hidden = n >= LEVELS.length;
+  $('#wTitle').textContent = n >= LEVELS.length ? 'Every lantern is home.' : 'The storm has passed.';
+  showOv('win');
+}
+$('#wNext').addEventListener('click', async () => { await hideOv('win'); toMap(); openLevel(LI + 1); });
+$('#wMap').addEventListener('click', async () => { await hideOv('win'); toMap(); });
+
+function loseLevel() {
+  S.hearts = Math.max(0, S.hearts - 1); save(); syncWallet();
+  bell(392, 0, 0.08); bell(329.63, 0.25, 0.07);
+  const left = clouds().length;
+  $('#lText').textContent = `Kai blew away ${L.clouds - left} of ${L.clouds} clouds. ${left} left. You have ${S.hearts} ${S.hearts === 1 ? 'heart' : 'hearts'} left.`;
+  $('#lRetry').textContent = S.hearts > 0 ? 'Try again · uses a heart' : 'Refill hearts to try again';
+  showOv('lose');
+}
+$('#lMore').addEventListener('click', async () => {
+  if (!spend(60)) return;
+  S.hearts = Math.min(5, S.hearts + 1); save();
+  moves += 5; await hideOv('lose'); busy = false; hud();
+  say('Five more moves. Take your time.');
+});
+$('#lRetry').addEventListener('click', async () => {
+  if (S.hearts <= 0) { showOv('shop'); return; }
+  await hideOv('lose'); startLevel();
+});
+$('#lMap').addEventListener('click', async () => { await hideOv('lose'); toMap(); });
+
+/* ---------- shop ---------- */
+$('#shop').addEventListener('click', async e => {
+  const buy = e.target.closest('[data-buy]');
+  if (buy) {
+    const k = buy.dataset.buy;
+    if (k === 'lanterns') { S.lanterns += 3; toast("Preview: 3 Sorin's Lanterns added. No charge."); }
+    if (k === 'swirls') { S.swirls += 5; toast("Preview: 5 Luma's Swirls added. No charge."); }
+    if (k === 'hearts') { S.hearts = 5; toast('Preview: hearts are full. No charge.'); $('#lRetry').textContent = 'Try again · uses a heart'; }
+    if (k === 'boost') { S.boostUntil = Math.max(Date.now(), S.boostUntil || 0) + 30 * 60000; toast('Preview: double coins for 30 minutes. No charge.'); }
+    save(); syncWallet(); chord([783.99, 1046.5, 1318.5], 0.06);
+    return;
+  }
+  const ad = e.target.closest('[data-ad]');
+  if (ad) {
+    await playAd();
+    const k = ad.dataset.ad;
+    if (k === 'heart') { S.hearts = Math.min(5, S.hearts + 1); toast('Thanks for watching. +1 heart.'); $('#lRetry').textContent = 'Try again · uses a heart'; }
+    if (k === 'lantern') { S.lanterns++; toast("Thanks for watching. +1 Sorin's Lantern."); }
+    if (k === 'boost') { S.boostUntil = Math.max(Date.now(), S.boostUntil || 0) + 10 * 60000; toast('Thanks for watching. Double coins for 10 minutes.'); }
+    save(); syncWallet(); bell(880);
+    return;
+  }
+  if (e.target.closest('[data-hearts]')) {
+    if (S.hearts >= 5) { toast('Your hearts are already full.'); return; }
+    if (S.coins < 90) { toast('Not enough coins. Grab a pack above.'); return; }
+    S.coins -= 90; S.hearts = 5; save(); syncWallet(); bell(880); toast('Hearts refilled.');
+    $('#lRetry').textContent = 'Try again · uses a heart';
+    return;
+  }
+  if (e.target.closest('[data-close]') || e.target === e.currentTarget) hideOv('shop');
+});
+
+async function playAd() {
+  await showOv('adov');
+  const fill = $('#adFill');
+  for (let i = 3; i > 0; i--) { $('#adLeft').textContent = `Reward in ${i}…`; fill.style.width = `${((3 - i + 1) / 3) * 100}%`; await wait(1000); }
+  fill.style.width = '0';
+  await hideOv('adov');
+}
+$('#lAd').addEventListener('click', async () => {
+  await playAd();
+  S.hearts = Math.min(5, S.hearts + 1); save(); syncWallet();
+  moves += 5; await hideOv('lose'); busy = false; hud();
+  say('Five more moves. Take your time.');
+});
+
+/* ---------- guided practice ---------- */
+let guideRun = 0;
+$('#wPractice').addEventListener('click', async () => {
+  const run = ++guideRun;
+  $('#gEyebrow').textContent = L.power;
+  $('#gDone').textContent = 'Skip';
+  await showOv('guide');
+  const ring = $('#gRing'), txt = $('#gText'), sub = $('#gSub');
+  ring.style.transition = 'none'; ring.style.transform = 'scale(.45)';
+  txt.textContent = 'Get ready…'; sub.textContent = L.steps[0];
+  await wait(1800);
+  for (let i = 0; i < 3 && run === guideRun; i++) {
+    sub.textContent = `Breath ${i + 1} of 3 · ${L.steps[Math.min(i + 1, L.steps.length - 1)]}`;
+    txt.textContent = 'Breathe in…';
+    ring.style.transition = `transform ${L.inhale}s cubic-bezier(.35,0,.3,1)`; ring.style.transform = 'scale(1)';
+    breathSound('in', L.inhale); bell(523.25, 0, 0.05);
+    await wait(L.inhale * 1000); if (run !== guideRun) return;
+    txt.textContent = 'Breathe out…';
+    ring.style.transition = `transform ${L.exhale}s cubic-bezier(.4,0,.3,1)`; ring.style.transform = 'scale(.45)';
+    breathSound('out', L.exhale);
+    await wait(L.exhale * 1000);
+  }
+  if (run !== guideRun) return;
+  txt.textContent = 'Notice how your body feels now.';
+  sub.textContent = L.line;
+  $('#gDone').textContent = 'Done';
+  chord([523.25, 659.25, 783.99], 0.15);
+});
+$('#gDone').addEventListener('click', () => { guideRun++; breathSound('out', 0.3); hideOv('guide'); });
+
+/* ---------- boot ---------- */
+$$('[data-play]').forEach(b => b.addEventListener('click', () => {
+  ac();
+  $('#welcome').hidden = true; $('#map').hidden = false; renderMap();
+  openLevel(0);
+}));
+$('#retut').addEventListener('click', () => { S.tutDone = false; save(); toast('The guided walkthrough will play on level 1.'); });
+$('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); });
+$('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#welcome').hidden = false; $('#welcome').scrollTop = 0; });
+$$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
+syncMute(); renderMap();
+})();
+</script>
+
+</html>
