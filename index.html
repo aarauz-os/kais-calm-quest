@@ -158,12 +158,14 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 /* ---------- game ---------- */
 #game{color:#FBF3E2}
 .scene{position:absolute;inset:0;overflow:hidden;z-index:0}
-.sky{position:absolute;inset:0;background:linear-gradient(#F7E6C4,#E9CF9C 55%,#9DB58E)}
-.hills{position:absolute;left:-10%;right:-10%;bottom:0;height:38%;background:
-  radial-gradient(60% 70% at 20% 100%,#3E6B4F 60%,transparent 61%),
-  radial-gradient(55% 60% at 80% 100%,#2F5A44 60%,transparent 61%),
-  radial-gradient(90% 45% at 50% 100%,#24493A 60%,transparent 61%)}
-.storm{position:absolute;inset:0;background:linear-gradient(#1D2530,#2E3A46 60%,#1E2A2A);opacity:.85;transition:opacity 1.2s ease}
+.sky{position:absolute;inset:0;background:linear-gradient(#FFE0A8 0%,#FFC178 34%,#E89A6A 58%,#8FB682 100%)}
+.hills{position:absolute;left:-10%;right:-10%;bottom:0;height:40%;background:
+  radial-gradient(60% 70% at 20% 100%,#44784F 60%,transparent 61%),
+  radial-gradient(55% 60% at 80% 100%,#2E6349 60%,transparent 61%),
+  radial-gradient(90% 45% at 50% 100%,#1F4F3B 60%,transparent 61%)}
+.storm{position:absolute;inset:0;background:linear-gradient(#182A42 0%,#26455A 45%,#1B3540 100%);opacity:.85;transition:opacity 1.2s ease;mix-blend-mode:multiply}
+.scene::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:radial-gradient(120% 78% at 50% 34%, transparent 42%, rgba(8,16,22,.55) 100%)}
 #rain{position:absolute;inset:0;width:100%;height:100%}
 .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
 .flash.go{animation:flash .5s ease-out}
@@ -174,7 +176,9 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .gtop .place span{font-size:12px;font-weight:800;opacity:.85}
 .gtop .iconbtn{background:rgba(255,255,255,.16);color:#FBF3E2;backdrop-filter:blur(6px)}
 .stats{position:relative;z-index:2;display:flex;gap:8px;padding:4px 16px}
-.stat{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:16px;background:rgba(14,26,24,.42);backdrop-filter:blur(8px)}
+.stat{flex:1;min-width:0;display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:16px;
+  background:linear-gradient(rgba(38,56,58,.72),rgba(12,22,24,.72));backdrop-filter:blur(8px);
+  box-shadow:inset 0 0 0 1.5px rgba(255,226,160,.35),inset 0 2px 0 rgba(255,255,255,.14),0 4px 12px rgba(0,0,0,.35)}
 .stat .lbl{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
 .stat .val{font-size:22px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1}
 .stat .mini{width:28px;height:28px;position:relative;flex:none}
@@ -188,19 +192,44 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .lantern.lit{opacity:1;filter:drop-shadow(0 0 10px #FFD27A)}
 .lantern.lit i{background:radial-gradient(circle at 50% 55%,#FFF4C8,#F2B544 60%,#C9771E)}
 .boardwrap{position:relative;z-index:2;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:6px 16px}
-#board{position:relative;border-radius:22px;background:rgba(251,243,226,.16);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.22);backdrop-filter:blur(3px);touch-action:none;user-select:none;-webkit-user-select:none}
+#board{position:relative;border-radius:24px;touch-action:none;user-select:none;-webkit-user-select:none;
+  background:
+    linear-gradient(rgba(255,255,255,.10) 1px, transparent 1px) 0 0 / var(--t) var(--t),
+    linear-gradient(90deg, rgba(255,255,255,.10) 1px, transparent 1px) 0 0 / var(--t) var(--t),
+    radial-gradient(130% 100% at 50% -10%, #5C7A88 0%, #3E5764 45%, #273B46 100%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255,226,150,.5),
+    inset 0 calc(var(--t) * 0.06) calc(var(--t) * 0.22) rgba(0,0,0,.45),
+    0 0 0 5px #C79A45,
+    0 0 0 7px #7A4F1E,
+    0 16px 36px rgba(0,0,0,.5);
+  backdrop-filter:blur(3px)}
 #board.aiming{box-shadow:inset 0 0 0 3px var(--gold2),0 0 24px rgba(231,194,122,.5)}
 
 .tile{position:absolute;left:0;top:0;width:var(--t);height:var(--t);transition:transform .2s cubic-bezier(.3,.7,.4,1.12);will-change:transform}
-.orb{position:absolute;inset:7%;border-radius:50%;display:grid;place-items:center;color:var(--g);
-  background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.9) 0 7%,var(--l) 16%,var(--b) 62%,var(--d) 100%);
-  box-shadow:inset 0 -3px 6px rgba(0,0,0,.2),0 2px 3px rgba(20,15,5,.3);transition:transform .15s}
-.orb svg{width:54%;height:54%;overflow:visible}
-.t-wood{--b:#6FBF4A;--l:#CDF0A6;--d:#3B7A26;--g:#1C4412}
-.t-fire{--b:#E04B42;--l:#FFB8A2;--d:#96201F;--g:#4E0D0E}
-.t-earth{--b:#F0B93A;--l:#FFE8AC;--d:#AE7A12;--g:#5A3C04}
-.t-metal{--b:#DCE3E9;--l:#FFFFFF;--d:#96A3AD;--g:#3F4B55}
-.t-water{--b:#3C86C9;--l:#B4DAF7;--d:#1C4877;--g:#0C2440}
+.tile::before{content:"";position:absolute;inset:3%;border-radius:28%;
+  background:linear-gradient(rgba(255,255,255,.07),rgba(0,0,0,.14));
+  box-shadow:inset 0 1px 2px rgba(0,0,0,.28),inset 0 -1px 0 rgba(255,255,255,.07);pointer-events:none;z-index:-1}
+.orb{position:absolute;inset:4.5%;border-radius:50%;display:grid;place-items:center;color:var(--g);
+  background:
+    radial-gradient(ellipse 62% 34% at 50% 104%, var(--rim) 0 55%, transparent 100%),
+    radial-gradient(circle at 34% 24%, var(--l) 0 10%, var(--b) 46%, var(--d) 96%);
+  box-shadow:
+    inset 0 calc(var(--t) * -0.1) calc(var(--t) * 0.12) rgba(0,0,0,.5),
+    inset 0 calc(var(--t) * 0.04) calc(var(--t) * 0.07) rgba(255,255,255,.55),
+    0 0 0 calc(var(--t) * 0.035) var(--o),
+    0 calc(var(--t) * 0.08) calc(var(--t) * 0.12) rgba(8,6,3,.62);
+  transition:transform .15s}
+.orb::before{content:"";position:absolute;left:17%;top:9%;width:34%;height:24%;border-radius:50%;
+  background:radial-gradient(ellipse at 40% 40%, #fff 0 42%, rgba(255,255,255,.35) 68%, transparent 100%);
+  pointer-events:none}
+.orb svg{position:relative;width:60%;height:60%;overflow:visible;
+  filter:drop-shadow(0 calc(var(--t) * 0.018) 0 var(--o)) drop-shadow(0 0 calc(var(--t) * 0.03) rgba(0,0,0,.45))}
+.t-wood{--b:#4FC22B;--l:#E6FFC2;--d:#14591A;--o:#0B3A12;--g:#F4FFE9;--rim:#A6F075}
+.t-fire{--b:#F0392A;--l:#FFD2B4;--d:#8A0F10;--o:#4C0708;--g:#FFF2EA;--rim:#FF9877}
+.t-earth{--b:#FFB70F;--l:#FFF3C0;--d:#9A5D02;--o:#4F3001;--g:#4A2D00;--rim:#FFE083}
+.t-metal{--b:#E4EEF6;--l:#FFFFFF;--d:#7089A0;--o:#3A4E5E;--g:#2B3B49;--rim:#FFFFFF}
+.t-water{--b:#1F79E6;--l:#C2E6FF;--d:#0B3675;--o:#061F45;--g:#EAF6FF;--rim:#7CC6FF}
 .t-spirit .orb{background:conic-gradient(from 0deg,#EE8A2E,#F2C232,#8CC6E4,#E590A9,#8E5C3C,#EE8A2E);color:#fff;animation:spin 3s linear infinite}
 .t-spirit .orb::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#fff 0,rgba(255,255,255,.75) 45%,rgba(255,255,255,0) 72%)}
 .t-spirit .orb svg{position:relative;color:#E0A93A}
@@ -210,8 +239,13 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .sp-row .orb::after{left:-6%;right:-6%;top:calc(50% - 2px);height:4px}
 .sp-col .orb::after{top:-6%;bottom:-6%;left:calc(50% - 2px);width:4px}
 .tile.sel .orb{transform:scale(1.13);box-shadow:0 0 0 3px #FFF6DE,0 0 16px 5px rgba(255,214,130,.9)}
-.tile.pop .orb{animation:pop .26s ease-out forwards}
-@keyframes pop{35%{transform:scale(1.32)}100%{transform:scale(0);opacity:0}}
+.tile.pop .orb{animation:pop .3s cubic-bezier(.3,1.5,.5,1) forwards}
+@keyframes pop{28%{transform:scale(1.4) rotate(-4deg)}55%{transform:scale(1.15)}100%{transform:scale(0) rotate(6deg);opacity:0}}
+.shard{position:absolute;pointer-events:none;z-index:6;border-radius:2px}
+.scorepop{position:absolute;pointer-events:none;z-index:7;font-weight:900;font-size:calc(var(--t) * 0.42);color:#FFF3CF;text-shadow:0 2px 0 rgba(90,60,10,.85),0 0 12px rgba(255,214,130,.9);transform:translate(-50%,-50%)}
+.comboword{position:absolute;left:50%;top:42%;z-index:8;pointer-events:none;transform:translate(-50%,-50%);
+  font-family:"Marcellus SC",Georgia,serif;font-size:clamp(26px,8vw,40px);color:#FFF6DE;
+  text-shadow:0 3px 0 rgba(120,70,10,.9),0 0 22px rgba(255,205,110,.95)}
 .tile.born .orb{animation:born .45s ease-out}
 @keyframes born{0%{transform:scale(.4)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
 .tile.breathing .orb{animation:breathe 2.2s ease-in-out infinite}
@@ -1646,7 +1680,13 @@ async function popSet(set) {
     t.el.classList.add('pop');
     setTimeout(() => t.el.remove(), 280);
   });
-  if (arr.length) sparks(arr);
+  if (arr.length) {
+    sparks(arr);
+    shards(arr);
+    scorePop(arr, arr.length * (combo + 1) * 10);
+    if (arr.length >= 6) shake(Math.min(5, 2 + Math.floor(arr.length / 4)));
+    if (combo >= 2) comboWord(combo);
+  }
   arr.forEach(t => { if (t.type !== 'spirit') { turnTypes.add(t.type); levelTally[t.type]++; questBump('elem', 1, t.type); } });
   if (!breathing) {
     const boostEl = spunToday() ? S.todayElem : null;
@@ -2179,6 +2219,58 @@ function fxFor(type, tiles) {
       gone(r.animate([{ transform: 'translate(-50%,-50%) scale(.4)', opacity: .8 }, { transform: 'translate(-50%,-50%) scale(1.8)', opacity: 0 }], { duration: 520, easing: 'ease-out' }));
     }
   });
+}
+// Royal Kingdom-style payoff: shards fly, a number floats up, a word lands on a big cascade.
+function shards(tiles) {
+  if (reduce) return;
+  tiles.slice(0, 8).forEach(t => {
+    const x = t.c * T + T / 2, y = t.r * T + T / 2;
+    for (let i = 0; i < 5; i++) {
+      const d = document.createElement('div');
+      const sz = T * (0.09 + Math.random() * 0.11);
+      d.className = 'shard';
+      d.style.cssText = `left:${x}px;top:${y}px;width:${sz}px;height:${sz * (0.6 + Math.random() * 0.8)}px;background:var(--b);box-shadow:0 0 6px var(--rim)`;
+      d.style.setProperty('--b', getComputedStyle(t.el.firstChild).getPropertyValue('--b') || '#fff');
+      const tile = t.el.className.match(/t-(\w+)/);
+      if (tile && ELEM[tile[1]]) { d.style.background = ELEM[tile[1]].hue; d.style.boxShadow = `0 0 6px ${ELEM[tile[1]].glow}`; }
+      boardEl.appendChild(d);
+      const a = Math.random() * Math.PI * 2, dist = T * (0.5 + Math.random());
+      d.animate([
+        { transform: 'translate(-50%,-50%) rotate(0deg)', opacity: 1 },
+        { transform: `translate(calc(-50% + ${Math.cos(a) * dist}px), calc(-50% + ${Math.sin(a) * dist + T * 0.5}px)) rotate(${Math.random() * 540 - 270}deg)`, opacity: 0 }
+      ], { duration: 620 + Math.random() * 260, easing: 'cubic-bezier(.2,.7,.5,1)' }).onfinish = () => d.remove();
+    }
+  });
+}
+function scorePop(tiles, n) {
+  if (reduce || !tiles.length) return;
+  const cx = tiles.reduce((a, t) => a + t.c, 0) / tiles.length * T + T / 2;
+  const cy = tiles.reduce((a, t) => a + t.r, 0) / tiles.length * T + T / 2;
+  const d = document.createElement('div');
+  d.className = 'scorepop'; d.textContent = `+${n}`;
+  d.style.cssText += `left:${cx}px;top:${cy}px`;
+  boardEl.appendChild(d);
+  d.animate([{ transform: 'translate(-50%,-50%) scale(.6)', opacity: 0 },
+    { transform: 'translate(-50%,-95%) scale(1.1)', opacity: 1, offset: .3 },
+    { transform: 'translate(-50%,-190%) scale(1)', opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => d.remove();
+}
+const COMBO_WORDS = ['Nice', 'Lovely', 'Beautiful', 'Wonderful', 'Unreal'];
+function comboWord(level) {
+  if (reduce) return;
+  const d = document.createElement('div');
+  d.className = 'comboword display';
+  d.textContent = COMBO_WORDS[Math.min(level - 2, COMBO_WORDS.length - 1)];
+  boardEl.appendChild(d);
+  d.animate([{ transform: 'translate(-50%,-50%) scale(.5) rotate(-6deg)', opacity: 0 },
+    { transform: 'translate(-50%,-50%) scale(1.12) rotate(2deg)', opacity: 1, offset: .25 },
+    { transform: 'translate(-50%,-70%) scale(1) rotate(0deg)', opacity: 1, offset: .7 },
+    { transform: 'translate(-50%,-110%) scale(.9)', opacity: 0 }], { duration: 1100, easing: 'ease-out' }).onfinish = () => d.remove();
+}
+function shake(power) {
+  if (reduce) return;
+  boardEl.animate([{ transform: 'translate(0,0)' }, { transform: `translate(${power}px,${-power}px)` },
+    { transform: `translate(${-power}px,${power * .6}px)` }, { transform: 'translate(0,0)' }],
+    { duration: 220, easing: 'ease-out' });
 }
 function sparks(arr) {
   const by = {};
