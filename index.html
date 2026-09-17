@@ -58,6 +58,19 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .node .stars{margin-left:auto;color:var(--gold);font-size:15px;letter-spacing:1px;white-space:nowrap}
 .node.locked{opacity:.5;filter:saturate(.3)}
 .node.current{box-shadow:0 0 0 3px var(--gold2),0 6px 18px rgba(80,60,20,.15)}
+.sealcard{flex:none;display:block;text-align:left;margin:12px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.05)}
+.sealrow{display:flex;gap:5px;margin-top:8px}
+.sealrow i{width:100%;height:6px;border-radius:4px;background:rgba(31,74,61,.14)}
+.sealrow i.on{background:linear-gradient(90deg,var(--gold2),var(--gold))}
+.sealgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.sealslot{display:grid;justify-items:center;gap:3px;padding:10px 6px;border-radius:14px;background:#FFFBF2;text-align:center}
+.sealslot b{font-size:12.5px;font-weight:900;line-height:1.15}
+.sealslot em{font-style:normal;font-size:10.5px;font-weight:700;color:var(--muted);line-height:1.2}
+.sealslot.earned{background:linear-gradient(#FFF7E4,#F6E4B8);box-shadow:inset 0 0 0 2px var(--gold2)}
+.seal{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:rgba(31,74,61,.08);color:rgba(31,74,61,.32);box-shadow:inset 0 0 0 2px rgba(31,74,61,.12)}
+.seal svg{width:60%;height:60%}
+.seal.earned{background:radial-gradient(circle at 38% 32%,#FFF6DC,#E8C578 70%,#BF9438);color:var(--forest);box-shadow:inset 0 0 0 2px #FFF1C8,0 2px 8px rgba(120,90,20,.35)}
+.seal.big{width:104px;height:104px;margin:6px auto 2px}
 .questcard{flex:none;display:block;text-align:left;margin:12px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:#FFFBF2;box-shadow:0 2px 0 rgba(0,0,0,.05)}
 .qhead{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:15px;font-weight:900}
 .qtease{font-size:13px;font-weight:800;color:var(--muted)}
@@ -503,6 +516,10 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       </div>
     </div>
     <div class="banner" id="streakBanner"></div>
+    <button class="sealcard" id="sealCard">
+      <span class="qhead"><b>Spirit Seals</b><span class="qtease" id="sealTease"></span></span>
+      <span class="sealrow" id="sealRow"></span>
+    </button>
     <button class="questcard" id="questCard">
       <span class="qhead"><b>Today's practice quests</b><span class="qtease" id="questTease"></span></span>
     </button>
@@ -628,6 +645,22 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       <button class="btn" id="lRetry">Try again</button>
       <button class="btn ghost" id="lMap">Back to map</button>
     </div>
+  </div></div>
+
+  <div class="ov" id="sealov" hidden><div class="card" role="dialog" aria-labelledby="sealTitle">
+    <div class="eyebrow">Earned, never bought</div>
+    <h2 class="display" id="sealTitle">The Seal Book</h2>
+    <div class="sealgrid" id="sealGrid"></div>
+    <div class="stack"><button class="btn" id="sealClose">Close</button></div>
+    <div class="note">Every seal marks something you did: an element calmed, a cycle kept, your own voice used, the balance held.</div>
+  </div></div>
+
+  <div class="ov" id="sealwin" hidden style="align-items:center"><div class="card rewardcard" role="dialog" aria-labelledby="sealWinName">
+    <div class="eyebrow" style="color:var(--gold2)">New seal</div>
+    <div id="sealWinArt"></div>
+    <h2 class="display" id="sealWinName"></h2>
+    <p id="sealWinHint" style="color:#D8E6DF"></p>
+    <div class="stack"><button class="btn gold" id="sealWinGo">Add to the book</button></div>
   </div></div>
 
   <div class="ov" id="questov" hidden><div class="card" role="dialog" aria-labelledby="questTitle">
@@ -812,7 +845,24 @@ const DEF = { unlocked: 1, stars: {}, coins: 150, hearts: 5, swirls: 1, lanterns
   bal: { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 }, balDay: '', balBonusDay: '',
   wheelDay: '', todayElem: '', wheelPrize: null,
   buddy: '', owned: ['fire', 'water', 'earth'], earlyPass: false, practiceDays: 0,
-  quests: null, questChest: '' };
+  quests: null, questChest: '',
+  sealsEarned: {}, tally: { harmony: 0, flow3: 0, voiced: 0 } };
+// Twelve seals, each earned by a deed rather than bought. This is the shelf everything
+// else points at: play every element, keep the cycle, use your voice, hold the balance.
+const SEALS = [
+  { id: 'first', name: 'First Breath', hint: 'Finish your first place' },
+  { id: 'earth', name: 'Earth Seal', hint: 'Calm the storm at The Root Grounds', elem: 'earth' },
+  { id: 'wood', name: 'Wood Seal', hint: 'Calm the storm at Whispering Forest', elem: 'wood' },
+  { id: 'fire', name: 'Fire Seal', hint: 'Calm the storm at Valley of Echoes', elem: 'fire' },
+  { id: 'metal', name: 'Metal Seal', hint: 'Calm the storm at Sky Temple', elem: 'metal' },
+  { id: 'water', name: 'Water Seal', hint: 'Calm the storm at Lantern River', elem: 'water' },
+  { id: 'harmony', name: 'Harmony Seal', hint: 'Make 10 harmonies', goal: 10, count: 'harmony' },
+  { id: 'cycle', name: 'Cycle Seal', hint: 'Reach flow ×3 five times', goal: 5, count: 'flow3' },
+  { id: 'voice', name: 'Voice Seal', hint: 'Use your voice on 10 breaths', goal: 10, count: 'voiced' },
+  { id: 'balance', name: 'Balance Seal', hint: 'Light all five at once' },
+  { id: 'nine', name: 'Nine Days', hint: 'Keep a 9-day streak' },
+  { id: 'keeper', name: 'Keeper of Flow', hint: 'Keep a 108-day streak' }
+];
 // The Five Animal Frolics (Wu Qin Xi) pair each animal with an organ, so the animals and the
 // elements stay one system: Tiger-liver-Wood, Monkey-heart-Fire, Bear-spleen-Earth,
 // Crane-lung-Metal, Deer-kidney-Water.
@@ -828,16 +878,16 @@ const STAGES = [{ at: 0, name: 'baby' }, { at: 10, name: 'child' }, { at: 30, na
 const MILES = [
   { d: 3, coins: 150, swirls: 1 },
   { d: 6, coins: 300, lanterns: 1, shields: 1 },
-  { d: 9, coins: 600, seals: 1, boost: 30 },
+  { d: 9, coins: 600, boost: 30 },
   { d: 18, coins: 1200, lanterns: 2, swirls: 2 },
   { d: 27, coins: 1800, shields: 2 },
-  { d: 36, coins: 3000, seals: 1, boost: 60 },
+  { d: 36, coins: 3000, boost: 60 },
   { d: 40, coins: 4000, lanterns: 3 },
-  { d: 43, coins: 5000, seals: 1 },
+  { d: 43, coins: 5000, swirls: 2 },
   { d: 54, coins: 7000, shields: 3 },
-  { d: 72, coins: 9000, seals: 1, boost: 120 },
+  { d: 72, coins: 9000, boost: 120 },
   { d: 90, coins: 12000, lanterns: 5, swirls: 5 },
-  { d: 108, coins: 20000, seals: 1, title: 'Keeper of Flow' }
+  { d: 108, coins: 20000, title: 'Keeper of Flow' }
 ];
 let S;
 try { S = Object.assign({}, DEF, JSON.parse(localStorage.getItem('kcq-v1')) || {}); } catch (e) { S = { ...DEF }; }
@@ -996,10 +1046,64 @@ function balanceBonus() {
   const st = balState();
   if (!st.even || S.balBonusDay === dayKey()) return null;
   S.balBonusDay = dayKey();
-  const gift = { coins: 200 * coinMult(), seals: 1 };
+  const gift = { coins: 200 * coinMult(), swirls: 1 };
   grant(gift);
   return gift;
 }
+
+/* ---------- the seal book ---------- */
+const sealGlyph = sl => sl.elem ? GLYPH[sl.elem] : ({
+  first: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/></svg>',
+  harmony: '<svg viewBox="0 0 24 24"><circle cx="9" cy="12" r="5.4" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="15" cy="12" r="5.4" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>',
+  cycle: '<svg viewBox="0 0 24 24"><path d="M19 12a7 7 0 1 1-2.6-5.4" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="M19 3.4V7.6h-4.2" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  voice: '<svg viewBox="0 0 24 24"><path d="M6 9v6M10 5.5v13M14 8v8M18 10.5v3" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>',
+  balance: '<svg viewBox="0 0 24 24"><circle cx="12" cy="4.6" r="2.1" fill="currentColor"/><circle cx="19" cy="9.7" r="2.1" fill="currentColor"/><circle cx="16.3" cy="18" r="2.1" fill="currentColor"/><circle cx="7.7" cy="18" r="2.1" fill="currentColor"/><circle cx="5" cy="9.7" r="2.1" fill="currentColor"/></svg>',
+  nine: '<svg viewBox="0 0 24 24"><text x="12" y="17" text-anchor="middle" font-size="13" font-weight="900" fill="currentColor" font-family="system-ui">9</text><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',
+  keeper: '<svg viewBox="0 0 24 24"><text x="12" y="16" text-anchor="middle" font-size="9" font-weight="900" fill="currentColor" font-family="system-ui">108</text><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
+}[sl.id] || GLYPH.spirit);
+const sealCount = () => Object.keys(S.sealsEarned || {}).length;
+function awardSeal(id) {
+  if (!S.sealsEarned) S.sealsEarned = {};
+  if (S.sealsEarned[id]) return null;
+  const sl = SEALS.find(x => x.id === id);
+  S.sealsEarned[id] = dayKey(); S.seals = sealCount(); save();
+  renderSeals();
+  showSealWin(sl);
+  return sl;
+}
+async function showSealWin(sl) {
+  $('#sealWinArt').innerHTML = `<span class="seal big earned">${sealGlyph(sl)}</span>`;
+  $('#sealWinName').textContent = sl.name;
+  $('#sealWinHint').textContent = `${sl.hint}. ${sealCount()} of ${SEALS.length} seals.`;
+  await showOv('sealwin');
+  chord([523.25, 783.99, 1046.5], 0.1);
+  confetti('#sealwin .card');
+}
+$('#sealWinGo').addEventListener('click', () => hideOv('sealwin'));
+function bumpTally(key, n = 1) {
+  if (!S.tally) S.tally = { harmony: 0, flow3: 0, voiced: 0 };
+  S.tally[key] = (S.tally[key] || 0) + n; save();
+  const sl = SEALS.find(x => x.count === key);
+  if (sl && S.tally[key] >= sl.goal) awardSeal(sl.id);
+  renderSeals();
+}
+function renderSeals() {
+  const n = sealCount();
+  $('#sealTease').textContent = `${n} of ${SEALS.length} collected`;
+  $('#sealGrid').innerHTML = SEALS.map(sl => {
+    const got = (S.sealsEarned || {})[sl.id];
+    const prog = sl.count ? Math.min((S.tally || {})[sl.count] || 0, sl.goal) : null;
+    return `<div class="sealslot ${got ? 'earned' : ''}" title="${sl.hint}">
+      <span class="seal ${got ? 'earned' : ''}" ${sl.elem && got ? `style="color:${ELEM[sl.elem].hue}"` : ''}>${sealGlyph(sl)}</span>
+      <b>${sl.name}</b>
+      <em>${got ? `earned ${got}` : sl.count ? `${prog}/${sl.goal}` : sl.hint}</em>
+    </div>`;
+  }).join('');
+  const row = $('#sealRow');
+  if (row) row.innerHTML = SEALS.map(sl => `<i class="${(S.sealsEarned || {})[sl.id] ? 'on' : ''}"></i>`).join('');
+}
+$('#sealCard').addEventListener('click', () => { renderSeals(); showOv('sealov'); });
+$('#sealClose').addEventListener('click', () => hideOv('sealov'));
 
 /* ---------- daily quests ---------- */
 // Three small asks a day. One of them always points at the element that has gone quiet.
@@ -1042,7 +1146,7 @@ function questBump(id, amount = 1, elem) {
   save();
   if (q.items.every(i => i.done) && S.questChest !== dayKey()) {
     S.questChest = dayKey();
-    const chest = { coins: 150 * coinMult(), seals: 1 };
+    const chest = { coins: 150 * coinMult(), lanterns: 1 };
     grant(chest);
     toast(`All three quests done. Chest: ${rewardText(chest)}.`);
     chord([523.25, 659.25, 783.99, 1046.5], 0.1);
@@ -1257,7 +1361,7 @@ function renderStreak() {
     const done = S.claimed.includes(x.d) || S.streak >= x.d, next = x.d === m.d && !done;
     return `<div class="rung ${done ? 'done' : ''} ${next ? 'next' : ''}"><b>Day ${x.d}</b><span>${rewardText(x)}</span><i>${done ? '✓' : next ? `${left} to go` : ''}</i></div>`;
   }).join('');
-  $('#streakStats').innerHTML = `<span class="chip">🔥 ${S.streak} day${S.streak === 1 ? '' : 's'}</span><span class="chip">best ${S.best || 0}</span><span class="chip">🛡 ${S.shields}</span><span class="chip">◈ ${S.seals} seal${S.seals === 1 ? '' : 's'}</span>`;
+  $('#streakStats').innerHTML = `<span class="chip">🔥 ${S.streak} day${S.streak === 1 ? '' : 's'}</span><span class="chip">best ${S.best || 0}</span><span class="chip">🛡 ${S.shields}</span><span class="chip">◈ ${sealCount()}/${SEALS.length} seals</span>`;
 }
 function showComeback(days) {
   $('#cbText').textContent = `You have been away ${days} days. Luma kept your lantern lit the whole time.`;
@@ -1288,9 +1392,9 @@ async function celebrate(m) {
   renderStreak();
 }
 $('#rwGo').addEventListener('click', () => hideOv('reward'));
-function confetti() {
+function confetti(sel) {
   if (reduce) return;
-  const box = $('#reward .card');
+  const box = $(sel || '#reward .card');
   for (let i = 0; i < 26; i++) {
     const d = document.createElement('div');
     d.className = 'conf';
@@ -1597,7 +1701,7 @@ function flowStep(el) {
   bar.animate([{ transform: 'scale(.85)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
   chord(flow >= 3 ? [659.25, 880, 1174.66] : [587.33, 783.99], 0.07);
   buddyHop();
-  if (flow >= 3) questBump('flow');
+  if (flow >= 3) { questBump('flow'); bumpTally('flow3'); }
   say(flow >= 3 ? 'The whole cycle is flowing. Luma filled up fast.' : `${ELEM[prevOf(el)].feeds}. Luma filled faster.`);
   clearTimeout(bar._t); bar._t = setTimeout(() => { bar.hidden = true; }, 4500);
   hud();
@@ -1911,7 +2015,7 @@ async function applyBreath(q) {
   const p = breathPlan(q);
   glowGoal(false);
   if (p.tier === 'deep') { deepBreaths++; questBump('deep'); }
-  if (p.sang) questBump('sound');
+  if (p.sang) { questBump('sound'); bumpTally('voiced'); }
   if (p.cloudsOff) questBump('clouds', p.cloudsOff);
   S.coins += p.coins; save();
   charge = 0; hud();
@@ -2128,6 +2232,7 @@ function harmony(types) {
   charge = Math.min(100, charge + 15);
   buddyHop();
   questBump('harmony');
+  bumpTally('harmony');
   S.coins += 2; save();
   hud();
 }
@@ -2300,7 +2405,7 @@ function toMap() {
   running = false; busy = true;
   brRun++; closeMic(); breathing = false;
   tut = null; clearHints(); hideTip();
-  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests();
+  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals();
 }
 $('#toMap').addEventListener('click', toMap);
 
@@ -2327,16 +2432,21 @@ async function winLevel() {
   addBal(L.elem, 2.5);
   TYPES.forEach(t => { if (t !== L.elem && levelTally[t] > 0) addBal(t, Math.min(1, levelTally[t] / 26)); });
   const bonus = balanceBonus();
+  if (balState().even) awardSeal('balance');
   const bst = balState(), bl = $('#wBalance');
   bl.className = 'streakrow' + (bonus ? ' gold' : '');
   bl.innerHTML = bonus ? `<b>All five lights are lit.</b> Balance bonus: ${rewardText(bonus)}.`
     : bst.lit >= 2 ? `<b>${ELEM[L.elem].name} is brighter.</b> Your quietest is ${ELEM[bst.low.t].name} — that is your ${ELEM[bst.low.t].body}.`
       : `<b>${ELEM[L.elem].name} is lit.</b> Four more elements to balance.`;
   questBump('win');
+  awardSeal(LEVELS[LI].elem);
+  if (!S.sealsEarned || !S.sealsEarned.first) awardSeal('first');
   const newDay = S.lastDay !== dayKey();
   const note = markDay();
   if (newDay) { S.practiceDays = (S.practiceDays || 0) + 1; save(); }
   const freshBuddy = checkBuddyUnlocks();
+  if (S.streak >= 9) awardSeal('nine');
+  if (S.streak >= 108) awardSeal('keeper');
   const mile = MILES.find(x => x.d === S.streak && !S.claimed.includes(x.d));
   const sr = $('#wStreak');
   sr.className = 'streakrow' + (mile ? ' gold' : '');
@@ -2474,7 +2584,7 @@ $('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#wel
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
 $('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
 $('#cycleRow').innerHTML = ['wood', 'fire', 'earth', 'metal', 'water'].map(e => `<span class="eo">${orbHTML(e)}</span>`).join('<i>→</i>') + '<i>↻</i>';
-syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests();
+syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals();
 })();
 </script>
 
