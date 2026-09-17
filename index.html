@@ -86,6 +86,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .stat .mini{width:28px;height:28px;position:relative;flex:none}
 .bump{animation:bump .3s}
 @keyframes bump{50%{transform:scale(1.18)}}
+.flowbar{position:relative;z-index:3;align-self:center;margin:2px auto 0;padding:5px 12px;border-radius:999px;background:rgba(231,194,122,.94);color:#3B2A08;font-size:12.5px;font-weight:800;box-shadow:0 2px 10px rgba(0,0,0,.3)}
 .lanterns{position:relative;z-index:2;display:flex;justify-content:center;gap:18px;padding:8px 0 2px}
 .lantern{width:22px;height:30px;position:relative;opacity:.45;transition:opacity .6s,filter .6s}
 .lantern::before{content:"";position:absolute;left:50%;top:-6px;height:6px;border-left:1.5px solid rgba(255,255,255,.6)}
@@ -101,11 +102,11 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
   background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.9) 0 7%,var(--l) 16%,var(--b) 62%,var(--d) 100%);
   box-shadow:inset 0 -3px 6px rgba(0,0,0,.2),0 2px 3px rgba(20,15,5,.3);transition:transform .15s}
 .orb svg{width:54%;height:54%;overflow:visible}
-.t-tiger{--b:#EE8A2E;--l:#FFCB85;--d:#B45714;--g:#6E2C05}
-.t-crane{--b:#8CC6E4;--l:#EEF9FF;--d:#4F8DB0;--g:#1E4E6A}
-.t-monkey{--b:#F2C232;--l:#FFF0A6;--d:#C28E0B;--g:#6A4C00}
-.t-bear{--b:#8E5C3C;--l:#D9AC84;--d:#5A3520;--g:#FBEBD6}
-.t-deer{--b:#E590A9;--l:#FFE0EA;--d:#B85C79;--g:#6E1F3A}
+.t-wood{--b:#6FBF4A;--l:#CDF0A6;--d:#3B7A26;--g:#1C4412}
+.t-fire{--b:#E04B42;--l:#FFB8A2;--d:#96201F;--g:#4E0D0E}
+.t-earth{--b:#F0B93A;--l:#FFE8AC;--d:#AE7A12;--g:#5A3C04}
+.t-metal{--b:#DCE3E9;--l:#FFFFFF;--d:#96A3AD;--g:#3F4B55}
+.t-water{--b:#3C86C9;--l:#B4DAF7;--d:#1C4877;--g:#0C2440}
 .t-spirit .orb{background:conic-gradient(from 0deg,#EE8A2E,#F2C232,#8CC6E4,#E590A9,#8E5C3C,#EE8A2E);color:#fff;animation:spin 3s linear infinite}
 .t-spirit .orb::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#fff 0,rgba(255,255,255,.75) 45%,rgba(255,255,255,0) 72%)}
 .t-spirit .orb svg{position:relative;color:#E0A93A}
@@ -125,12 +126,12 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 
 .tile.clouded .orb{filter:saturate(.25) brightness(.72)}
 .tile.clouded::after{content:"";position:absolute;inset:-4% -6%;pointer-events:none;
-  background:radial-gradient(circle at 30% 58%,#C9D1D8 0 22%,transparent 23%),radial-gradient(circle at 55% 42%,#DCE2E7 0 27%,transparent 28%),radial-gradient(circle at 75% 60%,#BAC3CC 0 20%,transparent 21%),radial-gradient(ellipse at 50% 68%,#AEB8C2 0 36%,transparent 37%);
-  filter:drop-shadow(0 2px 2px rgba(0,0,0,.3));opacity:.93}
+  background:radial-gradient(circle at 30% 58%,#6C7C8C 0 22%,transparent 23%),radial-gradient(circle at 55% 42%,#8494A4 0 27%,transparent 28%),radial-gradient(circle at 75% 60%,#5D6C7C 0 20%,transparent 21%),radial-gradient(ellipse at 50% 68%,#4E5C6B 0 36%,transparent 37%);
+  filter:drop-shadow(0 2px 3px rgba(0,0,0,.55));opacity:.97}
 .tile.clouded.breathing .orb{animation:none}
 .tile.clouded.breathing::after{animation:drift 2.2s ease-in-out infinite}
 @keyframes drift{50%{transform:translateX(6%) scale(1.05);opacity:.7}}
-.cloudicon{background:radial-gradient(circle at 32% 60%,#DCE2E7 0 24%,transparent 25%),radial-gradient(circle at 58% 44%,#EEF2F5 0 29%,transparent 30%),radial-gradient(ellipse at 50% 68%,#C9D1D8 0 38%,transparent 39%)}
+.cloudicon{background:radial-gradient(circle at 32% 60%,#8494A4 0 24%,transparent 25%),radial-gradient(circle at 58% 44%,#A3B2C0 0 29%,transparent 30%),radial-gradient(ellipse at 50% 68%,#6C7C8C 0 38%,transparent 39%)}
 .stat small{font-size:13px;font-weight:800;opacity:.85;white-space:nowrap}
 .stat.goal{flex:2}
 .stat.goal .mini{width:40px;height:40px}
@@ -257,6 +258,13 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .minitrack i{position:absolute;left:0;width:24px;height:24px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,236,170,.9);animation:mini 4s ease-in-out infinite}
 @keyframes mini{0%,100%{bottom:1px}45%,55%{bottom:35px}}
 .wave{font-size:10px;font-weight:900;color:#FBF3E2;line-height:1.3}
+.elemtable{display:grid;gap:6px}
+.elemrow{display:grid;grid-template-columns:32px 62px 1fr;gap:10px;align-items:center;padding:8px 10px;border-radius:12px;background:#FFFBF2;font-weight:800;font-size:14px}
+.elemrow .eo{position:relative;width:30px;height:30px}
+.elemrow em{font-style:normal;color:var(--muted);font-weight:700}
+.cycle{display:flex;align-items:center;justify-content:center;gap:1px;flex-wrap:wrap;margin-top:12px;padding:12px 8px;border-radius:16px;background:linear-gradient(#3A4652,#2A3A36)}
+.cycle .eo{position:relative;width:34px;height:34px}
+.cycle i{color:#E7C27A;font-style:normal;font-weight:900;font-size:14px;margin:0 2px}
 .cloudrow{display:flex;gap:2px}
 .cloudrow .mini{display:block;width:26px;height:26px}
 .tipbox{margin-top:10px;padding:12px 14px;border-radius:14px;background:rgba(31,74,61,.09);font-size:14px;line-height:1.45;font-weight:600;color:var(--forest)}
@@ -307,8 +315,8 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
         <p class="small" style="text-align:left;margin:0 0 10px">The first level walks you through all of this with a guiding hand.</p>
         <div class="steps">
           <div class="step">
-            <div class="vis"><div class="orbrow" data-types="bear bear bear"></div></div>
-            <div><h3><b class="n">1</b>Match 3</h3><p>Slide an orb onto the one next to it so three of the same color line up. They pop.</p></div>
+            <div class="vis"><div class="orbrow" data-types="fire fire fire"></div></div>
+            <div><h3><b class="n">1</b>Match 3</h3><p>Slide an orb onto the one next to it so three of the same element line up. They pop.</p></div>
           </div>
           <div class="step">
             <div class="vis"><div class="minil"><img src="img/luma-happy.jpg" alt=""></div></div>
@@ -331,9 +339,18 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
         <ul>
           <li>Kids are told to "calm down" and never shown how. Here the breath is the only way to win, so every level is practice.</li>
           <li>The game scores the breath itself. Slow, long breaths win, so kids learn the pace that actually settles the body.</li>
-          <li>It's built on Demaris's qigong practice and the MorQi Kids story world: Kai, Luma, Sorin, and five animal practices (Bear Root, Tiger Breath, Monkey Shake, Crane Flow, Deer Heart).</li>
+          <li>It's built on Demaris's qigong practice: the five elements, each with its own colour, symbol, organ, emotion, and sound, straight off his teaching sheets.</li>
+          <li>Each level takes one hard feeling and moves it: worry to trust, anger to kindness, too much to peace, sadness to strength, fear to wisdom.</li>
           <li>Every level ends with a real practice kids can do off the screen, with a guided breath from Sorin.</li>
         </ul>
+      </div>
+
+      <div class="wsec">
+        <h2 class="display">The five elements</h2>
+        <p class="small" style="text-align:left;margin:0 0 10px">Every orb is an element off Demaris's teaching sheets. Each carries a feeling, and the level teaches the shift.</p>
+        <div class="elemtable" id="elemTable"></div>
+        <div class="cycle" id="cycleRow"></div>
+        <div class="tipbox" style="margin-top:12px"><b>The cycle is the bonus.</b> Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. Match along that circle and Luma fills faster, so kids learn the creation cycle by playing it.</div>
       </div>
 
       <div class="wsec">
@@ -410,6 +427,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
       <div class="stat" id="movesStat"><div><div class="lbl">Moves</div><div class="val" id="gMoves">20</div></div></div>
     </div>
     <div class="lanterns" id="lanterns" aria-label="Lanterns lit"></div>
+    <div class="flowbar" id="flowBar" hidden><span id="flowText"></span></div>
     <div class="boardwrap" id="boardwrap">
       <div id="board" aria-label="Puzzle board"></div>
     </div>
@@ -549,40 +567,50 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ---------- content ---------- */
 const GLYPH = {
-  tiger: '<svg viewBox="0 0 24 24"><path d="M6.5 4.5c1.8 4.2 1.9 9.6-.2 15M12 3.5c1.9 5.3 1.9 11.6 0 17M17.5 4.5c1.8 4.2 1.9 9.6-.2 15" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>',
-  crane: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M19.5 3.5C12 4 5.8 9.6 5.6 17.2L4 20l1.2.9 2-2.4C15 18 20.2 11.8 19.5 3.5z"/><path d="M7.6 17.6 15.5 8.5" stroke="rgba(255,255,255,.75)" stroke-width="1.3" stroke-linecap="round"/></svg>',
-  monkey: '<svg viewBox="0 0 24 24"><path d="M12.4 11.6a1.4 1.4 0 1 0-1.3 1.9 3.2 3.2 0 1 0 3.3-3.6 5 5 0 1 0-5 5.6 6.6 6.6 0 0 0 7.2-3.2" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/></svg>',
-  bear: '<svg viewBox="0 0 24 24" fill="currentColor"><ellipse cx="12" cy="15.6" rx="4.8" ry="3.9"/><circle cx="5.9" cy="10.4" r="2"/><circle cx="9.6" cy="6.9" r="2.1"/><circle cx="14.4" cy="6.9" r="2.1"/><circle cx="18.1" cy="10.4" r="2"/></svg>',
-  deer: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 20.5s-7.6-4.6-7.6-10.6A4.2 4.2 0 0 1 12 7.1a4.2 4.2 0 0 1 7.6 2.8c0 6-7.6 10.6-7.6 10.6z"/></svg>',
+  wood: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="10.6" y="12" width="2.8" height="8.6" rx="1.3"/><circle cx="12" cy="7.8" r="4.9"/><circle cx="7.5" cy="10.5" r="3.3"/><circle cx="16.5" cy="10.5" r="3.3"/></svg>',
+  fire: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.6 2.2c.7 3.1-.9 4.5-2.6 6.1C9.2 9.9 7.2 11.5 7.2 14.5a5.7 5.7 0 0 0 11.4.3c0-2.3-.9-3.8-1.9-5-.3 1.2-1 1.9-1.9 2.1.7-3.3-.3-7.6-1.2-9.7z"/><path d="M12 20.9a2.8 2.8 0 0 1-1.1-5.2c.5 1 1.2 1.4 2 1.6-.3-1 .1-2.1.5-2.7.7.8 1.4 1.8 1.4 3.4a2.8 2.8 0 0 1-2.8 2.9z" fill="rgba(255,255,255,.5)"/></svg>',
+  earth: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c4.7 2.3 7.1 5.7 7.1 9.3A7.1 7.1 0 0 1 4.9 12.3C4.9 8.7 7.3 5.3 12 3z"/><path d="M12 6.6v12.1" stroke="rgba(255,255,255,.55)" stroke-width="1.4" stroke-linecap="round"/></svg>',
+  metal: '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="5.8" width="3.7" height="12.4" rx="1.85"/><rect x="10.15" y="5.8" width="3.7" height="12.4" rx="1.85"/><rect x="16.3" y="5.8" width="3.7" height="12.4" rx="1.85"/></svg>',
+  water: '<svg viewBox="0 0 24 24"><path d="M2.8 9.2c2.3-2.7 4.6-2.7 6.9 0s4.6 2.7 6.9 0 4-2.1 4.6 0M2.8 15.2c2.3-2.7 4.6-2.7 6.9 0s4.6 2.7 6.9 0 4-2.1 4.6 0" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>',
   spirit: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5l2.2 6.8 7.1.1-5.8 4.2 2.2 6.9L12 16.3l-5.7 4.2 2.2-6.9-5.8-4.2 7.1-.1z"/></svg>'
 };
-const TYPES = ['tiger', 'crane', 'monkey', 'bear', 'deer'];
+const TYPES = ['wood', 'fire', 'earth', 'metal', 'water'];
+// Demaris's chart: the creation cycle feeds forward, the control cycle keeps each element in check.
+const CREATES = { wood: 'fire', fire: 'earth', earth: 'metal', metal: 'water', water: 'wood' };
+const CONTROLS = { wood: 'earth', earth: 'water', water: 'fire', fire: 'metal', metal: 'wood' };
+const ELEM = {
+  wood: { name: 'Wood', feeds: 'Wood feeds Fire' },
+  fire: { name: 'Fire', feeds: 'Fire makes Earth' },
+  earth: { name: 'Earth', feeds: 'Earth holds Metal' },
+  metal: { name: 'Metal', feeds: 'Metal carries Water' },
+  water: { name: 'Water', feeds: 'Water grows Wood' }
+};
 const LEVELS = [
-  { place: 'The Root Grounds', animal: 'bear', power: 'Bear Root', shift: 'worried → safe', moves: 16, clouds: 6,
-    problem: "Kai's tummy feels tight and the ground won't stop rumbling. He wants everyone to stop talking.",
-    sorin: "That tight feeling is looking for the ground. Where is the feeling trying to go? Let's help it land.",
-    steps: ['Stand with your feet wide, like a big bear.', 'Put both hands on your belly.', 'Breathe in slowly and feel your belly grow.', 'Breathe out long and let your feet get heavy.'],
-    line: 'Your body can feel safe again.', inhale: 4, exhale: 6 },
-  { place: 'Whispering Forest', animal: 'tiger', power: 'Tiger Breath', shift: 'scared → brave', moves: 16, clouds: 8,
-    problem: 'The shadows in the forest are whispering. Kai wants to run and hide behind a tree.',
-    sorin: "Scared is power that doesn't know where to go yet. Let's give it a direction.",
-    steps: ['Plant your feet like a tiger ready to walk.', 'Make tiger claws with your hands.', 'Breathe in and open your chest wide.', 'Breathe out with a big soft roar: haaaa.'],
-    line: 'Breath gives your power a direction.', inhale: 4, exhale: 5 },
-  { place: 'Valley of Echoes', animal: 'monkey', power: 'Monkey Shake', shift: 'stressed → playful', moves: 18, clouds: 10,
-    problem: 'Every sound in the valley bounces back louder. Kai feels buzzy, stuck, and ready to yell.',
-    sorin: "All that buzz needs somewhere to move. Let's shake it loose together.",
-    steps: ['Shake your hands like you are flicking off water.', 'Now shake your arms, your shoulders, your legs.', 'Bounce on your toes and let a laugh out.', 'Stop. Stand still. Feel the tingles.'],
-    line: 'Energy needs to move.', inhale: 3, exhale: 5 },
-  { place: 'Sky Temple', animal: 'crane', power: 'Crane Flow', shift: 'busy mind → still', moves: 20, clouds: 12,
-    problem: "Kai's thoughts are spinning faster than the wind around the temple. He can't stop thinking.",
-    sorin: "Your mind is flying fast. Let's slow the wings down, one breath at a time.",
-    steps: ['Stand tall and lift your arms like wings.', 'Lift one knee slowly if you can.', 'Breathe in while your wings rise.', 'Breathe out while they float down.'],
-    line: 'Stillness helps you notice.', inhale: 4, exhale: 6 },
-  { place: 'Lantern River', animal: 'deer', power: 'Deer Heart', shift: 'sad → close', moves: 22, clouds: 14,
-    problem: 'Kai misses his friend. The river has gone dark and the lanterns have floated away.',
-    sorin: "Sad feelings want company. Let's bring the lanterns home.",
-    steps: ['Put both hands on your heart.', 'Feel it beating under your hands.', 'Breathe in and think of someone you love.', 'Breathe out and send them a soft hello.'],
-    line: 'Softness is strength.', inhale: 4, exhale: 6 }
+  { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 16, clouds: 6,
+    problem: "Kai keeps thinking about tomorrow. His belly feels tight and he can't stop worrying.",
+    sorin: "Worry likes to sit in the belly. Where is that feeling trying to go? Let's hum it loose.",
+    steps: ['Stand with soft knees and put both hands on your belly.', 'Breathe in and feel your belly fill like a drum.', 'Hum the breath out low: mmmmmm. Feel your hands buzz.', 'Three times, then notice your middle feeling steady.'],
+    line: 'Worry gets stuck in the middle. Humming moves it.', inhale: 4, exhale: 6 },
+  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 16, clouds: 8,
+    problem: "Kai's friend broke his lantern. He is so angry he wants to shout at everybody.",
+    sorin: "Anger is strong power looking for a way out. Let's give it a way out that helps.",
+    steps: ['Stand tall like a tree with your feet rooted.', 'Breathe in and reach your arms up and out like branches.', 'Breathe out with a big haaaa and let your arms drop.', 'Shake your hands out, then stand still.'],
+    line: 'Anger is strong. Let it out and it can turn into kindness.', inhale: 4, exhale: 5 },
+  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 18, clouds: 10,
+    problem: 'Kai is so excited he cannot sit still or listen. His chest is racing and everything echoes.',
+    sorin: "Your heart is running bright and fast. Let a little out, then let it rest.",
+    steps: ['Put both hands on your heart.', 'Breathe in and feel your chest lift.', 'Breathe out with a soft laugh: ha-ha-haaa.', 'Now be still and feel your heart slow down.'],
+    line: 'Excitement settles when the heart is held.', inhale: 3, exhale: 5 },
+  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 20, clouds: 12,
+    problem: 'Something Kai loved has ended. His chest feels heavy and empty up in the cold wind.',
+    sorin: "Sad feelings live in the lungs. Every long sigh carries a little of it out.",
+    steps: ['Stand with your arms open wide like wings.', 'Breathe in through your nose and fill your lungs.', 'Breathe out with a long sigh: sssssss.', 'Let your shoulders drop lower each time.'],
+    line: 'Sad feelings leave on the out-breath.', inhale: 4, exhale: 6 },
+  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 22, clouds: 14,
+    problem: 'It is dark and Kai is scared. His legs feel shaky and his thinking has gone cloudy.',
+    sorin: "Fear lives low, near your back. Let's warm it until your clear thinking comes back.",
+    steps: ['Put your hands on your lower back, above your hips.', 'Breathe in slowly and feel your back widen.', 'Breathe out with a low hum: whoooooo.', 'Feel your feet heavy and your back warm.'],
+    line: 'When fear melts, clear thinking comes back.', inhale: 4, exhale: 6 }
 ];
 const CHEERS = ["Luma's glow is growing.", 'Nice match. Luma is filling up.', "Sorin: \"That's it. Nice and slow.\""];
 
@@ -691,8 +719,8 @@ function renderMap() {
     const n = i + 1, locked = n > S.unlocked, st = S.stars[n] || 0;
     const cur = n === Math.min(S.unlocked, LEVELS.length);
     return `<button class="node ${locked ? 'locked' : ''} ${cur ? 'current' : ''}" data-lv="${i}" ${locked ? 'aria-disabled="true"' : ''}>
-      <span class="orbicon">${orbHTML(L.animal)}</span>
-      <span><span class="name">${L.place}</span><br><span class="shift">${L.power} · ${L.shift}</span></span>
+      <span class="orbicon">${orbHTML(L.elem)}</span>
+      <span><span class="name">${L.place}</span><br><span class="shift">${ELEM[L.elem].name} · ${L.shift}</span></span>
       <span class="stars">${locked ? '🔒' : '★'.repeat(st) + '<span style="opacity:.25">' + '★'.repeat(3 - st) + '</span>'}</span>
     </button>`;
   }).join('');
@@ -715,8 +743,8 @@ function openLevel(i) {
   $('#iTitle').textContent = L.place;
   $('#iProblem').textContent = L.problem;
   $('#iSorin').textContent = L.sorin;
-  $('#iGoal').innerHTML = `<b>Blow away ${L.clouds} storm clouds.</b> You have ${L.moves} moves.`;
-  $('#iPower').innerHTML = `<b>1.</b> Match 3 of a color to fill Luma's glow.<br><b>2.</b> When she glows, tap her and breathe with her.<br>Slow breaths blow away more clouds.`;
+  $('#iGoal').innerHTML = `<b>Blow away ${L.clouds} storm clouds.</b> You have ${L.moves} moves. This place is <b>${ELEM[L.elem].name}</b>: ${L.shift}.`;
+  $('#iPower').innerHTML = `<b>1.</b> Match 3 of an element to fill Luma's glow.<br><b>2.</b> When she glows, tap her and breathe with her.<br>Slow breaths blow away more clouds. Match along the cycle (${ELEM[L.elem].feeds}) and Luma fills faster.`;
   showOv('intro');
   bell(523.25);
 }
@@ -728,6 +756,7 @@ const boardEl = $('#board'), wrap = $('#boardwrap');
 let board = [], ids = new Map(), nid = 1, T = 44;
 let busy = false, sel = null, drag = null, moves = 0, charge = 0, combo = 0, mode = null, cheerAt = 0, running = false;
 let deepBreaths = 0, breathing = false, wasReady = false;
+let lastElem = null, flow = 0;
 const progress = () => L ? 1 - clouds().length / L.clouds : 0;
 
 const rnd = a => a[Math.floor(Math.random() * a.length)];
@@ -850,7 +879,7 @@ async function trySwap(a, b) {
   if (a.type === 'spirit' || b.type === 'spirit') {
     useMove();
     const sp = a.type === 'spirit' ? a : b, other = sp === a ? b : a;
-    const color = other.type === 'spirit' ? L.animal : other.type;
+    const color = other.type === 'spirit' ? L.elem : other.type;
     sp.fired = true;
     const set = new Set([sp, ...all().filter(t => t.type === color)]);
     if (other.type === 'spirit') { other.fired = true; set.add(other); }
@@ -864,7 +893,11 @@ async function trySwap(a, b) {
       busy = false; return;
     }
     useMove();
+    const counts = {};
+    m.clear.forEach(t => { if (t.type !== 'spirit') counts[t.type] = (counts[t.type] || 0) + 1; });
+    const led = Object.keys(counts).sort((x, y) => counts[y] - counts[x])[0];
     await resolve(m.clear, m.groups, [a, b]);
+    flowStep(led);
   }
   await settle();
 }
@@ -875,7 +908,7 @@ function expand(clear) {
     const t = q.pop(); let extra = [];
     if (t.sp === 'row') extra = board[t.r];
     else if (t.sp === 'col') extra = board.map(row => row[t.c]);
-    else if (t.type === 'spirit' && !t.fired) { t.fired = true; extra = all().filter(x => x.type === L.animal); }
+    else if (t.type === 'spirit' && !t.fired) { t.fired = true; extra = all().filter(x => x.type === L.elem); }
     for (const x of extra) if (x && !clear.has(x)) { clear.add(x); q.push(x); }
   }
 }
@@ -950,6 +983,25 @@ async function settle() {
   coachAfterTurn();
 }
 
+// Demaris's creation cycle, played: match along Wood → Fire → Earth → Metal → Water and Luma fills faster.
+const prevOf = el => Object.keys(CREATES).find(k => CREATES[k] === el) || el;
+function flowStep(el) {
+  const bar = $('#flowBar');
+  if (!el) { bar.hidden = true; return; }
+  if (lastElem && CREATES[lastElem] === el) flow++; else flow = 1;
+  lastElem = el;
+  if (flow < 2) { bar.hidden = true; return; }
+  const bonus = flow >= 3 ? 40 : 20;
+  charge = Math.min(100, charge + bonus);
+  $('#flowText').innerHTML = `${ELEM[prevOf(el)].feeds} · <b>flow ×${flow}</b> · Luma +${bonus}`;
+  bar.hidden = false;
+  bar.animate([{ transform: 'scale(.85)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
+  chord(flow >= 3 ? [659.25, 880, 1174.66] : [587.33, 783.99], 0.07);
+  say(flow >= 3 ? 'The whole cycle is flowing. Luma filled up fast.' : `${ELEM[prevOf(el)].feeds}. Luma filled faster.`);
+  clearTimeout(bar._t); bar._t = setTimeout(() => { bar.hidden = true; }, 4500);
+  hud();
+}
+
 /* ---------- input ---------- */
 function clearSel() { if (sel) sel.el.classList.remove('sel'); sel = null; }
 boardEl.addEventListener('pointerdown', e => {
@@ -990,7 +1042,7 @@ const brStage = $('#brStage'), brTrack = $('#brTrack'), brKnob = $('#brKnob'), b
 let brRun = 0, micH = null;
 const ease = x => 0.5 - Math.cos(Math.PI * x) / 2;
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
-function glowGoal(on) { all().forEach(t => t.el.classList.toggle('breathing', on && (t.type === L.animal || t.cloud))); }
+function glowGoal(on) { all().forEach(t => t.el.classList.toggle('breathing', on && (t.type === L.elem || t.cloud))); }
 
 async function openMic() {
   try {
@@ -1195,7 +1247,7 @@ async function runBreath() {
 
 let pendingQ = null;
 function breathPlan(q) {
-  const cl = clouds().length, an = all().filter(t => t.type === L.animal && !t.cloud).length;
+  const cl = clouds().length, an = all().filter(t => t.type === L.elem && !t.cloud).length;
   const tier = q >= 0.72 ? 'deep' : q >= 0.4 ? 'nice' : 'small';
   const cloudsOff = Math.min(cl, tier === 'deep' ? 4 : tier === 'nice' ? 2 : 1);
   const orbs = 0;
@@ -1237,7 +1289,7 @@ async function applyBreath(q) {
   await wait(cl.length * 90 + 300);
   const left = clouds().length;
   say(left ? `${p.cloudsOff === 1 ? 'One cloud' : p.cloudsOff + ' clouds'} blew away. ${left} left. Match orbs to fill Luma again.` : 'The last cloud blew away.');
-  const orbs = all().filter(t => t.type === L.animal && !t.cloud).sort(() => Math.random() - 0.5).slice(0, p.orbs);
+  const orbs = all().filter(t => t.type === L.elem && !t.cloud).sort(() => Math.random() - 0.5).slice(0, p.orbs);
   if (orbs.length) await resolve(new Set(orbs), [], null);
   breathing = false;
   charge = 0; hud();
@@ -1428,7 +1480,7 @@ function coachStart() {
   if (LI !== 0 || S.tutDone) { tut = null; clearHints(); hideTip(); return; }
   tut = 'swap';
   showSwapHint();
-  tip('Step 1 of 3 · Match', 'Slide the glowing orb onto its neighbor, like the hand shows. Three of the same color in a row is a match.', 0);
+  tip('Step 1 of 3 · Match', 'Slide the glowing orb onto its neighbour, like the hand shows. Three of the same element in a row is a match.', 0);
 }
 // called after every finished turn
 function coachAfterTurn() {
@@ -1478,14 +1530,14 @@ addEventListener('resize', () => { if (tut === 'swap') showSwapHint(); else if (
 /* ---------- level flow ---------- */
 function startLevel() {
   $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
-  $('#gPlace').textContent = L.place; $('#gShift').textContent = `${L.power} · ${L.shift}`;
+  $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
-  moves = L.moves; charge = 0; wasReady = false; combo = 0; mode = null; busy = true; sel = null;
+  moves = L.moves; charge = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
   deepBreaths = 0; breathing = false;
   boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on');
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); hud();
-    say('Swipe to match 3 of the same color. Each match fills Luma.');
+    say('Swipe to match 3 of the same element. Each match fills Luma.');
     if (!running) { running = true; rainLoop(); }
     setTimeout(() => { busy = false; coachStart(); }, 700);
   }, 30);
@@ -1510,7 +1562,7 @@ async function winLevel() {
   S.unlocked = Math.max(S.unlocked, Math.min(LEVELS.length, n + 1));
   if (n === LEVELS.length) S.unlocked = LEVELS.length + 1;
   S.coins += coins; save();
-  $('#wEyebrow').textContent = `${L.place} · ${L.shift}`;
+  $('#wEyebrow').textContent = `${L.place} · ${ELEM[L.elem].name} · ${L.shift}`;
   $('#wStars').innerHTML = '★'.repeat(stars) + `<span class="off">${'★'.repeat(3 - stars)}</span>`;
   $('#wCoins').textContent = coins;
   $('#wLeft').textContent = deepBreaths ? `${deepBreaths} deep ${deepBreaths === 1 ? 'breath' : 'breaths'}` : 'Third star: take one deep breath';
@@ -1630,6 +1682,8 @@ $('#retut').addEventListener('click', () => { S.tutDone = false; save(); toast('
 $('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); });
 $('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#welcome').hidden = false; $('#welcome').scrollTop = 0; });
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
+$('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
+$('#cycleRow').innerHTML = ['wood', 'fire', 'earth', 'metal', 'water'].map(e => `<span class="eo">${orbHTML(e)}</span>`).join('<i>→</i>') + '<i>↻</i>';
 syncMute(); renderMap();
 })();
 </script>
