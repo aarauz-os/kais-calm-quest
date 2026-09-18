@@ -3567,11 +3567,12 @@ function chordNote(idx) {
 const SFX = {}, SFX_TUNE = { wood: 73.42 / 74.02, metal: 440 / 404.42 };
 const SFX_FILES = ['fire', 'fire-big', 'wood', 'metal', 'water', 'earth', 'stamp', 'swoosh', 'drum',
   // ElevenLabs set (2026-09-18): every button, reward, booster, piece, Luma's Dive and evolution has its own real sound
-  'sfx-tap', 'sfx-panel', 'sfx-coins', 'sfx-chest', 'sfx-star', 'sfx-tiger', 'sfx-bear', 'sfx-hawk', 'sfx-monkey', 'sfx-deer', 'sfx-lantern', 'sfx-blossom', 'sfx-firefly', 'sfx-spirit', 'sfx-combo', 'sfx-dive', 'sfx-evolve', 'sfx-cloud'];
+  // soft UI set (v70): felt-mallet taps in three pentatonic pitches, a warm bloom to open, a settle to close
+  'sfx-tap', 'sfx-tap2', 'sfx-tap3', 'sfx-close', 'sfx-panel', 'sfx-coins', 'sfx-chest', 'sfx-star', 'sfx-tiger', 'sfx-bear', 'sfx-hawk', 'sfx-monkey', 'sfx-deer', 'sfx-lantern', 'sfx-blossom', 'sfx-firefly', 'sfx-spirit', 'sfx-combo', 'sfx-dive', 'sfx-evolve', 'sfx-cloud'];
 let sfxLoading = false;
 function loadSfx() {
   if (sfxLoading || !AC) return; sfxLoading = true;
-  SFX_FILES.forEach(n => fetch(`snd/${n}.mp3?v=69`).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => AC.decodeAudioData(b, ok, no))).then(buf => { SFX[n] = buf; }).catch(() => {}));
+  SFX_FILES.forEach(n => fetch(`snd/${n}.mp3?v=70`).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => AC.decodeAudioData(b, ok, no))).then(buf => { SFX[n] = buf; }).catch(() => {}));
 }
 // the scale index each element sits on: water C5, wood D5, fire E5, earth G5, metal A5
 const ELEM_DEG = { water: 2, wood: 3, fire: 4, earth: 5, metal: 6 };
@@ -3582,7 +3583,7 @@ function playSfx(name, { pan = 0, rate = 1, gain = 1, send = 0.3, when = 0 } = {
   src.buffer = buf; src.playbackRate.value = rate * (SFX_TUNE[name] || 1);
   // a 1-2 frame fade in and out, so no clip ever starts or stops with a click
   const t0 = a.currentTime + when, dur = buf.duration / src.playbackRate.value;
-  const fin = Math.min(0.01, dur / 4), fout = Math.min(0.02, dur / 3);
+  const fin = Math.min(0.015, dur / 4), fout = Math.min(0.03, dur / 3);
   g.gain.setValueAtTime(0, t0);
   g.gain.linearRampToValueAtTime(gain, t0 + fin);
   g.gain.setValueAtTime(gain, Math.max(t0 + fin, t0 + dur - fout));
@@ -3613,7 +3614,7 @@ function mix() {
   const comp = a.createDynamicsCompressor();
   comp.threshold.value = -16; comp.knee.value = 20; comp.ratio.value = 3.5; comp.attack.value = 0.003; comp.release.value = 0.25;
   const soft = a.createBiquadFilter(); soft.type = 'peaking'; soft.frequency.value = 3200; soft.Q.value = 0.9; soft.gain.value = -3.5;
-  const air = a.createBiquadFilter(); air.type = 'highshelf'; air.frequency.value = 9000; air.gain.value = -4;
+  const air = a.createBiquadFilter(); air.type = 'highshelf'; air.frequency.value = 7000; air.gain.value = -6;   // softer top end on headphones
   const out = a.createGain(); out.gain.value = 0.95;
   const dry = a.createGain();
   const rev = a.createConvolver(); rev.buffer = impulse(a, 2.3, 2.7);
@@ -3635,7 +3636,7 @@ function voice(pan = 0, send = 1) {
 const LADDER = [1, 9 / 8, 5 / 4, 3 / 2, 5 / 3, 2, 9 / 4, 5 / 2, 3, 10 / 3, 4];
 const detune = () => 1;   // every repeat is identical and in tune: nothing ever sounds random
 function env(g, t, peak, attack, decay) {
-  attack = Math.max(0.006, attack);             // never faster than ~6ms: no click on the way in
+  attack = Math.max(0.012, attack);             // never faster than ~12ms: a soft, buttery start
   g.gain.setValueAtTime(0.0001, t);
   g.gain.exponentialRampToValueAtTime(peak, t + attack);
   g.gain.exponentialRampToValueAtTime(0.0001, t + attack + decay);
@@ -3644,22 +3645,24 @@ function osc(a, type, f, t, dur, dest) { const o = a.createOscillator(); o.type 
 function boop(step = 0, vol = 0.14, pan = 0) {
   const a = ac(); if (!a || muted) return;
   const t = a.currentTime, f = 523.25 * LADDER[Math.min(step, LADDER.length - 1)] * detune();
-  const out = voice(pan, 0.6), g = a.createGain(); g.connect(out);
-  env(g, t, vol, 0.006, 0.22);
-  const o = osc(a, 'sine', f * 1.5, t, 0.3, g);
-  o.frequency.exponentialRampToValueAtTime(f, t + 0.04);
+  const out = voice(pan, 0.6), lpf = a.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 1800; lpf.connect(out);
+  const g = a.createGain(); g.connect(lpf);
+  env(g, t, vol * 0.8, 0.014, 0.26);               // a soft marimba-like note: no pitch slide, no chirp
+  osc(a, 'triangle', f, t, 0.34, g);
 }
 function bell(f, delay = 0, vol = 0.1, pan = 0) {
   const a = ac(); if (!a || muted) return;
   const t = a.currentTime + delay, out = voice(pan, 1.1);
   [[1, vol, 1.8], [2, vol * 0.3, 0.9], [3, vol * 0.1, 0.45]].forEach(([m, v, d]) => {
-    const g = a.createGain(); g.connect(out); env(g, t, v, 0.008, d);
+    const lpf = a.createBiquadFilter(); lpf.type = 'lowpass'; lpf.frequency.value = 2200; lpf.Q.value = 0.5; lpf.connect(out);
+    const g = a.createGain(); g.connect(lpf); env(g, t, v * (m === 1 ? 1 : 0.6), 0.018, d);
     osc(a, 'sine', f * m, t, d + 0.05, g);
   });
 }
 // a soft wooden "tock" for every press
 function tick() {
-  if (playSfx('sfx-tap', { gain: 0.55, send: 0.12 })) { try { navigator.vibrate && navigator.vibrate(6); } catch (e) {} return; }
+  tick.n = ((tick.n || 0) + 1) % 3;
+  if (playSfx(['sfx-tap', 'sfx-tap2', 'sfx-tap3'][tick.n], { gain: 0.6, send: 0.1 })) { try { navigator.vibrate && navigator.vibrate(6); } catch (e) {} return; }
   const a = ac(); if (!a || muted) return;
   const t = a.currentTime, out = voice(0, 0.25), g = a.createGain(); g.connect(out);
   env(g, t, 0.07, 0.002, 0.07);
@@ -3740,10 +3743,10 @@ async function showOv(id) {
   const items = [...o.querySelectorAll('.quest,.sealslot,.buddyrow,.jrow,.streakrow,.rung,.light,.pack,.charm')].filter(x => x.offsetParent);
   items.slice(0, 14).forEach((it, k) => {
     it.animate([{ transform: 'translateY(14px) scale(.96)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 320, delay: 90 + k * 55, easing: 'cubic-bezier(.2,.9,.3,1.15)', fill: 'backwards' });
-    if (k < 8) setTimeout(() => boop(k, 0.028), 90 + k * 55);
+    if (k < 6) setTimeout(() => playSfx(['sfx-tap', 'sfx-tap2', 'sfx-tap3'][k % 3], { gain: 0.16, rate: 1 + Math.floor(k / 3) * 0.125, send: 0.2 }), 90 + k * 55);
   });
 }
-async function hideOv(id) { const o = $('#' + id); o.classList.remove('show'); await wait(250); o.hidden = true; if (o.classList.contains('pagemode')) { o.classList.remove('pagemode'); o.querySelector('.card').style.transform = ''; } if (o.style.zIndex === '28') o.style.zIndex = ''; if (id === 'breathe' || id === 'bedov') setGroove($('#game').hidden ? 'home' : 'play'); if (!$('#map').hidden && typeof renderHome === 'function') renderHome(); }
+async function hideOv(id) { const o = $('#' + id); if (!o.hidden && id !== 'breathe' && id !== 'bedov') playSfx('sfx-close', { gain: 0.45, send: 0.2 }); o.classList.remove('show'); await wait(250); o.hidden = true; if (o.classList.contains('pagemode')) { o.classList.remove('pagemode'); o.querySelector('.card').style.transform = ''; } if (o.style.zIndex === '28') o.style.zIndex = ''; if (id === 'breathe' || id === 'bedov') setGroove($('#game').hidden ? 'home' : 'play'); if (!$('#map').hidden && typeof renderHome === 'function') renderHome(); }
 function bump(el) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
 
 /* ---------- five lights: balance across the elements ---------- */
