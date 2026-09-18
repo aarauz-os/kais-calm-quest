@@ -772,8 +772,8 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
 .coachtip{position:absolute;padding:9px 12px;border-radius:16px 16px 16px 5px;color:#33281A;font-weight:800;font-size:13.5px;line-height:1.3;pointer-events:auto;
   background:linear-gradient(#FFFDF4,#FFEBC0);box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 0 0 2.5px var(--gold-hi),0 0 0 5px var(--wood),0 4px 0 var(--wood-d),0 0 20px rgba(255,210,120,.6)}
 .coachtip .k{display:block;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
-.tile.hint .orb{animation:hintp 1.1s ease-in-out infinite}
-@keyframes hintp{50%{transform:scale(1.14);box-shadow:0 0 0 3px #fff,0 0 18px 7px rgba(255,230,150,.95)}}
+.tile.hint .orb{animation:hintp 1.8s ease-in-out infinite}
+@keyframes hintp{50%{transform:scale(1.06);box-shadow:0 0 0 2px rgba(255,255,255,.7),0 0 10px 3px rgba(255,230,150,.5)}}
 .breathbtn.point{animation:ready 1s ease-in-out infinite}
 .brhand{left:calc(50% + 6px);top:auto;bottom:6%;pointer-events:none;z-index:2}
 .brhand.up{animation:hup 3.2s ease-in-out infinite}
@@ -2445,6 +2445,10 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
 #board .tile.pop .spfx,#board .tile.pop .knotx{display:none}
 .tile.land .orb{animation:land .24s cubic-bezier(.3,1.4,.5,1)}
 @keyframes land{0%{transform:scale(1.08,.88) translateY(4%)}55%{transform:scale(.97,1.04)}100%{transform:none}}
+
+/* v72: shop items use the same glossy 3D art as the booster bar */
+.sgem.s3d{overflow:visible;background:radial-gradient(circle at 50% 36%,color-mix(in srgb,var(--eh) 55%,#fff) 0%,color-mix(in srgb,var(--eh) 70%,#12302A) 78%) !important;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -4px 8px rgba(0,0,0,.25),0 0 0 2px #F4D78C,0 4px 0 #6B4418,0 6px 10px rgba(0,0,0,.3) !important}
+.sgem.s3d img{position:relative;inset:auto;width:84%;height:84%;border-radius:0;object-fit:contain;mix-blend-mode:normal;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35));animation:pwidle 3.2s ease-in-out infinite}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2481,7 +2485,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
           <p class="clede">The puzzle game kids win by breathing. Clear the storm with a real, slow breath, then understand the feeling behind it.</p>
           <div class="cfaces"><img src="img/faces/hero-g1-happy.jpg" alt=""><img src="img/faces/hero-b3-happy.jpg" alt=""><img src="img/faces/hero-g4-happy.jpg" alt=""><img src="img/faces/kai-happy.jpg" alt=""><img src="img/faces/hero-g6-happy.jpg" alt=""><img src="img/faces/hero-b5-happy.jpg" alt=""><img class="cluma" src="img/faces/luma-happy.jpg" alt="Luma"><img src="img/faces/hero-g2-happy.jpg" alt=""><img src="img/faces/hero-b2-happy.jpg" alt=""><img src="img/faces/hero-g5-happy.jpg" alt=""><img src="img/faces/hero-b4-happy.jpg" alt=""><img src="img/faces/hero-g3-happy.jpg" alt=""><img src="img/faces/hero-b6-happy.jpg" alt=""></div>
           <button class="btn gold big" data-play>Play the demo</button>
-          <p class="cnote">30 episodes to play · free forever · best with the sound on</p>
+          <p class="cnote">50 episodes to play · free forever · best with the sound on</p>
         </div>
       </header>
 
@@ -3281,24 +3285,27 @@ const BASE_LEVELS = [
    Episode 1 is pure matching. Each later episode introduces exactly one mechanic, with a short "New!" card
    and a level built to show it off. Boosters unlock one at a time, much later, each with 3 free to start.
    The five places, feelings and stories cycle; goals, moves and board shapes come from this table. */
-const FEAT_AT = { breath: 2, row: 3, clouds: 4, bomb: 5, fly: 6, knots: 7, spirit: 8, storm: 9, monkey: 10, feed: 11, charms: 12, tiger: 13, glow: 15, bear: 16, crane: 20, deer: 24 };
+// Anchored to Royal Kingdom's confirmed levels: first in-game booster at 8 (their Hammer), free starting
+// gifts at 32 (their Magic Pots) and the colour-clearing star at 36 (their Electro Ball event). Everything
+// else is spaced so each new thing gets several levels to settle before the next arrives.
+const FEAT_AT = { breath: 2, row: 4, clouds: 6, monkey: 8, bomb: 10, charms: 12, knots: 14, fly: 17, tiger: 20, storm: 23, feed: 26, bear: 30, glow: 32, spirit: 36, crane: 40, deer: 45 };
 const INTRO_AT = Object.fromEntries(Object.entries(FEAT_AT).map(([k, v]) => [v, k]));
 const reached = () => Math.max(S && S.unlocked || 1, (typeof LI === 'number' ? LI : 0) + 1);
 const featOn = (k, ep = (typeof LI === 'number' ? LI : 0) + 1) => ep >= FEAT_AT[k];
 const featEver = k => reached() >= FEAT_AT[k];
 // shapes chosen to suit what each episode teaches (wide rows for lines, open middles for shapes)
-const EP_SHAPE = { 3: null, 4: 'round6', 5: null, 6: 'bowl', 7: 'castle', 8: 'arch', 9: 'diamond', 10: 'heart', 11: 'gate', 12: 'lotus', 13: 'hourglass', 14: 'tower', 15: 'wave' };
-const SHAPE_CYCLE = ['heart', 'diamond', 'lotus', 'arch', 'hourglass', 'castle', 'wave', 'tower', 'gate', 'bowl'];
+// intro episodes use a simple board so the new thing is easy to see; the others rotate through the shapes
+const SHAPE_CYCLE = [null, 'bowl', 'heart', 'castle', 'diamond', 'arch', 'lotus', 'gate', 'hourglass', 'tower', 'wave'];
 function makeEp(i) {
   const ep = i + 1, b = BASE_LEVELS[i % BASE_LEVELS.length];
   const gems = ep <= 3 ? 10 + ep * 2 : ep % 3 === 1 ? 0 : Math.min(30, 14 + Math.floor(ep / 2));
   const clouds = ep < FEAT_AT.clouds ? 0 : Math.min(14, 3 + Math.floor((ep - FEAT_AT.clouds) * 0.8));
   const knots = ep < FEAT_AT.knots ? 0 : (ep === FEAT_AT.knots || ep % 2 === 1) ? Math.min(8, 2 + Math.floor((ep - FEAT_AT.knots) / 3)) : 0;
   const moves = Math.max(16, Math.min(40, 14 + Math.round(gems * 0.45 + clouds * 1.5 + knots * 1.3)));
-  const shape = ep in EP_SHAPE ? EP_SHAPE[ep] : ep > 15 ? SHAPE_CYCLE[(ep - 16) % SHAPE_CYCLE.length] : null;
+  const shape = INTRO_AT[ep] ? null : ep === 3 ? 'round6' : ep < 5 ? null : SHAPE_CYCLE[(ep - 5) % SHAPE_CYCLE.length];
   return Object.assign({}, b, { moves, clouds, knots, gems: gems || (clouds || knots ? 0 : 12), shape, ep, intro: INTRO_AT[ep] || (ep === 1 ? 'match' : null) });
 }
-const LEVELS = Array.from({ length: 30 }, (_, i) => makeEp(i));
+const LEVELS = Array.from({ length: 50 }, (_, i) => makeEp(i));
 
 // the Feelings Journey: 16 chapters of 60 places, then the 40-place Harmony Road (1,000 in all).
 // Framing rule: every feeling is welcome. We tame, face, untangle or hold it, never defeat it.
@@ -5006,9 +5013,9 @@ const VOICE = { hero: 520, sorin: 290, luma: 780 };
 /* ---------- difficulty: every 5th episode is Stormy (Hard), every 20th a Thunderstorm (Super Hard).
    Four easy wins, then a challenge that pays more; the rarer Thunderstorms become events. ---------- */
 // Stormy episodes arrive only once the basics are learned, and never on an episode that introduces something new
-const epDifficulty = ep => ep >= 40 && ep % 20 === 0 ? 'super' : ep >= 12 && ep % 5 === 2 && !INTRO_AT[ep] ? 'hard' : 'normal';
+const epDifficulty = ep => ep >= 40 && ep % 20 === 0 && !INTRO_AT[ep] ? 'super' : ep >= 15 && ep % 5 === 2 && !INTRO_AT[ep] ? 'hard' : 'normal';
 // how many Stormy episodes came before this one: the first ones are gentle, the squeeze grows slowly
-const stormRank = ep => Math.max(1, Math.floor((ep - 12) / 5) + 1);
+const stormRank = ep => Math.max(1, Math.floor((ep - 17) / 5) + 1);
 const DIFF = {
   normal: { name: '', label: '', moves: 1, clouds: 0, knots: 0, gems: 1, coin: 1, xp: 1 },
   hard: { name: 'Stormy', label: 'Hard', moves: 0.9, clouds: 2, knots: 2, gems: 1, coin: 2, xp: 1.5 },
@@ -5774,7 +5781,7 @@ async function shuffle() {
 }
 
 /* ---------- turn resolution ---------- */
-function useMove() { moves--; movesUsed++; moveAura = 0; hud(); bump($('#movesStat')); }
+function useMove() { moves--; movesUsed++; moveAura = 0; wrongSwaps = 0; hud(); bump($('#movesStat')); }
 function swapCells(a, b) {
   const { r: ar, c: ac_ } = a, { r: br, c: bc } = b;
   board[ar][ac_] = b; board[br][bc] = a;
@@ -5837,10 +5844,11 @@ async function trySwap(a, b) {
     const m = findMatches();
     if (!m.clear.size) {
       swapCells(a, b); await wait(220);
-      say('Those two don\'t make a line. Try another swap.');
+      wrongSwaps++;
+      if (wrongSwaps < HINT_WRONG) say('Those two don\'t make a line. Try another swap.');
       busy = false; return;
     }
-    useMove();
+    useMove(); wrongSwaps = 0;
     turnTypes = new Set();
     const counts = {};
     m.clear.forEach(t => { if (t.type !== 'spirit') counts[t.type] = (counts[t.type] || 0) + 1; });
@@ -7482,7 +7490,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -7677,7 +7685,8 @@ function rainLoop() {
 /* ---------- coach: guided first level + idle hints ---------- */
 // tut: null | 'swap' | 'luma' | 'breath' | 'loop'
 const appEl = $('#app'), handEl = $('#hand'), tipEl = $('#coachTip');
-let idleTurn = false, tut = null, handAnim = null, idleAt = performance.now(), hintShown = false;
+let idleTurn = false, tut = null, handAnim = null, idleAt = performance.now(), hintShown = false, wrongSwaps = 0;
+const HINT_IDLE_MS = 15000, HINT_WRONG = 3;      // hints stay hidden unless you've been still 15s, or missed 3 swaps in a row
 function findSwap() {
   const sw = (r1, c1, r2, c2) => { const x = board[r1][c1]; board[r1][c1] = board[r2][c2]; board[r2][c2] = x; };
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
@@ -7743,7 +7752,7 @@ function showLumaHint() {
 }
 
 function coachStart() {
-  idleAt = performance.now(); hintShown = false;
+  idleAt = performance.now(); hintShown = false; wrongSwaps = 0;
   if (LI !== 0 || S.tutDone) { tut = null; clearHints(); hideTip(); return; }
   tut = 'swap';
   showSwapHint();
@@ -7754,10 +7763,10 @@ function coachAfterTurn() {
   idleAt = performance.now(); hintShown = false;
   if (tut === 'swap') {
     if (charge >= 100) return;
-    showSwapHint();
-    tip('Step 1 of 3', `Nice! Luma's Aura is ${auraName(charge)}. Keep matching.`, 0);
-  } else if (tut === 'loop') {
     clearHints();
+    tip('Step 1 of 3', `Nice! Keep matching.`, 0);
+  } else if (tut === 'loop') {
+    clearHints(); wrongSwaps = 0;
   } else if (!tut) clearHints();
 }
 function coachReady() {
@@ -7784,8 +7793,8 @@ async function coachBreathDone() {
 // idle hints on every level, so nobody sits there stuck
 setInterval(() => {
   if ($('#game').hidden || busy || tut || practice || lab || hintShown || $$('.ov').some(o => !o.hidden)) return;
-  if (performance.now() - idleAt < 7000) return;
-  hintShown = true;
+  if (performance.now() - idleAt < HINT_IDLE_MS && wrongSwaps < HINT_WRONG) return;
+  hintShown = true; wrongSwaps = 0;
   const piece = all().find(t => (t.sp || t.type === 'spirit') && !t.knot && !t.cloud);
   if (charge >= 100) { showLumaHint(); say('Luma is ready. Tap her and breathe with her.'); }
   else if (piece && (idleTurn = !idleTurn)) { pHandTap(piece); showPreview(spArea(piece)); setTimeout(clearPreview, 1600); say(`Tap the ${SP_NAME[piece.type === 'spirit' ? 'spirit' : piece.sp]} to fire it.`); }
@@ -8993,22 +9002,22 @@ const CALM_DAYS = 9;
 const SINGLES = [
   { id: 's-claw', give: { lanterns: 3 }, price: 0.99, name: 'Tiger Claws', note: 'clears a whole row', icon: 'pw-tiger', eh: '#9AA9B8', qty: '×3' },
   { id: 's-deer', give: { swirls: 5 }, price: 0.99, name: 'Deer Leaps', note: 'grows the board fresh', icon: 'pw-deer', eh: '#6FBF4A', qty: '×5' },
-  { id: 's-hearts', give: { hearts: 1 }, price: 0.99, name: 'Full hearts', note: 'back to 5 tries', glyph: '<b class="heartg">♥</b>', eh: '#E0697F' },
-  { id: 's-shield', give: { shields: 2 }, price: 0.99, name: 'Streak Shields', note: 'covers a missed day', glyph: '<b class="shieldg">🛡</b>', eh: '#C9D2DA', qty: '×2' },
-  { id: 's-coins', give: { coins: 500 }, price: 0.99, name: '500 coins', note: 'for charms and refills', glyph: '<i class="coin"></i>', eh: '#F0B93A' },
-  { id: 's-coins2', give: { coins: 1500 }, price: 1.99, name: '1,500 coins', note: '50% more per dollar', glyph: '<i class="coin"></i>', eh: '#F0B93A' }
+  { id: 's-hearts', give: { hearts: 1 }, price: 0.99, name: 'Full hearts', note: 'back to 5 tries', icon: 'heart', eh: '#E0697F' },
+  { id: 's-shield', give: { shields: 2 }, price: 0.99, name: 'Streak Shields', note: 'covers a missed day', icon: 'shield', eh: '#C9D2DA', qty: '×2' },
+  { id: 's-coins', give: { coins: 500 }, price: 0.99, name: '500 coins', note: 'for charms and refills', icon: 'coin', eh: '#F0B93A' },
+  { id: 's-coins2', give: { coins: 1500 }, price: 1.99, name: '1,500 coins', note: '50% more per dollar', icon: 'coin', eh: '#F0B93A' }
 ];
 const BUNDLES = [
-  { id: 'b-starter', rib: 'One per player', name: 'Starter Satchel', price: 0.99, once: true, give: { lanterns: 3, swirls: 5, coins: 500 }, gems: ['pw-tiger', 'coin', 'pw-deer'], list: ['3 Tiger Claws', '5 Deer Streams', '500 coins'] },
+  { id: 'b-starter', rib: 'One per player', name: 'Starter Satchel', price: 0.99, once: true, give: { lanterns: 3, swirls: 5, coins: 500 }, gems: ['pw-tiger', 'coin', 'pw-deer'], list: ['3 Tiger Claws', '5 Deer Leaps', '500 coins'] },
   { id: 'b-five', rib: 'All five elements', name: 'Five Elements Chest', price: 2.99, give: { lanterns: 5, swirls: 10, shields: 2, coins: 1500, charms: 1 }, gems: ['pw-bear', 'pw-crane', 'pw-monkey'], list: ['5 Tiger Claws', '10 Deer Streams', '2 Streak Shields', '1,500 coins', '1 of each charm'] },
   { id: 'b-treasure', rib: 'Everything', name: "Breather's Treasure", price: 4.99, give: { lanterns: 10, swirls: 15, shields: 5, coins: 4000, charms: 2, pw: 3, aura: 'starlight' }, gems: ['pw-tiger', 'coin', 'pw-crane'], list: ['10 Tiger Claws', '15 Deer Streams', '3 Bear Stomps + 3 Crane Wings', '5 Streak Shields', '4,000 coins', '2 of each charm', 'Starlight Aura, yours to keep'] }
 ];
 const worthOf = g => (g.lanterns || 0) * UNIT.lanterns + (g.swirls || 0) * UNIT.swirls + (g.shields || 0) * UNIT.shields + (g.coins || 0) * UNIT.coins + (g.hearts ? UNIT.hearts : 0);
 const money = n => `$${n.toFixed(2)}`;
 const calmLeft = () => Math.max(0, Math.ceil(((S.calmUntil || 0) - Date.now()) / 86400000));
+const SHOP_ART = { 'pw-tiger': 'img/ui/pw-tiger.png', 'pw-deer': 'img/ui/pw-deer.png', 'pw-crane': 'img/ui/pw-hawk.png', 'pw-hawk': 'img/ui/pw-hawk.png', 'pw-monkey': 'img/ui/pw-monkey.png', 'pw-bear': 'img/ui/pw-bear.png', coin: 'img/ui/coins.png', heart: 'img/ui/heart.png', shield: 'img/ui/shield.png' };
 function gemHTML(icon, eh) {
-  if (icon === 'coin') return `<span class="sgem" style="--eh:#E08A2E"><i class="coin"></i></span>`;
-  return `<span class="sgem" style="--eh:${eh || '#F0B93A'}"><img src="img/icons/${icon}.jpg" alt=""></span>`;
+  return `<span class="sgem s3d" style="--eh:${icon === 'coin' ? '#F0B93A' : eh || '#F0B93A'}"><img src="${SHOP_ART[icon] || 'img/ui/coins.png'}" alt=""></span>`;
 }
 function renderShop() {
   const left = calmLeft();
