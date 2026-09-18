@@ -1721,7 +1721,15 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .hometitle h1 .qi{color:#C58A1E;-webkit-text-fill-color:#C58A1E}
 @keyframes plaqueGlint{0%,86%,100%{box-shadow:inset 0 3px 0 #fff,inset 0 -5px 0 rgba(170,145,100,.35),inset 0 0 0 1px rgba(255,255,255,.8),0 0 0 3px #E3BC6A,0 0 0 5.5px rgba(110,72,18,.55),0 10px 22px rgba(0,0,0,.4)}
   92%{box-shadow:inset 0 3px 0 #fff,inset 0 -5px 0 rgba(170,145,100,.35),inset 0 0 0 1px rgba(255,255,255,.8),0 0 0 3px #FFE9A8,0 0 0 5.5px rgba(110,72,18,.55),0 10px 22px rgba(0,0,0,.4),0 0 26px 6px rgba(255,236,170,.75)}}
-#map.dark-sky .hometitle h1{color:#2A6A55 !important;-webkit-text-fill-color:#2A6A55 !important}
+/* night and dawn: the plaque turns to polished black onyx, the name inlaid in gold */
+#map.night-sky .hometitle h1{background:radial-gradient(120% 90% at 50% 0%,#3A3D44 0%,#1C1E23 48%,#0B0C0F 100%) !important;
+  color:#F2D38A !important;-webkit-text-fill-color:#F2D38A !important;
+  text-shadow:0 -1px 0 rgba(0,0,0,.95),0 1px 0 rgba(255,236,190,.28),0 0 14px rgba(242,196,106,.35) !important;
+  animation:plaqueGlintNight 7s ease-in-out infinite;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.16),inset 0 -5px 10px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.07),0 0 0 3px #E3BC6A,0 0 0 5.5px rgba(60,38,8,.75),0 10px 24px rgba(0,0,0,.55)}
+#map.night-sky .hometitle h1 .qi{color:#FFE7A8;-webkit-text-fill-color:#FFE7A8}
+@keyframes plaqueGlintNight{0%,86%,100%{box-shadow:inset 0 2px 0 rgba(255,255,255,.16),inset 0 -5px 10px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.07),0 0 0 3px #E3BC6A,0 0 0 5.5px rgba(60,38,8,.75),0 10px 24px rgba(0,0,0,.55)}
+  92%{box-shadow:inset 0 2px 0 rgba(255,255,255,.22),inset 0 -5px 10px rgba(0,0,0,.55),inset 0 0 0 1px rgba(255,255,255,.1),0 0 0 3px #FFE9A8,0 0 0 5.5px rgba(60,38,8,.75),0 10px 24px rgba(0,0,0,.55),0 0 26px 6px rgba(255,220,140,.55)}}
 /* home foot: richer tiles and a Play button that means business */
 .journeybtn{position:relative;overflow:hidden;border-radius:20px !important;background:linear-gradient(180deg,#2F6B57,#173E33) !important;
   box-shadow:inset 0 2px 0 rgba(255,255,255,.25),inset 0 -4px 0 rgba(0,0,0,.3),0 0 0 2.5px #E3BC6A,0 6px 14px rgba(0,0,0,.4) !important}
@@ -4847,6 +4855,7 @@ function renderHome() {
   $$('.hvid').forEach(v => { if (reduce) v.pause(); else if (v.paused && !$('#map').hidden) v.play().catch(() => {}); });
   $('#homeShade').className = `homeshade world`;
   $('#map').classList.toggle('dark-sky', ['night', 'dawn'].includes(WORLD_OF[tod]));
+  $('#map').classList.toggle('night-sky', WORLD_OF[tod] === 'night');
   // badges
   $('#bStreak').textContent = S.streak ? S.streak : '';
   const q = ensureQuests(), done = q.items.filter(i => i.done).length;
