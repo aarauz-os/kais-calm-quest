@@ -2775,7 +2775,9 @@ function chordNote(idx) {
 // and the metal clank at 404 Hz, pulled up to A4 (metal's A). All pitch steps move along the
 // same C-major pentatonic, so any mix of elements, at any cascade step, stays consonant.
 const SFX = {}, SFX_TUNE = { wood: 73.42 / 74.02, metal: 440 / 404.42 };
-const SFX_FILES = ['fire', 'fire-big', 'wood', 'metal', 'water', 'earth', 'stamp', 'swoosh', 'drum'];
+const SFX_FILES = ['fire', 'fire-big', 'wood', 'metal', 'water', 'earth', 'stamp', 'swoosh', 'drum',
+  // ElevenLabs set (2026-09-18): every button, reward, booster, piece, Luma's Dive and evolution has its own real sound
+  'sfx-tap', 'sfx-panel', 'sfx-coins', 'sfx-chest', 'sfx-star', 'sfx-tiger', 'sfx-bear', 'sfx-hawk', 'sfx-monkey', 'sfx-deer', 'sfx-lantern', 'sfx-blossom', 'sfx-firefly', 'sfx-spirit', 'sfx-combo', 'sfx-dive', 'sfx-evolve', 'sfx-cloud'];
 let sfxLoading = false;
 function loadSfx() {
   if (sfxLoading || !AC) return; sfxLoading = true;
@@ -2859,6 +2861,7 @@ function bell(f, delay = 0, vol = 0.1, pan = 0) {
 }
 // a soft wooden "tock" for every press
 function tick() {
+  if (playSfx('sfx-tap', { gain: 0.55, send: 0.12 })) { try { navigator.vibrate && navigator.vibrate(6); } catch (e) {} return; }
   const a = ac(); if (!a || muted) return;
   const t = a.currentTime, out = voice(0, 0.25), g = a.createGain(); g.connect(out);
   env(g, t, 0.07, 0.002, 0.07);
@@ -2932,7 +2935,7 @@ async function showOv(id) {
   if (id === 'shop') renderShop();
   const o = $('#' + id); o.hidden = false; o.querySelectorAll('.card').forEach(c => { c.scrollTop = 0; }); void o.offsetWidth; await wait(20); o.classList.add('show');
   if (id === 'breathe' || id === 'bedov') { setGroove('calm'); return; }   // every breath: drums out, only the pad
-  playSfx('swoosh', { gain: 0.55 });
+  if (!playSfx('sfx-panel', { gain: 0.6, send: 0.2 })) playSfx('swoosh', { gain: 0.55 });
   if (reduce) return;
   const items = [...o.querySelectorAll('.quest,.sealslot,.buddyrow,.jrow,.streakrow,.rung,.light,.pack,.charm')].filter(x => x.offsetParent);
   items.slice(0, 14).forEach((it, k) => {
@@ -3288,7 +3291,7 @@ function questBump(id, amount = 1, elem) {
   });
   save();
   if (q.items.every(i => i.done) && S.questChest !== dayKey()) {
-    S.questChest = dayKey();
+    S.questChest = dayKey(); playSfx('sfx-chest', { gain: 0.75 });
     const chest = { coins: 150 * coinMult(), lanterns: 1 };
     grant(chest);
     toast(`All three quests done. Chest: ${rewardText(chest)}.`);
@@ -3406,6 +3409,7 @@ function renderCareBond(el, anim) {
 }
 // the evolution ceremony: glow, spin into light, burst, and the new form arrives with its stronger gift
 async function evolveBuddy(el, from, to) {
+  playSfx('sfx-evolve', { gain: 0.95 });
   const b = BUDDY[el], ov = $('#evolveov'), old = $('#evOld'), nu = $('#evNew');
   old.src = `img/${buddyWho(el, from)}.jpg`; nu.src = `img/${buddyWho(el, to)}.jpg`;
   ov.style.setProperty('--eg', ELEM[el].glow); ov.style.setProperty('--eh', ELEM[el].hue);
@@ -4679,6 +4683,7 @@ function controlBreak(clear) {
 }
 // a cloud that reaches the bottom row floats up into the storm counter and is freed
 function freeCloud(t, i = 0) {
+  if (i < 4) playSfx('sfx-cloud', { gain: 0.45, when: i * 0.12, rate: 1 + i * 0.05 });
   if (board[t.r] && board[t.r][t.c] === t) board[t.r][t.c] = null;
   ids.delete(String(t.id));
   const tgt = $('#cloudStat').getBoundingClientRect(), br = boardEl.getBoundingClientRect();
@@ -4881,7 +4886,7 @@ async function trySwap(a, b) {
     a.sp = b.sp = null;
     [...set].forEach(x => { if (x.cloud) set.delete(x); });
     powerUsed = { name, elem: a.type, sub: 'Special combo' };
-    flash(); chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.05);
+    flash(); playSfx('sfx-combo', { gain: 0.95 }); chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.03);
     await resolve(set, [], null);
   } else if (a.type === 'spirit' || b.type === 'spirit') {
     useMove();
@@ -4990,10 +4995,10 @@ function sweep(f0, f1, dur, vol = 0.05, type = 'sine', delay = 0, pan = 0) {
   const o = osc(a, type, f0, t, dur + 0.05, g); o.frequency.exponentialRampToValueAtTime(f1, t + dur);
 }
 function spSound(kind, n = 1) {
-  if (kind === 'row' || kind === 'col') { playSfx('swoosh', { rate: 1.35, gain: 0.6 }); sweep(220, 1320, 0.32, 0.05, 'triangle'); bell(chordNote(9), 0.06, 0.06); }
-  else if (kind === 'bomb') { playSfx('drum', { rate: 0.75, gain: 0.9 }); sweep(150, 42, 0.5, 0.14); chord([261.63, 329.63, 392, 523.25], 0.05); }
-  else if (kind === 'fly') { for (let k = 0; k < 6; k++) boop(3 + k, 0.03); bell(chordNote(10), 0.5, 0.08); playSfx('wood', { rate: 2, gain: 0.25, when: 0.5 }); }
-  else if (kind === 'spirit') { for (let k = 0; k < Math.min(8, 3 + n); k++) bell(chordNote(4 + k), k * 0.05, 0.05); sweep(400, 1600, 0.5, 0.03); }
+  if (kind === 'row' || kind === 'col') { playSfx('sfx-lantern', { gain: 0.85 }) || playSfx('swoosh', { rate: 1.35, gain: 0.6 }); bell(chordNote(9), 0.06, 0.04); }
+  else if (kind === 'bomb') { playSfx('sfx-blossom', { gain: 0.9 }) || playSfx('drum', { rate: 0.75, gain: 0.9 }); chord([261.63, 329.63, 392, 523.25], 0.03); }
+  else if (kind === 'fly') { if (!playSfx('sfx-firefly', { gain: 0.85 })) { for (let k = 0; k < 6; k++) boop(3 + k, 0.03); } bell(chordNote(10), 0.5, 0.05); }
+  else if (kind === 'spirit') { playSfx('sfx-spirit', { gain: 0.85 }); for (let k = 0; k < Math.min(6, 3 + n); k++) bell(chordNote(4 + k), k * 0.06, 0.03); }
 }
 const fxAt = (cls, x, y) => { const d = document.createElement('div'); d.className = 'fxp ' + cls; d.style.transform = `translate(${x}px,${y}px)`; boardEl.appendChild(d); return d; };
 const cx = c => c * T + T / 2, cy = r => r * T + T / 2;
@@ -5606,7 +5611,7 @@ async function lumaDive(t, d) {
   if (!t) return;
   const area = lumaArea(t, d), app = $('#app'), ar = app.getBoundingClientRect(), br = boardEl.getBoundingClientRect(), lr = $('#lumaWrap').getBoundingClientRect();
   await fxLumaDive(t, d);
-  playSfx('drum', { rate: 0.7, gain: 0.9 }); chord([392, 523.25, 659.25, 783.99, 1046.5], 0.07);
+  chord([392, 523.25, 659.25, 783.99, 1046.5], 0.035);
   // the clouds she touches float away; the orbs she touches clear (and count for your goals)
   const touched = area.filter(x => x.cloud);
   touched.forEach(swirlCloud);
@@ -5734,7 +5739,7 @@ $('#pwBar').addEventListener('click', async e => {
   // Deer Stream acts at once
   if (!await paidFor(pw)) return;
   busy = true; powerCaption(pw); cycleCheck(pw);
-  elemSound('wood', 0, 4);
+  playSfx('sfx-deer', { gain: 0.9 }) || elemSound('wood', 0, 4);
   await fxDeerStream();
   await shuffle();
   charge = Math.min(100, charge + 20); hud();
@@ -5811,7 +5816,7 @@ async function usePowerOn(t) {
     const a = monkeyFirst; monkeyFirst = null; a.el.classList.remove('sel');
     if (!await paidFor(pw)) return;
     setAim(null); busy = true; cycleCheck(pw);
-    elemSound('fire', 0, 3);
+    playSfx('sfx-monkey', { gain: 0.85 }) || elemSound('earth', 0, 3);
     await fxMonkeySwap(a, t);
     const m = findMatches();
     if (m.clear.size) await resolve(m.clear, m.groups, [a, t]);
@@ -5827,9 +5832,9 @@ async function usePowerOn(t) {
   if (!await paidFor(pw)) return;
   setAim(null); busy = true; cycleCheck(pw);
   popExit = pw.id === 'tiger' ? 'claw' : pw.id === 'bear' ? 'water' : 'fire'; powerUsed = pw;
-  if (pw.id === 'tiger') { fxTigerClaw(t.r); cells.forEach(x => { x._pd = 90 + x.c * 45; }); await wait(reduce ? 0 : 120); }
-  else if (pw.id === 'bear') { fxBearStomp(t); cells.forEach(x => { x._pd = Math.max(Math.abs(x.r - t.r), Math.abs(x.c - t.c)) * 60; }); await wait(reduce ? 0 : 420); }
-  else { fxHawkDive(t); cells.forEach(x => { x._pd = x.r === t.r ? 80 + x.c * 55 : 340 + x.r * 55; }); await wait(reduce ? 0 : 150); }
+  if (pw.id === 'tiger') { playSfx('sfx-tiger', { gain: 0.9 }); fxTigerClaw(t.r); cells.forEach(x => { x._pd = 90 + x.c * 45; }); await wait(reduce ? 0 : 120); }
+  else if (pw.id === 'bear') { setTimeout(() => playSfx('sfx-bear', { gain: 1 }), reduce ? 0 : 330); fxBearStomp(t); cells.forEach(x => { x._pd = Math.max(Math.abs(x.r - t.r), Math.abs(x.c - t.c)) * 60; }); await wait(reduce ? 0 : 420); }
+  else { playSfx('sfx-hawk', { gain: 0.9 }); fxHawkDive(t); cells.forEach(x => { x._pd = x.r === t.r ? 80 + x.c * 55 : 340 + x.r * 55; }); await wait(reduce ? 0 : 150); }
   await resolve(new Set(cells), [], null);
   await settle();
 }
@@ -5954,6 +5959,7 @@ async function fxDeerStream() {
 }
 // ---- Luma's Dive
 async function fxLumaDive(t, d) {
+  playSfx('sfx-dive', { gain: 0.95 });
   const app = $('#app'), ar = app.getBoundingClientRect(), br = boardEl.getBoundingClientRect(), lr = $('#lumaWrap').getBoundingClientRect();
   if (reduce) return;
   const x0 = lr.left - ar.left + lr.width / 2, y0 = lr.top - ar.top + lr.height / 2, x1 = br.left - ar.left + bx(t.c), y1 = br.top - ar.top + by(t.r);
@@ -6802,7 +6808,7 @@ async function fxLab() {
     if (k === 'clouds') { addClouds(5); hud(); return; }
     if (['tiger', 'bear', 'crane'].includes(k)) { mode = k; await usePowerOn(mid()); mode = null; return; }
     if (k === 'monkey') { const a = mid(), b2 = [board[a.r][a.c + 1], board[a.r][a.c - 1], board[a.r + 1] && board[a.r + 1][a.c]].find(x => x && !x.cloud); mode = 'monkey'; monkeyFirst = a; await usePowerOn(b2); mode = null; return; }
-    if (k === 'deer') { busy = true; elemSound('wood', 0, 4); await fxDeerStream(); await shuffle(); busy = false; return; }
+    if (k === 'deer') { busy = true; playSfx('sfx-deer', { gain: 0.9 }); await fxDeerStream(); await shuffle(); busy = false; return; }
     if (k.startsWith('p-')) { const t = mid(), sp = k.slice(2); if (sp === 'spirit') { t.type = 'spirit'; t.sp = null; } else t.sp = sp; paint(t); await wait(500); fireTap(t); return; }
     if (k.startsWith('dive-')) {
       if (clouds().length < 3) { addClouds(5); await wait(400); }
@@ -7379,7 +7385,7 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
     if (k < stars) {
       s.classList.add('lit');
       A(s, [{ transform: 'scale(3) rotate(-40deg)', opacity: 0 }, { transform: 'scale(.9) rotate(6deg)', opacity: 1, offset: .7 }, { transform: 'scale(1) rotate(0)', opacity: 1 }], { duration: 420, easing: 'cubic-bezier(.2,.9,.3,1.2)' });
-      setTimeout(() => { bell(notes[k], 0, 0.11); try { navigator.vibrate && navigator.vibrate(14); } catch (e) {}
+      setTimeout(() => { playSfx('sfx-star', { gain: 0.85, rate: 1 + k * 0.06 }); bell(notes[k], 0, 0.06); try { navigator.vibrate && navigator.vibrate(14); } catch (e) {}
         const r = s.getBoundingClientRect(), a = pt.getBoundingClientRect(); sparkleAt(pt, r.left - a.left + r.width / 2, r.top - a.top + r.height / 2, ['#FFE9A8', '#FFD45A', '#FFFFFF'], 18); }, 300);
     }
     await wait(k < stars ? 460 : 150);
@@ -7391,7 +7397,7 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
   elemSound(L.elem, 0, 4, 8);
   await wait(300);
   $('.pcoins').style.opacity = 1;
-  const steps = Math.min(20, coins);
+  const steps = Math.min(20, coins); playSfx('sfx-coins', { gain: 0.7 });
   for (let k = 1; k <= steps; k++) { $('#pCoins').textContent = Math.round(coins * k / steps); if (k % 2) boop(Math.min(9, 2 + Math.floor(k / 3)), 0.05); await wait(reduce ? 0 : 40); }
   if (xpGain && !babyOn()) {                                  // the season bar fills; crossing a tier gets its own burst
     const bar = $('#pPassFill'), lbl = $('#pPassLbl'), pp = $('#pPass');
@@ -7613,7 +7619,7 @@ async function showGot(title, items, eyebrow = 'Thank you') {
   $('#gotItems').innerHTML = items.map(([html, label]) => `<span class="gi">${html}<span>${label}</span></span>`).join('');
   $('#gotov').style.zIndex = 30;
   await showOv('gotov');
-  playSfx('stamp', { gain: 0.8 }); chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06); confetti('#gotov .card');
+  playSfx('sfx-chest', { gain: 0.75 }) || playSfx('stamp', { gain: 0.8 }); chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.04); confetti('#gotov .card');
   if (!reduce) $$('#gotItems .gi').forEach((g, i) => { g.animate([{ transform: 'scale(.2) translateY(30px)', opacity: 0 }, { transform: 'scale(1.1)', opacity: 1, offset: .6 }, { transform: 'none', opacity: 1 }], { duration: 480, delay: 200 + i * 120, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'backwards' }); setTimeout(() => boop(3 + i, 0.06), 200 + i * 120); });
 }
 $('#gotGo').addEventListener('click', () => { tick(); hideOv('gotov'); });
