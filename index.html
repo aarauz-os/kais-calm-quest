@@ -1641,6 +1641,15 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .evburst{position:absolute;left:50%;top:50%;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,#fff,var(--eg) 40%,transparent 70%);opacity:0;pointer-events:none}
 .evcard h2{font-size:26px;margin:4px 0 10px}
 .evgift{background:rgba(255,255,255,.08);border-radius:16px;padding:10px 12px;margin:0 auto 14px;text-align:left}
+
+/* the living world replaces the old tinted backdrops, the drawn sun and moon, and Sorin's photo slideshow */
+.homeworld{position:absolute;inset:0;z-index:0;overflow:hidden;background:#1d2a2a}
+.homeworld img,.homeworld video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 45%}
+.homeworld video{opacity:0;transition:opacity 1.4s ease}
+.homeworld video.on{opacity:1}
+#map .homebg,#map .homesky,#map .homefx,#map .homesorin{display:none !important}
+.homeshade.world{background:linear-gradient(180deg,rgba(0,0,0,.28) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 62%,rgba(0,0,0,.35) 100%) !important}
+#map.dark-sky .hometitle h1{color:#FFF1CF !important;-webkit-text-fill-color:#FFF1CF !important;background:none !important;text-shadow:0 3px 0 rgba(20,14,40,.9),0 0 18px rgba(255,220,150,.55) !important}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -1751,6 +1760,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 
   <section class="screen" id="map" hidden>
     <div class="homebg" id="homeBg"></div>
+    <div class="homeworld" id="homeWorld"><img id="hwStill" alt=""><video id="hwA" muted loop playsinline preload="auto"></video><video id="hwB" muted loop playsinline preload="auto"></video></div>
     <button class="homesorin" id="homeSorin" aria-label="Sorin"><img class="sa" alt=""><img class="sb" alt=""></button>
     <div class="homesky" id="homeSky"><i class="hsglow"></i><i class="hsorb"></i><i class="hsrays"></i><i class="hsmist"></i></div>
     <canvas class="homefx" id="homeFx"></canvas>
@@ -3592,13 +3602,31 @@ function timeOfDay() {
   return ph[1];
 }
 const phaseName = id => (PHASES.find(p => p[1] === id) || [])[2] || id;
+
+/* ---------- one living world per season ----------
+   Season 1 is Kai's village on Lantern River. The same scene, relit (not tinted) for four times of
+   day, each a seamless loop that starts and ends on its still. Changing time crossfades between them. */
+const WORLD = { 1: { dawn: 's1-dawn', day: 's1-day', golden: 's1-golden', night: 's1-night' } };
+const WORLD_OF = { crack: 'dawn', morning: 'dawn', midday: 'day', golden: 'golden', night: 'night', midnight: 'night' };
+const WORLD_NAME = { dawn: 'dawn', day: 'daytime', golden: 'golden hour', night: 'moonlit night' };
+let worldNow = null, worldFront = 'hwA';
+function showWorld(tod = timeOfDay()) {
+  const ph = WORLD_OF[tod] || 'day', f = WORLD[1][ph];
+  if (worldNow === f) { const v = $('#' + worldFront); if (v.paused && !reduce && !$('#map').hidden) v.play().catch(() => {}); return; }
+  const first = !worldNow; worldNow = f;
+  const still = $('#hwStill'); still.src = `img/world/${f}.jpg`;
+  if (reduce) return;
+  const back = worldFront === 'hwA' ? 'hwB' : 'hwA', v = $('#' + back), old = $('#' + worldFront);
+  v.src = `img/world/${f}.mp4`; v.poster = `img/world/${f}.jpg`;
+  v.oncanplay = () => { v.oncanplay = null; v.play().catch(() => {}); v.classList.add('on'); old.classList.remove('on'); setTimeout(() => { if (!old.classList.contains('on')) { old.pause(); } }, first ? 0 : 1600); };
+  worldFront = back;
+}
 function renderHome() {
   const el = homeElement(), tod = timeOfDay();
-  $('#homeBg').style.backgroundImage = `url(img/home/${HOME_SCENE[el]}.jpg)`;
-  $('#homeShade').className = `homeshade ${tod}`;
-  $('#homeBg').className = `homebg ph-${tod}`;
-  $('#homeSky').className = `homesky ph-${tod}`;
-  $('#seasonLine').textContent = `${SEASON_NAME[el]} · ${ELEM[el].name} season · ${phaseName(tod)}`;
+  showWorld(tod);
+  $('#homeShade').className = `homeshade world`;
+  $('#map').classList.toggle('dark-sky', ['night', 'dawn'].includes(WORLD_OF[tod]));
+  $('#seasonLine').textContent = `Kai's village · ${WORLD_NAME[WORLD_OF[tod] || 'day']}`;
   // badges
   $('#bStreak').textContent = S.streak ? S.streak : '';
   const q = ensureQuests(), done = q.items.filter(i => i.done).length;
@@ -6499,6 +6527,7 @@ async function fxLab() {
 }
 /* ---------- level flow ---------- */
 function startLevel() {
+  $$('#homeWorld video').forEach(v => v.pause());          // the home world rests while you play
   if (practice) { practice = null; document.body.classList.remove('practicing'); }
   setGroove('play');
   // Little board: 5x5 with the place's element and its two cycle neighbours, and fewer clouds
