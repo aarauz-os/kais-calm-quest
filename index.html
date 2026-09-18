@@ -1363,6 +1363,15 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .pwbtn{width:min(48px,10.6vw);height:min(48px,10.6vw)}
 #shopOpen2{padding:6px 10px;font-size:13px;white-space:nowrap}
 @media (max-width:380px){.gbot{padding-left:10px;padding-right:10px}}
+/* ================= Sorin in the scene ================= */
+.homesorin{position:absolute;z-index:1;left:50%;bottom:calc(206px + var(--sab));width:calc(100% - 176px);height:min(30vh,280px);transform:translateX(-50%);padding:0;background:none}
+.homesorin img{position:absolute;left:50%;bottom:0;max-width:100%;max-height:100%;transform:translateX(-50%);transform-origin:50% 100%;opacity:0;transition:opacity 1.8s ease;
+  filter:drop-shadow(0 6px 8px rgba(0,0,0,.35));animation:sorinbreath 10s ease-in-out infinite}
+.homesorin img.on{opacity:1}
+.homesorin::after{content:"";position:absolute;left:50%;bottom:-6px;width:70%;height:16px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.35),transparent)}
+@keyframes sorinbreath{0%{transform:translateX(-50%) scale(1)}40%{transform:translateX(-50%) scale(1.012,1.018)}100%{transform:translateX(-50%) scale(1)}}
+.sorincap{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);white-space:nowrap;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:900;color:#FFF6DE;background:rgba(8,16,14,.55);box-shadow:inset 0 0 0 1px rgba(255,233,168,.4)}
+@media (prefers-reduced-motion:reduce){.homesorin img{animation:none}}
 </style>
 
 <div id="app">
@@ -1459,6 +1468,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 
   <section class="screen" id="map" hidden>
     <div class="homebg" id="homeBg"></div>
+    <button class="homesorin" id="homeSorin" aria-label="Sorin"><img class="sa" alt=""><img class="sb" alt=""><span class="sorincap" id="sorinCap"></span></button>
     <div class="homesky" id="homeSky"><i class="hsglow"></i><i class="hsorb"></i><i class="hsrays"></i><i class="hsmist"></i></div>
     <canvas class="homefx" id="homeFx"></canvas>
     <div class="homeshade" id="homeShade"></div>
@@ -3176,7 +3186,50 @@ function renderHome() {
   $('#places').innerHTML = LEVELS.map((l, i) => `<button class="lvmed ${i + 1 > S.unlocked ? 'locked' : ''} ${i === next ? 'next' : ''}" data-lv="${i}" aria-label="${l.place}">${orbHTML(l.elem)}<span class="st">${'★'.repeat(S.stars[i + 1] || 0)}</span></button>`).join('');
   $('#playNext').textContent = `Play · ${LEVELS[next].place}`;
   startHomeFx(el, tod);
+  renderSorin();
 }
+
+/* ---------- Sorin in the home scene, following the clock ----------------------------------
+   Children only ever appear between 6am and noon, and only as a group class. After midday and
+   before morning Sorin practises alone or teaches adults. The day of the year picks between the
+   options, so it changes day to day but is never random. */
+const SORIN_SCENES = {
+  meditate: { poses: ['solo-meditate'], cap: 'Sorin is meditating', tip: 'Sit tall, let your hands rest, and count ten slow breaths.' },
+  flow: { poses: ['solo-sky', 'solo-ball', 'solo-crane'], cap: "Sorin's qigong flow", tip: 'Lift the sky, hold the ball, stand like a crane. Slow is the secret.' },
+  sunset: { poses: ['solo-ball', 'solo-crane'], cap: 'Sorin at sunset', tip: 'Hold a ball of light in front of your chest and breathe out longer than you breathe in.' },
+  kids: { poses: ['class-kids'], cap: "Sorin's morning class", tip: 'Reach up and lift the sky together. Breathe in as you reach, out as you lower.' },
+  adults: { poses: ['class-adults'], cap: 'Sorin teaching a class', tip: 'Soft knees, round arms. Everyone breathes at their own pace.' },
+  private: { poses: ['private-adult'], cap: 'A private session', tip: 'Mirror the movement slowly. Your breath leads, your arms follow.' }
+};
+function sorinPlan() {
+  const tod = timeOfDay(), forced = /[?&]tod=/.test(location.search);
+  const h = forced ? ({ crack: 5, morning: 8, midday: 11, golden: 17, night: 20, midnight: 1 })[tod] : new Date().getHours();
+  const kidsOK = h >= 6 && h < 12;                       // never with a child after midday or before morning
+  const opts = { crack: ['meditate'], morning: ['kids', 'flow'], midday: kidsOK ? ['kids', 'flow'] : ['adults', 'private'],
+    golden: ['sunset', 'private'], night: ['adults', 'flow'], midnight: ['meditate'] }[tod] || ['flow'];
+  const safe = opts.filter(o => o !== 'kids' || kidsOK);
+  const day = Math.max(0, daysBetween('2026-01-01', dayKey()));
+  return SORIN_SCENES[safe[day % safe.length]];
+}
+let sorinTimer = null, sorinNow = null;
+function renderSorin() {
+  const plan = sorinPlan(), box = $('#homeSorin'); if (!box) return;
+  const [a, b] = [box.querySelector('.sa'), box.querySelector('.sb')];
+  if (sorinNow !== plan) {
+    sorinNow = plan; clearInterval(sorinTimer);
+    let k = 0, front = a;
+    front.src = `img/sorin/${plan.poses[0]}.webp`; front.classList.add('on'); (front === a ? b : a).classList.remove('on');
+    $('#sorinCap').textContent = plan.cap;
+    if (plan.poses.length > 1 && !reduce) sorinTimer = setInterval(() => {   // a slow flow: each pose melts into the next
+      if ($('#map').hidden) return;
+      k = (k + 1) % plan.poses.length;
+      const back = front === a ? b : a;
+      back.src = `img/sorin/${plan.poses[k]}.webp`;
+      back.onload = () => { back.classList.add('on'); front.classList.remove('on'); front = back; };
+    }, 9000);
+  }
+}
+$('#homeSorin').addEventListener('click', () => { ac(); tick(); if (sorinNow) toast(`${sorinNow.cap}. Try it: ${sorinNow.tip}`); });
 // check the clock every minute; crossfade when the mood changes
 let lastPhase = null;
 setInterval(() => { if ($('#map').hidden) return; const t = timeOfDay(); if (lastPhase && t !== lastPhase) renderHome(); lastPhase = t; }, 60000);
