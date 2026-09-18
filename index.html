@@ -3013,9 +3013,13 @@ async function runStory() {
   st.style.setProperty('--sg', ELEM[L.elem].glow);
   const g = goalNums();
   const beats = [
-    { who: heroId(), voice: 'hero', name: 'You', text: storyLines(L).you },
-    { who: 'sorin', voice: 'sorin', name: 'Sorin', text: storyLines(L).sorin },
-    { who: 'luma', voice: 'luma', name: 'Luma', goal: true, text: `Help me blow away ${g.clouds} storm clouds. You have ${g.moves} moves.` }
+    { who: heroId(), voice: 'hero', name: 'You', text: storyLines(L).you[0], face: storyLines(L).you[1] },
+    // the friend who makes you feel seen; if you're playing as Kai, Luma is that friend
+    heroId() === 'kai'
+      ? { who: 'luma', voice: 'luma', name: 'Luma', text: storyLines(L).kai[0], face: 'happy' }
+      : { who: 'kai', voice: 'hero', name: 'Kai', text: storyLines(L).kai[0], face: storyLines(L).kai[1] },
+    { who: 'sorin', voice: 'sorin', name: 'Sorin', text: storyLines(L).sorin, face: 'calm' },
+    { who: 'luma', voice: 'luma', name: 'Luma', goal: true, text: GOAL_LINE(g.clouds, g.moves) }
   ];
   if (L.knots && !(S.seen || {}).knots) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', knotDemo: true, text: {
     '2-4': "New! Some orbs are tied in knots. Match them to untie them!",
@@ -3127,7 +3131,8 @@ async function showBeat(b, run, skipped, nextTap, k = 0) {
   $('#story').classList.toggle('demoing', !!b.knotDemo); demoRun++;
   $('#stPlate').textContent = b.name;
   // the portrait stays still: one calm expression, no mouth-flapping, no bouncing
-  face.src = faceSrc(b.who, b.voice === 'luma' ? 'happy' : 'calm');
+  face.onerror = () => { face.onerror = null; face.src = faceSrc(b.who, 'calm'); };
+  face.src = faceSrc(b.who, b.face || (b.voice === 'luma' ? 'happy' : 'calm'));
   const goal = $('#stGoal');
   goal.hidden = !b.goal && !b.knotDemo;
   if (b.knotDemo) {
@@ -5013,43 +5018,60 @@ function showLetter(id) {
    reviewed by people (Demaris + a school counselor) — never generated live on a child's device. */
 const BANDS = { '2-4': 'Little sprouts', '5-7': 'Seedlings', '8-11': 'Saplings', '12-15': 'Young trees' };
 const band = () => S.band || '5-7';
+// Each episode is a real three-way conversation, never a lecture:
+//   You   — the child names what's happening, in their own voice, with the face that goes with it
+//   Kai   — the friend: he makes them feel seen and understood; he shares a bit of himself and
+//           does NOT fix anything
+//   Sorin — the steady grown-up: he names what the feeling is doing, then offers one thing to try
+// Contractions, specifics, no moralizing, no "great job". Each line is [text, face].
 const STORY = {
   earth: {
-    '2-4': ["Your tummy feels tight. That's Worry saying hello.", "Let's hum like a bee. Mmmmm. Worry gets smaller."],
-    '8-11': ["There's a test tomorrow and your mind keeps playing 'what if' on repeat. Your stomach knew before you did.", "Worry is your mind trying to protect you from the future. Thank it, then come back to now. A long, low hum tells your body you're safe here."],
-    '12-15': ["Your group chat went quiet after you posted something, and now your brain is writing ten stories about why.", "Worry fills silence with guesses. Notice which thoughts are facts and which are stories. Settle the body first with a low hum; clear thinking comes after."]
+    '2-4': { you: ["My tummy feels all tight.", 'worried'], kai: ["Mine gets tight too sometimes. That's okay.", 'care'], sorin: "Let's hum like a sleepy bee. Mmmm. Feel it get softer?" },
+    '5-7': { you: ["Tomorrow's the spelling test and I keep thinking I'll forget everything. My tummy won't stop.", 'worried'], kai: ["Ugh, I hate that feeling. Mine does that before tests too. It doesn't mean you'll mess up.", 'care'], sorin: "Worry thinks it's helping by practicing the scary part. Let's give it a different job. Hum with me, low and slow, till your belly feels warm." },
+    '8-11': { you: ["Test tomorrow. My brain keeps running every way it could go wrong, and my stomach's in knots.", 'worried'], kai: ["The 'what if' loop. Yeah, I know that one. It's the worst at night.", 'care'], sorin: "Worry is your mind trying to protect you from something that hasn't happened yet. It means well, it's just loud. Let's settle your body first. A long, low hum tells it you're safe right now." },
+    '12-15': { you: ["I posted something and the group chat just went quiet. Now I'm writing ten different stories about why.", 'worried'], kai: ["Oof. Silence is so loud sometimes. Your brain isn't broken, it's just filling the gap.", 'care'], sorin: "Worry loves an empty space. Notice which of those thoughts are facts and which are guesses. Settle your body first, and the clearer thinking comes after." }
   },
   wood: {
-    '2-4': ["Someone took your toy! You feel hot and stompy.", "Big feelings need big breaths. Reach up tall like a tree, then blow it out: haaa!"],
-    '8-11': ["Your friend broke your lantern and laughed. Your face is hot and your hands want to push.", "Anger shows up when something feels unfair. Feeling it is okay. What you do next is your choice: breathe first, then use your words."],
-    '12-15': ["Someone said something about you that isn't true, and people believed it. You're furious, and you want to say something you can't take back.", "Anger often guards a hurt underneath it. Let the breath cool the heat so you can find that hurt, then speak up for yourself clearly instead of loudly."]
+    '2-4': { you: ["He took my toy! I'm SO mad!", 'frustrated'], kai: ["That's not fair. I'd be mad too.", 'care'], sorin: "Mad is big. Let's reach up tall like a tree, then blow it all out: haaa." },
+    '5-7': { you: ["They broke my lantern and laughed. I want to yell at everybody!", 'frustrated'], kai: ["They laughed? That's not okay. I'd be really mad too.", 'care'], sorin: "Your anger is saying something wasn't fair, and it's right. Let's get the heat out first. Arms up tall, then a big haaa. Then we'll figure out what to say." },
+    '8-11': { you: ["My friend broke my lantern, then laughed like it was funny. My face is hot and I want to shove something.", 'frustrated'], kai: ["Wait, he laughed? No wonder. I'd be furious.", 'care'], sorin: "Anger is telling you something wasn't fair, and it's got a point. You don't have to act on it this second. Let's cool the heat first, so you can say what you actually mean." },
+    '12-15': { you: ["Someone said something about me that isn't true, and people believed it. I'm so angry I could say something I'd regret.", 'frustrated'], kai: ["That's messed up. Anyone would be angry about that.", 'care'], sorin: "Anger usually guards a hurt underneath it. Cool the heat before you act, so you can find what actually hurt and stand up for yourself clearly, not loudly." }
   },
   fire: {
-    '2-4': ["You feel so bouncy you can't sit still! Wheee!", "Hands on your heart. Breathe in, and out slow. Bouncy can rest too."],
-    '8-11': ["It's the night before your birthday and your thoughts are zooming so fast you can't listen to anyone.", "Excitement is joy with the volume turned all the way up. You don't have to switch it off. Just turn it down a little so you can really enjoy it."],
-    '12-15': ["Everything's happening at once: plans, messages, ideas. Your heart is racing even though it's all good stuff.", "Too much of a good thing still tires the heart. A slow laughing breath lets the extra energy out without losing the joy."]
+    '2-4': { you: ["I can't stop bouncing! Boing boing!", 'cheer'], kai: ["Hee! Your bounce is SO big!", 'joy'], sorin: "Let's keep the happy and slow the bounce. Hands on your heart. Breathe in, and out slow." },
+    '5-7': { you: ["The festival is TOMORROW! I can't sit still. I can't even hear anybody!", 'cheer'], kai: ["Ha, I was like that last year. I didn't sleep at all.", 'joy'], sorin: "Excitement is a good thing with the volume way up. We don't need to turn it off, just down a bit, so you can actually enjoy it. Hands on your heart." },
+    '8-11': { you: ["It's the night before my birthday and my thoughts are going a hundred miles an hour. I can't focus on anything.", 'cheer'], kai: ["Same. Last year I reorganized my whole room at midnight.", 'joy'], sorin: "That's joy with the volume maxed out. Keep the joy, just bring the volume down a notch. A slow, laughing breath helps it settle." },
+    '12-15': { you: ["Everything's happening at once. Plans, messages, ideas. It's all good stuff, but my heart won't slow down.", 'cheer'], kai: ["I get that. Even good chaos is still chaos.", 'care'], sorin: "Too much of a good thing still wears the heart out. Let some of that energy go with a slow, laughing breath. You get to keep the joy." }
   },
   metal: {
-    '2-4': ["Your balloon floated away. You feel droopy and want a hug.", "Sad is okay. Open your arms wide like wings and sigh it out: sssss."],
-    '8-11': ["Your best friend is moving to another town, and the goodbye keeps coming back to you.", "Sadness shows how much something mattered. Sighing and crying are how the chest makes room again. You can miss someone and still be okay."],
-    '12-15': ["A friendship you counted on has quietly changed, and you're not sure when it happened.", "Grief isn't only for big losses. Letting yourself feel it, instead of pushing it away, is what lets it move. Each long out-breath is a small letting go."]
+    '2-4': { you: ["My balloon flew away…", 'sad'], kai: ["Oh no. I'd feel sad too. Want a hug?", 'care'], sorin: "Sad is okay. Open your arms really big, and sigh it out: haaah." },
+    '5-7': { you: ["Something I really loved is over. My chest feels heavy and kind of empty.", 'sad'], kai: ["That heavy feeling… yeah. You don't have to feel better right away.", 'care'], sorin: "Sadness shows up when something mattered. Open your arms wide and let a long sigh out. We're not pushing it away, just making a little room." },
+    '8-11': { you: ["My best friend is moving away. I keep replaying the goodbye in my head.", 'sad'], kai: ["That's really hard. I'd miss mine like crazy too.", 'care'], sorin: "Sadness is how much it mattered, showing up. Let it come and go. Long sighs make room in your chest. You can miss someone and still be okay." },
+    '12-15': { you: ["A friendship I counted on just… changed. I don't even know when it happened.", 'sad'], kai: ["That kind of loss is hard, because nobody really notices it but you.", 'care'], sorin: "Grief isn't only for big goodbyes. Let yourself feel it instead of pushing it down. Each long out-breath is a small letting go." }
   },
   water: {
-    '2-4': ["It's dark and you hear a noise. You feel shivery.", "Hands on your back. Breathe in slow, then whoooo. Brave can be quiet."],
-    '8-11': ["You have to read out loud in front of the class. Your legs feel shaky and your mind goes blank.", "Fear is your body getting ready, like a runner at the start line. A slow breath tells it there's no danger here, and your clear thinking comes back."],
-    '12-15': ["You want to try out for something new, but the fear of messing up in front of everyone is louder than the wanting.", "Courage isn't having no fear. It's taking one step while the fear is still there. Warm your low back, breathe slow, and let the fear come along."]
+    '2-4': { you: ["It's dark. I don't like it.", 'scared'], kai: ["Dark can feel scary. I'm right here.", 'care'], sorin: "Hands on your back. Breathe out slow: whooo. Brave can be quiet." },
+    '5-7': { you: ["It's so dark down by the river. My legs feel wobbly and I can't think.", 'scared'], kai: ["I'm scared of dark stuff too. You're not a baby for feeling it.", 'care'], sorin: "Fear is your body getting ready, just in case. Let's show it you're safe. Hands on your lower back, and breathe out slow: whooo." },
+    '8-11': { you: ["I have to read out loud in front of everyone. My legs are shaking and my mind just went blank.", 'scared'], kai: ["Oh, the blank-mind thing. That happened to me in the school play. It's awful.", 'care'], sorin: "That's your body getting ready to run, when all you need is to read. A slow breath out tells it there's no danger, and your words come back." },
+    '12-15': { you: ["I want to try out, but the fear of messing up in front of everyone is louder than wanting it.", 'scared'], kai: ["Honestly? Most people who try out feel exactly that. You're in good company.", 'care'], sorin: "Courage isn't having no fear. It's taking one step with the fear still there. Warm your low back, breathe slow, and let it come along." }
   }
 };
 function storyLines(lv) {
-  const b = band(), t = (STORY[lv.elem] || {})[b];
-  return t ? { you: t[0], sorin: t[1] } : { you: lv.you, sorin: lv.sorin };
+  const t = (STORY[lv.elem] || {})[band()] || (STORY[lv.elem] || {})['5-7'];
+  return t || { you: [lv.you, 'calm'], kai: ["I get it. I've felt that too.", 'care'], sorin: lv.sorin };
 }
 const HOWTO = {
-  '2-4': "Match the orbs to make me glow. Then breathe with me!",
-  '5-7': "Match orbs to grow my Aura. When I'm Heavenly, tap me and we'll breathe together.",
-  '8-11': "Every match grows my Aura. When it's Heavenly, tap me: a slow breath clears the storm and my Aura Burst clears the board.",
-  '12-15': "Matches build my Aura. At Heavenly, tap me and breathe: the slower and longer your out-breath, the more of the storm it clears."
+  '2-4': "Match the orbs so I glow. Then we breathe together!",
+  '5-7': "Every match makes my glow a little brighter. When I'm fully glowing, tap me and we'll breathe together.",
+  '8-11': "Each match builds my Aura. When it's Heavenly, tap me. A slow breath clears the storm, and my Aura Burst clears the board.",
+  '12-15': "Matches build my Aura. At Heavenly, tap me and breathe. The longer and slower your out-breath, the more of the storm it clears."
 };
+const GOAL_LINE = (c, m) => ({
+  '2-4': `Let's blow the clouds away! We have ${m} moves.`,
+  '5-7': `Want to help me clear these ${c} storm clouds? We've got ${m} moves.`,
+  '8-11': `${c} storm clouds to clear. We've got ${m} moves, no rush.`,
+  '12-15': `${c} storm clouds, ${m} moves. Take it at your pace.`
+})[band()];
 // every chapter climbs the same eight layers, so the understanding deepens episode by episode
 const LAYERS = ['Notice it', 'Name it', 'Where it lives', 'Why it comes', 'What helps', 'Help a friend', 'Mixed feelings', 'Meet it'];
 let agePicked = null;
