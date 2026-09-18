@@ -42,6 +42,69 @@ html,body{height:100%}
 body.baby #babyBar{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);left:50%;transform:translateX(-50%);margin:0;padding:4px;z-index:30}
 body.baby #babyBar span{display:none}
 #askov .seccard #askNo{color:#E4EFE8 !important;font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:3px;padding:10px 16px}
+/* Today's practice with Sorin */
+.dpicon.due .hart{box-shadow:0 0 0 3px #FFE9A8,0 0 22px 6px rgba(255,226,150,.85);animation:dpdue 2.2s ease-in-out infinite}
+@keyframes dpdue{50%{transform:scale(1.07)}}
+.dpcard{text-align:left}
+.dphead{display:flex;gap:14px;align-items:center}
+.dpsorin{flex:none;width:84px;height:84px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #E3BC6A,0 8px 18px rgba(0,0,0,.35)}
+.dpsorin video{width:100%;height:100%;object-fit:cover;display:block}
+.dphead h2{margin:2px 0}.dphead p{margin:0;font-size:13px;color:#D8E6DF}
+.dplist{display:flex;flex-direction:column;gap:8px;margin:14px 0 10px}
+.dpitem{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 8px;border-radius:18px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);color:#FBF3E2;text-align:left}
+.dpitem img{flex:none;width:58px;height:58px;border-radius:14px;object-fit:cover}
+.dpitem span{flex:1;min-width:0}.dpitem small{display:block;font-size:10.5px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--gold-hi)}
+.dpitem b{display:block;font-size:15px}.dpitem em{display:block;font-style:normal;font-size:12px;color:#CFE3DA;line-height:1.3}
+.dpitem i{flex:none;font-style:normal;font-size:22px;font-weight:900;color:#FFE9A8}
+.dpitem.now{background:linear-gradient(90deg,rgba(242,196,90,.28),rgba(255,255,255,.08));box-shadow:inset 0 0 0 2px #E3BC6A}
+.dpitem.done{opacity:.62}.dpitem.done i{color:#8FE0A8}
+.dpfam{display:block;width:100%;padding:10px 12px;border-radius:16px;background:rgba(0,0,0,.22);color:#FBF3E2;font-weight:800;font-size:13px;text-align:center}
+.dpfam.done{opacity:.6}
+.dpweek{margin:12px 0 4px;text-align:center;font-size:12.5px;color:#D8E6DF}
+.dpweek .dots{display:flex;justify-content:center;gap:8px;margin-bottom:6px}
+.dpweek .dots i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:10px;font-weight:900;background:rgba(0,0,0,.28);color:#9DB8AE}
+.dpweek .dots i.lit{background:radial-gradient(circle at 40% 35%,#FFFBEA,#F2CC6A 60%,#C08A26);color:#4A300A}
+.dpweek .dots i.today{box-shadow:0 0 0 2px #FFE9A8}
+.dptime{text-align:center;font-size:12px;color:var(--gold-hi);font-weight:800;margin-top:6px}
+#dpRun{text-align:center}
+.dpstage{position:relative;width:220px;height:220px;margin:12px auto 4px;display:grid;place-items:center}
+.dpring{position:absolute;inset:0;border-radius:50%;transform:scale(.62);background:radial-gradient(circle,rgba(255,236,170,.45),rgba(255,236,170,0) 70%);box-shadow:0 0 0 3px rgba(242,196,90,.6),0 0 40px 10px rgba(255,220,130,.35)}
+.dpstage img{position:relative;width:150px;height:150px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px #E3BC6A,0 10px 24px rgba(0,0,0,.4)}
+.dpbuddy{position:absolute;right:-18px;bottom:-6px;width:92px}
+.dpbuddy .hsprite{display:block;width:100%;background-size:500% 100%;background-position:var(--bx,0%) 0}
+.dpfeel{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.dpfeel button{padding:8px 4px;border-radius:16px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 2px var(--c,rgba(255,255,255,.15));color:#FBF3E2;font-weight:800;font-size:12.5px}
+.dpfeel img{display:block;width:62px;height:62px;border-radius:50%;object-fit:cover;margin:0 auto 4px}
+.dpgrown{display:flex;gap:14px;justify-content:center;margin:12px 0}
+.dphold{width:112px;height:112px;border-radius:50%;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 3px rgba(255,236,170,.5);color:#FBF3E2;font-weight:900;font-size:13px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;touch-action:none}
+.dphold i{width:34px;height:34px;border-radius:50%;background:rgba(255,236,170,.25)}
+.dphold.on{background:radial-gradient(circle,rgba(255,236,170,.55),rgba(242,196,90,.2));box-shadow:inset 0 0 0 3px #FFE9A8,0 0 24px 6px rgba(255,226,150,.6)}
+.dphold.on i{background:#FFE9A8}
+.dpgot{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+.dpgot div{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:14px;background:rgba(0,0,0,.22);text-align:left;font-size:13.5px;font-weight:700}
+.dpgot img{flex:none;width:36px;height:36px;object-fit:contain}
+.dpset{padding:12px 14px;border-radius:18px;background:rgba(0,0,0,.18)}
+.dpset p{margin:0 0 10px;font-size:13px}
+.dpsetrow{display:flex;gap:8px;margin-bottom:10px}
+.dpsetrow select,.dpsetrow input{flex:1;min-width:0;padding:9px 10px;border-radius:12px;border:0;font:inherit;font-weight:700;background:#FBF3E2;color:#26392F}
+#bPractice{background:linear-gradient(#FFF1C4,#E8C063) !important;color:#4A300A !important;box-shadow:0 0 0 2px #FFFBEA,0 2px 4px rgba(0,0,0,.3) !important}
+#bPractice.ok{background:linear-gradient(#B8F0C8,#5FBF7E) !important;color:#10331F !important}
+#dpov #dpStop{color:#E4EFE8 !important;font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:3px;padding:10px 16px}
+/* Kai's garden: one flower for every day of practice */
+.garden{position:absolute;left:50%;bottom:100%;transform:translateX(-50%);width:min(62%,260px);height:96px;pointer-events:none;margin-bottom:-4px}
+.garden img{position:absolute;bottom:0;transform-origin:50% 100%;animation:gsway 4.6s ease-in-out infinite;filter:drop-shadow(0 3px 3px rgba(0,0,0,.28))}
+.garden img.new{animation:gsprout 1.4s cubic-bezier(.3,1.5,.5,1) both,gsway 4.6s ease-in-out 1.4s infinite}
+@keyframes gsway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+@keyframes gsprout{from{transform:scale(0) rotate(0);opacity:0}to{transform:scale(1);opacity:1}}
+/* baby mode: between boards, the companion who held it breathes, big and close */
+.babyinter{position:absolute;inset:0;z-index:60;background:#0E1E26;display:grid;place-items:center;opacity:0;transition:opacity .7s ease}
+.babyinter.on{opacity:1}
+.babyinter video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.babyinter .bispr{position:relative;width:62%;display:none}
+.babyinter.fallback .bispr{display:block;animation:bibreath 8s ease-in-out infinite;transform-origin:50% 80%}
+.babyinter.fallback video{display:none}
+.babyinter .hsprite{display:block;width:100%;background-size:500% 100%;background-position:var(--bx,0%) 0}
+@keyframes bibreath{0%,100%{transform:scale(.92)}45%{transform:scale(1.1)}}
 /* baby mode: no words on screen (they can't read yet); only the grown-up Stop bar */
 body.baby #bubble, body.baby #flowBar, body.baby #toast, body.baby #todayChip, body.baby #toMap, body.baby #pkPerk, body.baby #pwBar [id^="pwc-"], body.baby .tipbox{display:none!important}
 #babyBloom{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(12,22,40,0) 25%,rgba(12,22,40,.38) 100%);opacity:0;transition:opacity .6s ease}
@@ -2570,7 +2633,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="crew">
           <div><img src="img/pass/trophy-lotus.png" alt=""><b>Free Season Pass</b><em>5 pages of rewards. Earn Spirit Stars and choose what to unlock, including Board Styles your companion shows off.</em></div>
           <div><img src="img/ui/journal.png" alt=""><b>Collection</b><em>Story cards from Kai's village, Spirit Seals and every companion stage.</em></div>
-          <div><img src="img/icons/icon-streak-3d.jpg" alt="" class="rnd"><b>Daily rhythm</b><em>Streaks, quests and a daily spin, all earned by practising.</em></div>
+          <div><img src="img/icons/icon-streak-3d.jpg" alt="" class="rnd"><b>Daily rhythm</b><em>Today's practice with Sorin: three tiny breath and qigong moments a day that grow your companion, warm up Luma and plant a flower in Kai's garden.</em></div>
           <div><img src="img/pass/aura-moon.png" alt=""><b>Bedtime with Luma</b><em>No game, no score. Just slow breathing before sleep.</em></div>
         </div>
       </section>
@@ -2649,15 +2712,17 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <button class="hicon" data-open="questCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-quests.mp4?v=60" poster="img/icons/icon-quests-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Quests</b><i class="hbadge" id="bQuests"></i></button>
         <button class="hicon" data-open="wheelCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-wheel.mp4?v=60" poster="img/icons/icon-wheel-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Spin</b><i class="hbadge" id="bWheel"></i></button>
         <button class="hicon" data-open="buddyCard"><span class="hart h3d"><video id="buddyCoin" class="hvid" src="img/icons/anim/icon-buddy.mp4?v=60" poster="img/icons/icon-buddy-3d.jpg" muted loop playsinline autoplay preload="auto"></video><img id="buddyIcon" alt="" hidden></span><b>Companion</b><i class="hbadge" id="bBuddy"></i></button>
+        <button class="hicon" data-open="sealCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-seal.mp4?v=60" poster="img/icons/icon-seal-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
         <span hidden><span class="hart hring" id="lightsHart"><img id="lightsIcon" src="img/faces/kai-calm.jpg" alt=""></span><i class="hbadge" id="bLights"></i></span>
       </div>
       <div class="rail">
-        <button class="hicon" data-open="sealCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-seal.mp4?v=60" poster="img/icons/icon-seal-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
+        <button class="hicon dpicon" data-open="dpOpen"><span class="hart h3d"><video class="hvid" src="img/sorin/sorin-breath.mp4?v=78" poster="img/sorin-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Practice</b><i class="hbadge" id="bPractice"></i></button>
         <button class="hicon" data-open="babyToggle"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-baby.mp4?v=60" poster="img/icons/icon-baby-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Baby</b><i class="hbadge" id="bBaby"></i></button>
         <button class="hicon" data-open="bedOpen"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-bedtime.mp4?v=60" poster="img/icons/icon-bedtime-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Bedtime</b></button>
       </div>
     </div>
     <div class="homefoot">
+      <div class="garden" id="garden" hidden></div>
       <div class="places" id="places"></div>
       <div class="homeduo">
         <button class="journeybtn" id="journeyOpen"><span class="jorbs"><i style="background:#6FBF4A"></i><i style="background:#E04B42"></i><i style="background:#F0B93A"></i><i style="background:#DCE3E9"></i><i style="background:#3C86C9"></i></span><span><b>Journey</b><em>Season 1 · 4 chapters</em></span></button>
@@ -2668,6 +2733,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     </div>
     <div class="drawer" aria-hidden="true">
     <div class="banner" id="streakBanner"></div>
+    <button id="dpOpen" hidden></button>
     <button class="bedcard" id="bedOpen">
       <span class="qhead"><b>Bedtime with Luma</b><span class="bedmoon">☾</span></span>
       <span class="balsub">No game, no score. Just Luma breathing slowly for as long as you like.</span>
@@ -2840,6 +2906,28 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="note">Every seal marks something you did: an element calmed, a cycle kept, your own voice used, the balance held.</div>
   </div></div>
 
+  <div class="ov" id="dpov" hidden><div class="card rewardcard dpcard" role="dialog" aria-labelledby="dpTitle">
+    <div id="dpHome">
+      <div class="dphead"><span class="dpsorin"><video src="img/sorin/sorin-breath.mp4?v=78" poster="img/sorin-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span>
+        <div><div class="eyebrow" style="color:var(--gold2)">Today's practice</div><h2 class="display" id="dpTitle">Practice with Sorin</h2><p id="dpSub"></p></div></div>
+      <div class="dplist" id="dpList"></div>
+      <button class="dpfam" id="dpFam"></button>
+      <div class="dpweek" id="dpWeek"></div>
+      <div class="dptime" id="dpTime" hidden></div>
+      <div class="stack"><button class="btn" id="dpClose">Close</button></div>
+    </div>
+    <div id="dpRun" hidden>
+      <div class="eyebrow" style="color:var(--gold2)" id="dpRunEy"></div>
+      <h2 class="display" id="dpRunTitle"></h2>
+      <div class="dpstage"><span class="dpring" id="dpRing"></span><img id="dpArt" alt=""><span class="dpbuddy" id="dpBuddy"></span></div>
+      <div class="btext" id="dpText"></div>
+      <div class="dpfeel" id="dpFeel" hidden></div>
+      <div class="dpgrown" id="dpGrown" hidden><button class="dphold" data-h="0"><i></i>You</button><button class="dphold" data-h="1"><i></i>Grown-up</button></div>
+      <div class="dpgot" id="dpGot" hidden></div>
+      <div class="stack"><button class="btn gold" id="dpGo" hidden>Lovely</button><button class="linkbtn dark" id="dpStop">Stop</button></div>
+    </div>
+  </div></div>
+  <div class="babyinter" id="babyInter" hidden><video id="biVid" muted playsinline preload="auto"></video><span class="bispr" id="biSpr"></span></div>
   <div class="ov" id="askov" hidden style="align-items:center"><div class="card rewardcard seccard" role="dialog" aria-labelledby="askName">
     <div class="eyebrow" style="color:var(--gold2)">Just checking</div>
     <div id="askArt" class="askart"></div>
@@ -3128,6 +3216,10 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       </div>
       <div class="csec"><h3>This week</h3><span id="wkRange"></span></div>
       <div class="wkcard" id="wkCard"></div>
+      <div class="csec"><h3>Practice time</h3></div>
+      <div class="dpset"><p>Pick a moment for Sorin's practice. At that time the Practice button glows so it becomes part of the day.</p>
+        <div class="dpsetrow"><select id="dpMoment"><option value="">No set time</option><option>Before school</option><option>After school</option><option>Before a test</option><option>Before bed</option></select><input type="time" id="dpClock" value="19:30"></div>
+        <button class="btn" id="dpSave">Save practice time</button></div>
       <div class="csec"><h3>What your child practises</h3></div>
       <div class="whygrid">
         <div class="whyc"><img src="img/faces/luma-happy.jpg" alt="" class="rnd"><b>Breathe</b><em>Every level is cleared with a real, slow breath: in through the nose, a longer breath out. A long out-breath is one of the simplest ways to help the body settle.</em></div>
@@ -3338,7 +3430,7 @@ const featEver = k => babyOn() || reached() >= FEAT_AT[k];
 // Home sections open one at a time, each after finishing an episode that's a multiple of 3.
 // Like Royal Kingdom holding back Teams (21) and its pass (31): a new player sees only what they need.
 // Grown-up things (Why MorQi, Baby mode, Bedtime, the Shop) are always there.
-const SEC_AT = { streak: 3, quests: 6, collection: 9, buddy: 12, harmony: 15, seals: 18, wheel: 21, pass: 24 };
+const SEC_AT = { practice: 3, streak: 6, collection: 9, buddy: 12, harmony: 15, seals: 18, wheel: 21, pass: 24 };   // Sorin's practice took the quests' place
 const secOn = k => (S.unlocked || 1) > SEC_AT[k];
 // rewards never hand out a booster before gameplay has introduced it; until then it comes as coins
 const BOOST_COIN = 80, PW_KEY = { lanterns: 'tiger', swirls: 'deer' };
@@ -3431,7 +3523,10 @@ const SEALS = [
   { id: 'voice', name: 'Voice Seal', hint: 'Use your voice on 10 breaths', goal: 10, count: 'voiced' },
   { id: 'balance', name: 'Balance Seal', hint: 'Light all five at once' },
   { id: 'nine', name: 'Nine Days', hint: 'Keep a 9-day streak' },
-  { id: 'keeper', name: 'Keeper of Flow', hint: 'Keep a 108-day streak' }
+  { id: 'keeper', name: 'Keeper of Flow', hint: 'Keep a 108-day streak' },
+  { id: 'practice7', name: 'Seven Practices', hint: 'Practise with Sorin 7 times', goal: 7, count: 'practice' },
+  { id: 'practice21', name: 'Twenty-one Practices', hint: 'Practise with Sorin 21 times', goal: 21, count: 'practice' },
+  { id: 'practice108', name: 'Keeper of Practice', hint: 'Practise with Sorin 108 times', goal: 108, count: 'practice' }
 ];
 // The Five Animal Frolics (Wu Qin Xi) pair each animal with an organ, so the animals and the
 // elements stay one system (Demaris's Qigong set): Deer-liver-Wood, Hawk-heart-Fire,
@@ -4111,7 +4206,10 @@ const sealGlyph = sl => sl.elem ? GLYPH[sl.elem] : ({
   voice: '<svg viewBox="0 0 24 24"><path d="M6 9v6M10 5.5v13M14 8v8M18 10.5v3" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg>',
   balance: '<svg viewBox="0 0 24 24"><circle cx="12" cy="4.6" r="2.1" fill="currentColor"/><circle cx="19" cy="9.7" r="2.1" fill="currentColor"/><circle cx="16.3" cy="18" r="2.1" fill="currentColor"/><circle cx="7.7" cy="18" r="2.1" fill="currentColor"/><circle cx="5" cy="9.7" r="2.1" fill="currentColor"/></svg>',
   nine: '<svg viewBox="0 0 24 24"><text x="12" y="17" text-anchor="middle" font-size="13" font-weight="900" fill="currentColor" font-family="system-ui">9</text><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',
-  keeper: '<svg viewBox="0 0 24 24"><text x="12" y="16" text-anchor="middle" font-size="9" font-weight="900" fill="currentColor" font-family="system-ui">108</text><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
+  keeper: '<svg viewBox="0 0 24 24"><text x="12" y="16" text-anchor="middle" font-size="9" font-weight="900" fill="currentColor" font-family="system-ui">108</text><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>',
+  practice7: '<svg viewBox="0 0 24 24"><path d="M12 20V11" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"/><path d="M12 12c-4.5 0-6.5-3-6.5-6.5C10 5.5 12 8 12 12zM12 14c4 0 6-2.6 6-5.6-3.8 0-6 2.2-6 5.6z" fill="currentColor"/></svg>',
+  practice21: '<svg viewBox="0 0 24 24"><path d="M12 21c-2-3-2-6 0-9 2 3 2 6 0 9zM12 13c-4 0-7-2-8-6 4 0 7 2 8 6zM12 13c4 0 7-2 8-6-4 0-7 2-8 6z" fill="currentColor"/></svg>',
+  practice108: '<svg viewBox="0 0 24 24"><text x="12" y="16" text-anchor="middle" font-size="9" font-weight="900" fill="currentColor" font-family="system-ui">108</text><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>'
 }[sl.id] || GLYPH.spirit);
 const sealCount = () => Object.keys(S.sealsEarned || {}).length;
 function awardSeal(id) {
@@ -4151,8 +4249,7 @@ function bumpTally(key, n = 1) {
   if (babyOn()) return;
   if (!S.tally) S.tally = { harmony: 0, flow3: 0, voiced: 0 };
   S.tally[key] = (S.tally[key] || 0) + n; save();
-  const sl = SEALS.find(x => x.count === key);
-  if (sl && S.tally[key] >= sl.goal) awardSeal(sl.id);
+  SEALS.filter(x => x.count === key && S.tally[key] >= x.goal).forEach(x => awardSeal(x.id));
   renderSeals();
 }
 function renderSeals() {
@@ -4888,12 +4985,222 @@ function renderHome() {
   startHomeFx(el, tod);
   renderSorin();
   applySections();
+  renderPracticeHome();
+}
+
+/* ---------- Today's practice with Sorin ----------
+   Three tiny practices a day, each under a minute, following the time of day. Each one gives +1 Bond to your
+   companion and warms Luma's Aura for the next episode; the first of the day plants a flower in Kai's garden
+   and counts for the streak. Practising on 3 days of a week brings Sorin's weekly gift.
+   Guardrails (approved by Demaris, 2026-09-18): delight, never guilt or loss; nothing here can be bought or
+   skipped with money; three a day at most, so "come back tomorrow" is a healthy place to stop. */
+const DP = [
+  { id: 'sun', when: 'Morning', name: 'Sunrise breath', art: 'img/sorin/solo-breath.webp', say: 'Three slow breaths to wake up your body.' },
+  { id: 'sky', when: 'Afternoon', name: 'Lift the Sky', art: 'img/sorin/solo-sky.webp', say: 'A qigong move: lift your hands to the sky, then float them down.' },
+  { id: 'feel', when: 'Evening', name: 'How does your body feel?', art: 'img/sorin/solo-meditate.webp', say: 'Notice how you feel, then breathe with it.' }
+];
+const FEELS = [
+  { el: 'wood', word: 'Frustrated', face: 'frustrated', breath: 'Cooling breath', how: 'Breathe out long and slow, like wind through the trees.' },
+  { el: 'fire', word: 'Too fizzy', face: 'joy', breath: 'Settling breath', how: 'Slow everything down. Let each breath out be longer.' },
+  { el: 'earth', word: 'Worried', face: 'worried', breath: 'Grounding breath', how: 'Feel your feet on the ground as you breathe.' },
+  { el: 'metal', word: 'Sad', face: 'sad', breath: 'Strong breath', how: 'Put a hand on your chest and breathe into it.' },
+  { el: 'water', word: 'Scared', face: 'scared', breath: 'Brave breath', how: 'Slow and steady. You are safe right here.' },
+  { el: null, word: 'Calm', face: 'calm', breath: 'Thank-you breath', how: 'Breathe in something you are thankful for.' }
+];
+const dpSlot = () => { const h = new Date().getHours(); return h < 12 ? 'sun' : h < 17 ? 'sky' : 'feel'; };
+function dpState() { if (!S.dp || S.dp.day !== dayKey()) S.dp = { day: dayKey(), done: {} }; return S.dp; }
+const dpDoneCount = () => DP.filter(p => dpState().done[p.id]).length;
+const weekKey = (d = dayKey()) => { const t = new Date(d + 'T12:00:00'); t.setDate(t.getDate() - (t.getDay() + 6) % 7); return t.toISOString().slice(0, 10); };
+const dpWeekDays = () => (S.dpDays || []).filter(d => weekKey(d) === weekKey()).length;
+const dpCompanion = () => S.buddy || 'fire';                               // Pip keeps you company until you choose
+function dpDue() {
+  const r = S.dpRemind; if (!r || !r.moment || !r.time || dpDoneCount() >= 3) return false;
+  const [h, m] = r.time.split(':').map(Number), now = new Date();
+  return now.getHours() * 60 + now.getMinutes() >= h * 60 + m;
+}
+// Luma starts the next episode already glowing (one warm start per practice, at most three saved up)
+function dpWarm() {
+  if (babyOn() || practice || !featOn('breath') || !(S.warm > 0)) return false;
+  charge = Math.max(charge, 30); S.warm--; save(); return true;
+}
+function renderPracticeHome() {
+  const b = $('#bPractice'); if (!b) return;
+  const n = dpDoneCount();
+  b.textContent = n >= 3 ? '✓' : `${n}/3`; b.className = 'hbadge' + (n >= 3 ? ' ok' : '');
+  const ic = $('.dpicon'); if (ic) ic.classList.toggle('due', dpDue());
+  renderGarden();
+}
+function renderGarden() {
+  const g = $('#garden'), list = S.garden || [];
+  g.hidden = !secOn('practice') || !list.length || babyOn();
+  if (g.hidden) return;
+  const show = list.slice(-14), seen = S.gardenSeen || 0;
+  g.innerHTML = show.map((f, i) => {
+    const k = list.length - show.length + i, back = i % 2 === 1 && show.length > 5;
+    const x = show.length === 1 ? 50 : 10 + i * (80 / (show.length - 1)) + ((k * 7) % 5 - 2), size = back ? 48 + (k % 3) * 4 : 62 + (k % 3) * 6;
+    return `<img class="${k >= seen ? 'new' : ''}" src="img/garden/${f.el}.png" alt="" style="left:${x}%;width:${size}px;margin-left:${-size / 2}px;bottom:${back ? 20 : 0}px;z-index:${back ? 1 : 2};animation-delay:${k >= seen ? 0 : -(k * 0.7) % 4.6}s${k >= seen ? `,${1.4}s` : ''}">`;
+  }).join('');
+  if (seen < list.length) { S.gardenSeen = list.length; save(); }
+}
+function bondAdd(el, n) {
+  S.bond = S.bond || {};
+  const from = careStage(el), bd = Object.assign({ care: 0, last: '', streak: 0 }, S.bond[el]);
+  bd.care += n; S.bond[el] = bd; save();
+  return { from, to: careStage(el) };
+}
+function renderPractice() {
+  const st = dpState(), slot = dpSlot(), n = dpDoneCount(), el = dpCompanion();
+  $('#dpSub').textContent = n >= 3 ? `All three done today. ${BUDDY[el].name} is glowing. See you tomorrow!` : `Three tiny practices a day. Each one helps ${BUDDY[el].name} grow and warms up Luma.`;
+  $('#dpList').innerHTML = DP.map(p => `<button class="dpitem ${st.done[p.id] ? 'done' : ''} ${p.id === slot && !st.done[p.id] ? 'now' : ''}" data-dp="${p.id}" ${st.done[p.id] ? 'disabled' : ''}>
+    <img src="${p.art}" alt=""><span><small>${p.when}${p.id === slot ? ' · now' : ''}</small><b>${p.name}</b><em>${p.say}</em></span><i>${st.done[p.id] ? '✓' : '›'}</i></button>`).join('');
+  const fam = $('#dpFam'); fam.classList.toggle('done', !!st.fam); fam.disabled = !!st.fam;
+  fam.textContent = st.fam ? '✓ You breathed together with a grown-up today' : '👫 Breathe together with a grown-up';
+  const wk = weekKey(), days = [...Array(7)].map((_, i) => { const t = new Date(wk + 'T12:00:00'); t.setDate(t.getDate() + i); return t.toISOString().slice(0, 10); });
+  const lit = new Set(S.dpDays || []), got = S.dpGiftWk === wk, cnt = dpWeekDays();
+  $('#dpWeek').innerHTML = `<div class="dots">${days.map(d => `<i class="${lit.has(d) ? 'lit' : ''} ${d === dayKey() ? 'today' : ''}">${'MTWTFSS'[days.indexOf(d)]}</i>`).join('')}</div>`
+    + (got ? "Sorin's gift for this week is yours. Every practice still helps." : `Practise on ${Math.max(0, 3 - cnt)} more day${3 - cnt === 1 ? '' : 's'} this week for Sorin's gift.`);
+  const r = S.dpRemind, tm = $('#dpTime');
+  tm.hidden = !(r && r.moment);
+  if (r && r.moment) tm.textContent = `Your practice time: ${r.moment.toLowerCase()} · ${new Date('2026-01-01T' + r.time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`;
+}
+let dpRunId = 0;
+function dpPose(pose) { const sp = $('#dpBuddy .hsprite'); if (sp) sp.style.setProperty('--bx', (PEEK_X[pose] || 0) + '%'); }
+async function dpBreath(run, n, IN = 4, OUT = 5, lines) {
+  const ring = $('#dpRing'), txt = $('#dpText');
+  for (let i = 0; i < n; i++) {
+    txt.textContent = lines ? lines[0] : 'Breathe in…'; dpPose('blink');
+    ring.style.transition = `transform ${IN}s cubic-bezier(.35,0,.3,1)`; ring.style.transform = 'scale(1)';
+    breathSound('in', IN); bell(523.25, 0, 0.05); await wait(reduce ? 500 : IN * 1000); if (run !== dpRunId) return false;
+    txt.textContent = lines ? lines[1] : 'And slowly out…'; dpPose('idle');
+    ring.style.transition = `transform ${OUT}s cubic-bezier(.4,0,.3,1)`; ring.style.transform = 'scale(.62)';
+    breathSound('out', OUT); await wait(reduce ? 500 : OUT * 1000); if (run !== dpRunId) return false;
+  }
+  return true;
+}
+async function openPractice() {
+  ac(); dpRunId++;
+  $('#dpHome').hidden = false; $('#dpRun').hidden = true;
+  renderPractice(); await showOv('dpov');
+}
+async function runDaily(id) {
+  const run = ++dpRunId, p = DP.find(x => x.id === id), el = dpCompanion();
+  const title = $('#dpRunTitle'), txt = $('#dpText'), art = $('#dpArt');
+  $('#dpHome').hidden = true; $('#dpRun').hidden = false;
+  $('#dpFeel').hidden = $('#dpGrown').hidden = $('#dpGot').hidden = $('#dpGo').hidden = true; $('#dpStop').hidden = false;
+  $('#dpRing').style.transition = 'none'; $('#dpRing').style.transform = 'scale(.62)';
+  $('#dpBuddy').innerHTML = holdSprite(buddyWho(el).replace('buddy-', ''), 'idle');
+  $('#dpRunEy').textContent = id === 'fam' ? 'Breathe together' : `${p.when} practice`;
+  title.textContent = id === 'fam' ? 'You and a grown-up' : p.name;
+  art.src = id === 'fam' ? 'img/sorin/solo-breath.webp' : p.art;
+  let feelEl = null, ok = false;
+  if (id === 'sun') {
+    txt.textContent = `Sit tall and soft. ${BUDDY[el].name} will breathe with you.`; await wait(reduce ? 300 : 2400);
+    ok = run === dpRunId && await dpBreath(run, 3, 4, 5);
+  } else if (id === 'sky') {
+    txt.textContent = 'Stand tall. Link your fingers together in front of you.'; await wait(reduce ? 300 : 3000);
+    ok = run === dpRunId && await dpBreath(run, 3, 4, 5, ['Breathe in and lift your hands up to the sky…', 'Breathe out and float them back down…']);
+  } else if (id === 'feel') {
+    txt.textContent = 'How does your body feel right now? Every feeling is okay.';
+    const fb = $('#dpFeel'); fb.hidden = false;
+    fb.innerHTML = FEELS.map((f, i) => `<button data-f="${i}" style="--c:${f.el ? ELEM[f.el].glow : '#FFE9A8'}"><img src="${faceSrc(heroId(), f.face)}" onerror="this.onerror=null;this.src='img/faces/kai-${f.face}.jpg'" alt="">${f.word}</button>`).join('');
+    const f = await new Promise(res => { fb.onclick = e => { const b = e.target.closest('[data-f]'); if (b) { tick(); res(FEELS[+b.dataset.f]); } }; });
+    if (run !== dpRunId) return;
+    fb.hidden = true; feelEl = f.el; title.textContent = f.breath;
+    txt.textContent = f.how; await wait(reduce ? 300 : 2600);
+    ok = run === dpRunId && await dpBreath(run, 2, 4, 6);
+  } else if (id === 'fam') {
+    txt.textContent = 'You and a grown-up each hold a circle. When you both hold, breathe together.';
+    const gb = $('#dpGrown'); gb.hidden = false;
+    const held = [false, false], btns = [...gb.querySelectorAll('.dphold')];
+    const set = (h, on) => { held[h] = on; btns[h].classList.toggle('on', on); };
+    await new Promise(res => {
+      btns.forEach((b, h) => {
+        b.onpointerdown = e => { e.preventDefault(); set(h, e.pointerType === 'mouse' ? !held[h] : true); if (held[0] && held[1]) res(); };
+        b.onpointerup = b.onpointercancel = e => { if (e.pointerType !== 'mouse') set(h, false); };
+      });
+    });
+    if (run !== dpRunId) return;
+    ok = await dpBreath(run, 3, 4, 5, ['Breathe in together…', 'And out together…']);
+    gb.hidden = true;
+  }
+  if (!ok || run !== dpRunId) return;
+  dpPose('cheer'); chord([523.25, 659.25, 783.99, 1046.5], 0.08);
+  const got = dpFinish(id, feelEl);
+  txt.textContent = id === 'fam' ? 'Breathing together is a superpower.' : 'Beautiful. Your body will remember this.';
+  $('#dpGot').innerHTML = got.map(([img, t]) => `<div><img src="${img}" alt="">${t}</div>`).join(''); $('#dpGot').hidden = !got.length;
+  $('#dpStop').hidden = true; $('#dpGo').hidden = false;
+  await new Promise(res => { $('#dpGo').onclick = () => { tick(); res(); }; });
+  await hideOv('dpov');
+  renderHome();
+  if (dpFinish.evolve) { const e = dpFinish.evolve; dpFinish.evolve = null; await evolveBuddy(e.el, e.from, e.to); renderBuddy(); renderHome(); }
+}
+function dpFinish(id, feelEl) {
+  if (babyOn()) return [];
+  const st = dpState(), today = dayKey(), first = !Object.keys(st.done).length && !st.fam, el = dpCompanion(), got = [];
+  if (id === 'fam') st.fam = 1; else st.done[id] = 1;
+  const bd = bondAdd(el, 1);
+  if (bd.to > bd.from) dpFinish.evolve = { el, ...bd };
+  got.push([`img/${buddyWho(el)}.jpg`, `+1 Bond for ${BUDDY[el].name}`]);
+  if (featOn('breath', reached())) { S.warm = Math.min(3, (S.warm || 0) + 1); got.push(['img/faces/luma-happy.jpg', "Luma's Aura starts warm in your next episode"]); }
+  if (first) {
+    S.dpDays = [...new Set([...(S.dpDays || []), today])].slice(-180);
+    const fl = feelEl || TYPES[((daysBetween('2026-01-01', today) % 5) + 5) % 5];
+    S.garden = [...(S.garden || []), { d: today, el: fl }];
+    got.push([`img/garden/${fl}.png`, "A new flower in Kai's garden"]);
+    if (S.lastDay !== today) {                         // a practice day counts like a played day (companion unlocks, Rin's gift)
+      S.practiceDays = (S.practiceDays || 0) + 1;
+      if (S.buddy === 'wood') S.swirls = (S.swirls || 0) + (giftTier('wood') >= 3 ? 2 : 1);
+      checkBuddyUnlocks();
+    }
+    markDay();
+  }
+  logDay(id === 'fam' ? 'fam' : 'p', 1, feelEl);
+  S.dpTotal = (S.dpTotal || 0) + 1;
+  const wk = weekKey();
+  if (dpWeekDays() >= 3 && S.dpGiftWk !== wk) {
+    S.dpGiftWk = wk; S.coins += 300; S.warm = 3;
+    if (featEver('charms')) CHARMS.forEach(c => { S.charms[c.id] = (S.charms[c.id] || 0) + 1; });
+    got.push(['img/ui/coins.png', `Sorin's weekly gift: 300 coins${featEver('charms') ? ', a charm of each kind' : ''} and a warm Aura for your next 3 episodes`]);
+  }
+  save(); syncWallet(); bumpTally('practice');
+  return got;
+}
+$('#dpOpen').addEventListener('click', openPractice);
+$('#dpClose').addEventListener('click', () => hideOv('dpov'));
+$('#dpList').addEventListener('click', e => { const b = e.target.closest('[data-dp]'); if (b && !b.disabled) { tick(); runDaily(b.dataset.dp); } });
+$('#dpFam').addEventListener('click', () => { if (!dpState().fam) { tick(); runDaily('fam'); } });
+$('#dpStop').addEventListener('click', () => { dpRunId++; breathSound('out', 0.4); $('#dpRun').hidden = true; $('#dpHome').hidden = false; renderPractice(); });
+// grown-ups pick a practice time on the Why MorQi page; the Practice button glows from then on each day
+$('#dpSave').addEventListener('click', async () => {
+  if (!await grownUpGate('', 'Answer to set the practice time.', true)) return;
+  S.dpRemind = { moment: $('#dpMoment').value, time: $('#dpClock').value || '19:30' }; save();
+  toast(S.dpRemind.moment ? `Practice time saved: ${S.dpRemind.moment.toLowerCase()}.` : 'No set practice time.');
+});
+setInterval(() => { if (!$('#map').hidden) renderPracticeHome(); }, 60000);
+
+// Baby mode: between boards, the companion who held the board takes one slow breath, big and close
+const BABY_VID = { fire: 'pip', earth: 'momo', water: 'nami' };
+async function babyInterlude(pal) {
+  const box = $('#babyInter'), v = $('#biVid');
+  box.classList.remove('fallback', 'on'); box.hidden = false;
+  $('#biSpr').innerHTML = holdSprite(pal, 'blink');
+  v.src = `img/baby/${BABY_VID[pal] || 'pip'}-breath.mp4?v=78`;
+  const ready = await new Promise(res => { v.oncanplay = () => res(true); v.onerror = () => res(false); setTimeout(() => res(false), 2500); });
+  if (!ready) box.classList.add('fallback');
+  void box.offsetWidth; box.classList.add('on');
+  if (ready) { v.currentTime = 0; v.play().catch(() => {}); }
+  breathSound('in', 4); bell(523.25, 0, 0.05);
+  await wait(4000); if (!babyOn()) { box.hidden = true; return; }
+  breathSound('out', 4);
+  await wait(3800);
+  box.classList.remove('on'); await wait(700); box.hidden = true; v.pause();
 }
 
 /* ---------- Sections that open as you play ---------- */
-const SEC_SEL = { streak: '[data-open="streakChip"]', quests: '[data-open="questCard"]', wheel: '[data-open="wheelCard"]', buddy: '[data-open="buddyCard"]', seals: '[data-open="sealCard"]', collection: '#tabbar [data-tab="collection"]', harmony: '#tabbar [data-tab="harmony"]', pass: '.homepass' };
+const SEC_SEL = { practice: '[data-open="dpOpen"]', streak: '[data-open="streakChip"]', quests: '[data-open="questCard"]', wheel: '[data-open="wheelCard"]', buddy: '[data-open="buddyCard"]', seals: '[data-open="sealCard"]', collection: '#tabbar [data-tab="collection"]', harmony: '#tabbar [data-tab="harmony"]', pass: '.homepass' };
 const SEC_CARD = {
-  streak: ['Daily streak', 'img/icons/icon-streak-3d.jpg', 'Play one episode a day to grow your streak. Every few days brings a gift.'],
+  practice: ["Today's practice", 'img/sorin-3d.jpg', 'Sorin has three tiny practices for you every day. Each one helps your companion grow and warms up Luma for your next episode.'],
+  streak: ['Daily streak', 'img/icons/icon-streak-3d.jpg', 'Practise or play one episode a day to grow your streak. Every few days brings a gift.'],
   quests: ["Today's quests", 'img/icons/icon-quests-3d.jpg', 'Three small things to try each day. Finish all three for a chest.'],
   collection: ['Collection', 'img/ui/journal.png', 'Everything you find on your journey is kept here, ready to look back on.'],
   buddy: ['Your companion', 'img/icons/icon-buddy-3d.jpg', 'Your companion has a home of its own now. Visit, breathe together and watch it grow.'],
@@ -7630,7 +7937,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { babyState: () => ({ babyIx, busy, charge, shape: L && L.shape, R, C, pal: peekWho(), peekHidden: $('#peek').hidden, clouds: clouds().length, bubble: getComputedStyle($('#bubble')).display }), fillAura: () => { charge = 100; hud(); }, hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { dpTry: id => { try { const pr = runDaily(id); return pr.then(() => 'done', e => String(e && e.stack)).then(x => x); } catch (e) { return String(e.stack); } }, babyInter: pal => babyInterlude(pal), babyState: () => ({ babyIx, busy, charge, shape: L && L.shape, R, C, pal: peekWho(), peekHidden: $('#peek').hidden, clouds: clouds().length, bubble: getComputedStyle($('#bubble')).display }), fillAura: () => { charge = 100; hud(); }, hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -8133,8 +8440,8 @@ function startLevel() {
   placePeek();
   playGate();
   setTimeout(() => {
-    sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); hud();
-    say(S.buddy === L.elem
+    sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); const warmed = dpWarm(); hud();
+    if (warmed) say('Your practice with Sorin warmed up Luma. Her Aura is already glowing.'); else say(S.buddy === L.elem
       ? `${BUDDY[S.buddy].name} is at home here. Match 3 of the same element to grow Luma's Aura.`
       : featOn('breath') ? 'Swipe to match 3 of the same element. Each match grows Luma’s Aura.' : 'Swipe two orbs to line up 3 of the same element!');
     if (!running) { running = true; rainLoop(); }
@@ -8637,7 +8944,8 @@ function renderWhy() {
     <div class="wkstats"><div><b>${tot('b') + tot('c')}</b><small>calm breaths</small></div><div><b>${tot('d')}</b><small>deep breaths</small></div><div><b>${tot('e')}</b><small>episodes</small></div><div><b>${active}/7</b><small>days practised</small></div></div>
     ${top.length ? `<div class="wkfeel">Feelings explored this week<div class="chips">${top.map(([k, v]) => `<span style="--c:${ELEM[k].glow}">${FEEL_OF[k]} · ${v}</span>`).join('')}</div></div>
     <div class="wkask"><small>A question to ask tonight</small><p>“${ASK_OF[top[0][0]]}”</p></div>` : ''}
-    ${tot('bed') ? `<div class="wkfeel">🌙 ${tot('bed')} bedtime breathing session${tot('bed') === 1 ? '' : 's'} with Luma.</div>` : ''}`;
+    ${tot('bed') ? `<div class="wkfeel">🌙 ${tot('bed')} bedtime breathing session${tot('bed') === 1 ? '' : 's'} with Luma.</div>` : ''}
+    ${tot('p') ? `<div class="wkfeel">🌱 ${tot('p')} practice${tot('p') === 1 ? '' : 's'} with Sorin${tot('fam') ? ` · ${tot('fam')} breathing together with a grown-up` : ''}.</div>` : ''}`;
   $('#whyAges').innerHTML = Object.entries(BANDS).map(([k, v]) => `<div class="${band() === k ? 'me' : ''}"><small>Ages ${k}</small><b>${v}</b><em>${AGE_NOTE[k]}</em></div>`).join('');
 }
 async function openWhy() {
@@ -9029,8 +9337,10 @@ async function winLevel() {
   glowGoal(false); clearHints(); hideTip();
   if (babyOn()) {                                          // baby mode: a soft cheer, then a fresh sky. No stars, coins or unlocks
     chord([523.25, 659.25, 783.99], 0.08); if (!reduce) confetti('#board');
+    const held = babyBoard().pal;
     babyIx = (babyIx + 1) % BABY_BOARDS.length;
-    await wait(2200); if (babyOn()) startLevel(); else busy = false;
+    await wait(1300); if (babyOn()) await babyInterlude(held);
+    if (babyOn()) startLevel(); else busy = false;
     return;
   }
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.13);
