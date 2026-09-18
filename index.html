@@ -1141,6 +1141,26 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   background:repeating-conic-gradient(rgba(255,210,120,.2) 0 8deg,transparent 8deg 22deg);-webkit-mask-image:radial-gradient(circle,#000 15%,transparent 60%);mask-image:radial-gradient(circle,#000 15%,transparent 60%);animation:rays 14s linear infinite}
 .gotitems{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:14px 0 6px}
 .gotitems .gi{display:grid;justify-items:center;gap:6px;font-size:13px;font-weight:900;width:76px}
+.odemo{width:100%;max-width:340px;padding:12px 14px 12px;border-radius:20px;text-align:center;color:#FFF6DE;
+  background:linear-gradient(180deg,rgba(18,40,33,.82),rgba(10,22,18,.88));box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.5),0 12px 30px rgba(0,0,0,.45);backdrop-filter:blur(6px)}
+.odhead{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px}
+.odhead b{font:400 22px "Marcellus SC",Georgia,serif}
+.odnew{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A)}
+.odboard{position:relative;margin:0 auto;padding:6px;box-sizing:content-box;border-radius:14px;background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.12)}
+.dcell{position:absolute;width:44px;height:44px;margin:6px 0 0 6px}
+.dcell .tile{position:absolute;inset:3px !important;width:auto !important;height:auto !important}
+.dcell .knotx{inset:0}
+.dcell.freed .tile{filter:drop-shadow(0 0 8px #FFE9A8) drop-shadow(0 0 14px rgba(255,220,130,.8))}
+.odline{position:absolute;height:10px;border-radius:99px;background:linear-gradient(90deg,rgba(255,233,168,.2),#FFE9A8,rgba(255,233,168,.2));box-shadow:0 0 16px #FFE9A8;opacity:0;margin:6px 0 0 6px;transform-origin:left center;z-index:4;pointer-events:none}
+.odhand{position:absolute;z-index:6;font-size:30px;font-style:normal;opacity:0;margin:6px 0 0 6px;transform:translate(-30%,-10%);filter:drop-shadow(0 3px 3px rgba(0,0,0,.5));transition:opacity .25s}
+.odx{position:absolute;z-index:5;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-weight:900;font-size:15px;color:#fff;background:#D9534F;box-shadow:0 0 0 2px #fff;opacity:0;margin:-14px 0 0 20px;transform:translate(-50%,-50%);transition:opacity .2s}
+.odsteps{display:flex;justify-content:center;gap:6px;margin:10px 0 6px}
+.odsteps i{width:22px;height:5px;border-radius:99px;background:rgba(255,255,255,.22);transition:background .3s,width .3s}
+.odsteps i.on{width:34px;background:var(--gold-hi)}
+.odcap{min-height:2.8em;font-size:15px;font-weight:800;line-height:1.35;display:flex;gap:8px;align-items:flex-start;justify-content:center;text-align:left}
+.odcap b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A)}
+.story.demoing .stpor{width:120px;height:120px}
+.story.demoing .stbubble p{font-size:17px;min-height:0}
 </style>
 
 <div id="app">
@@ -3041,17 +3061,77 @@ function crossfadeBg(url) {
   back.style.opacity = 1; front.style.opacity = 0; stBgFront = 1 - stBgFront;
 }
 let lastSpeaker = null;
+
+/* ---------- obstacle lessons ----------------------------------------------------------
+   Every new obstacle is introduced with a looping, animated demo on a tiny board: what it is,
+   what doesn't work, what does, and what happens. Numbered steps, one caption each. */
+let demoRun = 0;
+const DEMO_T = 44;                                        // demo tile size, px
+function demoBoard(rows) {
+  return rows.map((row, r) => row.map((type, c) => `<span class="dcell" data-r="${r}" data-c="${c}" style="left:${c * DEMO_T}px;top:${r * DEMO_T}px">${orbHTML(type)}</span>`).join('')).join('');
+}
+async function obstacleDemo(host, kind) {
+  const run = demoRun;
+  const rows = [['wood', 'fire', 'water', 'earth', 'metal'], ['fire', 'earth', 'earth', 'water', 'wood'], ['metal', 'water', 'wood', 'fire', 'earth']];
+  host.innerHTML = `<div class="odemo">
+      <div class="odhead"><span class="odnew">New</span><b>Knots</b></div>
+      <div class="odboard" style="width:${5 * DEMO_T}px;height:${3 * DEMO_T}px">${demoBoard(rows)}<i class="odline"></i><i class="odhand">👆</i><i class="odx">✕</i></div>
+      <div class="odsteps"><i></i><i></i><i></i></div>
+      <div class="odcap" id="odCap"></div>
+    </div>`;
+  const cell = (r, c) => host.querySelector(`.dcell[data-r="${r}"][data-c="${c}"]`);
+  const knotCell = cell(1, 1), hand = host.querySelector('.odhand'), x = host.querySelector('.odx'), line = host.querySelector('.odline'), cap = host.querySelector('#odCap');
+  const steps = [...host.querySelectorAll('.odsteps i')];
+  const at = (el, r, c) => { el.style.left = `${c * DEMO_T + DEMO_T / 2}px`; el.style.top = `${r * DEMO_T + DEMO_T / 2}px`; };
+  const alive = () => run === demoRun && host.isConnected && !host.hidden;
+  const step = (i, text) => { steps.forEach((s2, k) => s2.classList.toggle('on', k === i)); cap.innerHTML = `<b>${i + 1}</b>${text}`; if (!reduce) cap.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: 'ease-out' }); };
+  const mv = (el, kf, ms) => reduce ? Promise.resolve() : el.animate(kf, { duration: ms, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' }).finished.catch(() => {});
+  while (alive()) {
+    // reset the little board
+    host.querySelectorAll('.dcell').forEach(c => { c.getAnimations().forEach(a => a.cancel()); c.style.opacity = 1; });
+    const knot = document.createElement('i'); knot.className = 'knotx'; knotCell.querySelector('.tile').appendChild(knot);
+    knotCell.classList.remove('freed'); line.style.opacity = 0; x.style.opacity = 0; hand.style.opacity = 0;
+    // 1 · it can't be moved
+    step(0, 'A knotted orb is stuck. It can’t be swapped.');
+    at(hand, 1, 1); hand.style.opacity = 1;
+    await wait(700); if (!alive()) return;
+    await Promise.all([mv(hand, [{ transform: 'translate(-30%,-10%)' }, { transform: `translate(calc(-30% - ${DEMO_T * 0.6}px),-10%)` }, { transform: 'translate(-30%,-10%)' }], 700),
+      mv(knotCell, [{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(-3px)' }, { transform: 'none' }], 520)]);
+    at(x, 1, 1); x.style.opacity = 1; if (!reduce) x.animate([{ transform: 'translate(-50%,-50%) scale(.3)' }, { transform: 'translate(-50%,-50%) scale(1.15)' }, { transform: 'translate(-50%,-50%) scale(1)' }], { duration: 320 });
+    await wait(1500); if (!alive()) return;
+    x.style.opacity = 0; hand.style.opacity = 0;
+    // 2 · match through it
+    step(1, 'Make a match that goes through the knot.');
+    const up = cell(0, 3), down = cell(1, 3);
+    at(hand, 0, 3); hand.style.opacity = 1; await wait(500); if (!alive()) return;
+    await Promise.all([mv(hand, [{ transform: 'translate(-30%,-10%)' }, { transform: `translate(-30%,calc(-10% + ${DEMO_T}px))` }], 520),
+      mv(up, [{ transform: 'none' }, { transform: `translateY(${DEMO_T}px)` }], 520), mv(down, [{ transform: 'none' }, { transform: `translateY(${-DEMO_T}px)` }], 520)]);
+    hand.style.opacity = 0;
+    line.style.left = `${1 * DEMO_T + 4}px`; line.style.top = `${1 * DEMO_T + DEMO_T / 2}px`; line.style.width = `${3 * DEMO_T - 8}px`;
+    line.style.opacity = 1; if (!reduce) line.animate([{ transform: 'translateY(-50%) scaleX(0)' }, { transform: 'translateY(-50%) scaleX(1)' }], { duration: 420, easing: 'ease-out', fill: 'forwards' });
+    await wait(1300); if (!alive()) return;
+    // 3 · the knot comes loose, the orb stays
+    step(2, 'The knot comes loose. The orb stays and can move again.');
+    line.style.opacity = 0;
+    await Promise.all([mv(knot, [{ transform: 'none', opacity: 1 }, { transform: 'scale(1.6) rotate(40deg)', opacity: 0 }], 520),
+      mv(cell(1, 2), [{ transform: 'none', opacity: 1 }, { transform: 'scale(1.3)', opacity: 0 }], 420),
+      mv(up, [{ transform: `translateY(${DEMO_T}px)`, opacity: 1 }, { transform: `translateY(${DEMO_T}px) scale(1.3)`, opacity: 0 }], 420)]);
+    knot.remove(); knotCell.classList.add('freed');
+    await wait(2200); if (!alive()) return;
+  }
+}
 async function showBeat(b, run, skipped, nextTap, k = 0) {
   const face = $('#stFace'), txt = $('#stText'), bub = $('#stBubble'), por = $('#stPor');
   if (k > 0) crossfadeBg(storyBg(k, b.voice));
   const newSpeaker = lastSpeaker !== b.name; lastSpeaker = b.name;
+  $('#story').classList.toggle('demoing', !!b.knotDemo); demoRun++;
   $('#stPlate').textContent = b.name;
   // the portrait stays still: one calm expression, no mouth-flapping, no bouncing
   face.src = faceSrc(b.who, b.voice === 'luma' ? 'happy' : 'calm');
   const goal = $('#stGoal');
   goal.hidden = !b.goal && !b.knotDemo;
   if (b.knotDemo) {
-    goal.innerHTML = `<div class="knotdemo"><div class="tile t-earth knotted" style="--t:74px;position:absolute;inset:0;width:74px;height:74px;transform:none"><div class="orb">${GLYPH.earth}</div><i class="knotx"></i></div></div><div class="goalchips"><span class="gchip">New · Knots</span></div>`;
+    obstacleDemo(goal, 'knots');
     if (!reduce) goal.animate([{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' });
     S.seen = Object.assign(S.seen || {}, { knots: 1 }); save();
   }
