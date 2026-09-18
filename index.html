@@ -1562,6 +1562,51 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .dcell.pvd .tile::before{background:rgba(255,226,150,.6) !important;box-shadow:0 0 0 2px #FFE9A8,0 0 14px rgba(255,220,130,.9) !important}
 .dcell.pvd{filter:drop-shadow(0 0 6px rgba(255,220,130,.9))}
 .pwdring{position:absolute;z-index:5;width:44px;height:44px;margin:6px 0 0 6px;border-radius:50%;border:4px solid #FFE08A;box-shadow:0 0 16px #FFD45A;pointer-events:none}
+
+/* ---------- signature effects ---------- */
+.fx-art{position:absolute;left:0;top:0;pointer-events:none;z-index:11}
+.fx-art svg{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.fx-clawmark{position:absolute;height:calc(var(--t)*.16);border-radius:99px;transform-origin:0 50%;z-index:10;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,170,60,0),#FFE7B0 35%,#fff 50%,#FFE7B0 65%,rgba(255,170,60,0));box-shadow:0 0 14px 4px rgba(255,150,40,.85)}
+.fx-shadow{border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.7),transparent 70%);z-index:8}
+.fx-cracks{z-index:9}
+.fx-cracks path{fill:none;stroke:#2A1A0C;stroke-width:calc(var(--t)*.09);stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 1px 0 rgba(255,220,160,.5))}
+.fx-dust{border-radius:50%;background:radial-gradient(circle,rgba(205,178,140,.95),rgba(150,120,85,.5) 55%,transparent 72%);z-index:10}
+.fx-crane svg{filter:drop-shadow(0 0 10px rgba(255,255,255,.9)) drop-shadow(0 6px 8px rgba(0,0,0,.45))}
+.fx-crane .wing{transform-box:fill-box;animation:craneflap .22s ease-in-out infinite alternate}
+.fx-crane .wt{transform-origin:100% 100%}.fx-crane .wb{transform-origin:100% 0}
+@keyframes craneflap{to{transform:scaleY(.25)}}
+.fx-gust{position:absolute;z-index:8;pointer-events:none;background:repeating-linear-gradient(90deg,transparent 0 18px,rgba(255,255,255,.55) 18px 60px,transparent 60px 90px);filter:blur(1px);border-radius:99px}
+.fx-feather{width:calc(var(--t)*.34);height:calc(var(--t)*.12);border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:linear-gradient(90deg,#fff,#DDE6EE);box-shadow:0 1px 2px rgba(0,0,0,.3);z-index:12}
+.fx-tail{z-index:12}
+.fx-tail path{fill:none;stroke:#8A5A2E;stroke-width:9;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 0 6px rgba(255,210,90,.8))}
+.fx-stream{position:absolute;z-index:9;pointer-events:none;border-radius:40%;
+  background:linear-gradient(90deg,transparent,rgba(60,160,240,.45) 18%,rgba(120,205,255,.7) 60%,rgba(230,248,255,.95) 84%,transparent);box-shadow:inset -18px 0 24px rgba(255,255,255,.6)}
+.fx-deer{z-index:12}
+.fx-dot{width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;z-index:12;box-shadow:0 0 6px currentColor}
+.fx-ember{width:7px;height:7px;margin:-3.5px 0 0 -3.5px;border-radius:50%;background:radial-gradient(circle,#FFF6C8,#FF9A2E 55%,rgba(255,80,20,0) 75%);z-index:10}
+.fx-comet{background:linear-gradient(90deg,transparent,#E0401A 35%,#FF9A2E 65%,#FFE7A8 88%,#fff) !important;box-shadow:0 0 18px 6px rgba(255,140,40,.85) !important}
+.fx-comet.light{background:linear-gradient(90deg,transparent,#5BC0FF 40%,#CFEFFF 80%,#fff) !important;box-shadow:0 0 18px 6px rgba(150,215,255,.95) !important}
+.fx-ember.lt{background:radial-gradient(circle,#fff,#9EDCFF 55%,transparent 75%)}
+.fx-lotus{z-index:11}
+.fx-lotus svg{width:100%;height:100%;overflow:visible}
+.fx-glowdot{width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:radial-gradient(circle,#FFFDE0,rgba(255,229,92,.7) 50%,transparent 72%);z-index:10}
+.lumadive{position:absolute;left:0;top:0;width:72px;height:72px;z-index:40;pointer-events:none}
+.lumadive img{width:100%;height:100%;border-radius:50%;display:block;box-shadow:0 0 0 3px #FFF6DE,0 0 26px 10px rgba(150,215,255,.95)}
+.lumatrail{position:absolute;width:26px;height:26px;border-radius:50%;z-index:39;pointer-events:none;background:radial-gradient(circle,#fff,rgba(170,225,255,.8) 45%,transparent 72%)}
+.fx-splashflash{border-radius:50%;background:radial-gradient(circle,#fff,rgba(190,235,255,.85) 35%,transparent 70%);z-index:11}
+.fx-drop{width:9px;height:14px;margin:-7px 0 0 -4.5px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:linear-gradient(#fff,#9EDCFF);box-shadow:0 0 8px rgba(160,220,255,.9);z-index:12}
+.fx-ripple{border-radius:50%;border:calc(var(--t)*.07) solid rgba(210,240,255,.95);box-shadow:0 0 16px rgba(160,220,255,.9),inset 0 0 16px rgba(160,220,255,.7);z-index:10}
+.fx-zone{position:absolute;z-index:9;pointer-events:none;border-radius:14px;border:3px solid #CFEFFF;background:rgba(170,225,255,.28);box-shadow:0 0 24px 6px rgba(150,215,255,.8)}
+/* how orbs leave for each power */
+@keyframes clawcut{0%{transform:none}25%{transform:translateX(-5%) scale(1.12);filter:brightness(1.9)}100%{transform:translate(40%,-30%) rotate(40deg) scale(.3);opacity:0}}
+#board .tile.pop.pop-claw .orb{animation-name:clawcut;animation-duration:.5s;animation-fill-mode:forwards;animation-timing-function:cubic-bezier(.4,0,.6,1)}
+@keyframes blownaway{30%{transform:translateX(-8%) rotate(-12deg)}100%{transform:translate(170%,-70%) rotate(240deg) scale(.4);opacity:0}}
+#board .tile.pop.pop-wind .orb{animation-name:blownaway;animation-duration:.6s;animation-fill-mode:forwards;animation-timing-function:cubic-bezier(.5,0,.7,1)}
+@keyframes dissolvelight{30%{transform:scale(1.25);filter:brightness(2.2)}100%{transform:scale(.2);filter:brightness(3) blur(4px);opacity:0}}
+#board .tile.pop.pop-light .orb{animation-name:dissolvelight;animation-duration:.55s;animation-fill-mode:forwards}
+#fxlab{position:absolute;left:0;right:0;bottom:0;z-index:50;display:flex;flex-wrap:wrap;gap:5px;justify-content:center;padding:10px 8px calc(10px + var(--sab));background:linear-gradient(180deg,rgba(20,14,8,.0),rgba(20,14,8,.92) 18%)}
+#fxlab button{padding:6px 9px;border-radius:99px;border:0;font:900 11.5px/1 inherit;color:#3A2408;background:linear-gradient(#FFF3C4,#F2C45A);box-shadow:0 2px 0 #8A5A1A,0 3px 8px rgba(0,0,0,.4);cursor:pointer}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -4491,7 +4536,9 @@ function fxComets(f) {
   boardEl.appendChild(beam);
   beam.animate([{ opacity: 0, scale: f.kind === 'row' ? '0 1' : '1 0' }, { opacity: 1, scale: '1 1', offset: .4 }, { opacity: 0, scale: '1 1' }], { duration: 480, easing: 'ease-out' }).onfinish = () => beam.remove();
   (f.kind === 'row' ? [[-1, 180], [1, 0]] : [[-1, -90], [1, 90]]).forEach(([s, ang]) => {
-    const d = document.createElement('div'); d.className = 'fxp fx-comet'; d.style.setProperty('--hue', hue); boardEl.appendChild(d);
+    if (!reduce) for (let e2 = 0; e2 < 7; e2++) { const em = fxAt(f.light ? 'fx-ember lt' : 'fx-ember', x, y), far = (e2 + 1) / 8 * (f.kind === 'row' ? (s < 0 ? x : C * T - x) : (s < 0 ? y : R * T - y));
+      gone(em.animate([{ transform: `translate(${x}px,${y}px) scale(1)`, opacity: 0 }, { transform: `translate(${x + (f.kind === 'row' ? s * far : (e2 % 2 ? 5 : -5))}px,${y + (f.kind === 'col' ? s * far : (e2 % 2 ? 5 : -5))}px) scale(1)`, opacity: 1, offset: .3 }, { transform: `translate(${x + (f.kind === 'row' ? s * far : (e2 % 2 ? 12 : -12))}px,${y + (f.kind === 'col' ? s * far : 0) - 14}px) scale(.2)`, opacity: 0 }], { duration: 700, delay: (f.delay || 0) + e2 * 40, fill: 'backwards' })); }
+    const d = document.createElement('div'); d.className = 'fxp fx-comet' + (f.light ? ' light' : ''); d.style.setProperty('--hue', hue); boardEl.appendChild(d);
     const dist = f.kind === 'row' ? (s < 0 ? x + T * 1.5 : C * T - x + T * 1.5) : (s < 0 ? y + T * 1.5 : R * T - y + T * 1.5);
     const tx = f.kind === 'row' ? s * dist : 0, ty = f.kind === 'col' ? s * dist : 0;
     d.animate([{ transform: `translate(${x}px,${y}px) rotate(${ang}deg) scaleX(.2)`, opacity: 1 }, { transform: `translate(${x + tx}px,${y + ty}px) rotate(${ang}deg) scaleX(1)`, opacity: 1 }],
@@ -4500,6 +4547,9 @@ function fxComets(f) {
 }
 function fxBloom(f) {
   const x = cx(f.c), y = cy(f.r), k = f.big ? 2.2 : 1.3;
+  if (!reduce) { const lo = fxAt('fx-lotus', x, y); lo.innerHTML = SP_GLYPH.bomb; lo.style.width = lo.style.height = `${T}px`; lo.style.margin = `${-T / 2}px 0 0 ${-T / 2}px`;
+    gone(lo.animate([{ transform: `translate(${x}px,${y}px) scale(1) rotate(0)`, opacity: 1 }, { transform: `translate(${x}px,${y}px) scale(${k * 2}) rotate(60deg)`, opacity: .9, offset: .5 }, { transform: `translate(${x}px,${y}px) scale(${k * 2.6}) rotate(90deg)`, opacity: 0 }], { duration: 700, delay: f.delay || 0, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' }));
+    sparkBurst(x, y, ['#FFE08A', '#FFF6C8', '#FFC4E6'], 16, T * k * 1.4, 900, (f.delay || 0) + 120); }
   const ring = fxAt('fx-bloomring', x, y); ring.style.width = ring.style.height = `${T * 3 * k / 1.3}px`; ring.style.margin = `${-T * 1.5 * k / 1.3}px 0 0 ${-T * 1.5 * k / 1.3}px`;
   ring.animate([{ transform: `translate(${x}px,${y}px) scale(.15)`, opacity: 1 }, { transform: `translate(${x}px,${y}px) scale(1.05)`, opacity: 0 }], { duration: 560, delay: f.delay || 0, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' }).onfinish = () => ring.remove();
   for (let i = 0; i < 8; i++) {
@@ -4513,14 +4563,21 @@ function fxFly(f) {
   const x0 = cx(f.c), y0 = cy(f.r), x1 = cx(f.to[1]), y1 = cy(f.to[0]), lift = T * 1.6;
   const d = fxAt('fx-fly', x0, y0); d.innerHTML = SP_GLYPH.fly;
   const kf = []; for (let i = 0; i <= 8; i++) { const s = i / 8, e = s * s * (3 - 2 * s); kf.push({ transform: `translate(${x0 + (x1 - x0) * e}px,${y0 + (y1 - y0) * e - Math.sin(Math.PI * s) * lift}px) rotate(${Math.sin(Math.PI * s * 2) * 14}deg) scale(${1 + Math.sin(Math.PI * s) * .35})` }); }
+  const trail = setInterval(() => { const m = d.style.transform; const g = document.createElement('div'); g.className = 'fxp fx-glowdot'; boardEl.appendChild(g);
+    const cur = getComputedStyle(d).transform; g.style.transform = cur === 'none' ? m : cur; gone(g.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 480 })); }, 40);
   d.animate(kf, { duration: 520, delay: f.delay || 0, easing: 'linear', fill: 'backwards' }).onfinish = () => {
-    d.remove(); sparkleAt(boardEl, x1, y1, ['#FFF6C8', '#FFE55C', '#FFFFFF'], 14);
+    clearInterval(trail); d.remove(); sparkleAt(boardEl, x1, y1, ['#FFF6C8', '#FFE55C', '#FFFFFF'], 14);
+    const fl2 = fxAt('fx-splashflash', x1, y1); fl2.style.width = fl2.style.height = `${T * 1.6}px`; fl2.style.margin = `${-T * 0.8}px 0 0 ${-T * 0.8}px`; fl2.style.background = 'radial-gradient(circle,#FFFDE0,rgba(255,229,92,.6) 40%,transparent 70%)';
+    gone(fl2.animate([{ opacity: 1, transform: `translate(${x1}px,${y1}px) scale(.3)` }, { opacity: 0, transform: `translate(${x1}px,${y1}px) scale(1.3)` }], { duration: 420 }));
   };
   [0.33, 0.66].forEach(s => setTimeout(() => sparkleAt(boardEl, x0 + (x1 - x0) * s, y0 + (y1 - y0) * s - Math.sin(Math.PI * s) * lift, ['#FFF6C8', '#FFE55C'], 4), (f.delay || 0) + 520 * s));
 }
 function fxZaps(f) {
-  const x0 = cx(f.c), y0 = cy(f.r), hue = ELEM[f.color] ? ELEM[f.color].hue : '#FFD45A';
+  const x0 = cx(f.c), y0 = cy(f.r), FIVE = ['#7BE07B', '#FF6B4A', '#FFD45A', '#F2F6FA', '#5BC8FF'];
+  if (!reduce) { const st = fxAt('fx-lotus', x0, y0); st.innerHTML = SP_GLYPH.spirit; st.style.width = st.style.height = `${T}px`; st.style.margin = `${-T / 2}px 0 0 ${-T / 2}px`;
+    gone(st.animate([{ transform: `translate(${x0}px,${y0}px) scale(1) rotate(0)`, opacity: 1 }, { transform: `translate(${x0}px,${y0 - T * 0.5}px) scale(2.2) rotate(180deg)`, opacity: 1, offset: .6 }, { transform: `translate(${x0}px,${y0 - T * 0.5}px) scale(2.8) rotate(300deg)`, opacity: 0 }], { duration: 900 })); }
   (f.targets || []).slice(0, 24).forEach(([r, c], i) => {
+    const hue = FIVE[i % 5];
     const dx = cx(c) - x0, dy = cy(r) - y0, len = Math.hypot(dx, dy), ang = Math.atan2(dy, dx) * 180 / Math.PI;
     const z = fxAt('fx-zap', x0, y0); z.style.width = `${len}px`; z.style.setProperty('--hue', hue);
     z.animate([{ transform: `translate(${x0}px,${y0}px) rotate(${ang}deg) scaleX(0)`, opacity: 1 }, { transform: `translate(${x0}px,${y0}px) rotate(${ang}deg) scaleX(1)`, opacity: 1, offset: .5 }, { transform: `translate(${x0}px,${y0}px) rotate(${ang}deg) scaleX(1)`, opacity: 0 }],
@@ -4642,9 +4699,11 @@ async function popSet(set) {
     shards(arr, juice);
     scorePop(arr, arr.length * (combo + 1) * 10, juice);
     if (juice >= 5) shake(Math.min(10, 1 + juice / 2));
+    // powers with their own signature effect skip the generic rings, so each one feels like itself
+    const sig = pw && (['tiger', 'bear', 'crane'].includes(pw.id) || pw.name === 'Luma’s Dive');
     if (juice >= 11 && !special && !pw) flash();
-    if (juice >= 8) shockwave(arr, juice);
-    if (pw || special) impact(juice);
+    if (juice >= 8 && !sig && !special) shockwave(arr, juice);
+    if ((pw || special) && !sig) impact(juice);
     bigWord(arr, juice, pw);
   }
   arr.forEach(t => { if (t.type !== 'spirit' && !t.sp) { turnTypes.add(t.type); levelTally[t.type]++; questBump('elem', 1, t.type); } });
@@ -4687,6 +4746,7 @@ function gravity() {
 async function settle() {
   hud();
   if (practice) { busy = false; const f = practice.onSettle; practice.onSettle = null; if (f) f(); return; }
+  if (lab) { busy = false; return; }
   if (goalsDone()) { busy = true; await winLevel(); return; }
   if (moves <= 0 && charge < 100 && !babyOn()) { busy = true; await wait(400); loseLevel(); return; }
   if (!hasMove()) { say('No swaps left, so Luma is stirring the orbs.'); await shuffle(); }
@@ -5075,23 +5135,16 @@ async function lumaDive(t, d) {
   const bar = $('#flowBar'); bar.hidden = true; bar.innerHTML = '<span id="flowText"></span>';
   if (!t) return;
   const area = lumaArea(t, d), app = $('#app'), ar = app.getBoundingClientRect(), br = boardEl.getBoundingClientRect(), lr = $('#lumaWrap').getBoundingClientRect();
-  auraBurstFx();
-  if (!reduce) {
-    // Luma leaps from her ring and swoops down onto the spot
-    const x0 = lr.left - ar.left + lr.width / 2, y0 = lr.top - ar.top + lr.height / 2, x1 = br.left - ar.left + t.c * T + T / 2, y1 = br.top - ar.top + t.r * T + T / 2;
-    const im = document.createElement('img'); im.src = 'img/faces/luma-happy.jpg'; im.className = 'lumadive'; app.appendChild(im);
-    const kf = []; for (let i = 0; i <= 10; i++) { const s2 = i / 10, e = s2 * s2 * (3 - 2 * s2); kf.push({ transform: `translate(${x0 + (x1 - x0) * e}px,${y0 + (y1 - y0) * e - Math.sin(Math.PI * s2) * 120}px) translate(-50%,-50%) scale(${1 + Math.sin(Math.PI * s2) * .5}) rotate(${(1 - s2) * -20}deg)`, opacity: i === 10 ? .2 : 1 }); }
-    sweep(300, 1400, 0.6, 0.05, 'sine'); playSfx('swoosh', { rate: 0.9, gain: 0.7 });
-    await im.animate(kf, { duration: 700, easing: 'cubic-bezier(.4,0,.3,1)' }).finished.catch(() => {});
-    im.remove();
-    fxBloom({ r: t.r, c: t.c, big: d.k > 1 });
-    if (d.cross) { fxComets({ kind: 'row', r: t.r, c: t.c }); fxComets({ kind: 'col', r: t.r, c: t.c }); }
-  }
-  playSfx('drum', { rate: 0.7, gain: 0.9 }); chord([392, 523.25, 659.25, 783.99, 1046.5], 0.07); shake(d.k > 1 ? 10 : 6);
+  await fxLumaDive(t, d);
+  playSfx('drum', { rate: 0.7, gain: 0.9 }); chord([392, 523.25, 659.25, 783.99, 1046.5], 0.07);
   // the clouds she touches float away; the orbs she touches clear (and count for your goals)
-  area.filter(x => x.cloud).forEach((x, i) => freeCloud(x, i));
+  const touched = area.filter(x => x.cloud);
+  touched.forEach(swirlCloud);
+  if (touched.length) await wait(reduce ? 0 : 360);
+  touched.forEach((x, i) => freeCloud(x, i));
   const orbs = area.filter(x => !x.cloud && board[x.r] && board[x.r][x.c] === x);
   staggerPops(new Set(orbs), [{ r: t.r, c: t.c }]);
+  popExit = 'light';
   powerUsed = { name: 'Luma’s Dive', elem: L.elem, sub: { small: 'Gentle breath', nice: 'Good breath', deep: 'Deep breath' }[d.tier] };
   await resolve(new Set(orbs), [], null);
   await wait(reduce ? 60 : 300); await collectClouds();
@@ -5176,11 +5229,13 @@ function setAim(id) {
   $$('.pwbtn').forEach(b => b.classList.toggle('on', b.dataset.pw === id));
 }
 async function paidFor(pw) {
+  if (lab) return true;
   if (pwCount(pw.id) > 0) { pwTake(pw.id); syncBoosts(); return true; }
   return spend(pw.cost);
 }
 // the creation cycle, taught through the powers: use them in order and it pays
 function cycleCheck(pw) {
+  if (lab) return;
   if (lastPower && CREATES[lastPower] === pw.elem) {
     charge = Math.min(100, charge + 20);
     if (!babyOn()) { S.coins += 30; save(); }
@@ -5208,6 +5263,7 @@ $('#pwBar').addEventListener('click', async e => {
   if (!await paidFor(pw)) return;
   busy = true; powerCaption(pw); cycleCheck(pw);
   elemSound('water', 0, 4);
+  await fxDeerStream();
   await shuffle();
   charge = Math.min(100, charge + 20); hud();
   busy = false;
@@ -5284,7 +5340,7 @@ async function usePowerOn(t) {
     if (!await paidFor(pw)) return;
     setAim(null); busy = true; cycleCheck(pw);
     elemSound('fire', 0, 3);
-    swapCells(a, t); await wait(240);
+    await fxMonkeySwap(a, t);
     const m = findMatches();
     if (m.clear.size) await resolve(m.clear, m.groups, [a, t]);
     await settle();
@@ -5298,12 +5354,160 @@ async function usePowerOn(t) {
   if (!cells.length) return;
   if (!await paidFor(pw)) return;
   setAim(null); busy = true; cycleCheck(pw);
-  popExit = pw.id === 'tiger' ? 'metal' : pw.id === 'bear' ? 'earth' : 'water'; powerUsed = pw;
-  if (pw.id === 'tiger') clawMarks(t.r);
-  flash();
+  popExit = pw.id === 'tiger' ? 'claw' : pw.id === 'bear' ? 'earth' : 'wind'; powerUsed = pw;
+  if (pw.id === 'tiger') { fxTigerClaw(t.r); cells.forEach(x => { x._pd = 90 + x.c * 45; }); await wait(reduce ? 0 : 120); }
+  else if (pw.id === 'bear') { fxBearStomp(t); cells.forEach(x => { x._pd = Math.max(Math.abs(x.r - t.r), Math.abs(x.c - t.c)) * 60; }); await wait(reduce ? 0 : 420); }
+  else { fxCraneWings(t); cells.forEach(x => { x._pd = x.r === t.r ? 80 + x.c * 55 : 340 + x.r * 55; }); await wait(reduce ? 0 : 150); }
   await resolve(new Set(cells), [], null);
   await settle();
 }
+/* ---------- signature effects: every power looks like its name ----------
+   Tiger Claw: a striped paw rakes three claw marks through the row and the orbs are cut apart.
+   Bear Stomp: a giant paw slams down, the ground cracks, dust puffs out, the orbs sink into the earth.
+   Crane Wings: a white crane glides the row and another swoops down the column; wind blows the orbs off, feathers drift.
+   Monkey Swap: the two orbs leap over each other in a big arc, a curly tail swishes between them.
+   Deer Stream: a stream of water rushes across the board, a deer leaps over it, every orb bobs and remixes.
+   Luma's Dive: Luma rises, dives with a comet tail, splashes down in a crown of light, ripples fill her area,
+   and the clouds she touches spin up into sparkles. */
+const ART = {
+  bearPaw: '<svg viewBox="0 0 100 100"><g fill="#3B2414"><path d="M50 40c17 0 31 14 31 31 0 12-11 21-31 21S19 83 19 71c0-17 14-31 31-31z"/><ellipse cx="17" cy="40" rx="9.5" ry="12.5" transform="rotate(-28 17 40)"/><ellipse cx="36" cy="22" rx="9.5" ry="12.5" transform="rotate(-10 36 22)"/><ellipse cx="64" cy="22" rx="9.5" ry="12.5" transform="rotate(10 64 22)"/><ellipse cx="83" cy="40" rx="9.5" ry="12.5" transform="rotate(28 83 40)"/></g><path d="M50 52c10 0 20 9 20 18 0 7-8 12-20 12s-20-5-20-12c0-9 10-18 20-18z" fill="#6B4526"/><g fill="#F3E3C4"><path d="M12 27l-3-9 7 6z"/><path d="M33 9l-1-9 5 8z"/><path d="M67 9l1-9-5 8z"/><path d="M88 27l3-9-7 6z"/></g></svg>',
+  tigerPaw: '<svg viewBox="0 0 100 100"><path d="M24 58c0-18 14-30 30-30s30 12 30 30-12 30-30 30-30-12-30-30z" fill="#F29A2E" stroke="#8A4A0E" stroke-width="3"/><g stroke="#2A1606" stroke-width="5" stroke-linecap="round"><path d="M40 36l6 10M58 32l-2 12M74 44l-8 8M34 70l10-4"/></g><g fill="#FFF6E6" stroke="#8A4A0E" stroke-width="2"><path d="M30 34C22 24 20 12 26 4c2 10 8 18 12 24z"/><path d="M50 28C46 16 48 5 56 0c-1 10 1 19 4 27z"/><path d="M70 32C72 20 80 12 90 10c-6 8-10 16-12 25z"/></g><ellipse cx="54" cy="64" rx="13" ry="11" fill="#FFD9A8"/></svg>',
+  crane: '<svg viewBox="0 0 120 70"><path d="M8 40c20-4 34-4 50-2" stroke="#1E1E1E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path class="wing wt" d="M52 34C40 14 26 4 8 2c10 10 22 22 34 34z" fill="#FFFFFF" stroke="#C8D0D8" stroke-width="1.5"/><path class="wing wt" d="M16 8c-4-3-6-5-8-6 4 1 7 2 10 4z" fill="#1E1E1E"/><ellipse cx="60" cy="38" rx="20" ry="9" fill="#FFFFFF" stroke="#C8D0D8" stroke-width="1.5"/><path d="M76 34c10-8 18-14 26-14" stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M76 34c10-8 18-14 26-14" stroke="#1E1E1E" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="0 14 30"/><circle cx="104" cy="20" r="5" fill="#FFFFFF"/><circle cx="104.5" cy="17" r="2.6" fill="#E0392E"/><path d="M108 21l12 2-12 1z" fill="#6A6A6A"/><path class="wing wb" d="M54 42C44 60 30 68 12 70c10-8 24-18 34-28z" fill="#EEF2F6" stroke="#C8D0D8" stroke-width="1.5"/><path d="M40 40l-12 4" stroke="#1E1E1E" stroke-width="4" stroke-linecap="round"/></svg>',
+  deer: '<svg viewBox="0 0 120 90"><g fill="#B7773E" stroke="#6B4222" stroke-width="2" stroke-linejoin="round"><path d="M28 44c6-10 30-14 52-10 8 2 12 8 12 14s-6 10-16 10H40c-8 0-14-4-12-14z"/><path d="M84 38c4-8 10-14 16-16l6 6c-4 4-8 10-12 14z"/><path d="M98 24c4-2 10 0 12 4-2 4-8 6-12 4z"/></g><g stroke="#6B4222" stroke-width="4" stroke-linecap="round"><path d="M40 56L22 74M52 58l-6 22M72 58l20 14M80 56l20 4"/></g><g stroke="#8A5A2E" stroke-width="3" stroke-linecap="round" fill="none"><path d="M100 22c-2-8 0-14 4-18M102 12l6-4M100 22c-6-6-8-12-8-18M94 10l-6-2"/></g><circle cx="106" cy="27" r="1.6" fill="#2A1606"/><path d="M30 42c-4-2-8 0-8 4" stroke="#FFF1DC" stroke-width="4" stroke-linecap="round" fill="none"/></svg>'
+};
+const bx = (c) => c * T + T / 2, by = (r) => r * T + T / 2;
+function fxEl(cls, html) { const d = document.createElement('div'); d.className = 'fxp ' + cls; if (html) d.innerHTML = html; boardEl.appendChild(d); return d; }
+function sparkBurst(x, y, colors, n, dist, dur = 700, delay = 0) {
+  if (reduce) return;
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2 + (i % 2) * 0.2, d = dist * (0.7 + (i % 3) * 0.15);
+    const s = fxEl('fx-dot'); s.style.background = colors[i % colors.length];
+    gone(s.animate([{ transform: `translate(${x}px,${y}px) scale(1)`, opacity: 1 }, { transform: `translate(${x + Math.cos(a) * d}px,${y + Math.sin(a) * d}px) scale(.2)`, opacity: 0 }], { duration: dur, delay, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' }));
+  }
+}
+// ---- Tiger Claw
+function fxTigerClaw(row) {
+  if (reduce) return;
+  const y = by(row), w = C * T;
+  const paw = fxEl('fx-art', ART.tigerPaw); paw.style.width = paw.style.height = `${T * 1.9}px`;
+  gone(paw.animate([{ transform: `translate(${-T * 2}px,${y - T * 1.6}px) rotate(-30deg)`, opacity: 0 }, { transform: `translate(${-T * 0.6}px,${y - T * 1.2}px) rotate(-20deg)`, opacity: 1, offset: .15 },
+    { transform: `translate(${w - T * 0.8}px,${y - T * 0.5}px) rotate(15deg)`, opacity: 1, offset: .8 }, { transform: `translate(${w + T}px,${y - T * 0.2}px) rotate(25deg)`, opacity: 0 }], { duration: 560, easing: 'cubic-bezier(.5,0,.3,1)' }));
+  [-0.26, 0, 0.26].forEach((o, i) => {
+    const d = fxEl('fx-clawmark'); d.style.cssText += `;width:${w + T}px;top:${y + o * T}px;left:${-T / 2}px`;
+    gone(d.animate([{ transform: 'rotate(-7deg) scaleX(0)', opacity: 1 }, { transform: 'rotate(-7deg) scaleX(1)', opacity: 1, offset: .4 }, { transform: 'rotate(-7deg) scaleX(1)', opacity: 0 }], { duration: 760, delay: 80 + i * 55, easing: 'ease-out' }));
+  });
+  shake(7);
+}
+// ---- Bear Stomp
+function fxBearStomp(t) {
+  if (reduce) return;
+  const x = bx(t.c), y = by(t.r), sz = T * 2.9;
+  const shadow = fxEl('fx-shadow'); shadow.style.cssText += `;width:${sz}px;height:${sz * 0.5}px;margin:${-sz * 0.25}px 0 0 ${-sz / 2}px`;
+  gone(shadow.animate([{ transform: `translate(${x}px,${y + T * 0.6}px) scale(.3)`, opacity: 0 }, { transform: `translate(${x}px,${y + T * 0.6}px) scale(1)`, opacity: .55, offset: .45 }, { transform: `translate(${x}px,${y + T * 0.6}px) scale(1.1)`, opacity: 0 }], { duration: 1100 }));
+  const paw = fxEl('fx-art', ART.bearPaw); paw.style.width = paw.style.height = `${sz}px`; paw.style.margin = `${-sz / 2}px 0 0 ${-sz / 2}px`;
+  gone(paw.animate([{ transform: `translate(${x}px,${y - T * 3}px) scale(1.9)`, opacity: .6, easing: 'cubic-bezier(.55,0,1,.7)' }, { transform: `translate(${x}px,${y}px) scale(1)`, opacity: 1, offset: .3, easing: 'ease-out' },
+    { transform: `translate(${x}px,${y}px) scale(1.04,.94)`, opacity: 1, offset: .38 }, { transform: `translate(${x}px,${y}px) scale(1)`, opacity: .9, offset: .7 }, { transform: `translate(${x}px,${y}px) scale(1)`, opacity: 0 }], { duration: 1300 }));
+  setTimeout(() => {
+    shake(16); flash();
+    // cracks run out through the ground
+    const cr = fxEl('fx-cracks'); const L2 = T * 1.9;
+    cr.innerHTML = `<svg viewBox="${-L2} ${-L2} ${L2 * 2} ${L2 * 2}" width="${L2 * 2}" height="${L2 * 2}">${[0, 45, 90, 135, 180, 225, 270, 315].map((a, i) => { const r = a * Math.PI / 180, j = (i % 2 ? 0.35 : -0.35), p1 = [Math.cos(r) * L2 * .35, Math.sin(r) * L2 * .35], p2 = [Math.cos(r + j) * L2 * .6, Math.sin(r + j) * L2 * .6], p3 = [Math.cos(r) * L2 * .95, Math.sin(r) * L2 * .95];
+      return `<path d="M0 0L${p1}L${p2}L${p3}" pathLength="1"/>`; }).join('')}</svg>`;
+    cr.style.margin = `${-L2}px 0 0 ${-L2}px`; cr.style.transform = `translate(${x}px,${y}px)`;
+    cr.querySelectorAll('path').forEach(pth => pth.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 280, fill: 'forwards', easing: 'ease-out' }));
+    gone(cr.animate([{ opacity: 1 }, { opacity: 1, offset: .7 }, { opacity: 0 }], { duration: 1200 }));
+    // dust puffs roll out
+    for (let i = 0; i < 12; i++) {
+      const a = i / 12 * Math.PI * 2, p = fxEl('fx-dust'), s = T * (0.55 + (i % 3) * 0.15);
+      p.style.width = p.style.height = `${s}px`; p.style.margin = `${-s / 2}px 0 0 ${-s / 2}px`;
+      gone(p.animate([{ transform: `translate(${x}px,${y}px) scale(.3)`, opacity: .9 }, { transform: `translate(${x + Math.cos(a) * T * 1.9}px,${y + Math.sin(a) * T * 1.4}px) scale(1.3)`, opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.2,.8,.3,1)' }));
+    }
+    sparkBurst(x, y, ['#8A6A4A', '#B89A70', '#5A4028'], 14, T * 1.6, 700);
+  }, 380);
+}
+// ---- Crane Wings
+function fxCraneWings(t) {
+  if (reduce) return;
+  const w = C * T, h = R * T, sz = T * 3.4;
+  const fly = (from, to, rot, delay) => {
+    const c = fxEl('fx-art fx-crane', ART.crane); c.style.width = `${sz}px`; c.style.height = `${sz * 0.58}px`; c.style.margin = `${-sz * 0.29}px 0 0 ${-sz / 2}px`;
+    gone(c.animate([{ transform: `translate(${from[0]}px,${from[1]}px) rotate(${rot}deg)`, opacity: 0 }, { transform: `translate(${(from[0] + to[0]) / 2}px,${(from[1] + to[1]) / 2}px) rotate(${rot}deg)`, opacity: 1, offset: .5 },
+      { transform: `translate(${to[0]}px,${to[1]}px) rotate(${rot}deg)`, opacity: 0 }], { duration: 780, delay, easing: 'cubic-bezier(.4,.1,.5,1)', fill: 'backwards' }));
+    // a gust of wind follows it
+    const g = fxEl('fx-gust'); const horiz = from[1] === to[1];
+    if (horiz) g.style.cssText += `;width:${w}px;height:${T * 0.8}px;left:0;top:${from[1] - T * 0.4}px`; else g.style.cssText += `;width:${T * 0.8}px;height:${h}px;top:0;left:${from[0] - T * 0.4}px`;
+    gone(g.animate([{ opacity: 0, transform: horiz ? 'scaleX(0)' : 'scaleY(0)' }, { opacity: .9, transform: 'scale(1)', offset: .5 }, { opacity: 0, transform: 'scale(1)' }], { duration: 700, delay: delay + 120, fill: 'backwards' }));
+    for (let i = 0; i < 6; i++) {
+      const f = fxEl('fx-feather'), s2 = i / 6, fx0 = from[0] + (to[0] - from[0]) * s2, fy0 = from[1] + (to[1] - from[1]) * s2;
+      gone(f.animate([{ transform: `translate(${fx0}px,${fy0}px) rotate(0deg)`, opacity: 0 }, { transform: `translate(${fx0 + 6}px,${fy0 + T * 0.3}px) rotate(40deg)`, opacity: 1, offset: .2 }, { transform: `translate(${fx0 - 10}px,${fy0 + T * 1.3}px) rotate(-30deg)`, opacity: 0 }], { duration: 1500, delay: delay + s2 * 600, fill: 'backwards' }));
+    }
+  };
+  fly([-sz, by(t.r)], [w + sz, by(t.r)], 0, 0);
+  fly([bx(t.c), -sz], [bx(t.c), h + sz], 90, 260);
+}
+// ---- Monkey Swap: the two orbs leap over each other
+async function fxMonkeySwap(a, b) {
+  const pa = [a.c * T, a.r * T], pb = [b.c * T, b.r * T];
+  swapCells(a, b);
+  if (reduce) return wait(240);
+  const hop = (el, p0, p1, up) => el.animate([{ transform: `translate(${p0[0]}px,${p0[1]}px) rotate(0deg)` }, { transform: `translate(${(p0[0] + p1[0]) / 2}px,${(p0[1] + p1[1]) / 2 - T * (up ? 1.4 : 0.5)}px) rotate(${up ? -180 : 180}deg) scale(1.15)` }, { transform: `translate(${p1[0]}px,${p1[1]}px) rotate(-360deg)` }], { duration: 560, easing: 'cubic-bezier(.4,0,.3,1)' }).finished.catch(() => {});
+  const tail = fxEl('fx-tail'); const mx = (pa[0] + pb[0]) / 2 + T / 2, my = (pa[1] + pb[1]) / 2 + T / 2 - T;
+  tail.innerHTML = `<svg viewBox="-60 -60 120 120" width="${T * 2.4}" height="${T * 2.4}"><path d="M-50 30C-40-20 10-40 30-20S30 20 10 16 0 -6 14-6" pathLength="1"/></svg>`;
+  tail.style.margin = `${-T * 1.2}px 0 0 ${-T * 1.2}px`; tail.style.transform = `translate(${mx}px,${my}px)`;
+  tail.querySelector('path').animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 420, fill: 'forwards', easing: 'ease-out' });
+  gone(tail.animate([{ opacity: 1 }, { opacity: 1, offset: .6 }, { opacity: 0 }], { duration: 900 }));
+  await Promise.all([hop(a.el, pa, pb, true), hop(b.el, pb, pa, false)]);
+  sparkBurst(bx(a.c), by(a.r), ['#FFE14D', '#FFB23A', '#FFF6C8'], 8, T * 0.9, 500); sparkBurst(bx(b.c), by(b.r), ['#FFE14D', '#FFB23A', '#FFF6C8'], 8, T * 0.9, 500);
+}
+// ---- Deer Stream
+async function fxDeerStream() {
+  if (reduce) return;
+  const w = C * T, h = R * T;
+  const water = fxEl('fx-stream'); water.style.cssText += `;width:${w * 0.6}px;height:${h}px;left:0;top:0`;
+  gone(water.animate([{ transform: `translateX(${-w * 0.7}px)`, opacity: .95 }, { transform: `translateX(${w * 1.1}px)`, opacity: .95 }], { duration: 1100, easing: 'cubic-bezier(.45,0,.55,1)' }));
+  const deer = fxEl('fx-art fx-deer', ART.deer); const sz = T * 2.6; deer.style.width = `${sz}px`; deer.style.height = `${sz * 0.75}px`;
+  const kf = []; for (let i = 0; i <= 8; i++) { const s2 = i / 8; kf.push({ transform: `translate(${-sz + (w + sz * 2) * s2}px,${h * 0.35 - Math.sin(Math.PI * s2) * h * 0.4}px) rotate(${(s2 - 0.5) * 30}deg)`, opacity: i === 0 || i === 8 ? 0 : 1 }); }
+  gone(deer.animate(kf, { duration: 1100, easing: 'linear' }));
+  all().forEach(t => t.el.animate([{ transform: `translate(${t.c * T}px,${t.r * T}px)` }, { transform: `translate(${t.c * T}px,${t.r * T - T * 0.25}px) rotate(${t.c % 2 ? 8 : -8}deg)` }, { transform: `translate(${t.c * T}px,${t.r * T}px)` }], { duration: 500, delay: 150 + (t.c / C) * 700, easing: 'ease-in-out' }));
+  for (let c = 0; c < C; c++) setTimeout(() => sparkBurst(bx(c), h - T * 0.3, ['#BFE9FF', '#FFFFFF', '#5BC0FF'], 5, T * 0.8, 600), 150 + c / C * 700);
+  await wait(700);
+}
+// ---- Luma's Dive
+async function fxLumaDive(t, d) {
+  const app = $('#app'), ar = app.getBoundingClientRect(), br = boardEl.getBoundingClientRect(), lr = $('#lumaWrap').getBoundingClientRect();
+  if (reduce) return;
+  const x0 = lr.left - ar.left + lr.width / 2, y0 = lr.top - ar.top + lr.height / 2, x1 = br.left - ar.left + bx(t.c), y1 = br.top - ar.top + by(t.r);
+  const peak = Math.min(y0, y1) - Math.max(140, (y0 - br.top + ar.top) * 0.35);
+  $('#lumaWrap').classList.add('bursting'); setTimeout(() => $('#lumaWrap').classList.remove('bursting'), 1400);
+  const im = document.createElement('div'); im.className = 'lumadive'; im.innerHTML = '<img src="img/faces/luma-happy.jpg" alt="">'; app.appendChild(im);
+  // 1 · she gathers herself, then leaps high
+  await im.animate([{ transform: `translate(${x0}px,${y0}px) translate(-50%,-50%) scale(.9)`, opacity: 0 }, { transform: `translate(${x0}px,${y0}px) translate(-50%,-50%) scale(1.25)`, opacity: 1 }], { duration: 260, easing: 'ease-out', fill: 'forwards' }).finished.catch(() => {});
+  const px = (x0 + x1) / 2 + (x1 > x0 ? 30 : -30);
+  const trail = setInterval(() => { const r2 = im.getBoundingClientRect(); const s = document.createElement('div'); s.className = 'lumatrail'; s.style.left = `${r2.left - ar.left + r2.width / 2}px`; s.style.top = `${r2.top - ar.top + r2.height / 2}px`; app.appendChild(s);
+    s.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: .9 }, { transform: 'translate(-50%,-50%) scale(.2)', opacity: 0 }], { duration: 520 }).onfinish = () => s.remove(); }, 28);
+  await im.animate([{ transform: `translate(${x0}px,${y0}px) translate(-50%,-50%) scale(1.25) rotate(0deg)` }, { transform: `translate(${px}px,${peak}px) translate(-50%,-50%) scale(1.45) rotate(${x1 > x0 ? 20 : -20}deg)`, offset: .45, easing: 'cubic-bezier(.2,.6,.4,1)' },
+    { transform: `translate(${x1}px,${y1}px) translate(-50%,-50%) scale(.9) rotate(${x1 > x0 ? 160 : -160}deg)`, easing: 'cubic-bezier(.7,0,1,.6)' }], { duration: 820, fill: 'forwards' }).finished.catch(() => {});
+  clearInterval(trail); im.remove();
+  // 2 · splashdown: a flash, a crown of light, ripples that fill her area
+  const x = bx(t.c), y = by(t.r), k = d.k;
+  const fl = fxEl('fx-splashflash'); fl.style.width = fl.style.height = `${T * 3}px`; fl.style.margin = `${-T * 1.5}px 0 0 ${-T * 1.5}px`;
+  gone(fl.animate([{ transform: `translate(${x}px,${y}px) scale(.2)`, opacity: 1 }, { transform: `translate(${x}px,${y}px) scale(1.4)`, opacity: 0 }], { duration: 500, easing: 'ease-out' }));
+  for (let i = 0; i < 14; i++) {
+    const a = -Math.PI / 2 + (i - 6.5) / 14 * Math.PI * 1.6, dr = fxEl('fx-drop'), dist = T * (1.1 + (i % 3) * 0.35);
+    gone(dr.animate([{ transform: `translate(${x}px,${y}px) scale(1)`, opacity: 1 }, { transform: `translate(${x + Math.cos(a) * dist}px,${y + Math.sin(a) * dist}px) scale(.9)`, opacity: 1, offset: .55 }, { transform: `translate(${x + Math.cos(a) * dist * 1.2}px,${y + Math.sin(a) * dist * 0.6 + T}px) scale(.3)`, opacity: 0 }], { duration: 780, easing: 'cubic-bezier(.2,.7,.4,1)' }));
+  }
+  [0, 1, 2].forEach(i => { const rp = fxEl('fx-ripple'), s = T * (2 * k + 1) * (1 + i * 0.12); rp.style.width = rp.style.height = `${s}px`; rp.style.margin = `${-s / 2}px 0 0 ${-s / 2}px`;
+    gone(rp.animate([{ transform: `translate(${x}px,${y}px) scale(.1)`, opacity: .95 }, { transform: `translate(${x}px,${y}px) scale(1)`, opacity: 0 }], { duration: 700, delay: i * 140, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'backwards' })); });
+  const zone = fxEl('fx-zone'); zone.style.cssText += `;left:${(t.c - k) * T}px;top:${(t.r - k) * T}px;width:${(2 * k + 1) * T}px;height:${(2 * k + 1) * T}px`;
+  gone(zone.animate([{ opacity: 0 }, { opacity: 1, offset: .25 }, { opacity: 0 }], { duration: 800 }));
+  if (d.cross) { fxComets({ kind: 'row', r: t.r, c: t.c, light: true }); fxComets({ kind: 'col', r: t.r, c: t.c, light: true }); }
+  shake(k > 1 ? 12 : 8);
+  // Luma pops back into her ring, happy
+  $('#lumaWrap').animate([{ transform: 'scale(.8)' }, { transform: 'scale(1.15)' }, { transform: 'scale(1)' }], { duration: 500, delay: 200, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+}
+// clouds she touches spin up into sparkles before they float to the counter
+function swirlCloud(x) { if (reduce) return; sparkBurst(bx(x.c), by(x.r), ['#FFFFFF', '#CFE8FF', '#FFE9A8'], 8, T * 0.7, 600); x.el.animate([{ transform: `translate(${x.c * T}px,${x.r * T}px) rotate(0) scale(1)` }, { transform: `translate(${x.c * T}px,${x.r * T - T * 0.4}px) rotate(200deg) scale(.8)` }], { duration: 380, easing: 'ease-out' }); }
+
 function clawMarks(row) {
   if (reduce) return;
   const y = row * T + T / 2, w = boardEl.clientWidth;
@@ -5423,7 +5627,7 @@ function hud() {
   if (spunToday()) { tc.hidden = false; tc.innerHTML = `<span class="tco">${orbHTML(S.todayElem)}</span>${ELEM[S.todayElem].name} day · Luma fills faster`; }
   else tc.hidden = true;
   $('#gCloudWord').textContent = cl === 1 ? 'cloud left' : 'clouds left';
-  $('#gMoves').textContent = babyOn() || practice ? '∞' : Math.max(0, moves);
+  $('#gMoves').textContent = babyOn() || practice || lab ? '∞' : Math.max(0, moves);
   $('#movesStat').style.boxShadow = moves <= 3 ? 'inset 0 0 0 2px #F2A07B' : '';
   if (moves === 3 && !hud.warned) { hud.warned = true; avatarReact('worry'); }
   if (moves > 3) hud.warned = false;
@@ -5951,7 +6155,7 @@ async function coachBreathDone() {
 }
 // idle hints on every level, so nobody sits there stuck
 setInterval(() => {
-  if ($('#game').hidden || busy || tut || practice || hintShown || $$('.ov').some(o => !o.hidden)) return;
+  if ($('#game').hidden || busy || tut || practice || lab || hintShown || $$('.ov').some(o => !o.hidden)) return;
   if (performance.now() - idleAt < 7000) return;
   hintShown = true;
   const piece = all().find(t => (t.sp || t.type === 'spirit') && !t.knot && !t.cloud);
@@ -6091,6 +6295,42 @@ async function finishPractice(done) {
 }
 document.addEventListener('click', e => { if (e.target.closest('[data-pskip]') && practice) { tick(); finishPractice(false); } });
 
+
+/* ---------- Effects Lab (?fxlab=1): a board with a button for every effect, for review ---------- */
+let lab = false;
+async function fxLab() {
+  lab = true; practice = null; clearHints(); hideTip();
+  R = 8; C = 7; POOL = TYPES; MASK = null; LI = 3;
+  L = Object.assign({}, LEVELS[3], { place: 'Effects Lab', clouds: 6, knots: 0, gems: 0, moves: 99 });
+  $$('.splash').forEach(e => e.remove());
+  $('#map').hidden = true; $('#welcome').hidden = true; $('#story').hidden = true; $('#game').hidden = false;
+  $('#gPlace').textContent = 'Effects Lab'; $('#gShift').textContent = 'Tap a button to preview an effect';
+  moves = 99; charge = 0; busy = false; sel = null; mode = null; breathing = false; combo = 0;
+  levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
+  await wait(30); sizeBoard(); sizeRain(); fill();
+  if (!running) { running = true; rainLoop(); }
+  hud();
+  const panel = document.createElement('div'); panel.id = 'fxlab';
+  const B = [['Tiger Claw', 'tiger'], ['Bear Stomp', 'bear'], ['Crane Wings', 'crane'], ['Monkey Swap', 'monkey'], ['Deer Stream', 'deer'], ['Lantern', 'p-row'], ['Blossom', 'p-bomb'], ['Firefly', 'p-fly'], ['Spirit Star', 'p-spirit'],
+    ['Luma’s Dive · gentle', 'dive-small'], ['Luma’s Dive · good', 'dive-nice'], ['Luma’s Dive · deep', 'dive-deep'], ['+ Clouds', 'clouds']];
+  panel.innerHTML = B.map(([n, k]) => `<button data-lab="${k}">${n}</button>`).join('');
+  $('#game').appendChild(panel);
+  panel.addEventListener('click', async e => {
+    const b = e.target.closest('[data-lab]'); if (!b || busy) return;
+    const k = b.dataset.lab, mid = () => all().filter(t => !t.cloud).sort((a, c) => Math.abs(a.r - 4) + Math.abs(a.c - 3) - (Math.abs(c.r - 4) + Math.abs(c.c - 3)))[0];
+    ac();
+    if (k === 'clouds') { addClouds(5); hud(); return; }
+    if (['tiger', 'bear', 'crane'].includes(k)) { mode = k; await usePowerOn(mid()); mode = null; return; }
+    if (k === 'monkey') { const a = mid(), b2 = [board[a.r][a.c + 1], board[a.r][a.c - 1], board[a.r + 1] && board[a.r + 1][a.c]].find(x => x && !x.cloud); mode = 'monkey'; monkeyFirst = a; await usePowerOn(b2); mode = null; return; }
+    if (k === 'deer') { busy = true; elemSound('water', 0, 4); await fxDeerStream(); await shuffle(); busy = false; return; }
+    if (k.startsWith('p-')) { const t = mid(), sp = k.slice(2); if (sp === 'spirit') { t.type = 'spirit'; t.sp = null; } else t.sp = sp; paint(t); await wait(500); fireTap(t); return; }
+    if (k.startsWith('dive-')) {
+      if (clouds().length < 3) { addClouds(5); await wait(400); }
+      const tier = k.slice(5), d = { k: tier === 'deep' ? 2 : 1, cross: tier === 'nice', tier };
+      busy = true; breathing = true; await lumaDive(bestDiveSpot(d), d); breathing = false; busy = false;
+    }
+  });
+}
 /* ---------- level flow ---------- */
 function startLevel() {
   if (practice) { practice = null; document.body.classList.remove('practicing'); }
@@ -7052,6 +7292,7 @@ async function introSplash() {
   done();
 }
 introSplash();
-syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals(); if (S.babyMode) { S.babyLog = S.babyLog || { sessions: 0, seconds: 0 }; S.babyLog.sessions++; S.babyLog.since = Date.now(); } setBaby(S.babyMode); renderHome();
+syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); if (/[?&]fxlab=1/.test(location.search)) setTimeout(fxLab, 700);
+renderQuests(); renderSeals(); if (S.babyMode) { S.babyLog = S.babyLog || { sessions: 0, seconds: 0 }; S.babyLog.sessions++; S.babyLog.since = Date.now(); } setBaby(S.babyMode); renderHome();
 })();
 </script>
