@@ -1495,6 +1495,23 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .sp-row .spfx,.sp-col .spfx{opacity:.7}
 .sp-bomb .spfx{border-color:rgba(255,190,230,.8)}
 .fx-fly svg{filter:none}
+
+/* ---------- a calmer board: room around every orb, flat quiet cells, the shape drawn in gold ---------- */
+#board{background:none !important;box-shadow:none !important;backdrop-filter:none !important;border-radius:0}
+.cellbg{position:absolute;inset:0;pointer-events:none;filter:drop-shadow(0 14px 24px rgba(0,0,0,.45))}
+.cellbg .cell{position:absolute;box-sizing:border-box;background:linear-gradient(rgba(226,236,248,.15),rgba(226,236,248,.15)),rgba(16,30,38,.78)}
+.cellbg .cell.alt{background:linear-gradient(rgba(226,236,248,.08),rgba(226,236,248,.08)),rgba(16,30,38,.78)}
+.cellbg .eu{border-top:3px solid #E3BC6A}.cellbg .ed{border-bottom:3px solid #E3BC6A}
+.cellbg .el{border-left:3px solid #E3BC6A}.cellbg .er{border-right:3px solid #E3BC6A}
+.cellbg .eu.el{border-top-left-radius:14px}.cellbg .eu.er{border-top-right-radius:14px}
+.cellbg .ed.el{border-bottom-left-radius:14px}.cellbg .ed.er{border-bottom-right-radius:14px}
+#board.aiming .cellbg{filter:drop-shadow(0 0 12px rgba(231,194,122,.85))}
+#board .tile:not(.pv)::before{background:none;box-shadow:none}
+#board .tile[class*=" sp-"]:not(.pv)::before,#board .tile.t-spirit:not(.pv)::before{background:radial-gradient(circle,rgba(255,236,170,.3),transparent 70%)}
+#board .tile .orb{inset:11%;
+  box-shadow:inset 0 calc(var(--t) * -0.08) calc(var(--t) * 0.1) rgba(0,0,0,.38),inset 0 calc(var(--t) * 0.035) calc(var(--t) * 0.06) rgba(255,255,255,.55),0 calc(var(--t) * 0.05) calc(var(--t) * 0.07) rgba(4,10,14,.45)}
+#board .tile .orb svg{width:64%;height:64%}
+#board .tile.sel .orb{box-shadow:0 0 0 3px #FFF6DE,0 0 16px 5px rgba(255,214,130,.9)}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2159,25 +2176,25 @@ const LEVELS = [
     sorin: "Worry likes to sit in the belly. Where is that feeling trying to go? Let's hum it loose.",
     steps: ['Stand with soft knees and put both hands on your belly.', 'Breathe in and feel your belly fill like a drum.', 'Hum the breath out low: mmmmmm. Feel your hands buzz.', 'Three times, then notice your middle feeling steady.'],
     line: 'Worry gets stuck in the middle. Humming moves it.', inhale: 4, exhale: 6 },
-  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 58, clouds: 8, knots: 0, gems: 20,
+  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 58, clouds: 8, knots: 0, gems: 20, shape: 'castle',
     problem: "Kai's friend broke his lantern. He is so angry he wants to shout at everybody.",
     you: "A friend broke your lantern. You feel so angry you want to shout at everybody.",
     sorin: "Anger is strong power looking for a way out. Let's give it a way out that helps.",
     steps: ['Stand tall like a tree with your feet rooted.', 'Breathe in and reach your arms up and out like branches.', 'Breathe out with a big haaaa and let your arms drop.', 'Shake your hands out, then stand still.'],
     line: 'Anger is strong. Let it out and it can turn into kindness.', inhale: 4, exhale: 5 },
-  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 55, clouds: 10, knots: 5, gems: 24,
+  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 55, clouds: 10, knots: 5, gems: 24, shape: 'diamond',
     problem: 'Kai is so excited he cannot sit still or listen. His chest is racing and everything echoes.',
     you: "You're so excited you can't sit still or listen. Your chest is racing and everything echoes.",
     sorin: "Your heart is running bright and fast. Let a little out, then let it rest.",
     steps: ['Put both hands on your heart.', 'Breathe in and feel your chest lift.', 'Breathe out with a soft laugh: ha-ha-haaa.', 'Now be still and feel your heart slow down.'],
     line: 'Excitement settles when the heart is held.', inhale: 3, exhale: 5 },
-  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 52, clouds: 12, knots: 7, gems: 25,
+  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 52, clouds: 12, knots: 7, gems: 25, shape: 'gate',
     problem: 'Something Kai loved has ended. His chest feels heavy and empty up in the cold wind.',
     you: "Something you loved has ended. Your chest feels heavy and empty, up here in the cold wind.",
     sorin: "Sad feelings live in the lungs. Every long sigh carries a little of it out.",
     steps: ['Stand with your arms open wide like wings.', 'Breathe in through your nose and fill your lungs.', 'Breathe out with a long sigh: sssssss.', 'Let your shoulders drop lower each time.'],
     line: 'Sad feelings leave on the out-breath.', inhale: 4, exhale: 6 },
-  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 50, clouds: 12, knots: 7, gems: 30,
+  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 50, clouds: 12, knots: 7, gems: 30, shape: 'bowl',
     problem: 'It is dark and Kai is scared. His legs feel shaky and his thinking has gone cloudy.',
     you: "It's dark and you feel scared. Your legs are shaky and your thoughts have gone cloudy.",
     sorin: "Fear lives low, near your back. Let's warm it until your clear thinking comes back.",
@@ -3580,6 +3597,9 @@ function levelSpec(i = LI) {
   let moves = Math.round(b.moves * d.moves), clouds = b.clouds + d.clouds, knots = b.knots ? b.knots + d.knots : 0, gems = b.gems ? Math.round(b.gems * d.gems) : 0;
   if (babyOn()) { knots = 0; gems = 0; }                   // baby boards are gentle: clouds only
   if (little) { clouds = Math.min(4, clouds); moves -= 2; knots = Math.ceil(knots / 2); gems = Math.round(gems * 0.6); }
+  // never overstuff: obstacles stay a small share of the cells, so the board always has room to breathe
+  const cells = little ? 25 : shapeCells(b.shape);
+  clouds = Math.min(clouds, Math.round(cells * 0.2)); knots = Math.min(knots, Math.round(cells * 0.12));
   if (S.buddy === 'water' && !babyOn()) moves += 3;        // Nami's gift
   return { moves, clouds, knots, gems, diff };
 }
@@ -4001,6 +4021,7 @@ function sizeBoard() {
   boardEl.style.width = T * C + 'px'; boardEl.style.height = T * R + 'px';
   boardEl.style.setProperty('--t', T + 'px');
   all().forEach(t => place(t, t.r, t.c, false));
+  if (board.length) drawCells();
 }
 addEventListener('resize', () => { if (!$('#game').hidden) { sizeBoard(); sizeRain(); } });
 
@@ -4088,7 +4109,7 @@ function freeCloud(t, i = 0) {
 }
 async function collectClouds() {
   for (let guard = 0; guard < 8; guard++) {
-    const low = board[R - 1].filter(t => t && t.cloud);
+    const low = all().filter(t => t.cloud && t.r === colBot(t.c));
     if (!low.length) return;
     low.forEach((t, i) => freeCloud(t, i));
     if (cloudsFreed === low.length && !S.seen?.sink) { S.seen = Object.assign(S.seen || {}, { sink: 1 }); save(); say('A cloud reached the bottom and floated away. Bring them all down!'); }
@@ -4164,14 +4185,47 @@ function findMatches() {
   }
   return { clear, groups: blobs };
 }
+
+/* ---------- board shapes ----------
+   Boards aren't always rectangles. Each shape gives every column one unbroken run of cells
+   (top..bottom), so orbs always fall straight down and clouds float away at their column's floor. */
+const SHAPES = {
+  castle: { top: [1, 0, 1, 0, 1, 0, 1] },
+  diamond: { top: [2, 1, 0, 0, 0, 1, 2], bot: [5, 6, 7, 7, 7, 6, 5] },
+  gate: { top: [2, 2, 0, 0, 0, 2, 2] },
+  bowl: { bot: [5, 6, 7, 7, 7, 6, 5] }
+};
+const shapeCells = name => { const sh = SHAPES[name]; if (!sh) return 56; let n = 0; for (let c = 0; c < 7; c++) n += (sh.bot ? sh.bot[c] : 7) - (sh.top ? sh.top[c] : 0) + 1; return n; };
+let MASK = null;
+const colTop = c => MASK ? MASK.top[c] : 0, colBot = c => MASK ? MASK.bot[c] : R - 1;
+const inCell = (r, c) => r >= 0 && r < R && c >= 0 && c < C && r >= colTop(c) && r <= colBot(c);
+function setMask(name) {
+  const sh = name && SHAPES[name];
+  MASK = sh && R === 8 && C === 7 ? { top: sh.top || Array(C).fill(0), bot: sh.bot || Array(C).fill(R - 1) } : null;
+}
+// the floor under the orbs: calm cells with room around every orb, and a gold edge that follows the shape
+function drawCells() {
+  let bg = boardEl.querySelector('.cellbg');
+  if (!bg) { bg = document.createElement('div'); bg.className = 'cellbg'; boardEl.prepend(bg); }
+  let h = '';
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    if (!inCell(r, c)) continue;
+    const e = [!inCell(r - 1, c) && 'eu', !inCell(r + 1, c) && 'ed', !inCell(r, c - 1) && 'el', !inCell(r, c + 1) && 'er'].filter(Boolean).join(' ');
+    h += `<i class="cell ${(r + c) % 2 ? 'alt' : ''} ${e}" style="left:${c * T}px;top:${r * T}px;width:${T}px;height:${T}px"></i>`;
+  }
+  bg.innerHTML = h;
+}
 function fill() {
   boardEl.innerHTML = ''; ids.clear();
   board = Array.from({ length: R }, () => Array(C).fill(null));
+  drawCells();
+  const ty = (r, c) => board[r] && board[r][c] && board[r][c].type;
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    if (!inCell(r, c)) continue;
     let type;
     do { type = rnd(POOL); } while (
-      (c >= 2 && board[r][c - 1].type === type && board[r][c - 2].type === type) ||
-      (r >= 2 && board[r - 1][c].type === type && board[r - 2][c].type === type));
+      (ty(r, c - 1) === type && ty(r, c - 2) === type) ||
+      (ty(r - 1, c) === type && ty(r - 2, c) === type));
     const t = newTile(type); board[r][c] = t;
     drop(t, r - R - 1, r, c);
   }
@@ -4185,7 +4239,7 @@ function hasMove() {
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
     for (const [dr, dc] of [[0, 1], [1, 0]]) {
       const r2 = r + dr, c2 = c + dc; if (r2 >= R || c2 >= C) continue;
-      if (board[r][c].knot || board[r2][c2].knot) continue;
+      if (!board[r][c] || !board[r2][c2] || board[r][c].knot || board[r2][c2].knot) continue;
       sw(r, c, r2, c2); const ok = findMatches().clear.size > 0; sw(r, c, r2, c2);
       if (ok) return true;
     }
@@ -4544,13 +4598,14 @@ async function popSet(set) {
 
 function gravity() {
   for (let c = 0; c < C; c++) {
-    let w = R - 1;
-    for (let r = R - 1; r >= 0; r--) {
+    const top = colTop(c);
+    let w = colBot(c);
+    for (let r = colBot(c); r >= top; r--) {
       const t = board[r][c];
       if (t) { if (r !== w) { board[w][c] = t; board[r][c] = null; place(t, w, c); } w--; }
     }
-    const n = w + 1;
-    for (let r = w; r >= 0; r--) {
+    const n = w + 1 - top;
+    for (let r = w; r >= top; r--) {
       const t = newTile(rnd(POOL)); board[r][c] = t;
       t.el.style.transitionDelay = `${c * 26 + (w - r) * 16}ms`;
       setTimeout(() => { t.el.style.transitionDelay = ''; }, 900);
@@ -4622,6 +4677,7 @@ boardEl.addEventListener('pointermove', e => {
   const [dr, dc] = Math.abs(dx) > Math.abs(dy) ? [0, Math.sign(dx)] : [Math.sign(dy), 0];
   const r2 = drag.t.r + dr, c2 = drag.t.c + dc;
   if (r2 < 0 || r2 >= R || c2 < 0 || c2 >= C) return;
+  if (!board[r2][c2]) return;
   clearSel(); trySwap(drag.t, board[r2][c2]);
 });
 const endDrag = () => {
@@ -5757,6 +5813,7 @@ const LESSONS = [
 function loadGrid(spec = {}) {
   boardEl.innerHTML = ''; ids.clear();
   board = Array.from({ length: R }, () => Array(C).fill(null));
+  MASK = null; drawCells();
   L.clouds = (spec.clouds || []).length;
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
     const key = `${r},${c}`, ch = (spec.mods || {})[key] || PBASE[(r + c) % 5], sp = (spec.sps || {})[key];
@@ -5792,7 +5849,7 @@ async function runPractice(after) {
   practice = { i: 0, after, allow: null, onSettle: null };
   document.body.classList.add('practicing');
   setGroove('play');
-  R = 6; C = 6; POOL = TYPES;
+  R = 6; C = 6; POOL = TYPES; MASK = null;
   L = Object.assign({}, LEVELS.find(l => l.elem === 'water'), { place: 'Practice Grove', shift: 'learning the pieces', clouds: 0, knots: 0, gems: 0, moves: 99 });
   $('#map').hidden = true; $('#welcome').hidden = true; $('#story').hidden = true; $('#game').hidden = false;
   $('#gPlace').textContent = 'Practice Grove'; $('#gShift').textContent = 'Learn every power piece';
@@ -5868,6 +5925,7 @@ function startLevel() {
   R = little ? 5 : 8; C = little ? 5 : 7;
   POOL = little ? [base.elem, CREATES[base.elem], Object.keys(CREATES).find(k => CREATES[k] === base.elem)] : TYPES;
   L = Object.assign({}, base, levelSpec(LI));
+  setMask(little || babyOn() ? null : base.shape);
   $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
   $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
