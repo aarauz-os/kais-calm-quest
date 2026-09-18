@@ -1063,6 +1063,13 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .enlayers i{font-style:normal;padding:5px 11px;border-radius:99px;font-size:12px;font-weight:900;background:rgba(0,0,0,.45);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.5)}
 .enlayers i b{color:var(--gold-hi);margin-right:4px}
 .enter .btn.big{width:100%;max-width:320px;margin-top:6px}
+.tile .knotx{position:absolute;inset:4%;z-index:3;pointer-events:none;border-radius:50%;
+  background:radial-gradient(circle at 50% 50%,#8A5A24 0 11%,#C99550 12% 17%,transparent 18%),
+    linear-gradient(45deg,transparent 43%,#6E4618 43% 45%,#D6A660 45% 55%,#6E4618 55% 57%,transparent 57%),
+    linear-gradient(-45deg,transparent 43%,#6E4618 43% 45%,#D6A660 45% 55%,#6E4618 55% 57%,transparent 57%);
+  box-shadow:inset 0 0 0 3px rgba(150,100,40,.9),inset 0 0 0 5px rgba(230,190,120,.6);filter:drop-shadow(0 2px 1px rgba(0,0,0,.45))}
+.tile.knotted .orb{filter:saturate(.8) brightness(.92)}
+.stgoal .knotdemo{position:relative;width:74px;height:74px}
 </style>
 
 <div id="app">
@@ -1662,31 +1669,31 @@ const SOUND = {
   water: { verb: 'low hum', say: 'whoooooo',   tip: 'As low as your voice goes.',           dir: 'Deep and quiet — Water sinks and cools.' }
 };
 const LEVELS = [
-  { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 16, clouds: 6,
+  { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 30, clouds: 6,
     problem: "Kai keeps thinking about tomorrow. His belly feels tight and he can't stop worrying.",
     you: "You keep thinking about tomorrow. Your belly feels tight and the worry won't stop.",
     sorin: "Worry likes to sit in the belly. Where is that feeling trying to go? Let's hum it loose.",
     steps: ['Stand with soft knees and put both hands on your belly.', 'Breathe in and feel your belly fill like a drum.', 'Hum the breath out low: mmmmmm. Feel your hands buzz.', 'Three times, then notice your middle feeling steady.'],
     line: 'Worry gets stuck in the middle. Humming moves it.', inhale: 4, exhale: 6 },
-  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 16, clouds: 8,
+  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 30, clouds: 8, knots: 0,
     problem: "Kai's friend broke his lantern. He is so angry he wants to shout at everybody.",
     you: "A friend broke your lantern. You feel so angry you want to shout at everybody.",
     sorin: "Anger is strong power looking for a way out. Let's give it a way out that helps.",
     steps: ['Stand tall like a tree with your feet rooted.', 'Breathe in and reach your arms up and out like branches.', 'Breathe out with a big haaaa and let your arms drop.', 'Shake your hands out, then stand still.'],
     line: 'Anger is strong. Let it out and it can turn into kindness.', inhale: 4, exhale: 5 },
-  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 18, clouds: 10,
+  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 32, clouds: 10, knots: 5,
     problem: 'Kai is so excited he cannot sit still or listen. His chest is racing and everything echoes.',
     you: "You're so excited you can't sit still or listen. Your chest is racing and everything echoes.",
     sorin: "Your heart is running bright and fast. Let a little out, then let it rest.",
     steps: ['Put both hands on your heart.', 'Breathe in and feel your chest lift.', 'Breathe out with a soft laugh: ha-ha-haaa.', 'Now be still and feel your heart slow down.'],
     line: 'Excitement settles when the heart is held.', inhale: 3, exhale: 5 },
-  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 20, clouds: 12,
+  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 34, clouds: 12, knots: 7,
     problem: 'Something Kai loved has ended. His chest feels heavy and empty up in the cold wind.',
     you: "Something you loved has ended. Your chest feels heavy and empty, up here in the cold wind.",
     sorin: "Sad feelings live in the lungs. Every long sigh carries a little of it out.",
     steps: ['Stand with your arms open wide like wings.', 'Breathe in through your nose and fill your lungs.', 'Breathe out with a long sigh: sssssss.', 'Let your shoulders drop lower each time.'],
     line: 'Sad feelings leave on the out-breath.', inhale: 4, exhale: 6 },
-  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 22, clouds: 14,
+  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 36, clouds: 14, knots: 9,
     problem: 'It is dark and Kai is scared. His legs feel shaky and his thinking has gone cloudy.',
     you: "It's dark and you feel scared. Your legs are shaky and your thoughts have gone cloudy.",
     sorin: "Fear lives low, near your back. Let's warm it until your clear thinking comes back.",
@@ -1802,117 +1809,124 @@ function ac() {
 }
 const PENTA = [392, 440, 523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.5, 1568, 1760];
 
-/* ---------- the groove -------------------------------------------------------------
-   Home and menus: laid-back hip-hop (86 BPM, swung hats, boom-bap kick and snare).
-   Play: light afro house (118 BPM, four-on-the-floor, off-beat hats, shaker, congas and the
-   signature log-drum bass). Every breath screen fades the drums out and keeps only the pad.
-   One loop of warm chords under both, Am7 → Fmaj7 → Cmaj7 → G6, and every match note snaps
-   to a tone of the chord that is playing, so matches always land in harmony with the music.
-   Nothing is random: the same bar always plays the same way. */
+/* ---------- the music ------------------------------------------------------------------
+   One continuous afro-house piece in D minor at ~122 BPM (the RE\MIND "1995" feel A asked for).
+   It never switches songs: layers fade in and out on the bar, so home → level → breath is seamless.
+     level 0  breath: warm pad only, softer, no pulse at all — the breath leads
+     level 1  home: pad, a soft kick, shaker
+     level 2  play: + off-beat hats
+     level 3  heating up: + log-drum bass and congas
+     level 4  on fire: + clap, open hat, the filter opens
+     level 5  clearing the board: + 16th hats, and the tempo leans up to 125
+   "Heat" rises with big clears and cascades and cools a little every bar, so the groove evolves
+   with how the child is playing. Nothing is random: the same state always plays the same way.
+   The match notes (C D E G A) all sit inside D minor, and they snap to the chord that is playing. */
 const CHORDS = [
-  { root: 110, pad: [220, 261.63, 329.63, 392], pcs: [9, 0, 4, 7] },
-  { root: 87.31, pad: [174.61, 220, 261.63, 329.63], pcs: [5, 9, 0, 4] },
-  { root: 130.81, pad: [196, 246.94, 329.63, 392], pcs: [0, 4, 7, 11] },
-  { root: 98, pad: [196, 246.94, 293.66, 329.63], pcs: [7, 11, 2, 4] }
+  { root: 73.42, pad: [174.61, 220, 261.63, 329.63], pcs: [2, 5, 9, 0, 4] },     // Dm9
+  { root: 116.54, pad: [233.08, 293.66, 349.23, 440], pcs: [10, 2, 5, 9] },      // Bbmaj7
+  { root: 98, pad: [196, 233.08, 293.66, 349.23], pcs: [7, 10, 2, 5] },          // Gm7
+  { root: 110, pad: [220, 261.63, 329.63, 392], pcs: [9, 0, 4, 7] }             // Am7
 ];
-const GROOVES = {
-  home: { bpm: 86, swing: 0.17, kick: { 0: .55, 7: .35, 10: .45 }, snare: { 4: .32, 12: .32 }, hat: { 0: .09, 2: .07, 4: .09, 6: .07, 8: .09, 10: .07, 12: .09, 14: .08, 15: .04 }, shaker: {}, bass: { 0: 1, 7: .7, 10: .8 }, conga: {}, log: false, pad: .045 },
-  play: { bpm: 118, swing: 0.05, kick: { 0: .5, 4: .45, 8: .5, 12: .45 }, clap: { 4: .18, 12: .18 }, hat: { 2: .1, 6: .1, 10: .1, 14: .12 }, shaker: { 0: .025, 1: .018, 3: .03, 5: .018, 7: .03, 9: .018, 11: .03, 13: .018, 15: .03 }, bass: { 0: 1, 3: .7, 6: .8, 10: .9, 13: .6 }, conga: { 7: [392, .09], 11: [293.66, .08], 15: [392, .07] }, log: true, pad: .035 },
-  calm: { bpm: 70, swing: 0, kick: {}, snare: {}, hat: {}, shaker: {}, bass: {}, conga: {}, log: false, pad: .05 }
-};
-let gMode = null, gWant = 'home', gNext = 0, gStep = 0, gChord = 0, gTimer = null, gBus = null, gDrums = null, gPad = null;
+let gWant = 'home', gLevel = 1, gHeat = 0, gBpm = 121, gNext = 0, gStep = 0, gChord = 0, gTimer = null, gBus = null, gDrums = null, gPad = null, gPadLp = null;
+const gLv = [1, 1, 0, 0, 0, 0];                 // live mix of each layer, eased toward its target
+const MUSIC_VOL = () => (S.musicVol ?? 0.32);     // low by default
 function grooveInit() {
   const a = AC, m = mix();
-  gBus = a.createGain(); gBus.gain.value = muted ? 0 : 0.7; gBus.connect(m.dry);
-  const send = a.createGain(); send.gain.value = 0.12; gBus.connect(send); send.connect(m.rev);
-  gDrums = a.createGain(); gDrums.gain.value = 1; gDrums.connect(gBus);
-  gPad = a.createGain(); gPad.gain.value = 1;
-  const lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1900; gPad.connect(lp).connect(gBus);
+  gBus = a.createGain(); gBus.gain.value = 0; gBus.connect(m.dry);
+  const send = a.createGain(); send.gain.value = 0.14; gBus.connect(send); send.connect(m.rev);
+  gDrums = a.createGain(); gDrums.connect(gBus);
+  gPad = a.createGain(); gPadLp = a.createBiquadFilter(); gPadLp.type = 'lowpass'; gPadLp.frequency.value = 1500;
+  gPad.connect(gPadLp).connect(gBus);
 }
-function setGroove(mode) {
-  gWant = mode;
-  if (!AC || !gBus) return;
-  const t = AC.currentTime;
-  gDrums.gain.cancelScheduledValues(t); gDrums.gain.setValueAtTime(gDrums.gain.value, t);
-  gDrums.gain.linearRampToValueAtTime(mode === 'calm' ? 0 : 1, t + (mode === 'calm' ? 1.2 : 2));
+function targetLevel() {
+  if (gWant === 'calm') return 0;
+  if (gWant === 'home') return 1;
+  return Math.max(2, Math.min(5, 2 + Math.floor(gHeat)));
 }
+function setGroove(mode) { gWant = mode; if (mode !== 'play') gHeat = 0; }
+// called from every clear: bigger moments and cascades heat the groove up
+function grooveHeat(juice) { if (gWant !== 'play') return; gHeat = Math.min(3.6, gHeat + (juice >= 12 ? 0.9 : juice >= 8 ? 0.55 : juice >= 5 ? 0.3 : 0.12)); }
 function startGroove() {
   if (!AC || gTimer) return;
   gTimer = -1;                                   // claim the start first: building the mix calls ac() again
-  grooveInit(); gNext = AC.currentTime + 0.1; gStep = 0; gMode = gWant;
+  grooveInit(); gNext = AC.currentTime + 0.1; gStep = 0;
   gTimer = setInterval(grooveTick, 25);
 }
 function grooveTick() {
   const a = AC; if (!a) return;
-  gBus.gain.setTargetAtTime(muted || document.hidden ? 0 : 0.7, a.currentTime, 0.1);
+  const calm = gWant === 'calm';
+  gBus.gain.setTargetAtTime(muted || document.hidden ? 0 : MUSIC_VOL() * (calm ? 0.6 : 1), a.currentTime, calm ? 0.8 : 0.5);
   while (gNext < a.currentTime + 0.12) {
-    if (gStep % 16 === 0) { gMode = gWant; gChord = (gStep / 16) % 4; }   // styles change on the bar line
-    const G = GROOVES[gMode] || GROOVES.home, st = gStep % 16, t = gNext, ch = CHORDS[gChord];
-    if (!muted && !document.hidden) playStep(G, st, t, ch);
-    const six = 60 / G.bpm / 4;
-    gNext += six * (st % 2 === 0 ? 1 + G.swing : 1 - G.swing);
+    const st = gStep % 16, t = gNext;
+    if (st === 0) {                              // on the bar line: pick the level, cool the heat, move the chord
+      gChord = (gStep / 16) % 4;
+      gLevel = targetLevel();
+      if (gWant === 'play') gHeat = Math.max(0, gHeat - 0.3);
+      const bpmWant = gLevel >= 5 ? 125 : gLevel >= 4 ? 123 : 121;
+      gBpm += (bpmWant - gBpm) * 0.5;            // lean into the new tempo over a couple of bars
+      gPadLp.frequency.setTargetAtTime(gLevel === 0 ? 900 : gLevel >= 4 ? 3000 : 1600, t, 1.2);
+    }
+    // each layer eases toward on/off across the bar: layers breathe in and out, never cut
+    if (gWant === 'calm') gLevel = 0;          // a breath doesn't wait for the bar: the drums start easing out at once
+    for (let k = 0; k < 6; k++) { const on = k === 0 || gLevel >= k ? 1 : 0; gLv[k] += (on - gLv[k]) / (gLevel === 0 ? 8 : 16); }
+    if (!muted && !document.hidden) playStep(st, t, CHORDS[gChord]);
+    const six = 60 / gBpm / 4;
+    gNext += six * (st % 2 === 0 ? 1.04 : 0.96);   // a gentle afro swing
     gStep = (gStep + 1) % 64;
   }
 }
-function playStep(G, st, t, ch) {
-  if (st === 0) padChord(t, ch, G);
-  if (G.kick[st]) { kickAt(t, G.kick[st]); if (G.log) duck(t); }
-  if (G.snare && G.snare[st]) snareAt(t, G.snare[st]);
-  if (G.clap && G.clap[st]) clapAt(t, G.clap[st]);
-  if (G.hat[st]) hatAt(t, G.hat[st]);
-  if (G.shaker[st]) shakerAt(t, G.shaker[st]);
-  if (G.bass[st]) { if (G.log) logAt(t, ch.root * (st === 6 || st === 13 ? 1.5 : 1), G.bass[st] * 0.32); else bassAt(t, ch.root, G.bass[st] * 0.26); }
-  if (G.conga[st]) congaAt(t, ...G.conga[st]);
+function playStep(st, t, ch) {
+  const L1 = gLv[1], L2 = gLv[2], L3 = gLv[3], L4 = gLv[4], L5 = gLv[5];
+  if (st === 0) padChord(t, ch);
+  if (st % 4 === 0 && L1 > 0.02) { kickAt(t, (st === 0 ? 0.42 : 0.36) * L1); duck(t, L1); }
+  if (L1 > 0.02) shakerAt(t, (st % 2 ? 0.014 : 0.022) * L1, st % 4 === 2);
+  if (st % 4 === 2 && L2 > 0.02) hatAt(t, 0.085 * L2);
+  if (L3 > 0.02 && [0, 3, 6, 10, 13].includes(st)) logAt(t, ch.root * (st === 6 || st === 13 ? 1.5 : 1), (st === 0 ? 0.3 : 0.22) * L3);
+  if (L3 > 0.02 && ({ 7: 392, 11: 293.66, 15: 392 })[st]) congaAt(t, ({ 7: 392, 11: 293.66, 15: 392 })[st], 0.075 * L3);
+  if (L4 > 0.02 && (st === 4 || st === 12)) clapAt(t, 0.15 * L4);
+  if (L4 > 0.02 && st === 14) hatAt(t, 0.06 * L4, true);
+  if (L5 > 0.02 && st % 2 === 1) hatAt(t, 0.035 * L5);
 }
 const nz = (t, dur, type, f, q, v, dest, attack = 0.001) => {
   const a = AC, n = noise(), fl = a.createBiquadFilter(), g = a.createGain();
   fl.type = type; fl.frequency.value = f; fl.Q.value = q;
-  n.connect(fl).connect(g).connect(dest); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + attack); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  n.connect(fl).connect(g).connect(dest); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + attack); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
   n.start(t); n.stop(t + dur + 0.02);
 };
 function kickAt(t, v) {
   const a = AC, o = a.createOscillator(), g = a.createGain();
-  o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(46, t + 0.11);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.003); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+  o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(44, t + 0.12);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.36);
   o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.4);
-  nz(t, 0.012, 'highpass', 3000, 0.7, v * 0.12, gDrums);
 }
-function snareAt(t, v) { nz(t, 0.16, 'bandpass', 1900, 0.8, v, gDrums); const o = AC.createOscillator(), g = AC.createGain(); o.frequency.value = 196; g.gain.setValueAtTime(v * 0.5, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.08); o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.1); }
 function clapAt(t, v) { [0, 0.011, 0.022].forEach((d, i) => nz(t + d, i === 2 ? 0.14 : 0.02, 'bandpass', 1400, 0.9, v, gDrums)); }
-function hatAt(t, v) { nz(t, 0.04, 'highpass', 7800, 0.6, v, gDrums); }
-function shakerAt(t, v) { nz(t, 0.06, 'bandpass', 5600, 1.4, v, gDrums, 0.012); }
+function hatAt(t, v, open) { nz(t, open ? 0.2 : 0.04, 'highpass', 7800, 0.6, v, gDrums); }
+function shakerAt(t, v, accent) { nz(t, 0.06, 'bandpass', 5600, 1.4, accent ? v * 1.4 : v, gDrums, 0.012); }
 function logAt(t, f, v) {                     // the afro-house log drum: a woody, pitch-dropping bass
   const a = AC, o = a.createOscillator(), g = a.createGain(), sh = a.createWaveShaper(), lp = a.createBiquadFilter();
   const c = new Float32Array(256); for (let i = 0; i < 256; i++) { const x = i / 128 - 1; c[i] = Math.tanh(2.2 * x); } sh.curve = c;
   lp.type = 'lowpass'; lp.frequency.value = 900;
   o.frequency.setValueAtTime(f * 1.5, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.05);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
   o.connect(sh).connect(lp).connect(g).connect(gDrums); o.start(t); o.stop(t + 0.45);
-}
-function bassAt(t, f, v) {
-  const a = AC, o = a.createOscillator(), g = a.createGain();
-  o.type = 'triangle'; o.frequency.value = f;
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
-  o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.6);
 }
 function congaAt(t, f, v) {
   const a = AC, o = a.createOscillator(), g = a.createGain();
   o.frequency.setValueAtTime(f * 1.06, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.03);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.003); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + 0.003); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
   o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.22);
-  nz(t, 0.012, 'bandpass', 2200, 1, v * 0.4, gDrums);
 }
-function padChord(t, ch, G) {
-  const a = AC, bar = 60 / G.bpm * 4;
-  ch.pad.forEach((f, i) => [1, 1.003].forEach((m, j) => {    // two voices a hair apart: a warm, steady chorus
+function padChord(t, ch) {
+  const a = AC, bar = 60 / gBpm * 4, vol = 0.04;
+  ch.pad.forEach(f => [1, 1.003].forEach((m, j) => {    // two voices a hair apart: a warm, steady chorus
     const o = a.createOscillator(), g = a.createGain();
     o.type = j ? 'sine' : 'triangle'; o.frequency.value = f * m;
-    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(G.pad / (j ? 2 : 1), t + 0.35);
-    g.gain.setValueAtTime(G.pad / (j ? 2 : 1), t + bar - 0.2); g.gain.linearRampToValueAtTime(0.0001, t + bar + 0.5);
-    o.connect(g).connect(gPad); o.start(t); o.stop(t + bar + 0.6);
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(vol / (j ? 2 : 1), t + 0.6);
+    g.gain.setValueAtTime(vol / (j ? 2 : 1), t + bar - 0.1); g.gain.linearRampToValueAtTime(0.0001, t + bar + 0.8);   // chords overlap: no gap, no bop
+    o.connect(g).connect(gPad); o.start(t); o.stop(t + bar + 0.9);
   }));
 }
-function duck(t) { gPad.gain.setValueAtTime(0.5, t); gPad.gain.linearRampToValueAtTime(1, t + 0.22); }   // the pad breathes with the kick
+function duck(t, amt) { gPad.gain.setValueAtTime(1 - 0.4 * amt, t); gPad.gain.linearRampToValueAtTime(1, t + 0.22); }   // the pad breathes with the kick
 // match notes land on a tone of the chord that is playing
 const pcOf = f => ((Math.round(12 * Math.log2(f / 261.63)) % 12) + 12) % 12;
 function chordNote(idx) {
@@ -2861,6 +2875,11 @@ async function runStory() {
     { who: 'sorin', voice: 'sorin', name: 'Sorin', text: storyLines(L).sorin },
     { who: 'luma', voice: 'luma', name: 'Luma', goal: true, text: `Help me blow away ${g.clouds} storm clouds. You have ${g.moves} moves.` }
   ];
+  if (L.knots && !(S.seen || {}).knots) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', knotDemo: true, text: {
+    '2-4': "New! Some orbs are tied in knots. Match them to untie them!",
+    '5-7': "Something new: Worry tied some orbs in knots. A knotted orb can't move, but a match that includes it unties the knot.",
+    '8-11': "New here: knots. Worry ties orbs down so you can't swap them. Line up a match that includes a knotted orb and it comes loose. Plan around them.",
+    '12-15': "New obstacle: knots. A knotted orb is locked in place and can't be swapped. Build matches through it to untie it. Knots near the clouds are worth freeing first." }[band()] });
   if (LI === 0 || !S.tutDone || band() === '2-4') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: HOWTO[band()] });
   $('#stPips').innerHTML = beats.map(() => '<i></i>').join('') + '<i></i>';
   $('#loadout').hidden = true; $('#loadout').classList.remove('up');
@@ -2908,7 +2927,12 @@ async function showBeat(b, run, skipped, nextTap, k = 0) {
   // the portrait stays still: one calm expression, no mouth-flapping, no bouncing
   face.src = faceSrc(b.who, b.voice === 'luma' ? 'happy' : 'calm');
   const goal = $('#stGoal');
-  goal.hidden = !b.goal;
+  goal.hidden = !b.goal && !b.knotDemo;
+  if (b.knotDemo) {
+    goal.innerHTML = `<div class="knotdemo"><div class="tile t-earth knotted" style="--t:74px;position:absolute;inset:0;width:74px;height:74px;transform:none"><div class="orb">${GLYPH.earth}</div><i class="knotx"></i></div></div><div class="goalchips"><span class="gchip">New · Knots</span></div>`;
+    if (!reduce) goal.animate([{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' });
+    S.seen = Object.assign(S.seen || {}, { knots: 1 }); save();
+  }
   if (b.goal) {
     const g = goalNums();
     goal.innerHTML = `<div class="cloudpile"><i style="left:6px;top:30px;width:58px;height:50px"></i><i style="left:40px;top:6px;width:70px;height:66px"></i><i style="left:88px;top:28px;width:56px;height:50px"></i><b>${g.clouds}</b></div>
@@ -3024,7 +3048,9 @@ function newTile(type, sp = null) {
   return t;
 }
 function paint(t) {
-  t.el.className = `tile t-${t.type}${t.sp ? ' sp-' + t.sp : ''}${t.cloud ? ' clouded' : ''}`;
+  t.el.className = `tile t-${t.type}${t.sp ? ' sp-' + t.sp : ''}${t.cloud ? ' clouded' : ''}${t.knot ? ' knotted' : ''}`;
+  const kx = t.el.querySelector('.knotx');
+  if (t.knot && !kx) { const k = document.createElement('i'); k.className = 'knotx'; t.el.appendChild(k); } else if (!t.knot && kx) kx.remove();
   t.el.firstChild.innerHTML = GLYPH[t.type];
   t.el.setAttribute('aria-label', t.type === 'spirit' ? 'spirit star' : t.type + (t.sp ? ' lantern' : '') + (t.cloud ? ' under a storm cloud' : ''));
 }
@@ -3050,6 +3076,18 @@ addEventListener('resize', () => { if (!$('#game').hidden) { sizeBoard(); sizeRa
 
 function same(a, b) { return a && b && a.type === b.type && a.type !== 'spirit' && !a.cloud && !b.cloud; }
 const clouds = () => all().filter(t => t.cloud);
+// Knots: Worry ties some orbs down. A knotted orb can't be swapped; any match that includes it
+// unties the knot and the orb stays. The first obstacle, in the spirit of Royal Kingdom's chains.
+function addKnots(n) {
+  const pool = all().filter(t => !t.cloud && !t.knot && t.type !== 'spirit').sort((x, y) => (x.r * 7 + x.c * 3) % 11 - (y.r * 7 + y.c * 3) % 11);
+  pool.slice(0, n).forEach(t => { t.knot = true; paint(t); });
+}
+function untie(t) {
+  t.knot = false; paint(t);
+  t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460);
+  playSfx('wood', { rate: 1.5, gain: 0.5 }); boop(5, 0.06);
+  if (!reduce) sparkleAt(boardEl, t.c * T + T / 2, t.r * T + T / 2, ['#E8C27A', '#FFF1C8', '#B58440'], 10);
+}
 function addClouds(n, quiet) {
   const pool = all().filter(t => !t.cloud && t.type !== 'spirit').sort(() => Math.random() - 0.5);
   pool.slice(0, n).forEach((t, i) => {
@@ -3109,6 +3147,7 @@ function fill() {
   }
   if (!hasMove()) { fill(); return; }
   addClouds(L.clouds, true);
+  if (L.knots) addKnots(S.boardSize === 'little' && !babyOn() ? Math.ceil(L.knots / 2) : L.knots);
 }
 function hasMove() {
   if (all().some(t => t.type === 'spirit')) return true;
@@ -3116,7 +3155,7 @@ function hasMove() {
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
     for (const [dr, dc] of [[0, 1], [1, 0]]) {
       const r2 = r + dr, c2 = c + dc; if (r2 >= R || c2 >= C) continue;
-      if (board[r][c].cloud || board[r2][c2].cloud) continue;
+      if (board[r][c].cloud || board[r2][c2].cloud || board[r][c].knot || board[r2][c2].knot) continue;
       sw(r, c, r2, c2); const ok = findMatches().clear.size > 0; sw(r, c, r2, c2);
       if (ok) return true;
     }
@@ -3147,6 +3186,7 @@ const adjacent = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
 async function trySwap(a, b) {
   if (moves <= 0) { say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
   if (a.cloud || b.cloud) { say("That orb is stuck under a storm cloud. Only Luma's breath can blow it away."); bump((a.cloud ? a : b).el); return; }
+  if (a.knot || b.knot) { say('Worry tied that orb in a knot. Make a match that includes it and the knot comes loose.'); bump((a.knot ? a : b).el); bell(392, 0, 0.05); return; }
   busy = true; swish();
   swapCells(a, b);
   await wait(220);
@@ -3201,6 +3241,7 @@ async function resolve(clear, groups, moved) {
     }
     const hadSpecial = [...clear].some(t => t.sp || t.type === 'spirit');
     expand(clear);
+    [...clear].forEach(t => { if (t.knot) { untie(t); clear.delete(t); } });   // a match unties the knot; the orb stays
     if (hadSpecial) flash();
     makes.forEach(m => clear.delete(m.t));
     await popSet(clear);
@@ -3232,6 +3273,7 @@ async function popSet(set) {
   if (arr.length) {
     // how big this moment is: more orbs, a power, a special or a cascade all turn it up
     const juice = arr.length + (pw ? 6 : special ? 4 : 0) + combo * 2;
+    grooveHeat(juice);
     sparks(arr, juice);
     shards(arr, juice);
     scorePop(arr, arr.length * (combo + 1) * 10, juice);
@@ -3245,7 +3287,7 @@ async function popSet(set) {
   if (!breathing) {
     const boostEl = spunToday() ? S.todayElem : null;
     let gain = 0;
-    arr.forEach(t => { gain += t.type === boostEl ? 22.5 : 15; });
+    arr.forEach(t => { gain += t.type === boostEl ? 6 : 4; });       // about 8 good matches to reach Heavenly
     charge = Math.min(100, charge + gain);
   }
   const n = Math.min(arr.length, 5);
@@ -4090,7 +4132,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ mode: gMode, want: gWant, step: gStep, chord: gChord, on: !!gTimer, drums: gDrums && +gDrums.gain.value.toFixed(2) }), tiles: () => all(), charge: v => { charge = v; hud(); } };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), charge: v => { charge = v; hud(); } };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -4272,7 +4314,7 @@ function findSwap() {
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
     for (const [dr, dc] of [[0, 1], [1, 0]]) {
       const r2 = r + dr, c2 = c + dc; if (r2 >= R || c2 >= C) continue;
-      if (!board[r][c] || !board[r2][c2] || board[r][c].cloud || board[r2][c2].cloud) continue;
+      if (!board[r][c] || !board[r2][c2] || board[r][c].cloud || board[r2][c2].cloud || board[r][c].knot || board[r2][c2].knot) continue;
       sw(r, c, r2, c2); const ok = findMatches().clear.size > 0; sw(r, c, r2, c2);
       if (ok) return [board[r][c], board[r2][c2]];
     }
@@ -4617,12 +4659,30 @@ const LETTERS = {
   cycle: { title: 'The Creation Cycle', text: 'Wood feeds Fire. Fire makes Earth. Earth holds Metal. Metal carries Water. Water grows Wood. Nothing in the circle works alone, and neither do you. When one part of you feels quiet, the one before it can help it wake up.' },
   breath: { title: 'Why the Out-Breath Matters', text: 'When you breathe out long and slow, your heart gets the message that you are safe. That is why every breath in this game asks you to go slower on the way out. Try it anywhere: in for four, out for six.' }
 };
+// friends from Kai's village, unlocked as story cards (drafts pending Demaris + counselor review)
+const FRIENDS = {
+  leo: { name: 'Leo', bg: 'img/story/bg-village.jpg', feel: 'Worry', text: {
+    '2-4': 'Leo lives with his mom and his grandma. Grandma sings him to sleep. Leo worries about tests, and humming like a bee helps him feel better.',
+    '5-7': "Leo lives with his mom and his grandma. His mom works nights at the clinic, so Grandma does bedtime. Leo loves fixing old radios. Before tests his tummy gets tight, and Grandma taught him to hum it loose.",
+    '8-11': "Leo, 8, fixes old radios on his grandma's porch. His mom is a night nurse, so Grandma does bedtime. The night before a test, his mind plays 'what if' on repeat. Grandma's trick: hum low until his belly feels like a warm drum.",
+    '12-15': "Leo is the village radio fixer. His mom works nights and his grandma runs the house. Before big tests his brain spins 'what ifs', and he's learning that humming slow isn't babyish. It's how he gets his thinking back." } },
+  june: { name: 'June', bg: 'img/story/bg-hill.jpg', feel: 'The Fizzies', text: {
+    '2-4': 'June loves lanterns! Her two moms run the tea house. When June gets super bouncy, she puts her hands on her heart and breathes slow.',
+    '5-7': "June's two moms run the village tea house, and June tells the best jokes in town. Before the Lantern Festival she's so excited she can't sit still, so she does her heart breath.",
+    '8-11': "June, 8, helps her two moms at the tea house and makes lanterns for the festival. When the excitement fizzes over and she can't listen, she laughs a slow breath out and lets her heart settle.",
+    '12-15': "June runs the lantern crew for the festival while her two moms run the tea house. She's learned that too much good energy still wears her out, and a slow laughing breath lets it out without losing the joy." } },
+  omar: { name: 'Omar', bg: 'img/story/bg-moonpond.jpg', feel: 'Sadness', text: {
+    '2-4': "Omar lives with his grandma and grandpa. He loves the stars. When his friend moved away he felt sad, and big sighs helped.",
+    '5-7': "Omar lives with his grandparents and knows every star in the sky. When his best friend moved to the city, his chest felt heavy. Long sighs, and his grandpa's hand, helped it feel lighter.",
+    '8-11': "Omar, 12, is raised by his grandparents and names every star over the moon pond. When his best friend moved away, the goodbye kept coming back. He's learning you can miss someone and still be okay.",
+    '12-15': "Omar is the village stargazer, raised by his grandparents. Since his best friend moved, some nights feel empty. He lets the sadness come instead of pushing it away, and each long out-breath makes a little more room." } }
+};
 const PASS_XP = 200;
 const PASS = [
   { coins: 100 }, { charm: 'sprout' }, { ring: 'jade' }, { lanterns: 1 }, { aura: 'blossom' },
-  { coins: 200 }, { charm: 'heart' }, { shields: 1 }, { ring: 'ember' }, { letter: 'cycle' },
-  { coins: 250 }, { swirls: 2 }, { aura: 'moon' }, { charm: 'drop' }, { ring: 'river' },
-  { coins: 300 }, { pw: 'bear' }, { aura: 'sunrise' }, { letter: 'breath' }, { ring: 'lotus', aura: 'gold', final: true }
+  { friend: 'leo' }, { charm: 'heart' }, { shields: 1 }, { ring: 'ember' }, { letter: 'cycle' },
+  { friend: 'june' }, { swirls: 2 }, { aura: 'moon' }, { charm: 'drop' }, { ring: 'river' },
+  { friend: 'omar' }, { pw: 'bear' }, { aura: 'sunrise' }, { letter: 'breath' }, { ring: 'lotus', aura: 'gold', final: true }
 ];
 function passState() { if (!S.sp) S.sp = { xp: 0, claimed: [] }; return S.sp; }
 const passTier = () => Math.min(PASS.length, Math.floor(passState().xp / PASS_XP));   // tiers fully earned
@@ -4631,6 +4691,7 @@ function passLabel(r) {
   if (r.ring) return RINGS[r.ring].name;
   if (r.aura) return AURAS[r.aura].name;
   if (r.letter) return `Sorin's letter`;
+  if (r.friend) return `Story card: ${FRIENDS[r.friend].name}`;
   if (r.charm) return CHARMS.find(c => c.id === r.charm).name + ' charm';
   if (r.pw) return POWERS.find(x => x.id === r.pw).name;
   return rewardText(r);
@@ -4639,6 +4700,7 @@ function passIcon(r) {
   if (r.ring) return `<span class="pic ring" style="--rc:${RINGS[r.ring].c}"><img src="${faceSrc(heroId(), 'happy')}" alt=""></span>`;
   if (r.aura) return `<span class="pic aura" style="--a1:${AURAS[r.aura].a1};--a2:${AURAS[r.aura].a2}"><img src="img/faces/luma-happy.jpg" alt=""></span>`;
   if (r.letter) return `<span class="pic"><img src="img/icons/icon-quests.jpg" alt=""></span>`;
+  if (r.friend) return `<span class="pic"><img src="${FRIENDS[r.friend].bg}" alt=""></span>`;
   if (r.charm) return `<span class="pic"><img src="img/icons/boost-${r.charm}.jpg" alt=""></span>`;
   if (r.pw) return `<span class="pic"><img src="img/icons/pw-${r.pw}.jpg" alt=""></span>`;
   if (r.lanterns) return `<span class="pic"><img src="img/icons/pw-tiger.jpg" alt=""></span>`;
@@ -4680,7 +4742,7 @@ function renderPass() {
   $('#passTrack').innerHTML = PASS.map((r, i) => {
     const got = sp.claimed.includes(i), open = i < t;
     const worn = got && ((r.ring && S.ring === r.ring) || (r.aura && !r.ring && S.aura === r.aura) || (r.final && S.ring === 'lotus'));
-    const btn = !open ? `${(i + 1) * PASS_XP - sp.xp} XP` : !got ? 'Claim' : (r.ring || r.aura) ? (worn ? 'Wearing' : 'Wear') : r.letter ? 'Read' : 'Claimed ✓';
+    const btn = !open ? `${(i + 1) * PASS_XP - sp.xp} XP` : !got ? 'Claim' : (r.ring || r.aura) ? (worn ? 'Wearing' : 'Wear') : (r.letter || r.friend) ? 'Read' : 'Claimed ✓';
     return `<div class="ptier ${open ? '' : 'locked'} ${open && !got ? 'ready' : ''} ${got ? 'done' : ''} ${worn ? 'worn' : ''}" data-tier="${i}"><span class="pn">${i + 1}</span>${passIcon(r)}<b>${passLabel(r)}</b><button class="pbtn">${btn}</button></div>`;
   }).join('') + `<div class="ptier next2"><span class="pn">S2</span><span class="pic">?</span><b>Season 2: new friends from Kai's village</b><span style="font-size:11px;font-weight:800;opacity:.8">Coming next</span></div>`;
 }
@@ -4717,16 +4779,27 @@ $('#passTrack').addEventListener('click', e => {
     const nc = $(`#passTrack .ptier[data-tier="${i}"]`);
     if (nc && !reduce) nc.animate([{ transform: 'scale(.85)' }, { transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
     if (r.letter) setTimeout(() => showLetter(r.letter), 500);
+    if (r.friend) setTimeout(() => showFriend(r.friend), 500);
     return;
   }
   if (r.letter) return showLetter(r.letter);
+  if (r.friend) return showFriend(r.friend);
   if (r.ring || r.aura) {                               // wear or take off
     if (r.ring) S.ring = S.ring === r.ring ? null : r.ring;
     else S.aura = S.aura === r.aura ? null : r.aura;
     save(); applyLooks(); renderPass(); tick(); bell(783.99, 0, 0.06);
   }
 });
+function showFriend(id) {
+  const f = FRIENDS[id];
+  $('#letterov .eyebrow').textContent = `A friend from Kai's village · ${f.feel}`;
+  $('#letterTitle').textContent = f.name; $('#letterText').textContent = f.text[band()] || f.text['5-7'];
+  $('#letterov .card').style.backgroundImage = `linear-gradient(rgba(255,249,234,.9),rgba(241,223,184,.95)),url(${f.bg})`;
+  $('#letterov .card').style.backgroundSize = 'cover';
+  $('#letterov').style.zIndex = 30; showOv('letterov');
+}
 function showLetter(id) {
+  $('#letterov .eyebrow').textContent = 'A letter from Sorin'; $('#letterov .card').style.backgroundImage = '';
   const l = LETTERS[id];
   $('#letterTitle').textContent = l.title; $('#letterText').textContent = l.text;
   $('#letterov').style.zIndex = 30;
