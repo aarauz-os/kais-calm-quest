@@ -1900,32 +1900,44 @@ function ac() {
 const PENTA = [392, 440, 523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.5, 1568, 1760];
 
 /* ---------- the music ------------------------------------------------------------------
-   One continuous afro-house piece in D minor at ~122 BPM (the RE\MIND "1995" feel A asked for).
-   It never switches songs: layers fade in and out on the bar, so home → level → breath is seamless.
-     level 0  breath: warm pad only, softer, no pulse at all — the breath leads
-     level 1  home: pad, a soft kick, shaker
-     level 2  play: + off-beat hats
-     level 3  heating up: + log-drum bass and congas
-     level 4  on fire: + clap, open hat, the filter opens
-     level 5  clearing the board: + 16th hats, and the tempo leans up to 125
-   "Heat" rises with big clears and cascades and cools a little every bar, so the groove evolves
-   with how the child is playing. Nothing is random: the same state always plays the same way.
-   The match notes (C D E G A) all sit inside D minor, and they snap to the chord that is playing. */
+   Healer music in the spirit A asked for (Temple Step Project & Hang Massive, "Warmth of the
+   Sun's Rays", Bass Love Remix): a handpan leading, a deep warm bass, soft organic percussion,
+   a slow half-time sway and lots of space. ~76 BPM in A minor. Every match note (C D E G A)
+   lives in A minor, and snaps to the chord that is playing.
+   One continuous piece whose layers ease in and out on the bar:
+     level 0  breath: warm drone and a few slow handpan notes — no percussion at all
+     level 1  home: the handpan's rolling patterns, a soft shaker
+     level 2  play: + frame drum and rim clicks
+     level 3  heating up: + the deep sub-bass line
+     level 4  on fire: + a half-time clap, the handpan doubles its notes
+     level 5  clearing the board: + extra percussion, the tempo leans up to 80
+   Nothing is random: the same state always plays the same bar. */
 const CHORDS = [
-  { root: 73.42, pad: [174.61, 220, 261.63, 329.63], pcs: [2, 5, 9, 0, 4] },     // Dm9
-  { root: 116.54, pad: [233.08, 293.66, 349.23, 440], pcs: [10, 2, 5, 9] },      // Bbmaj7
-  { root: 98, pad: [196, 233.08, 293.66, 349.23], pcs: [7, 10, 2, 5] },          // Gm7
-  { root: 110, pad: [220, 261.63, 329.63, 392], pcs: [9, 0, 4, 7] }             // Am7
+  { root: 55, pad: [220, 261.63, 329.63, 493.88], pcs: [9, 0, 4, 7, 11] },    // Am9
+  { root: 43.65, pad: [174.61, 261.63, 329.63, 392], pcs: [5, 9, 0, 4, 7] },  // Fmaj9
+  { root: 55, pad: [220, 293.66, 329.63, 392], pcs: [9, 0, 4, 7, 2] },        // Am11
+  { root: 41.2, pad: [196, 246.94, 293.66, 329.63], pcs: [4, 7, 11, 2] }      // Em7 (add11)
 ];
-let gWant = 'home', gLevel = 1, gHeat = 0, gBpm = 121, gNext = 0, gStep = 0, gChord = 0, gTimer = null, gBus = null, gDrums = null, gPad = null, gPadLp = null;
-const gLv = [1, 1, 0, 0, 0, 0];                 // live mix of each layer, eased toward its target
+// the handpan: A minor pentatonic, low to high
+const HANG = [220, 261.63, 293.66, 329.63, 392, 440, 523.25, 587.33, 659.25, 783.99];
+// four rolling patterns (step → note index), one per bar; the melody evolves bar by bar
+const HANG_PAT = [
+  { 0: 0, 3: 4, 6: 5, 8: 3, 10: 5, 12: 7, 14: 6 },
+  { 0: 2, 3: 5, 6: 4, 8: 6, 11: 5, 14: 3 },
+  { 0: 0, 2: 3, 4: 5, 7: 6, 8: 8, 10: 7, 12: 5, 15: 4 },
+  { 0: 1, 3: 4, 6: 3, 9: 5, 12: 4, 14: 2 }
+];
+const HANG_FILL = { 1: 5, 5: 7, 9: 6, 13: 8 };           // the doubled notes when the board is on fire
+let gWant = 'home', gLevel = 1, gHeat = 0, gBpm = 76, gNext = 0, gStep = 0, gChord = 0, gTimer = null, gBus = null, gDrums = null, gPad = null, gPadLp = null, gHang = null;
+const gLv = [1, 1, 0, 0, 0, 0];
 const MUSIC_VOL = () => (S.musicVol ?? 0.32);     // low by default
 function grooveInit() {
   const a = AC, m = mix();
   gBus = a.createGain(); gBus.gain.value = 0; gBus.connect(m.dry);
-  const send = a.createGain(); send.gain.value = 0.14; gBus.connect(send); send.connect(m.rev);
+  const send = a.createGain(); send.gain.value = 0.38; gBus.connect(send); send.connect(m.rev);   // lots of space
   gDrums = a.createGain(); gDrums.connect(gBus);
-  gPad = a.createGain(); gPadLp = a.createBiquadFilter(); gPadLp.type = 'lowpass'; gPadLp.frequency.value = 1500;
+  gHang = a.createGain(); gHang.connect(gBus);
+  gPad = a.createGain(); gPadLp = a.createBiquadFilter(); gPadLp.type = 'lowpass'; gPadLp.frequency.value = 1300;
   gPad.connect(gPadLp).connect(gBus);
 }
 function targetLevel() {
@@ -1934,7 +1946,6 @@ function targetLevel() {
   return Math.max(2, Math.min(5, 2 + Math.floor(gHeat)));
 }
 function setGroove(mode) { gWant = mode; if (mode !== 'play') gHeat = 0; }
-// called from every clear: bigger moments and cascades heat the groove up
 function grooveHeat(juice) { if (gWant !== 'play') return; gHeat = Math.min(3.6, gHeat + (juice >= 12 ? 0.9 : juice >= 8 ? 0.55 : juice >= 5 ? 0.3 : 0.12)); }
 function startGroove() {
   if (!AC || gTimer) return;
@@ -1945,37 +1956,46 @@ function startGroove() {
 function grooveTick() {
   const a = AC; if (!a) return;
   const calm = gWant === 'calm';
-  gBus.gain.setTargetAtTime(muted || document.hidden ? 0 : MUSIC_VOL() * (calm ? 0.6 : 1), a.currentTime, calm ? 0.8 : 0.5);
-  while (gNext < a.currentTime + 0.12) {
+  gBus.gain.setTargetAtTime(muted || document.hidden ? 0 : MUSIC_VOL() * (calm ? 0.7 : 1), a.currentTime, calm ? 0.8 : 0.5);
+  while (gNext < a.currentTime + 0.15) {
     const st = gStep % 16, t = gNext;
-    if (st === 0) {                              // on the bar line: pick the level, cool the heat, move the chord
+    if (st === 0) {
       gChord = (gStep / 16) % 4;
       gLevel = targetLevel();
       if (gWant === 'play') gHeat = Math.max(0, gHeat - 0.3);
-      const bpmWant = gLevel >= 5 ? 125 : gLevel >= 4 ? 123 : 121;
-      gBpm += (bpmWant - gBpm) * 0.5;            // lean into the new tempo over a couple of bars
-      gPadLp.frequency.setTargetAtTime(gLevel === 0 ? 900 : gLevel >= 4 ? 3000 : 1600, t, 1.2);
+      const bpmWant = gLevel >= 5 ? 80 : gLevel >= 4 ? 78 : 76;
+      gBpm += (bpmWant - gBpm) * 0.5;
+      gPadLp.frequency.setTargetAtTime(gLevel === 0 ? 800 : gLevel >= 4 ? 2200 : 1300, t, 1.5);
     }
-    // each layer eases toward on/off across the bar: layers breathe in and out, never cut
-    if (gWant === 'calm') gLevel = 0;          // a breath doesn't wait for the bar: the drums start easing out at once
+    if (gWant === 'calm') gLevel = 0;          // a breath doesn't wait for the bar
     for (let k = 0; k < 6; k++) { const on = k === 0 || gLevel >= k ? 1 : 0; gLv[k] += (on - gLv[k]) / (gLevel === 0 ? 8 : 16); }
-    if (!muted && !document.hidden) playStep(st, t, CHORDS[gChord]);
+    if (!muted && !document.hidden) playStep(st, t, CHORDS[gChord], (gStep / 16 | 0) % 4);
     const six = 60 / gBpm / 4;
-    gNext += six * (st % 2 === 0 ? 1.04 : 0.96);   // a gentle afro swing
+    gNext += six * (st % 2 === 0 ? 1.03 : 0.97);   // just a breath of swing
     gStep = (gStep + 1) % 64;
   }
 }
-function playStep(st, t, ch) {
+function playStep(st, t, ch, bar) {
   const L1 = gLv[1], L2 = gLv[2], L3 = gLv[3], L4 = gLv[4], L5 = gLv[5];
-  if (st === 0) padChord(t, ch);
-  if (st % 4 === 0 && L1 > 0.02) { kickAt(t, (st === 0 ? 0.42 : 0.36) * L1); duck(t, L1); }
-  if (L1 > 0.02) shakerAt(t, (st % 2 ? 0.014 : 0.022) * L1, st % 4 === 2);
-  if (st % 4 === 2 && L2 > 0.02) hatAt(t, 0.085 * L2);
-  if (L3 > 0.02 && [0, 3, 6, 10, 13].includes(st)) logAt(t, ch.root * (st === 6 || st === 13 ? 1.5 : 1), (st === 0 ? 0.3 : 0.22) * L3);
-  if (L3 > 0.02 && ({ 7: 392, 11: 293.66, 15: 392 })[st]) congaAt(t, ({ 7: 392, 11: 293.66, 15: 392 })[st], 0.075 * L3);
-  if (L4 > 0.02 && (st === 4 || st === 12)) clapAt(t, 0.15 * L4);
-  if (L4 > 0.02 && st === 14) hatAt(t, 0.06 * L4, true);
-  if (L5 > 0.02 && st % 2 === 1) hatAt(t, 0.035 * L5);
+  if (st === 0) { padChord(t, ch); hangAt(t, ch.root * 4, 0.05, 3.2); }          // the low "ding" at the start of every bar
+  // handpan melody: sparse in the breath (a few notes), rolling at home and in play
+  const pat = HANG_PAT[bar], n = pat[st];
+  if (n !== undefined) {
+    const breathOnly = gLevel === 0;
+    if (!breathOnly || st === 0 || st === 8) hangAt(t, HANG[n], (breathOnly ? 0.028 : 0.045) * (0.6 + 0.4 * Math.max(L1, breathOnly ? 1 : 0)), breathOnly ? 3 : 2.2);
+  }
+  if (L4 > 0.05 && HANG_FILL[st] !== undefined) hangAt(t, HANG[HANG_FILL[st]], 0.028 * L4, 1.6);
+  if (L1 > 0.02 && st % 2 === 0) shakerAt(t, (st % 4 === 2 ? 0.018 : 0.011) * L1);
+  // half-time frame drum on 1, a ghost on the "and" of 2, rim clicks around it
+  if (L2 > 0.02) {
+    if (st === 0) frameAt(t, 0.34 * L2);
+    if (st === 6) frameAt(t, 0.16 * L2);
+    if (st === 10) frameAt(t, 0.22 * L2);
+    if (st === 4 || st === 13) rimAt(t, 0.05 * L2);
+  }
+  if (L3 > 0.02 && (st === 0 || st === 7 || st === 10)) subAt(t, ch.root * (st === 7 ? 1.5 : 1), 0.2 * L3, st === 0 ? 1.4 : 0.6);
+  if (L4 > 0.02 && st === 8) clapAt(t, 0.1 * L4);                 // the half-time backbeat
+  if (L5 > 0.02 && (st === 3 || st === 11 || st === 14)) tokAt(t, st === 14 ? 520 : 660, 0.07 * L5);
 }
 const nz = (t, dur, type, f, q, v, dest, attack = 0.001) => {
   const a = AC, n = noise(), fl = a.createBiquadFilter(), g = a.createGain();
@@ -1983,40 +2003,51 @@ const nz = (t, dur, type, f, q, v, dest, attack = 0.001) => {
   n.connect(fl).connect(g).connect(dest); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + attack); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
   n.start(t); n.stop(t + dur + 0.02);
 };
-function kickAt(t, v) {
-  const a = AC, o = a.createOscillator(), g = a.createGain();
-  o.frequency.setValueAtTime(130, t); o.frequency.exponentialRampToValueAtTime(44, t + 0.12);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.36);
-  o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.4);
+// handpan: a fundamental, its octave and the compound fifth a hang is tuned to, soft hand attack, long bloom
+function hangAt(t, f, v, dur = 2.2) {
+  const a = AC;
+  [[1, 1, dur], [2, 0.32, dur * 0.7], [3, 0.12, dur * 0.45]].forEach(([m, w, d]) => {
+    const o = a.createOscillator(), g = a.createGain();
+    o.frequency.value = f * m;
+    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v * w), t + 0.012); g.gain.exponentialRampToValueAtTime(0.0001, t + d);
+    o.connect(g).connect(gHang); o.start(t); o.stop(t + d + 0.05);
+  });
+  nz(t, 0.03, 'bandpass', f * 4, 2, v * 0.25, gHang);            // the touch of the hand
 }
-function clapAt(t, v) { [0, 0.011, 0.022].forEach((d, i) => nz(t + d, i === 2 ? 0.14 : 0.02, 'bandpass', 1400, 0.9, v, gDrums)); }
-function hatAt(t, v, open) { nz(t, open ? 0.2 : 0.04, 'highpass', 7800, 0.6, v, gDrums); }
-function shakerAt(t, v, accent) { nz(t, 0.06, 'bandpass', 5600, 1.4, accent ? v * 1.4 : v, gDrums, 0.012); }
-function logAt(t, f, v) {                     // the afro-house log drum: a woody, pitch-dropping bass
+function frameAt(t, v) {                                          // a soft, round frame drum, not a club kick
+  const a = AC, o = a.createOscillator(), g = a.createGain();
+  o.frequency.setValueAtTime(96, t); o.frequency.exponentialRampToValueAtTime(52, t + 0.18);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
+  o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.6);
+  nz(t, 0.05, 'lowpass', 900, 0.7, v * 0.2, gDrums, 0.004);
+}
+function rimAt(t, v) { nz(t, 0.025, 'bandpass', 2600, 4, v, gDrums); }
+function tokAt(t, f, v) {                                          // a tabla-like "tok"
+  const a = AC, o = a.createOscillator(), g = a.createGain();
+  o.frequency.setValueAtTime(f * 1.4, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.02);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + 0.003); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.16);
+  o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.2);
+}
+function clapAt(t, v) { [0, 0.012, 0.024].forEach((d, i) => nz(t + d, i === 2 ? 0.3 : 0.02, 'bandpass', 1200, 0.8, v, gDrums)); }
+function shakerAt(t, v) { nz(t, 0.08, 'bandpass', 5200, 1.2, v, gDrums, 0.02); }
+function subAt(t, f, v, dur) {                                    // the deep warm bass: round, a little saturated
   const a = AC, o = a.createOscillator(), g = a.createGain(), sh = a.createWaveShaper(), lp = a.createBiquadFilter();
-  const c = new Float32Array(256); for (let i = 0; i < 256; i++) { const x = i / 128 - 1; c[i] = Math.tanh(2.2 * x); } sh.curve = c;
-  lp.type = 'lowpass'; lp.frequency.value = 900;
-  o.frequency.setValueAtTime(f * 1.5, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.05);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
-  o.connect(sh).connect(lp).connect(g).connect(gDrums); o.start(t); o.stop(t + 0.45);
-}
-function congaAt(t, f, v) {
-  const a = AC, o = a.createOscillator(), g = a.createGain();
-  o.frequency.setValueAtTime(f * 1.06, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.03);
-  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + 0.003); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
-  o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.22);
+  const c = new Float32Array(256); for (let i = 0; i < 256; i++) { const x = i / 128 - 1; c[i] = Math.tanh(1.6 * x); } sh.curve = c;
+  lp.type = 'lowpass'; lp.frequency.value = 260;
+  o.frequency.setValueAtTime(f * 2, t); o.frequency.exponentialRampToValueAtTime(f * 2 * 0.98, t + dur);   // f*2: audible on phone speakers
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(Math.max(0.0002, v), t + 0.03); g.gain.setValueAtTime(v, t + dur * 0.6); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(sh).connect(lp).connect(g).connect(gDrums); o.start(t); o.stop(t + dur + 0.05);
 }
 function padChord(t, ch) {
-  const a = AC, bar = 60 / gBpm * 4, vol = 0.04;
-  ch.pad.forEach(f => [1, 1.003].forEach((m, j) => {    // two voices a hair apart: a warm, steady chorus
+  const a = AC, bar = 60 / gBpm * 4, vol = 0.03;
+  ch.pad.forEach(f => [1, 1.003].forEach((m, j) => {
     const o = a.createOscillator(), g = a.createGain();
     o.type = j ? 'sine' : 'triangle'; o.frequency.value = f * m;
-    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(vol / (j ? 2 : 1), t + 0.6);
-    g.gain.setValueAtTime(vol / (j ? 2 : 1), t + bar - 0.1); g.gain.linearRampToValueAtTime(0.0001, t + bar + 0.8);   // chords overlap: no gap, no bop
-    o.connect(g).connect(gPad); o.start(t); o.stop(t + bar + 0.9);
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(vol / (j ? 2 : 1), t + 1.2);
+    g.gain.setValueAtTime(vol / (j ? 2 : 1), t + bar - 0.2); g.gain.linearRampToValueAtTime(0.0001, t + bar + 1.4);   // long overlaps: no seams
+    o.connect(g).connect(gPad); o.start(t); o.stop(t + bar + 1.5);
   }));
 }
-function duck(t, amt) { gPad.gain.setValueAtTime(1 - 0.4 * amt, t); gPad.gain.linearRampToValueAtTime(1, t + 0.22); }   // the pad breathes with the kick
 // match notes land on a tone of the chord that is playing
 const pcOf = f => ((Math.round(12 * Math.log2(f / 261.63)) % 12) + 12) % 12;
 function chordNote(idx) {
