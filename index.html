@@ -255,6 +255,32 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .conf{position:absolute;width:9px;height:14px;border-radius:2px;pointer-events:none}
 /* ---- living home ---- */
 .drawer{display:none}
+.pwbar{display:flex;gap:6px}
+.pwbtn{position:relative;width:48px;height:48px;border-radius:50%;padding:0;background:none;
+  box-shadow:0 0 0 2px var(--wood),0 4px 0 var(--wood-d),0 6px 10px rgba(0,0,0,.4)}
+.pwbtn img{width:100%;height:100%;border-radius:50%;display:block}
+.pwbtn i{position:absolute;right:-5px;bottom:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:2px;font-style:normal;font-size:11px;font-weight:900;color:#fff;
+  background:linear-gradient(#5CB27A,#2B7A4B);box-shadow:0 0 0 2px #FFE9C0}
+.pwbtn i.buy{background:linear-gradient(#3A3A3A,#1E1E1E);color:#FFE7A8}
+.pwbtn i .coin{width:9px;height:9px}
+.pwbtn.on{box-shadow:0 0 0 3px #FFF1C2,0 0 16px 5px rgba(255,210,120,.9),0 4px 0 var(--wood-d)}
+.fx-slash.claw{background:linear-gradient(90deg,transparent,#D8FFB0 20%,#fff 50%,#D8FFB0 80%,transparent);box-shadow:0 0 12px #9BEA6A,0 0 24px rgba(120,220,90,.8)}
+.charmhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:14px;font-size:14px}
+.charmhead span{font-size:12.5px;font-weight:700;color:var(--muted);text-align:right}
+.charms{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
+.charm{position:relative;display:grid;justify-items:center;gap:3px;padding:6px 2px 7px;border-radius:14px;
+  background:linear-gradient(#FFFDF6,#F0E2C2);box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 0 0 2px rgba(180,140,70,.5),0 2px 0 rgba(120,88,40,.4)}
+.charm img{width:44px;height:44px;border-radius:10px}
+.charm b{font-size:10.5px;font-weight:900;line-height:1.05;text-align:center}
+.charm i{font-style:normal;font-size:10.5px;font-weight:900;color:#2C5B2A}
+.charm i.buy{color:var(--gold)}
+.charm.on{background:linear-gradient(#FFF4D6,#F4D58C);box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 0 0 3px var(--gold-hi),0 0 14px rgba(255,200,110,.8),0 2px 0 rgba(120,88,40,.4)}
+.charm.on::after{content:"✓";position:absolute;top:-6px;right:-4px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:900;color:#fff;background:linear-gradient(#5CB27A,#2B7A4B);box-shadow:0 0 0 2px #FFE9C0}
+.gate{position:absolute;inset:0;z-index:30;display:grid;place-items:center;pointer-events:none}
+.gatein{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:10px;background:radial-gradient(80% 60% at 50% 45%,var(--gc,#2E6B54),#0B1A16 75%)}
+.gateorb{position:relative;width:110px;height:110px}
+.gatetitle{font-size:clamp(30px,9vw,40px);background:linear-gradient(#FFF7DC,#F2C766 55%,#B5822C);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 3px 0 rgba(0,0,0,.6))}
+.gatesub{font-size:12px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#FFE7A8}
 .splash{position:absolute;inset:0;z-index:60;display:grid;place-items:center;overflow:hidden;
   background:radial-gradient(90% 60% at 50% 45%,#23443A,#0C1B17 70%,#060D0B)}
 .spl-ring{position:absolute;left:50%;top:44%;width:0;height:0}
@@ -316,11 +342,11 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .hbadge.ok{background:linear-gradient(#5CB27A,#2B7A4B)}
 .homefoot{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 16px 14px;display:flex;flex-direction:column;align-items:center;gap:10px}
 .places{display:flex;justify-content:center;gap:8px}
-.place{position:relative;width:48px;height:48px;border-radius:50%;padding:3px;
+.lvmed{position:relative;width:48px;height:48px;border-radius:50%;padding:3px;
   background:linear-gradient(#FFEFC0,#C79A45 55%,#7A4F1E);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 3px 0 rgba(60,35,10,.7),0 6px 10px rgba(0,0,0,.4)}
-.place.locked{filter:grayscale(.85) brightness(.75)}
-.place.next{box-shadow:0 0 0 3px #FFF1C2,0 0 18px 4px rgba(255,210,120,.85),0 3px 0 rgba(60,35,10,.7)}
-.place .st{position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);font-size:9px;color:#FFD66E;text-shadow:0 1px 0 #000;white-space:nowrap}
+.lvmed.locked{filter:grayscale(.85) brightness(.75)}
+.lvmed.next{box-shadow:0 0 0 3px #FFF1C2,0 0 18px 4px rgba(255,210,120,.85),0 3px 0 rgba(60,35,10,.7)}
+.lvmed .st{position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);font-size:9px;color:#FFD66E;text-shadow:0 1px 0 #000;white-space:nowrap}
 #map .promise{margin:0;padding:6px 12px;font-size:11.5px}
 .homefoot .btn.big{width:100%;max-width:300px;margin-top:4px}
 .promise{flex:none;margin:10px 16px 22px;padding:12px 14px;border-radius:14px;font-size:13px;color:#33502F;font-weight:800;text-align:center;
@@ -429,6 +455,31 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .tile.breathing .orb{animation:breathe 2.2s ease-in-out infinite}
 @keyframes breathe{50%{transform:scale(1.16);box-shadow:0 0 0 2px #fff,0 0 22px 8px var(--l)}}
 .fx{position:absolute;pointer-events:none;z-index:5;border-radius:50%;transform:translate(-50%,-50%)}
+/* each element leaves the board its own way */
+.tile.pop.pop-water .orb{animation:washAway .5s cubic-bezier(.4,0,.6,1) forwards}
+@keyframes washAway{0%{transform:none}30%{transform:translateX(-5%) scale(1.05)}100%{transform:translate(75%,-10%) scale(.3);opacity:0;filter:blur(2px)}}
+.fx-wave{position:absolute;pointer-events:none;z-index:6;border-radius:45% 55% 40% 60%/60% 45% 55% 40%;
+  background:linear-gradient(100deg,rgba(90,170,240,0) 0%,rgba(90,170,240,.9) 28%,rgba(240,252,255,.98) 50%,rgba(55,125,220,.9) 70%,rgba(55,125,220,0) 100%);
+  box-shadow:0 0 14px rgba(150,210,255,.8)}
+.tile.pop.pop-earth{overflow:hidden}
+.tile.pop.pop-earth .orb{animation:swallow .56s cubic-bezier(.5,0,.75,.35) forwards}
+@keyframes swallow{0%{transform:none}22%{transform:translateY(-10%) scale(1.06,.94)}100%{transform:translateY(108%) scale(.82,1.12)}}
+.fx-hole{position:absolute;pointer-events:none;z-index:6;border-radius:50%;
+  background:radial-gradient(ellipse at 50% 38%,#140b04 0 42%,#4a2e12 68%,rgba(120,80,30,0) 100%)}
+.tile.pop.pop-wood .orb{animation:underPlank .54s linear forwards}
+@keyframes underPlank{0%,40%{opacity:1}44%,100%{opacity:0}}
+.fx-plank{position:absolute;pointer-events:none;z-index:6;border-radius:5px;
+  background:repeating-linear-gradient(90deg,rgba(0,0,0,0) 0 18%,rgba(90,50,20,.35) 18% 20%,rgba(0,0,0,0) 20% 44%,rgba(90,50,20,.28) 44% 46%),linear-gradient(#DDA463,#A86B34 60%,#7E4C22);
+  box-shadow:inset 0 1.5px 0 rgba(255,232,190,.7),inset 0 -2px 0 rgba(60,30,10,.45),0 3px 5px rgba(0,0,0,.45)}
+.tile.pop.pop-fire .orb{animation:burn .54s ease-in forwards}
+@keyframes burn{0%{filter:none;transform:none}22%{filter:brightness(1.9) saturate(1.6);transform:scale(1.14)}58%{filter:sepia(1) saturate(3) brightness(.55) contrast(1.4);transform:scale(.95)}100%{filter:brightness(.1);transform:scale(.45) translateY(-12%);opacity:0}}
+.fx-scorch{position:absolute;pointer-events:none;z-index:5;border-radius:50%;background:radial-gradient(circle,rgba(255,236,150,.95) 0 16%,rgba(255,130,40,.7) 36%,rgba(140,30,10,0) 70%)}
+.tile.grow .orb{animation:growIn .6s cubic-bezier(.3,1.7,.5,1)}
+@keyframes growIn{0%{transform:scale(0) rotate(-25deg);filter:brightness(2) saturate(1.5)}60%{filter:brightness(1.3)}100%{transform:none;filter:none}}
+.tile.pop.pop-metal .orb{opacity:0}
+.fx-half{position:absolute;left:0;top:0;pointer-events:none;z-index:6}
+.fx-slash{position:absolute;pointer-events:none;z-index:7;height:3px;border-radius:3px;
+  background:linear-gradient(90deg,transparent,#fff 25%,#fff 75%,transparent);box-shadow:0 0 10px #fff,0 0 22px rgba(200,230,255,.95)}
 .f-fire{background:radial-gradient(circle,#FFF0C2 0 18%,#FFA24B 45%,rgba(224,75,66,0) 72%);filter:blur(.3px)}
 .f-ring{border-radius:50%;background:none;box-shadow:0 0 0 2.5px rgba(180,218,247,.9),0 0 14px rgba(60,134,201,.7)}
 .f-ring.metalring{box-shadow:0 0 0 2px rgba(255,255,255,.95),0 0 16px rgba(220,227,233,.9)}
@@ -863,9 +914,12 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       </div>
     </div>
     <div class="gbot" style="padding-top:0;justify-content:space-between">
-      <div class="boosters">
-        <button class="boost" id="bShuffle"><span class="ic">↻</span>Swirl<span class="cost" id="cShuffle"></span></button>
-        <button class="boost" id="bLantern"><span class="ic">✦</span>Lantern<span class="cost" id="cLantern"></span></button>
+      <div class="boosters pwbar" id="pwBar">
+        <button class="pwbtn" data-pw="tiger" aria-label="Tiger Claw"><img src="img/icons/pw-tiger.jpg" alt=""><i id="pwc-tiger"></i></button>
+        <button class="pwbtn" data-pw="monkey" aria-label="Monkey Swap"><img src="img/icons/pw-monkey.jpg" alt=""><i id="pwc-monkey"></i></button>
+        <button class="pwbtn" data-pw="bear" aria-label="Bear Stomp"><img src="img/icons/pw-bear.jpg" alt=""><i id="pwc-bear"></i></button>
+        <button class="pwbtn" data-pw="crane" aria-label="Crane Wings"><img src="img/icons/pw-crane.jpg" alt=""><i id="pwc-crane"></i></button>
+        <button class="pwbtn" data-pw="deer" aria-label="Deer Stream"><img src="img/icons/pw-deer.jpg" alt=""><i id="pwc-deer"></i></button>
       </div>
       <div class="row" style="gap:6px"><span class="chip boostchip" id="boostChip" hidden>2× coins <span id="boostLeft"></span></span><button class="chip" id="shopOpen2" style="background:rgba(14,26,24,.5);color:#FBF3E2"><i class="coin"></i><span data-coins>0</span> +</button></div>
     </div>
@@ -879,6 +933,8 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <div class="who"><img src="img/sorin-3d.jpg" alt="Sorin smiling calmly"><div><b>Sorin</b><p id="iSorin"></p></div></div>
     <div class="goalline"><div class="mini cloudicon"></div><div id="iGoal"></div></div>
     <div class="goalline" style="background:rgba(140,198,228,.18)"><img src="img/luma-3d.jpg" alt="" style="width:36px;height:36px;border-radius:50%;object-fit:cover"><div id="iPower"></div></div>
+    <div class="charmhead"><b>Take a charm</b><span id="charmHint">Tap to bring one in with you</span></div>
+    <div class="charms" id="charmRow"></div>
     <div class="stack"><button class="btn gold" id="iGo">Begin</button></div>
   </div></div>
 
@@ -1042,8 +1098,8 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <p>The game is free. Only extras are for sale: power-ups, hearts, and boosts.</p>
     <h3 class="shoph">Power-ups and extras</h3>
     <div class="stack" style="margin-top:6px">
-      <button class="pack" data-buy="lanterns"><span class="bigic">✦</span><span class="amt">3 Sorin's Lanterns<small>Each clears a whole row of orbs</small></span><span class="price">$0.99</span></button>
-      <button class="pack" data-buy="swirls"><span class="bigic">↻</span><span class="amt">5 Luma's Swirls<small>Each stirs the board into new matches</small></span><span class="price">$0.99</span></button>
+      <button class="pack" data-buy="lanterns"><span class="bigic">✦</span><span class="amt">3 Tiger Claws<small>Each clears a whole row of orbs</small></span><span class="price">$0.99</span></button>
+      <button class="pack" data-buy="swirls"><span class="bigic">↻</span><span class="amt">5 Deer Streams<small>Each re-flows the board and fills Luma a little</small></span><span class="price">$0.99</span></button>
       <button class="pack" data-buy="hearts"><span class="bigic heart">♥</span><span class="amt">Full hearts<small>Back to 5 tries right away</small></span><span class="price">$0.99</span></button>
       <button class="pack" data-buy="boost"><span class="bigic">✺</span><span class="amt">Calm Boost<small>Double coins for 30 minutes</small></span><span class="price">$1.99</span></button>
       <button class="pack" data-buy="shields"><span class="bigic">🛡</span><span class="amt">2 Streak Shields<small>Each covers a day you miss</small></span><span class="price">$0.99</span></button>
@@ -1051,7 +1107,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <h3 class="shoph">Or watch a short video, if you want to</h3>
     <div class="stack" style="margin-top:6px">
       <button class="pack adpack" data-ad="heart"><span class="bigic">▶</span><span class="amt">+1 heart<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
-      <button class="pack adpack" data-ad="lantern"><span class="bigic">▶</span><span class="amt">+1 Sorin's Lantern<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
+      <button class="pack adpack" data-ad="lantern"><span class="bigic">▶</span><span class="amt">+1 Tiger Claw<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
       <button class="pack adpack" data-ad="boost"><span class="bigic">▶</span><span class="amt">Double coins for 10 minutes<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
     </div>
     <div class="stack" style="margin-top:14px"><button class="pack" data-hearts><span class="bigic heart">♥</span><span class="amt">Refill hearts with coins<small>Coins come from breathing and winning</small></span><span class="price coinprice"><i class="coin"></i> 90</span></button></div>
@@ -1077,6 +1133,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   </div></div>
 
   <div id="coach" aria-live="polite"><div id="hand" hidden aria-hidden="true">👆</div><div class="coachtip" id="coachTip" hidden></div></div>
+  <div class="gate" id="gate" hidden><div class="gatein"><div class="gateorb" id="gateOrb"></div><div class="gatetitle display" id="gateTitle"></div><div class="gatesub" id="gateSub"></div></div></div>
   <div class="toast" id="toast" role="status"></div>
 </div>
 
@@ -1151,7 +1208,25 @@ const DEF = { unlocked: 1, stars: {}, coins: 150, hearts: 5, swirls: 1, lanterns
   wheelDay: '', todayElem: '', wheelPrize: null,
   buddy: '', owned: ['fire', 'water', 'earth'], earlyPass: false, practiceDays: 0,
   quests: null, questChest: '',
-  sealsEarned: {}, tally: { harmony: 0, flow3: 0, voiced: 0 }, babyMode: false };
+  sealsEarned: {}, tally: { harmony: 0, flow3: 0, voiced: 0 }, babyMode: false,
+  pw: { monkey: 1, bear: 1, crane: 1 }, charms: { sprout: 1, heart: 1, root: 1, bell: 1, drop: 1 } };
+// In-game powers are the Five Animal Frolics. Each one plays like its animal moves and
+// quietly names its element and organ when used. Swirls and Lanterns became Deer and Tiger.
+const POWERS = [
+  { id: 'tiger', name: 'Tiger Claw', elem: 'wood', organ: 'liver', cost: 80, aim: true, how: 'Tap a row. The claw clears it.' },
+  { id: 'monkey', name: 'Monkey Swap', elem: 'fire', organ: 'heart', cost: 60, aim: true, how: 'Tap any two orbs to swap them.' },
+  { id: 'bear', name: 'Bear Stomp', elem: 'earth', organ: 'spleen', cost: 90, aim: true, how: 'Tap an orb. The ground takes everything around it.' },
+  { id: 'crane', name: 'Crane Wings', elem: 'metal', organ: 'lungs', cost: 100, aim: true, how: 'Tap an orb. The wings clear its row and column.' },
+  { id: 'deer', name: 'Deer Stream', elem: 'water', organ: 'kidneys', cost: 40, aim: false, how: 'The river re-flows the board and fills Luma a little.' }
+];
+// Charms are chosen before a level, one per element, each doing what its element does.
+const CHARMS = [
+  { id: 'sprout', name: 'Sprout', elem: 'wood', cost: 80, what: 'Wood grows: two lanterns sprout on the board.' },
+  { id: 'heart', name: 'Ember Heart', elem: 'fire', cost: 80, what: 'Fire sparks: a spirit star waits on the board.' },
+  { id: 'root', name: 'Root Stone', elem: 'earth', cost: 80, what: 'Earth grounds you: Luma starts half full.' },
+  { id: 'bell', name: 'Breeze Bell', elem: 'metal', cost: 80, what: 'Metal opens the lungs: three extra moves.' },
+  { id: 'drop', name: 'Still Drop', elem: 'water', cost: 80, what: 'Still water runs deep: your first breath clears two more clouds.' }
+];
 // Twelve seals, each earned by a deed rather than bought. This is the shelf everything
 // else points at: play every element, keep the cycle, use your voice, hold the balance.
 const SEALS = [
@@ -1333,7 +1408,7 @@ function orbHTML(type) { return `<div class="tile t-${type}" style="--t:100%;tra
 let toastT;
 function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2400); }
 function syncWallet() {
-  if (typeof syncBoosts === 'function' && $('#cShuffle')) syncBoosts();
+  if (typeof syncBoosts === 'function' && $('#pwBar')) syncBoosts();
   $$('[data-coins]').forEach(e => e.textContent = S.coins.toLocaleString());
   $$('[data-hearts]').forEach(e => e.textContent = S.hearts);
 }
@@ -1783,8 +1858,8 @@ const nextMile = () => MILES.find(m => m.d > S.streak) || MILES[MILES.length - 1
 function rewardText(m) {
   const bits = [];
   if (m.coins) bits.push(`${m.coins.toLocaleString()} coins`);
-  if (m.swirls) bits.push(`${m.swirls} Swirl${m.swirls > 1 ? 's' : ''}`);
-  if (m.lanterns) bits.push(`${m.lanterns} Lantern${m.lanterns > 1 ? 's' : ''}`);
+  if (m.swirls) bits.push(`${m.swirls} Deer Stream${m.swirls > 1 ? 's' : ''}`);
+  if (m.lanterns) bits.push(`${m.lanterns} Tiger Claw${m.lanterns > 1 ? 's' : ''}`);
   if (m.shields) bits.push(`${m.shields} Streak Shield${m.shields > 1 ? 's' : ''}`);
   if (m.seals) bits.push('a Spirit Seal');
   if (m.boost) bits.push(`${m.boost} min double coins`);
@@ -1897,7 +1972,7 @@ function confetti(sel) {
 /* ---------- press feel ---------- */
 // Every tappable thing answers the finger: a light ripple from the touch point, a small
 // squash, a soft wooden tock, and a haptic tick where the device supports it.
-const PRESSABLE = '.btn, .hicon, .place, .chip, .iconbtn, .node, .pack, .boost, .buddyrow, .sealslot, .quest, .rung, .breathbtn, .babybar button, .linkbtn';
+const PRESSABLE = '.btn, .hicon, .lvmed, .chip, .iconbtn, .node, .pack, .boost, .buddyrow, .sealslot, .quest, .rung, .breathbtn, .babybar button, .linkbtn';
 document.addEventListener('pointerdown', e => {
   const el = e.target.closest(PRESSABLE);
   if (!el || el.disabled) return;
@@ -1960,12 +2035,12 @@ function renderHome() {
       : 'One place a day starts your streak';
   // places
   const next = Math.min(S.unlocked, LEVELS.length) - 1;
-  $('#places').innerHTML = LEVELS.map((l, i) => `<button class="place ${i + 1 > S.unlocked ? 'locked' : ''} ${i === next ? 'next' : ''}" data-lv="${i}" aria-label="${l.place}">${orbHTML(l.elem)}<span class="st">${'★'.repeat(S.stars[i + 1] || 0)}</span></button>`).join('');
+  $('#places').innerHTML = LEVELS.map((l, i) => `<button class="lvmed ${i + 1 > S.unlocked ? 'locked' : ''} ${i === next ? 'next' : ''}" data-lv="${i}" aria-label="${l.place}">${orbHTML(l.elem)}<span class="st">${'★'.repeat(S.stars[i + 1] || 0)}</span></button>`).join('');
   $('#playNext').textContent = `Play · ${LEVELS[next].place}`;
   startHomeFx(el);
 }
 $('#places').addEventListener('click', e => {
-  const b = e.target.closest('.place'); if (!b) return;
+  const b = e.target.closest('.lvmed'); if (!b) return;
   if (b.classList.contains('locked')) { toast('Finish the place before it to open this one.'); return; }
   openLevel(+b.dataset.lv);
 });
@@ -2038,10 +2113,47 @@ function openLevel(i) {
   $('#iProblem').textContent = L.problem;
   $('#iSorin').textContent = L.sorin;
   $('#iGoal').innerHTML = `<b>Blow away ${L.clouds} storm clouds.</b> You have ${L.moves} moves. This place is <b>${ELEM[L.elem].name}</b>: ${L.shift}.`;
+  renderCharms();
   $('#iPower').innerHTML = `<b>1.</b> Match 3 of an element to fill Luma's glow.<br><b>2.</b> When she glows, tap her and breathe with her.<br>Slow breaths blow away more clouds. Match along the cycle (${ELEM[L.elem].feeds}) and Luma fills faster.`;
   showOv('intro');
   bell(523.25);
 }
+let charmPick = new Set();
+function charmCount(id) { return ((S.charms || {})[id]) || 0; }
+function renderCharms() {
+  $('#charmRow').innerHTML = CHARMS.map(c => {
+    const n = charmCount(c.id);
+    return `<button class="charm ${charmPick.has(c.id) ? 'on' : ''}" data-charm="${c.id}"><img src="img/icons/boost-${c.id}.jpg" alt=""><b>${c.name}</b><i class="${n ? '' : 'buy'}">${n ? `×${n}` : `${c.cost}c`}</i></button>`;
+  }).join('');
+}
+$('#charmRow').addEventListener('click', e => {
+  const b = e.target.closest('.charm'); if (!b) return;
+  const c = CHARMS.find(x => x.id === b.dataset.charm);
+  if (charmPick.has(c.id)) { charmPick.delete(c.id); $('#charmHint').textContent = 'Tap to bring one in with you'; }
+  else {
+    if (!charmCount(c.id) && S.coins < c.cost) { toast('Not enough coins for that charm.'); return; }
+    charmPick.add(c.id); $('#charmHint').textContent = c.what;
+    elemSound(c.elem, 0, 2);
+  }
+  renderCharms();
+});
+// charms take effect as the board fills
+function applyCharms() {
+  charmPick.forEach(id => {
+    const c = CHARMS.find(x => x.id === id);
+    if (charmCount(id) > 0) S.charms[id]--; else S.coins -= c.cost;
+    const pool = () => all().filter(t => !t.cloud && !t.sp && t.type !== 'spirit').sort(() => Math.random() - 0.5);
+    if (id === 'sprout') pool().slice(0, 2).forEach((t, i) => { t.sp = i ? 'col' : 'row'; paint(t); t.el.classList.add('born'); });
+    if (id === 'heart') { const t = pool()[0]; if (t) { t.type = 'spirit'; paint(t); t.el.classList.add('born'); } }
+    if (id === 'root') charge = Math.max(charge, 50);
+    if (id === 'bell') moves += 3;
+    if (id === 'drop') stillDrop = true;
+  });
+  if (charmPick.size) { save(); syncWallet(); say(`Charm${charmPick.size > 1 ? 's' : ''} ready: ${[...charmPick].map(id => CHARMS.find(c => c.id === id).name).join(', ')}.`); }
+  charmPick = new Set();
+  hud();
+}
+let stillDrop = false;
 $('#iGo').addEventListener('click', async () => { await hideOv('intro'); startLevel(); });
 
 /* ---------- board ---------- */
@@ -2244,9 +2356,12 @@ async function popSet(set) {
     if (board[t.r][t.c] === t) board[t.r][t.c] = null;
     ids.delete(String(t.id));
     t.el.classList.remove('breathing', 'sel');
-    t.el.classList.add('pop');
-    setTimeout(() => t.el.remove(), 280);
+    const exit = popExit || t.type;
+    t.el.classList.add('pop', `pop-${exit}`);
+    if (!reduce && t.type !== 'spirit') elementClear(exit, t);
+    setTimeout(() => t.el.remove(), 600);
   });
+  popExit = null;
   if (arr.length) {
     sparks(arr);
     shards(arr);
@@ -2279,9 +2394,13 @@ function gravity() {
     const n = w + 1;
     for (let r = w; r >= 0; r--) {
       const t = newTile(rnd(TYPES)); board[r][c] = t;
+      t.el.style.transitionDelay = `${c * 26 + (w - r) * 16}ms`;
+      setTimeout(() => { t.el.style.transitionDelay = ''; }, 900);
+      if (growNext) { t.el.classList.add('grow'); setTimeout(() => t.el.classList.remove('grow'), 1300); }
       drop(t, r - n, r, c);
     }
   }
+  growNext = false;
 }
 
 async function settle() {
@@ -2322,7 +2441,7 @@ boardEl.addEventListener('pointerdown', e => {
   const el = e.target.closest('.tile'); if (!el || busy) return;
   const t = ids.get(el.dataset.id); if (!t) return;
   ac();
-  if (mode === 'lantern') { useLantern(t); return; }
+  if (mode) { usePowerOn(t); return; }
   drag = { t, x: e.clientX, y: e.clientY, moved: false };
   try { boardEl.setPointerCapture(e.pointerId); } catch (err) {}
 });
@@ -2609,7 +2728,7 @@ function breathPlan(q) {
   const cl = clouds().length, an = all().filter(t => t.type === L.elem && !t.cloud).length;
   const tier = q >= 0.72 ? 'deep' : q >= 0.4 ? 'nice' : 'small';
   const sang = lastVoiced >= 0.45;
-  const cloudsOff = Math.min(cl, tier === 'deep' ? 4 : tier === 'nice' ? 2 : 1);
+  const cloudsOff = Math.min(cl, (tier === 'deep' ? 4 : tier === 'nice' ? 2 : 1) + (stillDrop ? 2 : 0));
   const orbs = 0;
   const coins = ((tier === 'deep' ? 20 : tier === 'nice' ? 10 : 3) + (sang ? 8 : 0)) * coinMult();
   return { tier, cloudsOff: cloudsOff + (sang && cl > cloudsOff ? 1 : 0), orbs, coins, sang };
@@ -2639,6 +2758,7 @@ $('#brBack').addEventListener('click', async () => {
 async function applyBreath(q) {
   const p = breathPlan(q);
   glowGoal(false);
+  stillDrop = false;
   if (p.tier === 'deep') { deepBreaths++; questBump('deep'); }
   if (p.sang) { questBump('sound'); bumpTally('voiced'); }
   if (p.cloudsOff) questBump('clouds', p.cloudsOff);
@@ -2668,10 +2788,16 @@ function spend(n) {
   if (S.coins < n) { toast('Not enough coins yet. Luma\'s shop has more.'); showOv('shop'); return false; }
   S.coins -= n; save(); syncWallet(); return true;
 }
+const pwCount = id => id === 'tiger' ? (S.lanterns || 0) : id === 'deer' ? (S.swirls || 0) : ((S.pw || {})[id] || 0);
+function pwTake(id) {
+  if (id === 'tiger') S.lanterns--; else if (id === 'deer') S.swirls--; else S.pw[id]--;
+  save();
+}
 function syncBoosts() {
-  const cost = (n, c) => n > 0 ? `<b class="own">×${n}</b>` : `<i class="coin"></i>${c}`;
-  $('#cShuffle').innerHTML = cost(S.swirls, 40);
-  $('#cLantern').innerHTML = cost(S.lanterns, 80);
+  POWERS.forEach(pw => {
+    const el = document.getElementById(`pwc-${pw.id}`);
+    if (el) { const n = pwCount(pw.id); el.innerHTML = n > 0 ? `${n}` : `<i class="coin"></i>${pw.cost}`; el.classList.toggle('buy', n <= 0); }
+  });
   const left = (S.boostUntil || 0) - Date.now();
   $('#boostChip').hidden = left <= 0;
   if (left > 0) $('#boostLeft').textContent = `${Math.floor(left / 60000)}:${String(Math.floor(left / 1000) % 60).padStart(2, '0')}`;
@@ -2683,26 +2809,91 @@ function usePower(kind, cost) {
   return spend(cost);
 }
 $('#shopOpen2').addEventListener('click', () => showOv('shop'));
-$('#bShuffle').addEventListener('click', async () => {
-  if (busy) return;
-  if (!usePower('swirls', 40)) return;
-  busy = true; say('Luma swirls the orbs into a new pattern.');
-  await shuffle(); busy = false;
+// ---- the Five Animal Frolics, in play ----
+let monkeyFirst = null, lastPower = null;
+function powerCaption(pw) {
+  const bar = $('#flowBar');
+  bar.innerHTML = `<span><b>${pw.name}</b> · ${ELEM[pw.elem].name} · the ${pw.organ}</span>`;
+  bar.hidden = false;
+  bar.animate([{ transform: 'scale(.85)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
+  clearTimeout(bar._t); bar._t = setTimeout(() => { bar.hidden = true; bar.innerHTML = '<span id="flowText"></span>'; }, 3200);
+}
+function setAim(id) {
+  mode = id;
+  boardEl.classList.toggle('aiming', !!id);
+  $$('.pwbtn').forEach(b => b.classList.toggle('on', b.dataset.pw === id));
+}
+async function paidFor(pw) {
+  if (pwCount(pw.id) > 0) { pwTake(pw.id); syncBoosts(); return true; }
+  return spend(pw.cost);
+}
+// the creation cycle, taught through the powers: use them in order and it pays
+function cycleCheck(pw) {
+  if (lastPower && CREATES[lastPower] === pw.elem) {
+    charge = Math.min(100, charge + 20);
+    if (!babyOn()) { S.coins += 30; save(); }
+    say(`${ELEM[lastPower].feeds}. You followed the creation cycle.`);
+    chord([ELEM[lastPower].tone, ELEM[pw.elem].tone, ELEM[pw.elem].tone * 1.5], 0.08);
+    hud();
+  }
+  lastPower = pw.elem;
+}
+$('#pwBar').addEventListener('click', async e => {
+  const b = e.target.closest('.pwbtn'); if (!b || busy) return;
+  const pw = POWERS.find(p => p.id === b.dataset.pw);
+  if (mode === pw.id) { setAim(null); monkeyFirst = null; say('Put away.'); return; }
+  if (pwCount(pw.id) <= 0 && S.coins < pw.cost) { spend(pw.cost); return; }
+  if (pw.aim) { setAim(pw.id); monkeyFirst = null; say(pw.how); powerCaption(pw); return; }
+  // Deer Stream acts at once
+  if (!await paidFor(pw)) return;
+  busy = true; powerCaption(pw); cycleCheck(pw);
+  elemSound('water', 0, 4);
+  await shuffle();
+  charge = Math.min(100, charge + 20); hud();
+  busy = false;
 });
-$('#bLantern').addEventListener('click', () => {
-  if (busy) return;
-  if (mode === 'lantern') { mode = null; boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on'); return; }
-  if (S.lanterns <= 0 && S.coins < 80) { spend(80); return; }
-  mode = 'lantern'; boardEl.classList.add('aiming'); $('#bLantern').classList.add('on');
-  say("Tap any orb. Sorin's lantern will clear its whole row.");
-});
-async function useLantern(t) {
-  mode = null; boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on');
-  if (!usePower('lanterns', 80)) return;
-  busy = true; flash(); chord([659.25, 880, 1174.66], 0.05);
-  await resolve(new Set(board[t.r].filter(Boolean)), [], null);
+async function usePowerOn(t) {
+  const pw = POWERS.find(p => p.id === mode); if (!pw) return;
+  if (pw.id === 'monkey') {
+    if (!monkeyFirst) { monkeyFirst = t; t.el.classList.add('sel'); say('Now tap the orb to swap it with.'); return; }
+    if (monkeyFirst === t) { t.el.classList.remove('sel'); monkeyFirst = null; return; }
+    const a = monkeyFirst; monkeyFirst = null; a.el.classList.remove('sel');
+    if (a.cloud || t.cloud) { say('Clouds only leave when you breathe.'); return; }
+    if (!await paidFor(pw)) return;
+    setAim(null); busy = true; cycleCheck(pw);
+    elemSound('fire', 0, 3);
+    swapCells(a, t); await wait(240);
+    const m = findMatches();
+    if (m.clear.size) await resolve(m.clear, m.groups, [a, t]);
+    await settle();
+    return;
+  }
+  let cells = [];
+  if (pw.id === 'tiger') cells = board[t.r].filter(Boolean);
+  else if (pw.id === 'bear') { for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const r = t.r + dr, c = t.c + dc; if (board[r] && board[r][c]) cells.push(board[r][c]); } }
+  else if (pw.id === 'crane') cells = [...board[t.r].filter(Boolean), ...board.map(row => row[t.c]).filter(Boolean)];
+  cells = [...new Set(cells)].filter(x => !x.cloud);                 // clouds belong to the breath
+  if (!cells.length) return;
+  if (!await paidFor(pw)) return;
+  setAim(null); busy = true; cycleCheck(pw);
+  popExit = pw.id === 'tiger' ? 'metal' : pw.id === 'bear' ? 'earth' : 'water';
+  if (pw.id === 'tiger') clawMarks(t.r);
+  flash();
+  await resolve(new Set(cells), [], null);
   await settle();
 }
+function clawMarks(row) {
+  if (reduce) return;
+  const y = row * T + T / 2, w = boardEl.clientWidth;
+  [-0.22, 0, 0.22].forEach((o, i) => {
+    const d = document.createElement('div'); d.className = 'fx-slash claw';
+    d.style.cssText = `left:${-10}px;top:${y + o * T}px;width:${w + 20}px`;
+    boardEl.appendChild(d);
+    d.animate([{ transform: 'rotate(-6deg) scaleX(0)', transformOrigin: 'left center', opacity: 1 }, { transform: 'rotate(-6deg) scaleX(1)', opacity: 1, offset: .35 }, { transform: 'rotate(-6deg) scaleX(1)', opacity: 0 }],
+      { duration: 420, delay: i * 60, easing: 'ease-out' }).onfinish = () => d.remove();
+  });
+}
+
 
 /* ---------- hud / scene ---------- */
 const kai = $('#kaiFace');
@@ -2823,6 +3014,55 @@ function bit(cls, x, y, size) {
   return d;
 }
 const gone = a => { a.onfinish = () => a.effect.target.remove(); };
+let growNext = false, popExit = null;
+function elementClear(type, t) {
+  const x = t.c * T + T / 2, y = t.r * T + T / 2, delay = t.c * 24;
+  const add = (cls, css) => { const d = document.createElement('div'); d.className = cls; d.style.cssText = css; boardEl.appendChild(d); return d; };
+  const done = a => { a.onfinish = () => a.effect.target.remove(); };
+  if (type === 'water') {
+    // a wave rolls across and takes the orb with it
+    const w = add('fx-wave', `left:${x - T * 0.7}px;top:${y - T * 0.42}px;width:${T * 1.4}px;height:${T * 0.84}px`);
+    done(w.animate([{ transform: `translateX(${-T * 1.1}px) scaleY(.6)`, opacity: 0 }, { transform: 'translateX(0) scaleY(1)', opacity: 1, offset: .45 },
+      { transform: `translateX(${T * 1.2}px) scaleY(.7)`, opacity: 0 }], { duration: 520, delay, easing: 'cubic-bezier(.35,0,.4,1)' }));
+  } else if (type === 'earth') {
+    // the ground opens and swallows it, then closes
+    const h = add('fx-hole', `left:${x - T * 0.42}px;top:${y + T * 0.24}px;width:${T * 0.84}px;height:${T * 0.26}px`);
+    done(h.animate([{ transform: 'scaleX(0) scaleY(.4)' }, { transform: 'scaleX(1) scaleY(1)', offset: .3 }, { transform: 'scaleX(1.05) scaleY(1)', offset: .75 },
+      { transform: 'scaleX(0) scaleY(.3)' }], { duration: 600, easing: 'ease-in-out' }));
+  } else if (type === 'wood') {
+    // two planks slide across and cover it, then lift away
+    const top = add('fx-plank', `left:${x - T * 0.48}px;top:${y - T * 0.47}px;width:${T * 0.96}px;height:${T * 0.46}px`);
+    const bot = add('fx-plank', `left:${x - T * 0.48}px;top:${y + T * 0.01}px;width:${T * 0.96}px;height:${T * 0.46}px`);
+    done(top.animate([{ transform: `translateX(${-T * 1.15}px)` }, { transform: 'translateX(0)', offset: .42 }, { transform: 'translateX(0)', offset: .62 },
+      { transform: `translateY(${-T * 0.3}px)`, opacity: 0 }], { duration: 620, delay: delay * .5, easing: 'cubic-bezier(.3,.9,.3,1)' }));
+    done(bot.animate([{ transform: `translateX(${T * 1.15}px)` }, { transform: 'translateX(0)', offset: .42 }, { transform: 'translateX(0)', offset: .62 },
+      { transform: `translateY(${T * 0.3}px)`, opacity: 0 }], { duration: 620, delay: delay * .5, easing: 'cubic-bezier(.3,.9,.3,1)' }));
+  } else if (type === 'fire') {
+    // it flares, chars, and the next orbs grow up out of the heat
+    const sc = add('fx-scorch', `left:${x - T * 0.6}px;top:${y - T * 0.6}px;width:${T * 1.2}px;height:${T * 1.2}px`);
+    done(sc.animate([{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1)', opacity: 1, offset: .3 }, { transform: 'scale(1.4)', opacity: 0 }], { duration: 560, easing: 'ease-out' }));
+    growNext = true;
+  } else if (type === 'metal') {
+    // a clean slice: one bright line, two halves that fall away
+    const ang = -32;
+    const sl = add('fx-slash', `left:${x - T * 0.7}px;top:${y - 1.5}px;width:${T * 1.4}px`);
+    sl.style.transform = `rotate(${ang}deg) scaleX(0)`;
+    done(sl.animate([{ transform: `rotate(${ang}deg) scaleX(0)`, opacity: 1 }, { transform: `rotate(${ang}deg) scaleX(1)`, opacity: 1, offset: .25 },
+      { transform: `rotate(${ang}deg) scaleX(1.1)`, opacity: 0 }], { duration: 360, easing: 'ease-out' }));
+    [['polygon(0 0,100% 0,100% 18%,0 82%)', -1], ['polygon(0 82%,100% 18%,100% 100%,0 100%)', 1]].forEach(([clip, dir]) => {
+      const half = t.el.cloneNode(true);
+      half.classList.remove('pop', 'pop-metal', 'sel', 'hint', 'breathing');
+      half.classList.add('fx-half');
+      half.style.transform = `translate(${t.c * T}px,${t.r * T}px)`;
+      half.style.clipPath = clip; half.style.transition = 'none';
+      boardEl.appendChild(half);
+      done(half.animate([{ transform: `translate(${t.c * T}px,${t.r * T}px)`, opacity: 1 },
+        { transform: `translate(${t.c * T + dir * T * 0.28}px,${t.r * T + dir * T * 0.18}px) rotate(${dir * 14}deg)`, opacity: 1, offset: .45 },
+        { transform: `translate(${t.c * T + dir * T * 0.5}px,${t.r * T + T * 0.6}px) rotate(${dir * 30}deg)`, opacity: 0 }],
+        { duration: 560, delay: 60, easing: 'cubic-bezier(.3,.6,.6,1)' }));
+    });
+  }
+}
 function fxFor(type, tiles) {
   if (reduce) return;
   tiles.slice(0, 8).forEach(t => {
@@ -2930,8 +3170,28 @@ function sparks(arr) {
     setTimeout(() => elemSound(type, pan, step), k * 45);
   });
 }
+// texture layer that matches what the eye sees on each clear
+function clearTexture(type, pan) {
+  const a = ac(); if (!a || muted) return;
+  const t = a.currentTime, out = voice(pan, 0.5);
+  const burst = (tt, f0, f1, q, peak, dur, kind = 'bandpass') => {
+    const n = noise(), flt = a.createBiquadFilter(), g = a.createGain();
+    flt.type = kind; flt.Q.value = q;
+    flt.frequency.setValueAtTime(f0, tt); flt.frequency.exponentialRampToValueAtTime(f1, tt + dur);
+    n.connect(flt).connect(g).connect(out); env(g, tt, peak, dur * 0.3, dur * 0.7); n.start(tt); n.stop(tt + dur + 0.05);
+  };
+  if (type === 'water') burst(t, 500, 2600, 0.8, 0.07, 0.42);                 // the wave rolling over
+  else if (type === 'earth') {                                                  // a soft gulp as the ground closes
+    const g = a.createGain(); g.connect(out); env(g, t + 0.12, 0.12, 0.01, 0.28);
+    const o = osc(a, 'sine', 180, t + 0.12, 0.32, g); o.frequency.exponentialRampToValueAtTime(70, t + 0.38);
+  } else if (type === 'wood') {                                                 // two planks meeting
+    [0, 0.09].forEach((d, i) => { const g = a.createGain(); g.connect(out); env(g, t + 0.2 + d, 0.08, 0.001, 0.05); osc(a, 'triangle', 420 + i * 90, t + 0.2 + d, 0.08, g); });
+  } else if (type === 'fire') burst(t, 300, 1500, 0.7, 0.08, 0.36, 'lowpass');  // a warm whoomp
+  else if (type === 'metal') burst(t, 5200, 7800, 6, 0.05, 0.22);               // the shing of a clean cut
+}
 function elemSound(type, pan = 0, step = 0) {
   const a = ac(); if (!a || muted) return;
+  clearTexture(type, pan);
   const root = (ELEM[type] || {}).tone || 660;
   const f = root * LADDER[Math.min(step, LADDER.length - 1)] * detune();
   const t = a.currentTime;
@@ -3167,11 +3427,13 @@ function startLevel() {
   moves = L.moves; charge = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
   deepBreaths = 0; breathing = false;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
-  boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on');
+  setAim(null); monkeyFirst = null; lastPower = null;
   makeRig($('#kaiFace'), 'kai');
   paintBuddyGame();
+  syncBoosts();
+  playGate();
   setTimeout(() => {
-    sizeBoard(); sizeRain(); fill(); hud();
+    sizeBoard(); sizeRain(); fill(); applyCharms(); hud();
     say(S.buddy === L.elem
       ? `${BUDDY[S.buddy].name} is at home here. Match 3 of the same element to fill Luma.`
       : 'Swipe to match 3 of the same element. Each match fills Luma.');
@@ -3182,6 +3444,22 @@ function startLevel() {
       else coachStart();
     }, 700);
   }, 30);
+}
+async function playGate() {
+  const g = $('#gate'), el = L.elem;
+  $('#gateOrb').innerHTML = orbHTML(el);
+  $('#gateTitle').textContent = L.place;
+  $('#gateSub').textContent = `${ELEM[el].name} · ${L.shift}`;
+  g.querySelector('.gatein').style.setProperty('--gc', ELEM[el].hue);
+  g.hidden = false;
+  g.style.clipPath = 'circle(150% at 50% 50%)';
+  elemSound(el, 0, 2); bell(ELEM[el].tone, 0.15, 0.06);
+  if (reduce) { await wait(600); g.hidden = true; return; }
+  $('#gateOrb').animate([{ transform: 'scale(.4) rotate(-90deg)', opacity: 0 }, { transform: 'scale(1.1) rotate(10deg)', opacity: 1, offset: .5 }, { transform: 'scale(1)' }], { duration: 600, easing: 'cubic-bezier(.3,1.5,.5,1)' });
+  await wait(900);
+  const a = g.animate([{ clipPath: 'circle(150% at 50% 50%)' }, { clipPath: 'circle(0% at 50% 50%)' }], { duration: 520, easing: 'cubic-bezier(.6,0,.4,1)' });
+  await a.finished.catch(() => {});
+  g.hidden = true;
 }
 function toMap() {
   running = false; busy = true;
@@ -3283,8 +3561,8 @@ $('#shop').addEventListener('click', async e => {
   const buy = e.target.closest('[data-buy]');
   if (buy) {
     const k = buy.dataset.buy;
-    if (k === 'lanterns') { S.lanterns += 3; toast("Preview: 3 Sorin's Lanterns added. No charge."); }
-    if (k === 'swirls') { S.swirls += 5; toast("Preview: 5 Luma's Swirls added. No charge."); }
+    if (k === 'lanterns') { S.lanterns += 3; toast('Preview: 3 Tiger Claws added. No charge.'); }
+    if (k === 'swirls') { S.swirls += 5; toast('Preview: 5 Deer Streams added. No charge.'); }
     if (k === 'hearts') { S.hearts = 5; toast('Preview: hearts are full. No charge.'); $('#lRetry').textContent = 'Try again · uses a heart'; }
     if (k === 'boost') { S.boostUntil = Math.max(Date.now(), S.boostUntil || 0) + 30 * 60000; toast('Preview: double coins for 30 minutes. No charge.'); }
     if (k === 'shields') { S.shields += 2; toast('Preview: 2 Streak Shields added. No charge.'); renderStreak(); }
@@ -3296,7 +3574,7 @@ $('#shop').addEventListener('click', async e => {
     await playAd();
     const k = ad.dataset.ad;
     if (k === 'heart') { S.hearts = Math.min(5, S.hearts + 1); toast('Thanks for watching. +1 heart.'); $('#lRetry').textContent = 'Try again · uses a heart'; }
-    if (k === 'lantern') { S.lanterns++; toast("Thanks for watching. +1 Sorin's Lantern."); }
+    if (k === 'lantern') { S.lanterns++; toast('Thanks for watching. +1 Tiger Claw.'); }
     if (k === 'boost') { S.boostUntil = Math.max(Date.now(), S.boostUntil || 0) + 10 * 60000; toast('Thanks for watching. Double coins for 10 minutes.'); }
     save(); syncWallet(); bell(880);
     return;
