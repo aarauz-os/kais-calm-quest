@@ -36,6 +36,9 @@
 .emboss-d{text-shadow:0 2px 0 rgba(0,0,0,.45)}
 html,body{height:100%}
 [hidden]{display:none!important}
+.seccard #secArt{display:flex;justify-content:center;margin:8px 0 12px}
+.seccard #secArt img{width:118px;height:118px;border-radius:30px;object-fit:cover;box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 3px rgba(255,236,180,.55)}
+.seccard .secorb{width:104px;height:104px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0,#C8F5B8 18%,#5FCB7E 52%,#1E7A52 100%);box-shadow:0 0 30px 8px rgba(120,230,150,.55)}
 body{background:var(--night);color:var(--ink);font-family:Nunito,ui-rounded,"SF Pro Rounded",system-ui,sans-serif;overflow:hidden;-webkit-tap-highlight-color:transparent}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
@@ -2533,6 +2536,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
           <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
           <li><b>A real conversation</b> each episode: you feel it, Kai gets it, Sorin helps</li>
           <li><b>One new thing at a time.</b> Episode 1 is just matching; every third episode adds one piece, obstacle or helper with its own showcase level, and every ninth from 27 is a harder Stormy episode, with a Thunderstorm at 54</li>
+          <li><b>The game opens up as you play.</b> A new player starts with just Home, the Journey and the Shop. The streak, quests, Collection, companion, Harmony, seals, daily wheel and Season Pass arrive one at a time over the first 24 episodes, each with its own welcome</li>
           <li><b>Boards in many shapes</b>: hearts, lotus flowers, arches, towers, waves, and gentle difficulty with Luma lending extra moves when a level feels hard</li>
         </ul>
       </section>
@@ -2562,7 +2566,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
           <li><b>Free forever.</b> No paywall, no forced ads.</li>
           <li><b>Small extras only</b> at $0.99, $1.99 or $4.99, and a grown-up approves every purchase. The optional Golden Path pays back enough coins for next season's.</li>
           <li><b>No chat, no leaderboards, no strangers.</b> Feelings are never "bad".</li>
-          <li><b>A weekly calm summary</b>: breaths, feelings explored and a question to ask your child tonight.</li>
+          <li><b>A weekly calm summary</b>, after the first week of play: breaths, feelings explored and a question to ask your child tonight.</li>
         </ul>
       </section>
 
@@ -2813,6 +2817,13 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="note">Every seal marks something you did: an element calmed, a cycle kept, your own voice used, the balance held.</div>
   </div></div>
 
+  <div class="ov" id="secov" hidden style="align-items:center"><div class="card rewardcard seccard" role="dialog" aria-labelledby="secName">
+    <div class="eyebrow" style="color:var(--gold2)">New!</div>
+    <div id="secArt"></div>
+    <h2 class="display" id="secName"></h2>
+    <p id="secSay" style="color:#D8E6DF"></p>
+    <div class="stack"><button class="btn gold" id="secGo">Show me</button></div>
+  </div></div>
   <div class="ov" id="sealwin" hidden style="align-items:center"><div class="card rewardcard" role="dialog" aria-labelledby="sealWinName">
     <div class="eyebrow" style="color:var(--gold2)">New seal</div>
     <div id="sealWinArt"></div>
@@ -3294,6 +3305,21 @@ const INTRO_AT = Object.fromEntries(Object.entries(FEAT_AT).map(([k, v]) => [v, 
 const reached = () => Math.max(S && S.unlocked || 1, (typeof LI === 'number' ? LI : 0) + 1);
 const featOn = (k, ep = (typeof LI === 'number' ? LI : 0) + 1) => ep >= FEAT_AT[k];
 const featEver = k => reached() >= FEAT_AT[k];
+// Home sections open one at a time, each after finishing an episode that's a multiple of 3.
+// Like Royal Kingdom holding back Teams (21) and its pass (31): a new player sees only what they need.
+// Grown-up things (Why MorQi, Baby mode, Bedtime, the Shop) are always there.
+const SEC_AT = { streak: 3, quests: 6, collection: 9, buddy: 12, harmony: 15, seals: 18, wheel: 21, pass: 24 };
+const secOn = k => (S.unlocked || 1) > SEC_AT[k];
+// rewards never hand out a booster before gameplay has introduced it; until then it comes as coins
+const BOOST_COIN = 80, PW_KEY = { lanterns: 'tiger', swirls: 'deer' };
+function fitReward(m) {
+  if (!m || typeof m !== 'object') return m;
+  const o = Object.assign({}, m); let n = 0;
+  Object.entries(PW_KEY).forEach(([k, f]) => { if (o[k] && !featEver(f)) { n += o[k]; delete o[k]; } });
+  if (o.pw && typeof o.pw === 'string' && !featEver(o.pw)) { n += o.n || 1; delete o.pw; delete o.n; }
+  if (n) o.coins = (o.coins || 0) + n * BOOST_COIN;
+  return o;
+}
 // shapes chosen to suit what each episode teaches (wide rows for lines, open middles for shapes)
 // intro episodes use a simple board so the new thing is easy to see; the others rotate through the shapes
 const SHAPE_CYCLE = [null, 'bowl', 'heart', 'castle', 'diamond', 'arch', 'lotus', 'gate', 'hourglass', 'tower', 'wave'];
@@ -3854,7 +3880,7 @@ function teaseBal() {
 }
 function balanceBonus() {
   const st = balState();
-  if (!st.even || S.balBonusDay === dayKey()) return null;
+  if (!st.even || S.balBonusDay === dayKey() || !secOn('harmony')) return null;
   S.balBonusDay = dayKey();
   const gift = { coins: 200 * coinMult(), swirls: 1 };
   grant(gift);
@@ -4019,7 +4045,7 @@ const sealGlyph = sl => sl.elem ? GLYPH[sl.elem] : ({
 }[sl.id] || GLYPH.spirit);
 const sealCount = () => Object.keys(S.sealsEarned || {}).length;
 function awardSeal(id) {
-  if (babyOn()) return null;
+  if (babyOn() || !secOn('seals')) return null;
   if (!S.sealsEarned) S.sealsEarned = {};
   if (S.sealsEarned[id]) return null;
   const sl = SEALS.find(x => x.id === id);
@@ -4045,7 +4071,7 @@ $('#sealWinGo').addEventListener('click', () => hideOv('sealwin'));
 // a small daily practice log for the grown-ups' weekly summary (baby mode never counts)
 function logDay(k, n = 1, el) {
   if (babyOn()) return;
-  const d = dayKey(); S.wk = S.wk || {};
+  const d = dayKey(); S.wk = S.wk || {}; S.firstDay = S.firstDay || Object.keys(S.wk).sort()[0] || d;
   const r = S.wk[d] = S.wk[d] || { b: 0, d: 0, e: 0, c: 0, bed: 0, f: {} };
   r[k] = (r[k] || 0) + n; if (el) r.f[el] = (r.f[el] || 0) + 1;
   const keys = Object.keys(S.wk).sort(); while (keys.length > 21) delete S.wk[keys.shift()];
@@ -4103,7 +4129,7 @@ function ensureQuests() {
   return S.quests;
 }
 function questBump(id, amount = 1, elem) {
-  if (babyOn()) return;                 // baby mode is for the baby, not the record
+  if (babyOn() || !secOn('quests')) return;                 // baby mode is for the baby, not the record
   const q = ensureQuests();
   let changed = false;
   q.items.forEach(it => {
@@ -4446,7 +4472,7 @@ const dayKey = (off = 0) => new Date(Date.now() + ((S.demoOffset || 0) + off) * 
 const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / DAY);
 const nextMile = () => MILES.find(m => m.d > S.streak) || MILES[MILES.length - 1];
 function rewardText(m) {
-  const bits = [];
+  m = fitReward(m); const bits = [];
   if (m.coins) bits.push(`${m.coins.toLocaleString()} coins`);
   if (m.swirls) bits.push(`${m.swirls} Deer Leap${m.swirls > 1 ? 's' : ''}`);
   if (m.lanterns) bits.push(`${m.lanterns} Tiger Claw${m.lanterns > 1 ? 's' : ''}`);
@@ -4458,6 +4484,7 @@ function rewardText(m) {
 }
 function grant(m) {
   if (babyOn()) return;
+  m = fitReward(m);
   S.coins += m.coins || 0;
   S.swirls += m.swirls || 0;
   S.lanterns += m.lanterns || 0;
@@ -4489,7 +4516,7 @@ function streakOnOpen() {
     const gap = daysBetween(S.lastDay, today);
     if (gap === 2 && S.shields > 0 && S.streak > 0) { S.shields--; save(); toast('A Streak Shield covered yesterday.'); }
     else if (gap > 1 && S.streak > 0) { S.lost = S.streak; S.streak = 0; save(); }
-    if (gap >= 7 && S.comebackOn !== today) { S.comebackOn = today; save(); showComeback(gap); }
+    if (gap >= 7 && secOn('streak') && S.comebackOn !== today) { S.comebackOn = today; save(); showComeback(gap); }
   }
   renderStreak();
 }
@@ -4704,7 +4731,7 @@ document.addEventListener('pointerdown', () => {
 /* ---------- UI kit v2 helpers ---------- */
 const RW_ICON = { coins: 'img/ui/coins.png', swirls: 'img/ui/pw-deer.png', lanterns: 'img/ui/pw-tiger.png', shields: 'img/ui/shield.png', boost: 'img/ui/double.png', title: 'img/ui/crown.png', seals: 'img/ui/star.png', hearts: 'img/ui/heart.png' };
 function rewardIcons(m) {
-  const out = [];
+  m = fitReward(m); const out = [];
   if (m.coins) out.push(['coins', m.coins.toLocaleString()]);
   if (m.swirls) out.push(['swirls', `×${m.swirls}`]);
   if (m.lanterns) out.push(['lanterns', `×${m.lanterns}`]);
@@ -4789,6 +4816,43 @@ function renderHome() {
   $('#playNext').classList.toggle('stormy', !!dz.name);
   startHomeFx(el, tod);
   renderSorin();
+  applySections();
+}
+
+/* ---------- Sections that open as you play ---------- */
+const SEC_SEL = { streak: '[data-open="streakChip"]', quests: '[data-open="questCard"]', wheel: '[data-open="wheelCard"]', buddy: '[data-open="buddyCard"]', seals: '[data-open="sealCard"]', collection: '#tabbar [data-tab="collection"]', harmony: '#tabbar [data-tab="harmony"]', pass: '.homepass' };
+const SEC_CARD = {
+  streak: ['Daily streak', 'img/icons/icon-streak-3d.jpg', 'Play one episode a day to grow your streak. Every few days brings a gift.'],
+  quests: ["Today's quests", 'img/icons/icon-quests-3d.jpg', 'Three small things to try each day. Finish all three for a chest.'],
+  collection: ['Collection', 'img/ui/journal.png', 'Everything you find on your journey is kept here, ready to look back on.'],
+  buddy: ['Your companion', 'img/icons/icon-buddy-3d.jpg', 'Your companion has a home of its own now. Visit, breathe together and watch it grow.'],
+  harmony: ['Harmony', null, 'See how your five elements are glowing, and which one could use a little care.'],
+  seals: ['Spirit Seals', 'img/icons/icon-seal-3d.jpg', 'Special seals for special moments. Collect them all in your book.'],
+  wheel: ['Daily wheel', 'img/icons/icon-wheel-3d.jpg', "Spin once a day to choose today's element and find a small gift."],
+  pass: ['Season Pass', 'img/pass/trophy-lotus.png', 'Every episode now earns Spirit Stars. Spend them on pages of rewards all season long.']
+};
+function applySections() {
+  Object.entries(SEC_SEL).forEach(([k, sel]) => $$(sel).forEach(x => { x.hidden = !secOn(k); }));
+  // a returning player keeps what they already had; only sections opened from here on get a card
+  if (!S.secSeen) { S.secSeen = {}; Object.keys(SEC_AT).forEach(k => { if (secOn(k)) S.secSeen[k] = 1; }); save(); }
+  clearTimeout(applySections.t);
+  applySections.t = setTimeout(secIntro, 900);
+}
+async function secIntro() {
+  const k = Object.keys(SEC_AT).find(x => secOn(x) && !S.secSeen[x]);
+  if (!k || $('#map').hidden || tabPageOpen() || $$('.ov.show').length) return;
+  S.secSeen[k] = 1; save();
+  const [t, img, say] = SEC_CARD[k];
+  $('#secArt').innerHTML = img ? `<img src="${img}" alt="">` : `<span class="secorb"></span>`;
+  $('#secName').textContent = t; $('#secSay').textContent = say;
+  $('#secGo').onclick = async () => {
+    await hideOv('secov');
+    const el = $(SEC_SEL[k]);
+    if (el && !reduce) el.animate([{ transform: 'scale(1)', filter: 'brightness(1)' }, { transform: 'scale(1.18)', filter: 'brightness(1.35) drop-shadow(0 0 14px rgba(255,225,140,.95))' }, { transform: 'scale(1)', filter: 'brightness(1)' }], { duration: 900, iterations: 2, easing: 'ease-in-out' });
+    setTimeout(secIntro, 1900);
+  };
+  await showOv('secov');
+  chord([523.25, 659.25, 783.99, 1046.5], 0.09);
 }
 
 /* ---------- Sorin in the home scene, following the clock ----------------------------------
@@ -8256,7 +8320,7 @@ function passState() {
 const passLevel = () => Math.floor(passState().xp / PASS_XP);
 const spentStars = () => Object.values(passState().p).reduce((n, c) => n + c, 0);
 const starsLeft = () => Math.max(0, passLevel() - spentStars());
-const pgItem = (pi, key) => key === 'h' ? { style: PAGES[pi].style, head: true } : key[0] === 'g' ? PAGES[pi].gold[+key.slice(1)] : PAGES[pi].items[+key];
+const pgItem = (pi, key) => key === 'h' ? { style: PAGES[pi].style, head: true } : fitReward(key[0] === 'g' ? PAGES[pi].gold[+key.slice(1)] : PAGES[pi].items[+key]);
 const pgCost = (pi, key) => key === 'h' ? PAGES[pi].head : key[0] === 'g' ? PAGES[pi].cost + 1 : PAGES[pi].cost;
 const isClaimed = (pi, key) => passState().p[`p${pi}-${key}`] != null;
 const pageClaims = pi => PAGES[pi].items.filter((_, k) => isClaimed(pi, String(k))).length;
@@ -8275,7 +8339,7 @@ function passLabel(r) {
 }
 function passIcon(r) { return passArtHTML(r); }
 function addXP(n) {
-  if (babyOn()) return 0;
+  if (babyOn() || !secOn('pass')) return 0;
   const sp = passState(), before = passLevel();
   sp.xp += n * ((S.calmUntil || 0) > Date.now() ? 2 : 1); save();
   const after = passLevel();
@@ -8355,12 +8419,12 @@ function renderPass(fresh) {
   $('#spHero').innerHTML = `<div class="shstage"><i class="shrays"></i>${holdSprite(peekWho(), 'cheer', 'shbud')}<span class="shrail"><small>${BUDDY[S.buddy || 'fire'].name}'s gift</small>${giftName(S.buddy || 'fire')}</span><span class="shboard"></span></div>
     <div class="shtx"><small>Page ${PGI + 1} headline · ${ELEM[pg.el].name}</small><b>${bs.name}</b><em>${bs.note}</em>
     <button class="shbtn" data-key="h">${!open ? '🔒 Opens after Page ' + PGI : hk ? (worn ? 'Using it ✓' : 'Use this style') : `Claim · ★ ${pg.head}`}</button></div>`;
-  $('#spGrid').innerHTML = pg.items.map((r, k) => tileHTML(PGI, String(k), r, open)).join('');
+  $('#spGrid').innerHTML = pg.items.map((r, k) => tileHTML(PGI, String(k), fitReward(r), open)).join('');
   const c = pageClaims(PGI);
   $('#spUnlock').innerHTML = PGI < PAGES.length - 1 ? `<div class="sppips">${[0, 1, 2, 3].map(i => `<i class="${i < c ? 'on' : ''}"></i>`).join('')}</div><span>${c >= 4 ? `Page ${PGI + 2} is open!` : `Claim ${4 - c} more to open <b>Page ${PGI + 2}</b>`}</span>` : `<span>The last page. Finish it for the whole season's collection.</span>`;
   const gold = !!sp.gold;
   $('#spGold').innerHTML = `<div class="sgtitle"><b>The Golden Path</b><span>${gold ? 'Yours for the whole season ✓' : 'Optional · for grown-ups to decide'}</span></div>
-    <div class="sgrow">${pg.gold.map((r, k) => tileHTML(PGI, 'g' + k, r, open && gold, true)).join('')}</div>
+    <div class="sgrow">${pg.gold.map((r, k) => tileHTML(PGI, 'g' + k, fitReward(r), open && gold, true)).join('')}</div>
     ${gold ? `<p class="sgnote">Golden rewards pay back ${GOLD_BACK.toLocaleString()} coins this season, enough to unlock next season's Golden Path without paying again.</p>` : `<button class="sgbuy" id="spGoldBuy">Unlock the Golden Path · ${GOLD_PRICE}</button><p class="sgnote">Adds 2 golden rewards to every page and the Heavenly Gold Board. Pays back ${GOLD_BACK.toLocaleString()} coins, enough for next season's Golden Path. The free pass stays complete without it.</p>`}`;
   if (fresh && !reduce) $$('#spHero,#spGrid .sptile,#spGold').forEach((x, k) => x.animate([{ transform: 'translateY(16px) scale(.96)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 340, delay: k * 45, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' }));
 }
@@ -8491,7 +8555,8 @@ function renderWhy() {
   const top = Object.entries(feel).sort((a, b) => b[1] - a[1]);
   const fmt = d => new Date(d + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
   $('#wkRange').textContent = `${fmt(days[0])} – ${fmt(days[6])}`;
-  $('#wkCard').innerHTML = !active ? `<div class="wkempty">This week's summary starts with the first breath.<br>Every calm breath, episode and bedtime shows up here.</div>` :
+  const first = S.firstDay || Object.keys(S.wk || {}).sort()[0], weekIn = first && daysBetween(first, dayKey()) >= 6;
+  $('#wkCard').innerHTML = !weekIn ? `<div class="wkempty">Your first weekly calm summary arrives after a week of play.<br>Every calm breath, episode and bedtime will show up here.</div>` : !active ? `<div class="wkempty">This week's summary starts with the first breath.<br>Every calm breath, episode and bedtime shows up here.</div>` :
     `<div class="wkbars">${rows.map((r, i) => { const v = r.b + r.c, day = new Date(days[i] + 'T12:00:00').toLocaleDateString(undefined, { weekday: 'narrow' }); return `<div class="wkbar ${i === 6 ? 'today' : ''}"><small>${v || ''}</small><i class="${v ? '' : 'zero'}" style="height:${Math.max(4, v / max * 80)}px"></i><span>${day}</span></div>`; }).join('')}</div>
     <div class="wkstats"><div><b>${tot('b') + tot('c')}</b><small>calm breaths</small></div><div><b>${tot('d')}</b><small>deep breaths</small></div><div><b>${tot('e')}</b><small>episodes</small></div><div><b>${active}/7</b><small>days practised</small></div></div>
     ${top.length ? `<div class="wkfeel">Feelings explored this week<div class="chips">${top.map(([k, v]) => `<span style="--c:${ELEM[k].glow}">${FEEL_OF[k]} · ${v}</span>`).join('')}</div></div>
@@ -8636,7 +8701,7 @@ $('#collect').addEventListener('click', e => {
   }
   const s = e.target.closest('.cstory');
   if (s) {
-    if (s.classList.contains('locked')) { tick(); const tr = +s.dataset.tier; if (pageOpen(tr)) { toast('Ready for you! Claim it with ★ in your Season Pass.'); setTimeout(openPass, 400); } else toast(`It's on Page ${tr + 1} of the Season Pass.`); return; }
+    if (s.classList.contains('locked')) { tick(); const tr = +s.dataset.tier; if (pageOpen(tr)) { toast('Ready for you! Claim it with ★ in your Season Pass.'); setTimeout(openPass, 400); } else toast(secOn('pass') ? `It's on Page ${tr + 1} of the Season Pass.` : 'Keep playing. This story is waiting for you further along.'); return; }
     tick(); const [k, id] = s.dataset.story.split(':'); return k === 'f' ? showFriend(id) : showLetter(id);
   }
   if (e.target.closest('#colSeals')) { tick(); renderSeals(); showOv('sealov'); return; }
@@ -8947,7 +9012,10 @@ async function winLevel() {
   sr.innerHTML = note === 'shield' ? `<b>A Streak Shield saved you.</b> Day ${S.streak} counted.`
     : mile ? `<b>Day ${S.streak} streak.</b> Reward unlocked.`
       : `<b>Day ${S.streak} streak.</b> ${Math.max(0, nm.d - S.streak)} more to ${rewardText(nm)}.`;
-  $('#wClaim').hidden = !mile;
+  $('#wClaim').hidden = !mile || !secOn('streak');
+  $('#wStreak').closest('.wrow').hidden = !secOn('streak');
+  $('#wBalance').closest('.wrow').hidden = !secOn('harmony');
+  $('#wBuddy').closest('.wrow').hidden = !secOn('buddy');
   if (mile) $('#wClaim').onclick = () => celebrate(mile);
   const br = $('#wBuddy');
   $('#wBuddyImg').src = S.buddy ? buddyArt(S.buddy) : 'img/icons/icon-buddy.jpg';
@@ -8965,7 +9033,7 @@ async function winLevel() {
   $('#wNext').hidden = n >= LEVELS.length;
   $('#wTitle').textContent = n >= LEVELS.length ? 'Every lantern is home.' : 'The storm has passed.';
   renderOutcome(); if ($('#wHarmImg')) $('#wHarmImg').src = `img/faces/${heroId()}-happy.jpg`;
-  const xpFrom = passState().xp, xpGain = Math.round((100 + stars * 25) * dz.xp);
+  const xpFrom = passState().xp, xpGain = secOn('pass') ? Math.round((100 + stars * 25) * dz.xp) : 0;
   addXP(xpGain);
   await party(stars, coins, xpFrom, xpGain);
   showOv('win');
@@ -9052,7 +9120,7 @@ function renderShop() {
     <div class="calmtop"><span class="nine">9</span><span><small>Featured · ${left ? 'active' : 'best value'}</small><b>Nine Days of Calm</b><em>${left ? `${left} of 9 days left. Enjoy them.` : 'Everything good in the game, doubled, for nine days.'}</em></span></div>
     <ul class="perks">
       <li><i>2×</i>Double coins from every win and every breath</li>
-      <li><i>2×</i>Double Season Pass XP</li>
+      ${secOn('pass') ? '<li><i>2×</i>Double Season Pass XP</li>' : ''}
       <li><i>♥</i>Hearts refill every morning</li>
       ${featEver('charms') ? '<li><i>✦</i>A free charm every day</li>' : ''}
       <li><i>✺</i>The Golden Nine aura, yours to keep</li>
