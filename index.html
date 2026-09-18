@@ -1372,6 +1372,23 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 @keyframes sorinbreath{0%{transform:translateX(-50%) scale(1)}40%{transform:translateX(-50%) scale(1.012,1.018)}100%{transform:translateX(-50%) scale(1)}}
 .sorincap{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);white-space:nowrap;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:900;color:#FFF6DE;background:rgba(8,16,14,.55);box-shadow:inset 0 0 0 1px rgba(255,233,168,.4)}
 @media (prefers-reduced-motion:reduce){.homesorin img{animation:none}}
+.wincard{text-align:center}
+.wsum{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:8px;margin:6px 0 8px}
+.wtile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 6px;border-radius:16px;
+  background:linear-gradient(#FFFFFF,#F4E8CC);box-shadow:inset 0 2px 0 #fff,0 0 0 1.5px rgba(184,134,47,.45),0 4px 0 rgba(120,88,40,.35)}
+.wtile b{display:flex;align-items:center;gap:4px;font-size:20px;font-weight:900;color:#1D5044;font-variant-numeric:tabular-nums}
+.wtile b .coin{width:18px;height:18px}
+.wtile small{font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#8A6A2E}
+.wtile .bigstars{font-size:30px;margin:0;letter-spacing:1px}
+.whint{min-height:1.2em;margin:2px 0 6px;font-size:13.5px;font-weight:800;color:#5A5444}
+.whint b{color:#2F8A3C}
+.wprog{display:grid;gap:8px;margin:8px 0 4px;text-align:left}
+.wrow{display:flex;align-items:center;gap:10px;padding:8px 12px 8px 8px;border-radius:16px;background:linear-gradient(#FFFFFF,#F4E8CC);box-shadow:inset 0 2px 0 #fff,0 0 0 1.5px rgba(184,134,47,.4),0 3px 0 rgba(120,88,40,.3)}
+.wrow:has(> [hidden]){display:none}
+.wrow img{flex:none;width:42px;height:42px;border-radius:50%;object-fit:cover;background:#FFF7E4;box-shadow:0 0 0 2px var(--gold-mid)}
+.wrow .streakrow{margin:0;padding:0;background:none !important;box-shadow:none !important;font-size:13.5px;line-height:1.35}
+.wincard .practice{text-align:left}
+.wincard .stack .btn.big{width:100%}
 </style>
 
 <div id="app">
@@ -1621,27 +1638,33 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     </div>
   </div></div>
 
-  <div class="ov" id="win" hidden><div class="card" role="dialog" aria-labelledby="wTitle">
+  <div class="ov" id="win" hidden><div class="card wincard" role="dialog" aria-labelledby="wTitle">
     <div class="eyebrow" id="wEyebrow">The Root Grounds</div>
     <h2 class="display" id="wTitle">The storm has passed.</h2>
-    <div class="streakrow" id="wStreak"></div>
-    <div class="streakrow" id="wBalance"></div>
-    <div class="streakrow" id="wBuddy" hidden></div>
-    <button class="btn gold" id="wClaim" hidden style="width:100%;margin-bottom:10px">Claim streak reward</button>
-    <div class="bigstars" id="wStars"></div>
-    <div class="row" style="justify-content:center;gap:8px"><span class="chip" style="background:#FFFBF2"><i class="coin"></i>+<span id="wCoins">0</span></span><span class="chip" style="background:#FFFBF2" id="wLeft"></span></div>
+    <div class="wsum">
+      <div class="wtile"><div class="bigstars" id="wStars"></div><small>Stars</small></div>
+      <div class="wtile"><b><i class="coin"></i>+<span id="wCoins">0</span></b><small>Coins</small></div>
+      <div class="wtile"><b id="wXp">+0</b><small>Season XP</small></div>
+    </div>
+    <div class="whint" id="wLeft"></div>
+    <button class="btn gold" id="wClaim" hidden style="width:100%;margin-top:10px">Claim streak reward</button>
+    <div class="wprog">
+      <div class="wrow"><img src="img/icons/icon-streak.jpg" alt=""><div class="streakrow" id="wStreak"></div></div>
+      <div class="wrow"><img src="img/icons/icon-lights.jpg" alt=""><div class="streakrow" id="wBalance"></div></div>
+      <div class="wrow"><img id="wBuddyImg" alt=""><div class="streakrow" id="wBuddy" hidden></div></div>
+    </div>
     <div class="practice">
-      <div class="row" style="align-items:flex-start;gap:12px">
-        <img src="img/sorin-3d.jpg" alt="Sorin" style="width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none">
+      <div class="row" style="align-items:center;gap:12px">
+        <img src="img/faces/sorin-calm.jpg" alt="Sorin" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none">
         <div><div class="eyebrow">Today's practice</div><h3 class="display" id="pTitle">Bear Root</h3></div>
       </div>
       <ol id="pSteps"></ol>
       <div class="line" id="pLine"></div>
+      <button class="btn gold" id="wPractice" style="width:100%;margin-top:12px">Try it with Sorin</button>
     </div>
     <div class="stack">
-      <button class="btn gold" id="wPractice">Try it with Sorin</button>
-      <button class="btn" id="wNext">Next place</button>
-      <button class="btn ghost" id="wMap">Back to map</button>
+      <button class="btn gold big" id="wNext">Next place</button>
+      <button class="linkbtn dark" id="wMap" style="align-self:center">Back to the map</button>
     </div>
   </div></div>
 
@@ -2010,31 +2033,31 @@ const SOUND = {
   water: { verb: 'low hum', say: 'whoooooo',   tip: 'As low as your voice goes.',           dir: 'Deep and quiet — Water sinks and cools.' }
 };
 const LEVELS = [
-  { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 30, clouds: 6,
+  { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 60, clouds: 6,
     problem: "Kai keeps thinking about tomorrow. His belly feels tight and he can't stop worrying.",
     you: "You keep thinking about tomorrow. Your belly feels tight and the worry won't stop.",
     sorin: "Worry likes to sit in the belly. Where is that feeling trying to go? Let's hum it loose.",
     steps: ['Stand with soft knees and put both hands on your belly.', 'Breathe in and feel your belly fill like a drum.', 'Hum the breath out low: mmmmmm. Feel your hands buzz.', 'Three times, then notice your middle feeling steady.'],
     line: 'Worry gets stuck in the middle. Humming moves it.', inhale: 4, exhale: 6 },
-  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 30, clouds: 8, knots: 0,
+  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 58, clouds: 8, knots: 0,
     problem: "Kai's friend broke his lantern. He is so angry he wants to shout at everybody.",
     you: "A friend broke your lantern. You feel so angry you want to shout at everybody.",
     sorin: "Anger is strong power looking for a way out. Let's give it a way out that helps.",
     steps: ['Stand tall like a tree with your feet rooted.', 'Breathe in and reach your arms up and out like branches.', 'Breathe out with a big haaaa and let your arms drop.', 'Shake your hands out, then stand still.'],
     line: 'Anger is strong. Let it out and it can turn into kindness.', inhale: 4, exhale: 5 },
-  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 32, clouds: 10, knots: 5,
+  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 55, clouds: 10, knots: 5,
     problem: 'Kai is so excited he cannot sit still or listen. His chest is racing and everything echoes.',
     you: "You're so excited you can't sit still or listen. Your chest is racing and everything echoes.",
     sorin: "Your heart is running bright and fast. Let a little out, then let it rest.",
     steps: ['Put both hands on your heart.', 'Breathe in and feel your chest lift.', 'Breathe out with a soft laugh: ha-ha-haaa.', 'Now be still and feel your heart slow down.'],
     line: 'Excitement settles when the heart is held.', inhale: 3, exhale: 5 },
-  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 34, clouds: 12, knots: 7,
+  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 52, clouds: 12, knots: 7,
     problem: 'Something Kai loved has ended. His chest feels heavy and empty up in the cold wind.',
     you: "Something you loved has ended. Your chest feels heavy and empty, up here in the cold wind.",
     sorin: "Sad feelings live in the lungs. Every long sigh carries a little of it out.",
     steps: ['Stand with your arms open wide like wings.', 'Breathe in through your nose and fill your lungs.', 'Breathe out with a long sigh: sssssss.', 'Let your shoulders drop lower each time.'],
     line: 'Sad feelings leave on the out-breath.', inhale: 4, exhale: 6 },
-  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 36, clouds: 14, knots: 9,
+  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 50, clouds: 14, knots: 9,
     problem: 'It is dark and Kai is scared. His legs feel shaky and his thinking has gone cloudy.',
     you: "It's dark and you feel scared. Your legs are shaky and your thoughts have gone cloudy.",
     sorin: "Fear lives low, near your back. Let's warm it until your clear thinking comes back.",
@@ -2744,7 +2767,7 @@ const QUEST_KINDS = [
   { id: 'sound', goal: 1, reward: { swirls: 1 }, text: 'Use your voice on a breath' },
   { id: 'win', goal: 1, reward: { coins: 50 }, text: 'Finish a place' },
   { id: 'flow', goal: 1, reward: { lanterns: 1 }, text: 'Reach flow ×3' },
-  { id: 'clouds', goal: 6, reward: { coins: 60 }, text: 'Blow away 6 storm clouds' }
+  { id: 'clouds', goal: 6, reward: { coins: 60 }, text: 'Free 6 storm clouds' }
 ];
 function newQuests() {
   const low = balState().low.t;
@@ -3699,7 +3722,7 @@ let R = 8, C = 7, POOL = TYPES;
 const boardEl = $('#board'), wrap = $('#boardwrap');
 let board = [], ids = new Map(), nid = 1, T = 44;
 let busy = false, sel = null, drag = null, moves = 0, charge = 0, combo = 0, mode = null, cheerAt = 0, running = false;
-let deepBreaths = 0, breathing = false, wasReady = false;
+let deepBreaths = 0, breathing = false, wasReady = false, movesUsed = 0, cloudsFreed = 0;
 let lastElem = null, flow = 0;
 let turnTypes = new Set();
 let levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
@@ -3810,8 +3833,34 @@ function controlBreak(clear) {
   freed.forEach(n => untie(n));
   if (freed.length && cycleTips < 6) { cycleTips++; const n = freed[0]; floatLabel('Wood breaks up Earth', n.c * T + T / 2, n.r * T + T / 2, ELEM.wood.glow); }
 }
+// a cloud that reaches the bottom row floats up into the storm counter and is freed
+function freeCloud(t, i = 0) {
+  if (board[t.r] && board[t.r][t.c] === t) board[t.r][t.c] = null;
+  ids.delete(String(t.id));
+  const tgt = $('#cloudStat').getBoundingClientRect(), br = boardEl.getBoundingClientRect();
+  const dx = tgt.left + tgt.width * 0.2 - br.left, dy = tgt.top + tgt.height / 2 - br.top;
+  if (!reduce) t.el.animate([{ transform: `translate(${t.c * T}px,${t.r * T}px) scale(1)`, opacity: 1 },
+    { transform: `translate(${t.c * T}px,${t.r * T - T * 0.8}px) scale(1.15)`, opacity: 1, offset: .3 },
+    { transform: `translate(${dx - T / 2}px,${dy - T / 2}px) scale(.3)`, opacity: 0 }], { duration: 900, delay: i * 120, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+  setTimeout(() => { t.el.remove(); hud(); bump($('#cloudStat')); }, reduce ? 0 : 900 + i * 120);
+  setTimeout(() => { playSfx('swoosh', { rate: 1.25, gain: 0.45 }); bell(chordNote(6 + Math.min(i, 3)), 0, 0.05); }, i * 120);
+  cloudsFreed++;
+}
+async function collectClouds() {
+  for (let guard = 0; guard < 8; guard++) {
+    const low = board[R - 1].filter(t => t && t.cloud);
+    if (!low.length) return;
+    low.forEach((t, i) => freeCloud(t, i));
+    if (cloudsFreed === low.length && !S.seen?.sink) { S.seen = Object.assign(S.seen || {}, { sink: 1 }); save(); say('A cloud reached the bottom and floated away. Bring them all down!'); }
+    await wait(reduce ? 40 : 420);
+    gravity();
+    await wait(reduce ? 60 : 300);
+  }
+}
 function addClouds(n, quiet) {
-  const pool = all().filter(t => !t.cloud && t.type !== 'spirit').sort(() => Math.random() - 0.5);
+  // clouds start in the top half; the player brings them down by clearing what's under them
+  const top = Math.max(2, Math.floor(R / 2));
+  const pool = all().filter(t => !t.cloud && t.type !== 'spirit' && t.r < top).sort(() => Math.random() - 0.5);
   pool.slice(0, n).forEach((t, i) => {
     t.cloud = true;
     if (quiet) { paint(t); return; }
@@ -3898,7 +3947,7 @@ async function shuffle() {
 }
 
 /* ---------- turn resolution ---------- */
-function useMove() { moves--; hud(); bump($('#movesStat')); }
+function useMove() { moves--; movesUsed++; hud(); bump($('#movesStat')); }
 function swapCells(a, b) {
   const { r: ar, c: ac_ } = a, { r: br, c: bc } = b;
   board[ar][ac_] = b; board[br][bc] = a;
@@ -3908,7 +3957,7 @@ const adjacent = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
 
 async function trySwap(a, b) {
   if (moves <= 0) { say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
-  if (a.cloud || b.cloud) { say("That orb is stuck under a storm cloud. Only Luma's breath can blow it away."); bump((a.cloud ? a : b).el); return; }
+  if (a.cloud || b.cloud) { say("Clouds can't be swapped. Clear the orbs under it so it sinks, or breathe with Luma to lift it."); bump((a.cloud ? a : b).el); return; }
   if (a.knot || b.knot) { say('Worry tied that orb in a knot. Make a match that includes it and the knot comes loose.'); bump((a.knot ? a : b).el); bell(392, 0, 0.05); return; }
   busy = true; swish();
   swapCells(a, b);
@@ -3977,6 +4026,7 @@ async function resolve(clear, groups, moved) {
     });
     gravity();
     await wait(reduce ? 60 : 280);
+    await collectClouds();
     const m = findMatches(); clear = m.clear; groups = m.groups; moved = null; combo++;
   }
 }
@@ -4101,7 +4151,7 @@ const endDrag = () => {
   if (d.moved || busy) return;
   if (sel && sel !== d.t && adjacent(sel, d.t)) { const a = sel; clearSel(); trySwap(a, d.t); }
   else if (sel === d.t) clearSel();
-  else if (d.t.cloud) { clearSel(); say("That orb is stuck under a storm cloud. Only Luma's breath can blow it away."); bump(d.t.el); }
+  else if (d.t.cloud) { clearSel(); say("Clouds can't be swapped. Clear the orbs under it so it sinks, or breathe with Luma to lift it."); bump(d.t.el); }
   else { clearSel(); sel = d.t; sel.el.classList.add('sel'); boop(0, 0.06); }
 };
 boardEl.addEventListener('pointerup', endDrag);
@@ -4405,15 +4455,13 @@ async function applyBreath(q) {
   S.coins += p.coins; save();
   charge = 0; hud();
   flash();
-  const cl = clouds().sort(() => Math.random() - 0.5).slice(0, p.cloudsOff);
-  cl.forEach((t, i) => setTimeout(() => {
-    t.cloud = false; paint(t);
-    t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460);
-    boop(3 + i, 0.1);
-  }, i * 90));
-  await wait(cl.length * 90 + 300);
+  // Luma's breath lifts the lowest clouds straight off the board, wherever they are
+  const cl = clouds().sort((a, b) => b.r - a.r || a.c - b.c).slice(0, p.cloudsOff);
+  cl.forEach((t, i) => freeCloud(t, i));
+  await wait(reduce ? 60 : cl.length * 120 + 900);
+  gravity(); await wait(reduce ? 60 : 300); await collectClouds();
   const left = clouds().length;
-  say(left ? `${p.cloudsOff === 1 ? 'One cloud' : p.cloudsOff + ' clouds'} blew away. ${left} left. Match orbs to grow her Aura again.` : 'The last cloud blew away.');
+  say(left ? `${p.cloudsOff === 1 ? 'One cloud' : p.cloudsOff + ' clouds'} floated away. ${left} left. Clear under the rest to bring them down.` : 'The last cloud floated away.');
   // Heavenly and aligned: Luma's Aura Burst clears every orb the clouds aren't holding
   const orbs = all().filter(t => !t.cloud);
   if (orbs.length) {
@@ -5185,7 +5233,7 @@ function startLevel() {
   $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
   moves = L.moves + (S.buddy === 'water' && !babyOn() ? 3 : 0); charge = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
-  deepBreaths = 0; breathing = false;
+  deepBreaths = 0; breathing = false; movesUsed = 0; cloudsFreed = 0;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   setAim(null); monkeyFirst = null; lastPower = null;
   makeRig($('#kaiFace'), heroId()); applyLooks();
@@ -5608,10 +5656,10 @@ const HOWTO = {
   '12-15': "Matches build my Aura. At Heavenly, tap me and breathe. The longer and slower your out-breath, the more of the storm it clears."
 };
 const GOAL_LINE = (c, m) => ({
-  '2-4': `Let's blow the clouds away! We have ${m} moves.`,
-  '5-7': `Want to help me clear these ${c} storm clouds? We've got ${m} moves.`,
-  '8-11': `${c} storm clouds to clear. We've got ${m} moves, no rush.`,
-  '12-15': `${c} storm clouds, ${m} moves. Take it at your pace.`
+  '2-4': `Pop the orbs under the clouds so they float down and away! We have ${m} moves.`,
+  '5-7': `Help me free ${c} storm clouds. Clear the orbs under them and they sink. At the bottom they float away. We've got ${m} moves.`,
+  '8-11': `${c} storm clouds to free. Clear what's underneath and they sink; at the bottom row they float away. ${m} moves, no rush.`,
+  '12-15': `${c} storm clouds, ${m} moves. Dig under them to bring them down, and use my breath to lift the stubborn ones.`
 })[band()];
 // every chapter climbs the same eight layers, so the understanding deepens episode by episode
 const LAYERS = ['Notice it', 'Name it', 'Where it lives', 'Why it comes', 'What helps', 'Help a friend', 'Mixed feelings', 'Meet it'];
@@ -5775,7 +5823,12 @@ async function winLevel() {
   say('The storm passed. You can breathe again.');
   await wait(1400);
   const n = LI + 1;
-  const stars = 1 + (moves >= 4 ? 1 : 0) + (deepBreaths > 0 ? 1 : 0);
+  // hidden par: never shown. Finishing within it earns a star and bonus coins that grow the more
+  // smoothly you played. Based on moves only; speed is never rewarded.
+  const par = Math.round(L.clouds * 3.5 + 10 + (L.knots || 0));
+  const smooth = movesUsed <= par, flowBonus = smooth ? Math.min(90, 30 + (par - movesUsed) * 4) * coinMult() : 0;
+  const stars = 1 + (smooth ? 1 : 0) + (deepBreaths > 0 ? 1 : 0);
+  if (flowBonus && !babyOn()) S.coins += flowBonus;
   const coins = (30 + moves * 5) * coinMult();
   S.stars[n] = Math.max(S.stars[n] || 0, stars);
   S.unlocked = Math.max(S.unlocked, Math.min(LEVELS.length, n + 1));
@@ -5784,7 +5837,9 @@ async function winLevel() {
   $('#wEyebrow').textContent = `${L.place} · ${ELEM[L.elem].name} · ${L.shift}`;
   $('#wStars').innerHTML = '★'.repeat(stars) + `<span class="off">${'★'.repeat(3 - stars)}</span>`;
   $('#wCoins').textContent = coins;
-  $('#wLeft').textContent = deepBreaths ? `${deepBreaths} deep ${deepBreaths === 1 ? 'breath' : 'breaths'}` : 'Third star: take one deep breath';
+  $('#wLeft').innerHTML = [smooth ? `<b>Smooth flow!</b> +${flowBonus} bonus coins` : '',
+    deepBreaths ? '' : 'One slow, deep breath earns a star.', !smooth ? 'A smoother flow earns a bonus.' : ''].filter(Boolean).join(' · ') || '<b>Every star earned.</b>';
+  $('#wXp').textContent = `+${100 + stars * 25}`;
   $('#pTitle').textContent = `${L.power} · the ${SOUND[L.elem].verb}`;
   $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
   $('#pLine').textContent = L.line;
@@ -5817,6 +5872,7 @@ async function winLevel() {
   $('#wClaim').hidden = !mile;
   if (mile) $('#wClaim').onclick = () => celebrate(mile);
   const br = $('#wBuddy');
+  $('#wBuddyImg').src = S.buddy ? buddyArt(S.buddy) : 'img/icons/icon-buddy.jpg';
   if (freshBuddy) {
     br.className = 'streakrow gold'; br.hidden = false;
     br.innerHTML = `<b>${BUDDY[freshBuddy].name} the ${BUDDY[freshBuddy].animal} is yours.</b> ${S.practiceDays} practice days earned it.`;
