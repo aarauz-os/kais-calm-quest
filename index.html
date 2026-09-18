@@ -82,7 +82,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .iconbtn:active{transform:translateY(2px)}
 
 /* ---------- map ---------- */
-#map{overflow-y:auto;overflow-x:hidden;
+#map{overflow:hidden;
   background:
     radial-gradient(85% 40% at 50% 4%, rgba(255,242,205,.9), transparent 68%),
     repeating-linear-gradient(90deg, rgba(120,88,40,.07) 0 2px, transparent 2px 46px),
@@ -253,6 +253,76 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .card.rewardcard h2{color:#FFF3D6;font-size:34px;text-shadow:0 3px 0 rgba(0,0,0,.5),0 0 22px rgba(255,205,110,.8)}
 .rwbig{font-size:19px;font-weight:900;color:var(--gold2);margin:6px 0 4px;line-height:1.35}
 .conf{position:absolute;width:9px;height:14px;border-radius:2px;pointer-events:none}
+/* ---- living home ---- */
+.drawer{display:none}
+.splash{position:absolute;inset:0;z-index:60;display:grid;place-items:center;overflow:hidden;
+  background:radial-gradient(90% 60% at 50% 45%,#23443A,#0C1B17 70%,#060D0B)}
+.spl-ring{position:absolute;left:50%;top:44%;width:0;height:0}
+.spl-ring .o{position:absolute;width:62px;height:62px;margin:-31px 0 0 -31px;opacity:0;animation:orbIn 1.1s cubic-bezier(.2,.9,.3,1.2) forwards}
+.spl-ring.spin{animation:ringSpin 1.2s cubic-bezier(.5,0,.3,1) forwards}
+@keyframes orbIn{from{opacity:0;transform:translate(var(--fx),var(--fy)) scale(.3)}to{opacity:1;transform:translate(var(--tx),var(--ty)) scale(1)}}
+@keyframes ringSpin{to{transform:rotate(360deg) scale(.2);opacity:0}}
+.spl-flash{position:absolute;left:50%;top:44%;width:30px;height:30px;margin:-15px;border-radius:50%;opacity:0;
+  background:radial-gradient(circle,#fff,rgba(255,230,160,.8) 30%,rgba(255,200,110,0) 70%)}
+.splash.burst .spl-flash{animation:flash2 1s ease-out forwards}
+@keyframes flash2{0%{opacity:0;transform:scale(.2)}20%{opacity:1}100%{opacity:0;transform:scale(40)}}
+.spl-title{position:absolute;left:0;right:0;top:40%;text-align:center;font-size:clamp(38px,11vw,50px);line-height:1;
+  background:linear-gradient(#FFF7DC 10%,#F2C766 50%,#B5822C 92%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 3px 0 rgba(60,35,10,.9)) drop-shadow(0 0 24px rgba(255,210,120,.55))}
+.spl-title span{display:inline-block;opacity:0;transform:translateY(24px) scale(.6)}
+.splash.words .spl-title span{animation:letterUp .6s cubic-bezier(.3,1.6,.5,1) forwards}
+@keyframes letterUp{to{opacity:1;transform:none}}
+.spl-sub{position:absolute;left:0;right:0;top:calc(40% + 60px);text-align:center;font-size:12px;font-weight:900;letter-spacing:.3em;text-transform:uppercase;color:#FFE7A8;opacity:0}
+.splash.words .spl-sub{animation:fadeIn .8s .7s forwards}
+@keyframes fadeIn{to{opacity:.9}}
+.spl-skip{position:absolute;bottom:26px;left:0;right:0;text-align:center;font-size:11px;font-weight:800;color:rgba(255,255,255,.45)}
+.splash.out{animation:splOut .7s ease-in forwards}
+@keyframes splOut{to{opacity:0;transform:scale(1.08)}}
+.ripplehost{position:relative;overflow:hidden}
+.ripple{position:absolute;border-radius:50%;pointer-events:none;z-index:5;transform:scale(0);
+  background:radial-gradient(circle,rgba(255,255,255,.6),rgba(255,248,220,.25) 45%,rgba(255,255,255,0) 70%);animation:ripple .55s ease-out forwards}
+@keyframes ripple{to{transform:scale(1);opacity:0}}
+.pressed{animation:pressSquash .22s ease-out}
+@keyframes pressSquash{35%{transform:scale(.93)}70%{transform:scale(1.03)}100%{transform:scale(1)}}
+.homebg{position:absolute;inset:0;background:#2a3a3a center/cover no-repeat;transition:filter 1.2s}
+.homefx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.homeshade{position:absolute;inset:0;pointer-events:none;z-index:1;transition:background 1.5s}
+.homeshade.dawn{background:linear-gradient(rgba(255,170,120,.28),rgba(120,90,160,.12) 55%,rgba(30,20,40,.25))}
+.homeshade.day{background:linear-gradient(rgba(255,245,220,.06),rgba(0,0,0,0) 50%,rgba(20,15,5,.22))}
+.homeshade.dusk{background:linear-gradient(rgba(255,120,60,.32),rgba(120,60,120,.22) 55%,rgba(20,10,30,.42))}
+.homeshade.night{background:linear-gradient(rgba(8,16,48,.62),rgba(10,18,50,.48) 55%,rgba(4,8,22,.6))}
+#map .maphead{position:relative;z-index:3}
+.hometitle{position:relative;z-index:3;text-align:center;padding:4px 16px 0}
+.hometitle h1{margin:2px 0 2px;font-size:clamp(34px,10vw,42px);line-height:1;font-weight:400;
+  background:linear-gradient(#FFF7DC 12%,#F2C766 48%,#B5822C 90%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 2px 0 rgba(60,35,10,.8)) drop-shadow(0 6px 10px rgba(0,0,0,.45))}
+.hometitle .eyebrow{color:#FFE7A8;text-shadow:0 1px 0 rgba(0,0,0,.6)}
+.seasonline{display:inline-block;margin-top:4px;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:900;letter-spacing:.06em;color:#FFF4D8;
+  background:rgba(20,30,28,.45);backdrop-filter:blur(6px);text-shadow:0 1px 0 rgba(0,0,0,.5);box-shadow:inset 0 0 0 1.5px rgba(255,226,160,.35)}
+.ribbon{position:relative;z-index:3;margin:10px auto 0;max-width:calc(100% - 150px);padding:8px 12px;border-radius:14px;text-align:center;font-size:12.5px;font-weight:800;line-height:1.3;color:#3A2A10;
+  background:linear-gradient(#FFF1CC,#EBCB84);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 0 0 2px var(--gold-mid),0 0 0 4px var(--wood),0 4px 0 var(--wood-d)}
+.ribbon.warn{background:linear-gradient(#FFE0C8,#F2B385)}
+.rails{position:absolute;left:0;right:0;top:188px;bottom:196px;z-index:3;display:flex;justify-content:space-between;padding:0 10px;pointer-events:none}
+.rail{display:flex;flex-direction:column;justify-content:space-around;gap:6px;pointer-events:auto}
+.hicon{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;width:70px;padding:0;background:none;color:#FFF6DE}
+.hicon .hart{position:relative;width:60px;height:60px;border-radius:18px;overflow:hidden;background:linear-gradient(#FFF6DF,#E9D3A3);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.9),inset 0 -3px 0 rgba(150,110,50,.3),0 0 0 3px var(--gold-mid),0 0 0 6px var(--wood),0 6px 0 var(--wood-d),0 10px 16px rgba(0,0,0,.4)}
+.hicon .hart img{width:100%;height:100%;object-fit:cover;display:block}
+.hicon b{font-size:11.5px;font-weight:900;letter-spacing:.03em;padding:2px 8px;border-radius:999px;background:linear-gradient(#2F5E4E,#16342B);
+  text-shadow:0 1px 0 rgba(0,0,0,.5);box-shadow:0 0 0 1.5px var(--gold-mid),0 2px 0 var(--wood-d)}
+.hbadge{position:absolute;top:-6px;right:0;min-width:22px;height:22px;padding:0 6px;border-radius:999px;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:900;color:#fff;
+  background:linear-gradient(#F0604A,#B8281C);box-shadow:0 0 0 2px #FFE9C0,0 2px 0 rgba(0,0,0,.35)}
+.hbadge:empty{display:none}
+.hbadge.ok{background:linear-gradient(#5CB27A,#2B7A4B)}
+.homefoot{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 16px 14px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.places{display:flex;justify-content:center;gap:8px}
+.place{position:relative;width:48px;height:48px;border-radius:50%;padding:3px;
+  background:linear-gradient(#FFEFC0,#C79A45 55%,#7A4F1E);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 3px 0 rgba(60,35,10,.7),0 6px 10px rgba(0,0,0,.4)}
+.place.locked{filter:grayscale(.85) brightness(.75)}
+.place.next{box-shadow:0 0 0 3px #FFF1C2,0 0 18px 4px rgba(255,210,120,.85),0 3px 0 rgba(60,35,10,.7)}
+.place .st{position:absolute;left:50%;bottom:-9px;transform:translateX(-50%);font-size:9px;color:#FFD66E;text-shadow:0 1px 0 #000;white-space:nowrap}
+#map .promise{margin:0;padding:6px 12px;font-size:11.5px}
+.homefoot .btn.big{width:100%;max-width:300px;margin-top:4px}
 .promise{flex:none;margin:10px 16px 22px;padding:12px 14px;border-radius:14px;font-size:13px;color:#33502F;font-weight:800;text-align:center;
   background:linear-gradient(#F3E7C6,#E1CD9F);
   box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 0 0 2.5px var(--gold-mid),0 0 0 5px var(--wood),0 4px 0 var(--wood-d)}
@@ -573,7 +643,8 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 /* coach */
 #coach{position:absolute;inset:0;pointer-events:none;z-index:15}
 #hand,.brhand{position:absolute;left:0;top:0;font-size:36px;line-height:1;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4));user-select:none}
-.coachtip{position:absolute;left:12px;right:112px;bottom:10px;padding:12px 14px;border-radius:16px;background:#FFFBF2;color:var(--ink);font-weight:700;font-size:15px;line-height:1.4;box-shadow:0 12px 30px rgba(0,0,0,.4),0 0 0 2px var(--gold2);pointer-events:auto}
+.coachtip{position:absolute;padding:9px 12px;border-radius:16px 16px 16px 5px;color:#33281A;font-weight:800;font-size:13.5px;line-height:1.3;pointer-events:auto;
+  background:linear-gradient(#FFFDF4,#FFEBC0);box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 0 0 2.5px var(--gold-hi),0 0 0 5px var(--wood),0 4px 0 var(--wood-d),0 0 20px rgba(255,210,120,.6)}
 .coachtip .k{display:block;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
 .tile.hint .orb{animation:hintp 1.1s ease-in-out infinite}
 @keyframes hintp{50%{transform:scale(1.14);box-shadow:0 0 0 3px #fff,0 0 18px 7px rgba(255,230,150,.95)}}
@@ -592,6 +663,13 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 </style>
 
 <div id="app">
+  <div class="splash" id="splash" hidden>
+    <div class="spl-ring" id="splRing"></div>
+    <div class="spl-flash"></div>
+    <div class="spl-title display" id="splTitle">Kai's Calm Quest</div>
+    <div class="spl-sub">MorQi Kids</div>
+    <div class="spl-skip">tap to skip</div>
+  </div>
   <!-- MAP -->
   <section class="screen" id="welcome">
     <div class="wwrap">
@@ -680,27 +758,46 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   </section>
 
   <section class="screen" id="map" hidden>
+    <div class="homebg" id="homeBg"></div>
+    <canvas class="homefx" id="homeFx"></canvas>
+    <div class="homeshade" id="homeShade"></div>
     <div class="maphead">
       <div class="row">
         <span class="chip"><i class="coin"></i><span data-coins>0</span></span>
         <span class="chip"><span class="heart">♥</span><span data-hearts>5</span></span>
       </div>
       <div class="row">
-        <button class="chip streakchip" id="streakChip" aria-label="Your streak">🔥 <span id="streakNum">0</span></button>
         <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
         <button class="iconbtn" id="howOpen" aria-label="How to play">?</button>
         <button class="iconbtn" id="shopOpen1" aria-label="Open shop">+</button>
       </div>
     </div>
-    <div class="hero">
-      <div class="eyebrow">MorQi Kids</div>
+    <div class="hometitle">
+      <div class="eyebrow" id="homeEyebrow">MorQi Kids</div>
       <h1 class="display">Kai's Calm Quest</h1>
-      <p>Every breath is a superpower.</p>
-      <div class="heroart">
-        <img src="img/kai-3d.jpg" alt="Kai standing in his green MorQi outfit">
-        <img class="luma" src="img/luma-3d.jpg" alt="Luma the spirit fox floating">
+      <div class="seasonline" id="seasonLine"></div>
+    </div>
+    <div class="ribbon" id="homeRibbon"></div>
+    <div class="rails">
+      <div class="rail">
+        <button class="hicon" data-open="streakChip"><span class="hart"><img src="img/icons/icon-streak.jpg" alt=""></span><b>Streak</b><i class="hbadge" id="bStreak"></i></button>
+        <button class="hicon" data-open="questCard"><span class="hart"><img src="img/icons/icon-quests.jpg" alt=""></span><b>Quests</b><i class="hbadge" id="bQuests"></i></button>
+        <button class="hicon" data-open="wheelCard"><span class="hart"><img src="img/icons/icon-wheel.jpg" alt=""></span><b>Spin</b><i class="hbadge" id="bWheel"></i></button>
+        <button class="hicon" data-open="balOpen"><span class="hart"><img src="img/icons/icon-lights.jpg" alt=""></span><b>Lights</b><i class="hbadge" id="bLights"></i></button>
+      </div>
+      <div class="rail">
+        <button class="hicon" data-open="sealCard"><span class="hart"><img src="img/icons/icon-seal.jpg" alt=""></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
+        <button class="hicon" data-open="buddyCard"><span class="hart"><img id="buddyIcon" src="img/icons/icon-buddy.jpg" alt=""></span><b>Buddy</b><i class="hbadge" id="bBuddy"></i></button>
+        <button class="hicon" data-open="babyToggle"><span class="hart"><img src="img/icons/icon-baby.jpg" alt=""></span><b>Baby</b><i class="hbadge" id="bBaby"></i></button>
+        <button class="hicon" data-open="bedOpen"><span class="hart"><img src="img/icons/icon-bedtime.jpg" alt=""></span><b>Bedtime</b></button>
       </div>
     </div>
+    <div class="homefoot">
+      <div class="places" id="places"></div>
+      <button class="btn gold big" id="playNext">Play</button>
+      <div class="promise">Free to play, always. No forced ads.</div>
+    </div>
+    <div class="drawer" aria-hidden="true">
     <div class="banner" id="streakBanner"></div>
     <button class="bedcard" id="bedOpen">
       <span class="qhead"><b>Bedtime with Luma</b><span class="bedmoon">☾</span></span>
@@ -724,8 +821,9 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       <span class="balsub" id="balTease"></span>
     </button>
     <div class="path" id="path"></div>
-    <div class="mapfoot"><button class="btn gold" id="playNext">Play</button></div>
-    <div class="promise">Free to play, always. No forced ads. Only extras like power-ups are for sale.</div>
+      <div class="path" id="path"></div>
+      <button class="chip streakchip" id="streakChip" aria-label="Your streak">🔥 <span id="streakNum">0</span></button>
+    </div>
   </section>
 
   <!-- GAME -->
@@ -1109,29 +1207,80 @@ function ac() {
   return AC;
 }
 const PENTA = [392, 440, 523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.5, 1568, 1760];
-function boop(step = 0, vol = 0.16) {
-  const a = ac(); if (!a || muted) return;
-  const t = a.currentTime, f = PENTA[Math.min(step, PENTA.length - 1)];
-  const o = a.createOscillator(), g = a.createGain();
-  o.type = 'sine';
-  o.frequency.setValueAtTime(f * 1.6, t);
-  o.frequency.exponentialRampToValueAtTime(f, t + 0.05);
-  g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(vol, t + 0.008);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
-  o.connect(g).connect(a.destination); o.start(t); o.stop(t + 0.22);
+// ---- sound design ------------------------------------------------------------
+// Why these choices (so the next person doesn't flatten them):
+//  - Every note is on a major pentatonic, so any two sounds that overlap are consonant.
+//  - Soft, fast attacks with smooth exponential decays; nothing clips or clicks.
+//  - A gentle cut around 3 kHz, where the ear is most sensitive and most easily fatigued.
+//  - A small stereo room: each pop is panned to where it happened on the board, and a
+//    decorrelated reverb makes headphones feel spacious rather than inside-your-head.
+//  - Cascades climb the scale, which the brain hears as reward building.
+//  - Tiny random detune (+/- 7 cents) so repeats never sound machine-identical.
+let MIX = null;
+function impulse(a, secs, decay) {
+  const len = Math.floor(a.sampleRate * secs), b = a.createBuffer(2, len, a.sampleRate);
+  for (let ch = 0; ch < 2; ch++) {
+    const d = b.getChannelData(ch);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / len, decay);
+  }
+  return b;
 }
-function bell(f, delay = 0, vol = 0.1) {
+function mix() {
+  const a = ac(); if (!a) return null; if (MIX) return MIX;
+  const comp = a.createDynamicsCompressor();
+  comp.threshold.value = -16; comp.knee.value = 20; comp.ratio.value = 3.5; comp.attack.value = 0.003; comp.release.value = 0.25;
+  const soft = a.createBiquadFilter(); soft.type = 'peaking'; soft.frequency.value = 3200; soft.Q.value = 0.9; soft.gain.value = -3.5;
+  const air = a.createBiquadFilter(); air.type = 'highshelf'; air.frequency.value = 9000; air.gain.value = -4;
+  const out = a.createGain(); out.gain.value = 0.95;
+  const dry = a.createGain();
+  const rev = a.createConvolver(); rev.buffer = impulse(a, 2.3, 2.7);
+  const revTone = a.createBiquadFilter(); revTone.type = 'lowpass'; revTone.frequency.value = 5200;
+  const wet = a.createGain(); wet.gain.value = 0.28;
+  dry.connect(soft); rev.connect(revTone).connect(wet).connect(soft);
+  soft.connect(air).connect(comp).connect(out).connect(a.destination);
+  MIX = { dry, rev };
+  return MIX;
+}
+function voice(pan = 0, send = 1) {
+  const a = ac(), m = mix(), g = a.createGain();
+  let node = g;
+  if (a.createStereoPanner) { const p = a.createStereoPanner(); p.pan.value = Math.max(-0.85, Math.min(0.85, pan)); g.connect(p); node = p; }
+  node.connect(m.dry);
+  const sgain = a.createGain(); sgain.gain.value = send; node.connect(sgain); sgain.connect(m.rev);
+  return g;
+}
+const LADDER = [1, 9 / 8, 5 / 4, 3 / 2, 5 / 3, 2, 9 / 4, 5 / 2, 3, 10 / 3, 4];
+const detune = () => Math.pow(2, (Math.random() * 14 - 7) / 1200);
+function env(g, t, peak, attack, decay) {
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.exponentialRampToValueAtTime(peak, t + attack);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + attack + decay);
+}
+function osc(a, type, f, t, dur, dest) { const o = a.createOscillator(); o.type = type; o.frequency.setValueAtTime(f, t); o.connect(dest); o.start(t); o.stop(t + dur); return o; }
+function boop(step = 0, vol = 0.14, pan = 0) {
   const a = ac(); if (!a || muted) return;
-  const t = a.currentTime + delay;
-  [[1, vol], [2.76, vol * 0.3], [5.4, vol * 0.12]].forEach(([m, v]) => {
-    const o = a.createOscillator(), g = a.createGain();
-    o.type = 'sine'; o.frequency.value = f * m;
-    g.gain.setValueAtTime(0.0001, t);
-    g.gain.exponentialRampToValueAtTime(v, t + 0.01);
-    g.gain.exponentialRampToValueAtTime(0.0001, t + 1.6 / m);
-    o.connect(g).connect(a.destination); o.start(t); o.stop(t + 1.7);
+  const t = a.currentTime, f = 523.25 * LADDER[Math.min(step, LADDER.length - 1)] * detune();
+  const out = voice(pan, 0.6), g = a.createGain(); g.connect(out);
+  env(g, t, vol, 0.006, 0.22);
+  const o = osc(a, 'sine', f * 1.5, t, 0.3, g);
+  o.frequency.exponentialRampToValueAtTime(f, t + 0.04);
+}
+function bell(f, delay = 0, vol = 0.1, pan = 0) {
+  const a = ac(); if (!a || muted) return;
+  const t = a.currentTime + delay, out = voice(pan, 1.1);
+  [[1, vol, 1.8], [2.76, vol * 0.32, 0.9], [5.4, vol * 0.12, 0.45]].forEach(([m, v, d]) => {
+    const g = a.createGain(); g.connect(out); env(g, t, v, 0.008, d);
+    osc(a, 'sine', f * m, t, d + 0.05, g);
   });
+}
+// a soft wooden "tock" for every press
+function tick() {
+  const a = ac(); if (!a || muted) return;
+  const t = a.currentTime, out = voice(0, 0.25), g = a.createGain(); g.connect(out);
+  env(g, t, 0.07, 0.002, 0.07);
+  const o = osc(a, 'sine', 1100 * detune(), t, 0.1, g);
+  o.frequency.exponentialRampToValueAtTime(760, t + 0.03);
+  try { navigator.vibrate && navigator.vibrate(6); } catch (e) {}
 }
 const chord = (fs, gap = 0.1) => fs.forEach((f, i) => bell(f, i * gap));
 let noiseBuf = null;
@@ -1189,7 +1338,7 @@ function syncWallet() {
   $$('[data-hearts]').forEach(e => e.textContent = S.hearts);
 }
 async function showOv(id) { const o = $('#' + id); o.hidden = false; void o.offsetWidth; await wait(20); o.classList.add('show'); }
-async function hideOv(id) { const o = $('#' + id); o.classList.remove('show'); await wait(250); o.hidden = true; }
+async function hideOv(id) { const o = $('#' + id); o.classList.remove('show'); await wait(250); o.hidden = true; if (!$('#map').hidden && typeof renderHome === 'function') renderHome(); }
 function bump(el) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
 
 /* ---------- five lights: balance across the elements ---------- */
@@ -1745,6 +1894,118 @@ function confetti(sel) {
   }
 }
 
+/* ---------- press feel ---------- */
+// Every tappable thing answers the finger: a light ripple from the touch point, a small
+// squash, a soft wooden tock, and a haptic tick where the device supports it.
+const PRESSABLE = '.btn, .hicon, .place, .chip, .iconbtn, .node, .pack, .boost, .buddyrow, .sealslot, .quest, .rung, .breathbtn, .babybar button, .linkbtn';
+document.addEventListener('pointerdown', e => {
+  const el = e.target.closest(PRESSABLE);
+  if (!el || el.disabled) return;
+  const host = el.querySelector('.hart') || el;
+  const r = host.getBoundingClientRect(), size = Math.max(r.width, r.height) * 1.6;
+  const rp = document.createElement('span');
+  rp.className = 'ripple';
+  rp.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX - r.left - size / 2}px;top:${e.clientY - r.top - size / 2}px`;
+  host.classList.add('ripplehost');
+  host.appendChild(rp);
+  setTimeout(() => rp.remove(), 560);
+  el.classList.remove('pressed'); void el.offsetWidth; el.classList.add('pressed');
+  setTimeout(() => el.classList.remove('pressed'), 220);
+  tick();
+}, true);
+
+/* ---------- the living home ---------- */
+// The home is a place, and the place follows the five-element calendar: Wood spring,
+// Fire summer, Earth late summer, Metal autumn, Water winter. The local clock relights it.
+const SEASON_OF = m => m <= 1 || m === 11 ? 'water' : m <= 4 ? 'wood' : m <= 6 ? 'fire' : m === 7 ? 'earth' : 'metal';
+const SEASON_NAME = { wood: 'Spring', fire: 'Summer', earth: 'Late summer', metal: 'Autumn', water: 'Winter' };
+const HOME_SCENE = { wood: 'home-wood-spring', fire: 'home-fire-summer', earth: 'home-earth-latesummer', metal: 'home-metal-autumn', water: 'home-water-winter' };
+const SOUTH = /^(Australia|Antarctica|Pacific\/Auckland|Pacific\/Fiji|America\/(Argentina|Santiago|Sao_Paulo|Montevideo|Asuncion|La_Paz|Lima)|Africa\/(Johannesburg|Maputo|Harare|Windhoek))/;
+function homeElement() {
+  const now = new Date(Date.now() + (S.demoOffset || 0) * DAY);
+  let m = now.getMonth();
+  let tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (e) {}
+  if (SOUTH.test(tz)) m = (m + 6) % 12;          // seasons flip below the equator
+  return SEASON_OF(m);
+}
+function timeOfDay() {
+  const h = new Date().getHours();
+  return h >= 5 && h < 8 ? 'dawn' : h >= 8 && h < 17 ? 'day' : h >= 17 && h < 20 ? 'dusk' : 'night';
+}
+function renderHome() {
+  const el = homeElement(), tod = timeOfDay();
+  $('#homeBg').style.backgroundImage = `url(img/home/${HOME_SCENE[el]}.jpg)`;
+  $('#homeShade').className = `homeshade ${tod}`;
+  $('#seasonLine').textContent = `${SEASON_NAME[el]} · ${ELEM[el].name} season · ${tod === 'day' ? 'daytime' : tod}`;
+  // badges
+  $('#bStreak').textContent = S.streak ? S.streak : '';
+  const q = ensureQuests(), done = q.items.filter(i => i.done).length;
+  $('#bQuests').textContent = done === 3 ? '✓' : `${done}/3`;
+  $('#bQuests').className = 'hbadge' + (done === 3 ? ' ok' : '');
+  $('#bWheel').textContent = spunToday() ? '' : '!';
+  const lit = balState().lit;
+  $('#bLights').textContent = `${lit}/5`;
+  $('#bLights').className = 'hbadge' + (lit === 5 ? ' ok' : '');
+  $('#bSeals').textContent = `${sealCount()}`;
+  $('#bSeals').className = 'hbadge ok';
+  $('#bBaby').textContent = babyOn() ? 'on' : '';
+  $('#bBaby').className = 'hbadge ok';
+  $('#bBuddy').textContent = S.buddy ? '' : '!';
+  $('#buddyIcon').src = S.buddy ? `img/faces/buddy-${S.buddy}-calm.jpg` : 'img/icons/icon-buddy.jpg';
+  // one line that tells you what matters right now
+  const rib = $('#homeRibbon'), m = nextMile(), played = S.lastDay === dayKey();
+  rib.className = 'ribbon' + (!played && S.streak ? ' warn' : '');
+  rib.textContent = !played && S.streak ? `Your ${S.streak}-day streak ends tonight`
+    : played ? `Day ${S.streak} done · ${Math.max(0, m.d - S.streak)} to the next reward`
+      : 'One place a day starts your streak';
+  // places
+  const next = Math.min(S.unlocked, LEVELS.length) - 1;
+  $('#places').innerHTML = LEVELS.map((l, i) => `<button class="place ${i + 1 > S.unlocked ? 'locked' : ''} ${i === next ? 'next' : ''}" data-lv="${i}" aria-label="${l.place}">${orbHTML(l.elem)}<span class="st">${'★'.repeat(S.stars[i + 1] || 0)}</span></button>`).join('');
+  $('#playNext').textContent = `Play · ${LEVELS[next].place}`;
+  startHomeFx(el);
+}
+$('#places').addEventListener('click', e => {
+  const b = e.target.closest('.place'); if (!b) return;
+  if (b.classList.contains('locked')) { toast('Finish the place before it to open this one.'); return; }
+  openLevel(+b.dataset.lv);
+});
+$$('.hicon[data-open]').forEach(b => b.addEventListener('click', () => {
+  const target = document.getElementById(b.dataset.open);
+  if (target) target.click();
+  setTimeout(renderHome, 400);
+}));
+// ambient life in the scene, one kind per element
+let fxRun = 0;
+function startHomeFx(el) {
+  const run = ++fxRun, cv = $('#homeFx'), g = cv.getContext('2d');
+  const W = cv.width = cv.clientWidth * devicePixelRatio, H = cv.height = cv.clientHeight * devicePixelRatio;
+  if (reduce || !W) return;
+  const kind = { wood: 'petal', fire: 'ember', earth: 'mote', metal: 'leaf', water: 'snow' }[el];
+  const P = Array.from({ length: kind === 'snow' ? 60 : 30 }, () => ({
+    x: Math.random() * W, y: Math.random() * H, s: (2 + Math.random() * 4) * devicePixelRatio,
+    v: (0.3 + Math.random() * 0.8) * devicePixelRatio, a: Math.random() * 6.28, w: Math.random() * 0.02 + 0.005
+  }));
+  const col = { petal: '255,190,210', ember: '255,190,90', mote: '255,225,150', leaf: '220,110,50', snow: '255,255,255' }[kind];
+  const tick = () => {
+    if (run !== fxRun || $('#map').hidden) return;
+    g.clearRect(0, 0, W, H);
+    for (const p of P) {
+      p.a += p.w;
+      if (kind === 'ember') { p.y -= p.v; p.x += Math.sin(p.a) * 0.6; if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; } }
+      else if (kind === 'mote') { p.y += Math.sin(p.a) * 0.3; p.x += Math.cos(p.a * 0.7) * 0.3; }
+      else { p.y += p.v; p.x += Math.sin(p.a) * (kind === 'snow' ? 0.5 : 1.4); if (p.y > H + 10) { p.y = -10; p.x = Math.random() * W; } }
+      const al = kind === 'ember' ? 0.5 + Math.sin(p.a * 3) * 0.4 : kind === 'mote' ? 0.35 + Math.sin(p.a * 2) * 0.25 : 0.8;
+      g.fillStyle = `rgba(${col},${al})`;
+      g.beginPath();
+      if (kind === 'petal' || kind === 'leaf') g.ellipse(p.x, p.y, p.s, p.s * 0.55, p.a, 0, 6.28);
+      else g.arc(p.x, p.y, kind === 'snow' ? p.s * 0.6 : p.s * 0.5, 0, 6.28);
+      g.fill();
+    }
+    requestAnimationFrame(tick);
+  };
+  tick();
+}
+
 /* ---------- map screen ---------- */
 function renderMap() {
   syncWallet();
@@ -2001,7 +2262,7 @@ async function popSet(set) {
     charge = Math.min(100, charge + gain);
   }
   const n = Math.min(arr.length, 5);
-  for (let i = 0; i < n; i++) setTimeout(() => boop(combo * 2 + i), i * 55);
+  if (combo >= 2) setTimeout(() => boop(Math.min(combo * 2, 9), 0.08), 120);
   if (arr.length >= 4) avatarReact('happy', arr.length + combo * 2);
   if (combo >= 1 && performance.now() - cheerAt > 2500) { cheerAt = performance.now(); say(rnd(CHEERS)); }
   hud();
@@ -2661,34 +2922,64 @@ function shake(power) {
 function sparks(arr) {
   const by = {};
   arr.forEach(t => { if (t.type !== 'spirit') (by[t.type] = by[t.type] || []).push(t); });
-  Object.keys(by).forEach(type => { fxFor(type, by[type]); elemSound(type); });
+  Object.keys(by).forEach((type, k) => {
+    const tiles = by[type];
+    fxFor(type, tiles);
+    const pan = (tiles.reduce((a, t) => a + t.c, 0) / tiles.length / (C - 1)) * 1.6 - 0.8;
+    const step = Math.min(combo * 2 + (tiles.length > 3 ? 1 : 0), LADDER.length - 1);
+    setTimeout(() => elemSound(type, pan, step), k * 45);
+  });
 }
-function elemSound(type) {
+function elemSound(type, pan = 0, step = 0) {
   const a = ac(); if (!a || muted) return;
-  const t = a.currentTime, f = (ELEM[type] || {}).tone || 660;
-  if (type === 'fire') {
-    const s = noise(), flt = a.createBiquadFilter(), g = a.createGain();
-    flt.type = 'bandpass'; flt.Q.value = 1.1;
-    flt.frequency.setValueAtTime(700, t); flt.frequency.exponentialRampToValueAtTime(2600, t + 0.22);
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.07, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
-    s.connect(flt).connect(g).connect(a.destination); s.start(t); s.stop(t + 0.32);
-    bell(f, 0, 0.05);
-  } else if (type === 'water') {
-    const o = a.createOscillator(), g = a.createGain();
-    o.type = 'sine'; o.frequency.setValueAtTime(f * 1.6, t); o.frequency.exponentialRampToValueAtTime(f * 0.7, t + 0.35);
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.09, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.4);
-    o.connect(g).connect(a.destination); o.start(t); o.stop(t + 0.42);
-  } else if (type === 'wood') {
-    const o = a.createOscillator(), g = a.createGain();
-    o.type = 'triangle'; o.frequency.setValueAtTime(f, t);
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.1, t + 0.006); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.28);
-    o.connect(g).connect(a.destination); o.start(t); o.stop(t + 0.3);
+  const root = (ELEM[type] || {}).tone || 660;
+  const f = root * LADDER[Math.min(step, LADDER.length - 1)] * detune();
+  const t = a.currentTime;
+  if (type === 'wood') {
+    // marimba: warm wooden bar, the 4th partial that makes it "wood", a felt mallet tap
+    const out = voice(pan, 0.7);
+    const g1 = a.createGain(); g1.connect(out); env(g1, t, 0.2, 0.003, 0.55); osc(a, 'sine', f, t, 0.6, g1);
+    const g2 = a.createGain(); g2.connect(out); env(g2, t, 0.06, 0.002, 0.09); osc(a, 'sine', f * 3.93, t, 0.12, g2);
+    const n = noise(), bp = a.createBiquadFilter(), g3 = a.createGain();
+    bp.type = 'bandpass'; bp.frequency.value = 1800; bp.Q.value = 2;
+    n.connect(bp).connect(g3).connect(out); env(g3, t, 0.035, 0.001, 0.02); n.start(t); n.stop(t + 0.04);
+  } else if (type === 'fire') {
+    // warm FM bell that brightens then mellows, with a few ember crackles
+    const out = voice(pan, 0.9);
+    const g = a.createGain(); g.connect(out); env(g, t, 0.16, 0.004, 0.9);
+    const car = osc(a, 'sine', f, t, 1, g);
+    const mod = a.createOscillator(), mg = a.createGain();
+    mod.frequency.value = f * 1.5; mg.gain.setValueAtTime(f * 2.2, t); mg.gain.exponentialRampToValueAtTime(1, t + 0.5);
+    mod.connect(mg).connect(car.frequency); mod.start(t); mod.stop(t + 1);
+    for (let k = 0; k < 3; k++) {
+      const tt = t + 0.02 + Math.random() * 0.13, n = noise(), bp = a.createBiquadFilter(), ng = a.createGain();
+      bp.type = 'bandpass'; bp.frequency.value = 2200 + Math.random() * 1500; bp.Q.value = 3;
+      n.connect(bp).connect(ng).connect(out); env(ng, tt, 0.03, 0.001, 0.015); n.start(tt); n.stop(tt + 0.03);
+    }
   } else if (type === 'earth') {
-    const o = a.createOscillator(), g = a.createGain();
-    o.type = 'sine'; o.frequency.setValueAtTime(f / 2, t); o.frequency.exponentialRampToValueAtTime(f / 2.6, t + 0.2);
-    g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.11, t + 0.015); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.34);
-    o.connect(g).connect(a.destination); o.start(t); o.stop(t + 0.36);
-  } else bell(f, 0, 0.09);
+    // singing bowl: low, round, two tones a hair apart so they beat slowly
+    const out = voice(pan, 1.2), low = f / 2;
+    const g1 = a.createGain(); g1.connect(out); env(g1, t, 0.17, 0.01, 1.4);
+    const o1 = osc(a, 'sine', low * 1.015, t, 1.5, g1); o1.frequency.exponentialRampToValueAtTime(low, t + 0.12);
+    const g2 = a.createGain(); g2.connect(out); env(g2, t, 0.08, 0.02, 1.3); osc(a, 'sine', low + 2.2, t, 1.4, g2);
+    const g3 = a.createGain(); g3.connect(out); env(g3, t, 0.035, 0.01, 0.5); osc(a, 'sine', low * 2.76, t, 0.6, g3);
+  } else if (type === 'metal') {
+    // crystal chime: pure, high, inharmonic partials that ring and fade
+    const out = voice(pan, 1.3), hi = f * 2;
+    [[1, 0.13, 1.9], [2.76, 0.055, 1.1], [5.4, 0.022, 0.6], [8.93, 0.01, 0.35]].forEach(([m, v, d]) => {
+      const g = a.createGain(); g.connect(out); env(g, t, v, 0.003, d); osc(a, 'sine', hi * m, t, d + 0.05, g);
+    });
+  } else if (type === 'water') {
+    // the droplet: a resonance that rises fast, then a smaller splash just after
+    const out = voice(pan, 1.0);
+    const drop = (tt, base, vol) => {
+      const g = a.createGain(); g.connect(out); env(g, tt, vol, 0.004, 0.2);
+      const o = osc(a, 'sine', base * 0.8, tt, 0.26, g); o.frequency.exponentialRampToValueAtTime(base * 1.7, tt + 0.045);
+    };
+    drop(t, f, 0.2);
+    drop(t + 0.07, f * 1.33, 0.07);
+    const gb = a.createGain(); gb.connect(out); env(gb, t, 0.05, 0.004, 0.12); osc(a, 'sine', f / 2, t, 0.15, gb);
+  } else bell(f, 0, 0.09, pan);
 }
 // two or more elements clearing in one turn ring together
 function harmony(types) {
@@ -2774,10 +3065,17 @@ function clearHints() {
   if (handAnim) { handAnim.cancel(); handAnim = null; }
   handEl.hidden = true;
 }
-function hideTip() { tipEl.hidden = true; }
+function hideTip() { tipEl.hidden = true; const b = $('#bubble'); if (b) b.style.visibility = ''; }
 function tip(step, text, y, button) {
-  tipEl.innerHTML = `${step ? `<span class="k">${step}</span>` : ''}${text}${button ? `<button class="btn gold" id="tipBtn" style="margin-top:10px;min-height:40px;width:100%">${button}</button>` : ''}`;
+  tipEl.innerHTML = `${step ? `<span class="k">${step}</span>` : ''}${text}${button ? `<button class="btn gold" id="tipBtn" style="margin-top:8px;min-height:38px;width:100%;font-size:14px">${button}</button>` : ''}`;
   tipEl.hidden = false;
+  // sit in the speech bubble's slot, never over the board labels or the HUD
+  const b = $('#bubble'), a = appEl.getBoundingClientRect(), r = b.getBoundingClientRect();
+  tipEl.style.left = `${r.left - a.left}px`;
+  tipEl.style.right = `${a.right - r.right}px`;
+  tipEl.style.bottom = `${a.bottom - r.bottom}px`;
+  tipEl.style.top = 'auto';
+  b.style.visibility = 'hidden';
   return button ? new Promise(res => $('#tipBtn').addEventListener('click', () => res(), { once: true })) : null;
 }
 // fingertip of the emoji sits about 8px right of centre, 4px from the top
@@ -2814,7 +3112,7 @@ function coachStart() {
   if (LI !== 0 || S.tutDone) { tut = null; clearHints(); hideTip(); return; }
   tut = 'swap';
   showSwapHint();
-  tip('Step 1 of 3 · Match', 'Slide the glowing orb onto its neighbour, like the hand shows. Three of the same element in a row is a match.', 0);
+  tip('Step 1 of 3', 'Slide the glowing orb where the hand shows. 3 in a row pops.', 0);
 }
 // called after every finished turn
 function coachAfterTurn() {
@@ -2822,7 +3120,7 @@ function coachAfterTurn() {
   if (tut === 'swap') {
     if (charge >= 100) return;
     showSwapHint();
-    tip('Step 1 of 3 · Match', `Nice. That match filled Luma's glow to ${Math.round(charge)}%. Make another match to fill her up.`, 0);
+    tip('Step 1 of 3', `Nice! Luma is ${Math.round(charge)}% full. One more match.`, 0);
   } else if (tut === 'loop') {
     clearHints();
   } else if (!tut) clearHints();
@@ -2831,7 +3129,7 @@ function coachReady() {
   if (tut !== 'swap') return;
   tut = 'luma';
   showLumaHint();
-  tip('Step 2 of 3 · Breathe', 'Luma is full and glowing. Tap her to breathe with her. Breathing is the only thing that blows clouds away.', 0);
+  tip('Step 2 of 3', 'Luma is glowing. Tap her and breathe with her.', 0);
 }
 function coachBreathOpened() {
   clearHints(); hideTip();
@@ -2841,7 +3139,7 @@ async function coachBreathDone() {
   if (tut !== 'breath') return;
   tut = 'loop';
   const left = clouds().length;
-  const wait1 = tip('Step 3 of 3 · Repeat', `That's the whole game. Match to fill Luma, then breathe. ${left ? `${left} ${left === 1 ? 'cloud' : 'clouds'} to go.` : ''} Slow breaths clear 4 clouds at once.`, 0, 'Got it, let me play');
+  const wait1 = tip('Step 3 of 3', 'That is the game: match, then breathe.', 0, 'Got it');
   await wait1;
   hideTip(); tut = null;
   S.tutDone = true; save();
@@ -2890,7 +3188,7 @@ function toMap() {
   brRun++; closeMic(); breathing = false; babyRun++;
   $('#babyBar').hidden = true;
   tut = null; clearHints(); hideTip();
-  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals();
+  $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals(); renderHome();
 }
 $('#toMap').addEventListener('click', toMap);
 
@@ -3060,16 +3358,45 @@ $('#gDone').addEventListener('click', () => { guideRun++; breathSound('out', 0.3
 /* ---------- boot ---------- */
 $$('[data-play]').forEach(b => b.addEventListener('click', () => {
   ac();
-  $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak();
+  $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome();
   openLevel(0);
 }));
 $('#retut').addEventListener('click', () => { S.tutDone = false; save(); toast('The guided walkthrough will play on level 1.'); });
-$('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); });
+$('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome(); });
 $('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#welcome').hidden = false; $('#welcome').scrollTop = 0; });
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
 $('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
 $('#cycleRow').innerHTML = ['wood', 'fire', 'earth', 'metal', 'water'].map(e => `<span class="eo">${orbHTML(e)}</span>`).join('<i>→</i>') + '<i>↻</i>';
-syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals(); setBaby(S.babyMode);
+// the opening: the five elements arrive around the creation cycle, spin into one light,
+// and the name rises out of it. Once per session, skippable.
+async function introSplash() {
+  let seen = false; try { seen = sessionStorage.getItem('kcq-intro') === '1'; } catch (e) {}
+  if (seen || reduce) return;
+  try { sessionStorage.setItem('kcq-intro', '1'); } catch (e) {}
+  const sp = $('#splash'), ring = $('#splRing'), title = $('#splTitle');
+  title.innerHTML = [...title.textContent].map((c, i) => `<span style="animation-delay:${i * 45}ms">${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+  const order = ['wood', 'fire', 'earth', 'metal', 'water'];
+  ring.innerHTML = order.map((e, i) => {
+    const ang = -Math.PI / 2 + i * (Math.PI * 2 / 5), R = 92;
+    return `<div class="o" style="--fx:${Math.cos(ang) * 420}px;--fy:${Math.sin(ang) * 420}px;--tx:${Math.cos(ang) * R}px;--ty:${Math.sin(ang) * R}px;animation-delay:${i * 140}ms">${orbHTML(e)}</div>`;
+  }).join('');
+  sp.hidden = false;
+  let skipped = false;
+  const done = async () => { if (skipped) return; skipped = true; sp.classList.add('out'); await wait(700); sp.hidden = true; };
+  sp.addEventListener('pointerdown', done, { once: true });
+  order.forEach((e, i) => setTimeout(() => { if (!skipped) elemSound(e, (i - 2) * 0.35, i); }, 300 + i * 140));
+  await wait(1300); if (skipped) return;
+  ring.classList.add('spin');
+  await wait(900); if (skipped) return;
+  sp.classList.add('burst');
+  chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
+  await wait(250);
+  sp.classList.add('words');
+  await wait(2000);
+  done();
+}
+introSplash();
+syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals(); setBaby(S.babyMode); renderHome();
 })();
 </script>
 
