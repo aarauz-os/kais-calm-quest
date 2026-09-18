@@ -2485,7 +2485,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
           <p class="clede">The puzzle game kids win by breathing. Clear the storm with a real, slow breath, then understand the feeling behind it.</p>
           <div class="cfaces"><img src="img/faces/hero-g1-happy.jpg" alt=""><img src="img/faces/hero-b3-happy.jpg" alt=""><img src="img/faces/hero-g4-happy.jpg" alt=""><img src="img/faces/kai-happy.jpg" alt=""><img src="img/faces/hero-g6-happy.jpg" alt=""><img src="img/faces/hero-b5-happy.jpg" alt=""><img class="cluma" src="img/faces/luma-happy.jpg" alt="Luma"><img src="img/faces/hero-g2-happy.jpg" alt=""><img src="img/faces/hero-b2-happy.jpg" alt=""><img src="img/faces/hero-g5-happy.jpg" alt=""><img src="img/faces/hero-b4-happy.jpg" alt=""><img src="img/faces/hero-g3-happy.jpg" alt=""><img src="img/faces/hero-b6-happy.jpg" alt=""></div>
           <button class="btn gold big" data-play>Play the demo</button>
-          <p class="cnote">50 episodes to play · free forever · best with the sound on</p>
+          <p class="cnote">60 episodes to play · free forever · best with the sound on</p>
         </div>
       </header>
 
@@ -2532,7 +2532,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
           <li><b>12 heroes</b> kids pick to look like them, with no labels</li>
           <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
           <li><b>A real conversation</b> each episode: you feel it, Kai gets it, Sorin helps</li>
-          <li><b>One new thing at a time.</b> Episode 1 is just matching; every episode after adds one piece, obstacle or helper with its own showcase level</li>
+          <li><b>One new thing at a time.</b> Episode 1 is just matching; every third episode adds one piece, obstacle or helper with its own showcase level, and every ninth from 27 is a harder Stormy episode, with a Thunderstorm at 54</li>
           <li><b>Boards in many shapes</b>: hearts, lotus flowers, arches, towers, waves, and gentle difficulty with Luma lending extra moves when a level feels hard</li>
         </ul>
       </section>
@@ -3288,7 +3288,8 @@ const BASE_LEVELS = [
 // Anchored to Royal Kingdom's confirmed levels: first in-game booster at 8 (their Hammer), free starting
 // gifts at 32 (their Magic Pots) and the colour-clearing star at 36 (their Electro Ball event). Everything
 // else is spaced so each new thing gets several levels to settle before the next arrives.
-const FEAT_AT = { breath: 2, row: 4, clouds: 6, monkey: 8, bomb: 10, charms: 12, knots: 14, fly: 17, tiger: 20, storm: 23, feed: 26, bear: 30, glow: 32, spirit: 36, crane: 40, deer: 45 };
+// every new thing lands on a multiple of 3; multiples of 9 from 27 are Stormy episodes, so the two never meet
+const FEAT_AT = { breath: 3, row: 6, clouds: 9, monkey: 12, bomb: 15, charms: 18, knots: 21, fly: 24, tiger: 30, storm: 33, feed: 39, bear: 42, glow: 48, spirit: 51, crane: 57, deer: 60 };
 const INTRO_AT = Object.fromEntries(Object.entries(FEAT_AT).map(([k, v]) => [v, k]));
 const reached = () => Math.max(S && S.unlocked || 1, (typeof LI === 'number' ? LI : 0) + 1);
 const featOn = (k, ep = (typeof LI === 'number' ? LI : 0) + 1) => ep >= FEAT_AT[k];
@@ -3305,7 +3306,7 @@ function makeEp(i) {
   const shape = INTRO_AT[ep] ? null : ep === 3 ? 'round6' : ep < 5 ? null : SHAPE_CYCLE[(ep - 5) % SHAPE_CYCLE.length];
   return Object.assign({}, b, { moves, clouds, knots, gems: gems || (clouds || knots ? 0 : 12), shape, ep, intro: INTRO_AT[ep] || (ep === 1 ? 'match' : null) });
 }
-const LEVELS = Array.from({ length: 50 }, (_, i) => makeEp(i));
+const LEVELS = Array.from({ length: 60 }, (_, i) => makeEp(i));
 
 // the Feelings Journey: 16 chapters of 60 places, then the 40-place Harmony Road (1,000 in all).
 // Framing rule: every feeling is welcome. We tame, face, untangle or hold it, never defeat it.
@@ -5010,12 +5011,12 @@ $('#heroOpen').addEventListener('click', () => { ac(); pickHero(); });
 
 /* ---------- story intro: tap through one line at a time, then the loadout ---------- */
 const VOICE = { hero: 520, sorin: 290, luma: 780 };
-/* ---------- difficulty: every 5th episode is Stormy (Hard), every 20th a Thunderstorm (Super Hard).
+/* ---------- difficulty: every 9th episode from 27 is Stormy (Hard), 54 a Thunderstorm (Super Hard).
    Four easy wins, then a challenge that pays more; the rarer Thunderstorms become events. ---------- */
 // Stormy episodes arrive only once the basics are learned, and never on an episode that introduces something new
-const epDifficulty = ep => ep >= 40 && ep % 20 === 0 && !INTRO_AT[ep] ? 'super' : ep >= 15 && ep % 5 === 2 && !INTRO_AT[ep] ? 'hard' : 'normal';
+const epDifficulty = ep => INTRO_AT[ep] || ep < 27 || ep % 9 ? 'normal' : ep % 54 === 0 ? 'super' : 'hard';
 // how many Stormy episodes came before this one: the first ones are gentle, the squeeze grows slowly
-const stormRank = ep => Math.max(1, Math.floor((ep - 17) / 5) + 1);
+const stormRank = ep => Math.max(1, Math.floor((ep - 27) / 9) + 1);
 const DIFF = {
   normal: { name: '', label: '', moves: 1, clouds: 0, knots: 0, gems: 1, coin: 1, xp: 1 },
   hard: { name: 'Stormy', label: 'Hard', moves: 0.9, clouds: 2, knots: 2, gems: 1, coin: 2, xp: 1.5 },
@@ -5637,7 +5638,7 @@ function placeGifts(kinds) {
     if (k === 'spirit') { t.type = 'spirit'; t.sp = null; } else t.sp = k;
     paint(t); setTimeout(() => { t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460); bell(chordNote(6 + i), 0, 0.05); }, 300 + i * 250); });
 }
-const GLOW_FROM = FEAT_AT.glow;                                   // free starting gifts unlock at episode 8, once kids can make pieces themselves
+const GLOW_FROM = FEAT_AT.glow;                                   // free starting gifts unlock with the glow streak, once kids can make pieces themselves
 const glowOn = () => !babyOn() && LI + 1 >= GLOW_FROM;
 function applyGlow() {
   const n = Math.min(3, S.glow || 0); if (!n || !glowOn()) return;
