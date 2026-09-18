@@ -1871,6 +1871,97 @@ body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--tabh) + v
 @keyframes cgrand{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(4deg) translateY(-5px)}}
 .cgrand b{display:block;font-size:18px;margin-top:4px}.cgrand em{display:block;font-style:normal;font-size:13px;font-weight:800;opacity:.88;line-height:1.4;margin-top:4px}
 .cgrand .btn{margin-top:10px}
+
+/* ================= Season Pass v2 (v56): a golden vine of rewards ================= */
+.passglow{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(90% 40% at 50% 0%,rgba(255,220,140,.35),transparent 70%),radial-gradient(70% 50% at 50% 100%,rgba(90,200,150,.18),transparent 70%)}
+.passin{box-sizing:border-box;padding-left:0;padding-right:0}
+.passin .wtitle small{white-space:nowrap;letter-spacing:.12em}
+.phero{position:relative;display:flex;align-items:center;gap:14px;margin:12px 16px 6px;padding:12px 14px 12px 12px;border-radius:24px;
+  background:linear-gradient(180deg,rgba(35,82,67,.95),rgba(15,40,33,.97));box-shadow:0 0 0 1.5px #F4D78C,0 0 0 5px rgba(20,50,40,.9),0 0 0 6.5px rgba(227,188,106,.55),0 14px 30px rgba(0,0,0,.45)}
+.pcrest{position:relative;flex:none;width:78px;height:78px;display:grid;place-items:center}
+.pcrest>span{position:relative;z-index:1;width:70px;height:70px;border-radius:50%;display:grid;place-items:center;align-content:center;line-height:1;color:#3A2408;
+  background:radial-gradient(circle at 38% 28%,#FFFBEA,#F6DB8E 45%,#C9912F 85%);box-shadow:inset 0 3px 3px rgba(255,255,255,.85),inset 0 -4px 6px rgba(120,70,10,.35),0 0 0 2.5px #FFF3CF,0 0 0 5px #B98331,0 6px 14px rgba(0,0,0,.4)}
+.pcrest small{font-size:9.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
+.pcrest b{font-family:"Marcellus SC",Georgia,serif;font-size:31px;font-weight:400;margin:1px 0}
+.pcrest em{font-style:normal;font-size:9.5px;font-weight:900;opacity:.75}
+.pcrays{position:absolute;inset:-16px;border-radius:50%;background:repeating-conic-gradient(rgba(255,226,150,.45) 0 6deg,transparent 6deg 18deg);-webkit-mask-image:radial-gradient(circle,#000 30%,transparent 70%);mask-image:radial-gradient(circle,#000 30%,transparent 70%);animation:rays 20s linear infinite}
+.pmeter{flex:1;min-width:0}
+.pnext{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12.5px;font-weight:900;line-height:1.15}
+.pnext img{width:34px;height:34px;object-fit:contain;flex:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));animation:pnextbob 2.8s ease-in-out infinite}
+.pnext img.photo{border-radius:10px;object-fit:cover;box-shadow:0 0 0 2px #F4D78C}
+.pnext small{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi)}
+@keyframes pnextbob{0%,100%{transform:rotate(-6deg) scale(1)}50%{transform:rotate(6deg) scale(1.08)}}
+.phero .passbar{height:14px;box-shadow:inset 0 2px 4px rgba(0,0,0,.5),0 0 0 1.5px #E3BC6A}
+.phero .passxp{margin-top:6px;font-size:12px;opacity:.85}
+.pclaimall{position:relative;z-index:3;align-self:center;margin:6px auto 2px;padding:10px 22px;border-radius:99px;font-weight:900;font-size:15px;color:#3A2408;
+  background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 4px 0 #8A5A1C,0 0 24px rgba(255,214,120,.7);animation:pcall 1.8s ease-in-out infinite}
+@keyframes pcall{50%{transform:scale(1.05);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 4px 0 #8A5A1C,0 0 34px 6px rgba(255,214,120,.85)}}
+.pscroll{position:relative;z-index:2;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:6px 14px 20px;-webkit-overflow-scrolling:touch;
+  -webkit-mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 18px),transparent);mask-image:linear-gradient(transparent,#000 14px,#000 calc(100% - 18px),transparent)}
+.pgrand{position:relative;display:flex;align-items:center;gap:12px;width:100%;margin:10px 0 18px;padding:14px 14px 14px 10px;border-radius:24px;overflow:hidden;text-align:left;color:#FFF6DE;
+  background:radial-gradient(90% 120% at 18% 50%,rgba(255,214,120,.45),transparent 60%),linear-gradient(135deg,#3B2A12,#1E3A30 60%,#12302A);box-shadow:0 0 0 2px #F4D78C,0 0 0 6px rgba(30,58,48,.9),0 0 0 7.5px rgba(227,188,106,.6),0 0 40px rgba(255,210,120,.35)}
+.pgrays{position:absolute;left:-40px;top:50%;width:220px;height:220px;margin-top:-110px;background:repeating-conic-gradient(rgba(255,230,160,.35) 0 7deg,transparent 7deg 20deg);-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 68%);mask-image:radial-gradient(circle,#000 20%,transparent 68%);animation:rays 24s linear infinite}
+.pgtro{position:relative;flex:none;width:96px;height:96px;object-fit:contain;filter:drop-shadow(0 6px 10px rgba(0,0,0,.45)) drop-shadow(0 0 14px rgba(255,214,120,.7));animation:pbloom 4.6s ease-in-out infinite;transform-origin:50% 80%}
+@keyframes pbloom{0%,100%{transform:scale(1) rotate(-2deg)}45%{transform:scale(1.07,1.03) rotate(2deg)}55%{transform:scale(1.05,1.06) rotate(2deg)}}
+.pgtx{position:relative}
+.pgtx small{display:block;font-size:10.5px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi)}
+.pgtx b{display:block;font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:19px;line-height:1.15;margin:3px 0 4px;text-shadow:0 2px 0 rgba(40,24,6,.8)}
+.pgtx em{display:block;font-style:normal;font-size:12px;font-weight:800;opacity:.85}
+.passtrack{position:relative;display:block;overflow:visible;padding:48px 0 10px;height:auto;flex:none;scroll-snap-type:none}
+.pvine,.pvlit{position:absolute;left:50%;width:6px;margin-left:-3px;top:30px;border-radius:6px}
+.pvine{bottom:60px;background:linear-gradient(rgba(255,233,168,.22),rgba(255,233,168,.12));box-shadow:inset 0 0 0 1px rgba(255,233,168,.15)}
+.pvlit{height:0;background:linear-gradient(#FFF3C4,#F2CC6A 40%,#E0A83E);box-shadow:0 0 12px rgba(255,214,120,.9),0 0 3px #fff;transition:height .8s cubic-bezier(.2,.9,.3,1)}
+.pvlit::after{content:"";position:absolute;left:-3px;right:-3px;height:40px;bottom:0;border-radius:6px;background:linear-gradient(transparent,rgba(255,255,255,.9));animation:pvflow 2.2s ease-in-out infinite}
+@keyframes pvflow{0%{opacity:0;transform:translateY(-60px)}50%{opacity:1}100%{opacity:0;transform:translateY(0)}}
+.prow{position:relative;display:grid;grid-template-columns:1fr 46px 1fr;align-items:center;min-height:92px;margin-top:-38px}
+.prow:first-child{margin-top:0}
+.pnode{grid-column:2;grid-row:1;justify-self:center;position:relative;z-index:2;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:13.5px;color:#FFF6DE;
+  background:radial-gradient(circle at 40% 30%,#3A6A5A,#16352C);box-shadow:0 0 0 2px rgba(255,233,168,.45),0 3px 6px rgba(0,0,0,.4)}
+.pnode.lit{color:#3A2408;background:radial-gradient(circle at 38% 28%,#FFFBEA,#F2CC6A 60%,#C08A26);box-shadow:0 0 0 2px #FFF3CF,0 0 14px rgba(255,214,120,.9)}
+.pnode.here{width:46px;height:46px;padding:0;background:none;box-shadow:0 0 0 3px #FFF3CF,0 0 0 5.5px #D9A94A,0 0 22px 6px rgba(255,214,120,.8);animation:phere 2.4s ease-in-out infinite}
+.pnode.here img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.pnode.here b{position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);min-width:22px;height:18px;padding:0 5px;border-radius:99px;display:grid;place-items:center;font-size:11px;color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:0 0 0 1.5px #7A4F1E}
+@keyframes phere{50%{box-shadow:0 0 0 3px #FFF3CF,0 0 0 5.5px #D9A94A,0 0 32px 12px rgba(255,214,120,.9)}}
+.prow .ptier{grid-row:1;position:relative;width:auto;height:auto;min-height:0;margin:0;padding:10px 10px 10px;border-radius:20px;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;color:#FFF6DE;filter:none;
+  background:linear-gradient(180deg,rgba(36,84,68,.96),rgba(16,42,34,.97));box-shadow:0 0 0 1.5px rgba(244,215,140,.85),0 0 0 4px rgba(18,46,38,.95),0 0 0 5px rgba(227,188,106,.4),0 10px 20px rgba(0,0,0,.4);scroll-snap-align:none}
+.prow.l .ptier{grid-column:1;margin-right:6px}
+.prow.r .ptier{grid-column:3;margin-left:6px}
+.prow .ptier::after{content:"";position:absolute;top:50%;width:14px;height:2px;background:rgba(244,215,140,.7)}
+.prow.l .ptier::after{right:-14px}.prow.r .ptier::after{left:-14px}
+.ptier .pn{display:none}
+.ptier .picw{position:relative;width:74px;height:74px;display:grid;place-items:center}
+.ptier .picw::before{content:"";position:absolute;inset:6px;border-radius:50%;background:radial-gradient(circle,var(--pg,rgba(255,226,150,.55)),transparent 70%)}
+.ptier .picw img{position:relative;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 6px rgba(0,0,0,.4))}
+.ptier .picw img.photo{width:66px;height:66px;border-radius:16px;object-fit:cover;box-shadow:0 0 0 2.5px #F4D78C,0 5px 10px rgba(0,0,0,.4);filter:none}
+.ptier .picw img.face{position:absolute;width:30px;height:30px;right:-2px;bottom:0;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #fff;filter:none}
+.ptier .picw.m-ring img:first-child{animation:pring 3.6s ease-in-out infinite}
+.ptier .picw.m-aura img{animation:paura 3.2s ease-in-out infinite}
+.ptier .picw.m-charm img{transform-origin:50% 8%;animation:pcharm 2.8s ease-in-out infinite}
+.ptier .picw.m-item img{animation:pitem 3.4s ease-in-out infinite}
+@keyframes pring{0%,100%{transform:rotateY(0) rotate(-6deg)}50%{transform:rotateY(35deg) rotate(6deg)}}
+@keyframes paura{0%,100%{transform:scale(.94);filter:drop-shadow(0 0 4px var(--pg,#fff))}50%{transform:scale(1.06);filter:drop-shadow(0 0 16px var(--pg,#fff))}}
+@keyframes pcharm{0%,100%{transform:rotate(-9deg)}50%{transform:rotate(9deg)}}
+@keyframes pitem{0%,80%,100%{transform:none}86%{transform:translateY(-6px) scale(1.06,.96)}92%{transform:translateY(0) scale(.96,1.05)}}
+.ptier .ptx small{display:block;font-size:9.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi);opacity:.9}
+.ptier .ptx b{display:block;font-size:13px;font-weight:900;line-height:1.15;margin-top:2px}
+.ptier .pbtn{width:100%;margin-top:4px;padding:7px 0;border-radius:12px;font-weight:900;font-size:12.5px;color:#FFF6DE;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,233,168,.35)}
+.ptier.ready{animation:none;box-shadow:0 0 0 2px #FFF3CF,0 0 0 4.5px #D9A94A,0 0 26px 6px rgba(255,214,120,.55),0 10px 20px rgba(0,0,0,.4)}
+.ptier.ready .pbtn{color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 3px 0 #8A5A1C;animation:pcall 1.8s ease-in-out infinite}
+.ptier.ready .picw img:first-child{animation:pready 1.6s ease-in-out infinite}
+@keyframes pready{0%,100%{transform:rotate(0) scale(1)}20%{transform:rotate(-8deg) scale(1.1)}40%{transform:rotate(8deg) scale(1.1)}60%{transform:rotate(0) scale(1)}}
+.ptier.done{background:linear-gradient(180deg,rgba(36,84,68,.9),rgba(16,42,34,.92))}
+.ptier.done .pbtn{color:#CFF3C2;background:rgba(120,210,110,.16);box-shadow:inset 0 0 0 1px rgba(160,230,140,.5)}
+.ptier.done::before{content:"✓";position:absolute;top:6px;right:8px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:900;color:#fff;background:linear-gradient(#7FD06A,#2F8A3C);box-shadow:0 0 0 1.5px #fff}
+.ptier.worn .pbtn{color:#3A2408;background:linear-gradient(#CFF3C2,#7FD06A);box-shadow:inset 0 2px 0 rgba(255,255,255,.7)}
+.ptier.locked{filter:none}
+.ptier.locked .picw img{filter:grayscale(.55) brightness(.75) drop-shadow(0 4px 5px rgba(0,0,0,.4));animation:none !important}
+.ptier.locked .picw img.photo{filter:blur(2px) grayscale(.6) brightness(.7)}
+.ptier.locked .ptx b{opacity:.8}
+.ptier.locked .pbtn{color:rgba(255,246,222,.7);background:rgba(0,0,0,.22);box-shadow:none}
+.ptier.final{box-shadow:0 0 0 2px #FFF3CF,0 0 0 4.5px #D9A94A,0 0 30px 8px rgba(255,214,120,.45),0 10px 20px rgba(0,0,0,.4)}
+.prow.s2 .ptier{opacity:.9;background:linear-gradient(180deg,rgba(20,36,32,.95),rgba(10,22,19,.97))}
+.prow.s2 .picw{font-size:34px;color:rgba(255,233,168,.85);font-family:"Marcellus SC",Georgia,serif}
+.pscroll .passhow{margin:16px 0 4px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2014,7 +2105,6 @@ body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--tabh) + v
       </div>
       <div class="rail">
         <button class="hicon" data-open="sealCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-seal.mp4" poster="img/icons/icon-seal-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
-        <button class="hicon" data-open="buddyCard"><span class="hart h3d"><video id="buddyCoin" class="hvid" src="img/icons/anim/icon-buddy.mp4" poster="img/icons/icon-buddy-3d.jpg" muted loop playsinline autoplay preload="auto"></video><img id="buddyIcon" alt="" hidden></span><b>Buddy</b><i class="hbadge" id="bBuddy"></i></button>
         <button class="hicon" data-open="babyToggle"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-baby.mp4" poster="img/icons/icon-baby-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Baby</b><i class="hbadge" id="bBaby"></i></button>
         <button class="hicon" data-open="bedOpen"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-bedtime.mp4" poster="img/icons/icon-bedtime-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Bedtime</b></button>
       </div>
@@ -2457,18 +2547,23 @@ body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--tabh) + v
   </nav>
   <div class="passov" id="passov" hidden>
     <div class="stbg" id="passBg"></div>
+    <div class="passglow"></div>
     <div class="passin">
       <div class="wtop"><button class="iconbtn" id="passBack" aria-label="Back">‹</button>
         <div class="wtitle"><small>Season 1 · free for everyone</small><b class="display">Season Pass</b></div><span></span></div>
-      <div class="passhead">
-        <div class="passtier"><small>Tier</small><b id="passTier">1</b></div>
-        <div class="passbarw"><div class="passbar"><i id="passFill"></i></div><div class="passxp" id="passXp"></div></div>
+      <div class="phero">
+        <div class="pcrest"><i class="pcrays"></i><span><small>Tier</small><b id="passTier">1</b><em>of 20</em></span></div>
+        <div class="pmeter"><div class="pnext" id="passNext"></div><div class="passbar"><i id="passFill"></i></div><div class="passxp" id="passXp"></div></div>
       </div>
-      <div class="passtrack" id="passTrack"></div>
-      <div class="passhow">
-        <b>Earn Season XP by playing</b>
-        <span class="xpchips"><i><img src="img/ui/flame.png" alt="">Episode <b>+100</b></i><i><img src="img/ui/star.png" alt="">Each star <b>+25</b></i><i><img src="img/faces/luma-happy.jpg" alt="" class="rnd">Deep breath <b>+20</b></i><i><img src="img/ui/letter.png" alt="">Quest <b>+40</b></i><i><img src="img/ui/crown.png" alt="">Seal <b>+50</b></i></span>
-        <em>Rewards never expire. No timers. Play at your own pace.</em>
+      <button class="pclaimall" id="passClaimAll" hidden></button>
+      <div class="pscroll" id="passScroll">
+        <button class="pgrand" id="passGrand"><i class="pgrays"></i><img class="pgtro" src="img/pass/trophy-lotus.png" alt=""><span class="pgtx"><small>Grand reward · tier 20</small><b>Golden Lotus Ring<br>+ Heavenly Gold Aura</b><em id="passGrandSub"></em></span></button>
+        <div class="passtrack" id="passTrack"></div>
+        <div class="passhow">
+          <b>Earn Season XP by playing</b>
+          <span class="xpchips"><i><img src="img/ui/flame.png" alt="">Episode <b>+100</b></i><i><img src="img/ui/star.png" alt="">Each star <b>+25</b></i><i><img src="img/faces/luma-happy.jpg" alt="" class="rnd">Deep breath <b>+20</b></i><i><img src="img/ui/letter.png" alt="">Quest <b>+40</b></i><i><img src="img/ui/crown.png" alt="">Seal <b>+50</b></i></span>
+          <em>Rewards never expire. No timers. Play at your own pace.</em>
+        </div>
       </div>
     </div>
   </div>
@@ -7239,17 +7334,59 @@ function applyLooks() {
   const lw = $('#lumaWrap');
   if (lw) { if (a) { lw.style.setProperty('--a1', a.a1); lw.style.setProperty('--a2', a.a2); lw.classList.add('dyed'); } else lw.classList.remove('dyed'); }
 }
+const PASS_GLOW = { jade: 'rgba(120,220,160,.6)', ember: 'rgba(255,140,110,.6)', river: 'rgba(120,190,255,.6)', lotus: 'rgba(255,214,120,.7)', blossom: 'rgba(255,180,210,.65)', moon: 'rgba(200,180,255,.6)', sunrise: 'rgba(255,190,130,.65)', gold: 'rgba(255,214,120,.75)', sprout: 'rgba(150,230,140,.55)', heart: 'rgba(255,150,130,.55)', drop: 'rgba(140,200,255,.55)' };
+function passArt(r) {
+  if (r.final) return { src: 'img/pass/trophy-lotus.png', m: 'aura', g: PASS_GLOW.gold };
+  if (r.ring) return { src: `img/pass/ring-${r.ring}.png`, m: 'ring', g: PASS_GLOW[r.ring], face: true };
+  if (r.aura) return { src: `img/pass/aura-${r.aura}.png`, m: 'aura', g: PASS_GLOW[r.aura] };
+  if (r.charm) return { src: `img/pass/charm-${r.charm}.png`, m: 'charm', g: PASS_GLOW[r.charm] };
+  if (r.friend) return { src: FRIENDS[r.friend].bg, m: 'photo' };
+  if (r.letter) return { src: 'img/ui/letter.png', m: 'item' };
+  if (r.pw) return { src: `img/ui/pw-${r.pw}.png`, m: 'item' };
+  if (r.lanterns) return { src: RW_ICON.lanterns, m: 'item' };
+  if (r.swirls) return { src: RW_ICON.swirls, m: 'item' };
+  if (r.shields) return { src: RW_ICON.shields, m: 'item' };
+  return { src: RW_ICON.coins, m: 'item' };
+}
+function passKind(r) {
+  if (r.final) return 'Grand reward';
+  if (r.ring) return 'Hero ring';
+  if (r.aura) return 'Aura for Luma';
+  if (r.charm) return 'Charm';
+  if (r.friend) return 'Story card';
+  if (r.letter) return 'Letter from Sorin';
+  if (r.pw || r.lanterns || r.swirls) return 'Booster';
+  if (r.shields) return 'Streak shield';
+  return 'Coins';
+}
+function passArtHTML(r) {
+  const a = passArt(r);
+  return `<span class="picw m-${a.m}" style="--pg:${a.g || 'rgba(255,226,150,.5)'}"><img class="${a.m === 'photo' ? 'photo' : ''}" src="${a.src}" alt="">${a.face ? `<img class="face" src="${faceSrc(heroId(), 'happy')}" alt="">` : ''}</span>`;
+}
 function renderPass() {
   const sp = passState(), t = passTier();
   $('#passTier').textContent = Math.min(PASS.length, t + (t < PASS.length ? 1 : 0));
   $('#passFill').style.width = t >= PASS.length ? '100%' : `${(sp.xp % PASS_XP) / PASS_XP * 100}%`;
   $('#passXp').textContent = t >= PASS.length ? 'Season 1 pass complete' : `${sp.xp % PASS_XP} / ${PASS_XP} XP to tier ${t + 1}`;
-  $('#passTrack').innerHTML = PASS.map((r, i) => {
+  const nx = PASS[Math.min(t, PASS.length - 1)], na = passArt(nx);
+  $('#passNext').innerHTML = t >= PASS.length ? `<img src="img/pass/trophy-lotus.png" alt=""><span><small>Season complete</small>Every reward is yours</span>` : `<img class="${na.m === 'photo' ? 'photo' : ''}" src="${na.src}" alt=""><span><small>Next reward</small>${passLabel(nx)}</span>`;
+  const ready = PASS.filter((_, i) => i < t && !sp.claimed.includes(i)).length, ca = $('#passClaimAll');
+  ca.hidden = ready < 2; ca.textContent = `Claim all ${ready} rewards`;
+  $('#passGrandSub').textContent = t >= PASS.length ? (sp.claimed.includes(PASS.length - 1) ? 'Yours. Wear it with pride.' : 'Ready to claim!') : `${PASS.length - t} tier${PASS.length - t === 1 ? '' : 's'} to go · no timers, it waits for you`;
+  $('#passTrack').innerHTML = '<i class="pvine"></i><i class="pvlit" id="passLit"></i>' + PASS.map((r, i) => {
     const got = sp.claimed.includes(i), open = i < t;
     const worn = got && ((r.ring && S.ring === r.ring) || (r.aura && !r.ring && S.aura === r.aura) || (r.final && S.ring === 'lotus'));
-    const btn = !open ? `${(i + 1) * PASS_XP - sp.xp} XP` : !got ? 'Claim' : (r.ring || r.aura) ? (worn ? 'Wearing' : 'Wear') : (r.letter || r.friend) ? 'Read' : 'Claimed ✓';
-    return `<div class="ptier ${open ? '' : 'locked'} ${open && !got ? 'ready' : ''} ${got ? 'done' : ''} ${worn ? 'worn' : ''}" data-tier="${i}"><span class="pn">${i + 1}</span>${passIcon(r)}<b>${passLabel(r)}</b><button class="pbtn">${btn}</button></div>`;
-  }).join('') + `<div class="ptier next2"><span class="pn">S2</span><span class="pic">?</span><b>Season 2: new friends from Kai's village</b><span style="font-size:11px;font-weight:800;opacity:.8">Coming next</span></div>`;
+    const btn = !open ? `🔒 ${(i + 1) * PASS_XP - sp.xp} XP` : !got ? 'Claim' : (r.ring || r.aura) ? (worn ? 'Wearing ✓' : 'Wear') : (r.letter || r.friend) ? 'Read' : 'Claimed';
+    const node = i === t ? `<span class="pnode here"><img src="${faceSrc(heroId(), 'happy')}" alt=""><b>${i + 1}</b></span>` : `<span class="pnode ${open ? 'lit' : ''}">${i + 1}</span>`;
+    return `<div class="prow ${i % 2 ? 'r' : 'l'}">${node}<div class="ptier ${open ? '' : 'locked'} ${open && !got ? 'ready' : ''} ${got ? 'done' : ''} ${worn ? 'worn' : ''} ${r.final ? 'final' : ''}" data-tier="${i}">${passArtHTML(r)}<span class="ptx"><small>${passKind(r)}</small><b>${r.friend ? `${FRIENDS[r.friend].name} · ${FRIENDS[r.friend].feel}` : r.letter ? LETTERS[r.letter].title : passLabel(r)}</b></span><button class="pbtn">${btn}</button></div></div>`;
+  }).join('') + `<div class="prow s2 ${PASS.length % 2 ? 'r' : 'l'}"><span class="pnode">S2</span><div class="ptier"><span class="picw">?</span><span class="ptx"><small>Coming next</small><b>Season 2: new friends from Kai's village</b></span></div></div>`;
+  requestAnimationFrame(() => {
+    const tr = $('#passTrack'), nodes = $$('#passTrack .pnode'), k = Math.min(t, PASS.length - 1), lit = $('#passLit');
+    if (!nodes[k]) return;
+    const top = nodes[0].offsetTop + nodes[0].parentNode.offsetTop, n = nodes[k], y = n.offsetTop + n.parentNode.offsetTop + n.offsetHeight / 2;
+    tr.querySelector('.pvine').style.top = lit.style.top = `${top + 17}px`;
+    lit.style.height = `${Math.max(0, y - top - 17)}px`;
+  });
 }
 async function openPass() {
   const ov = $('#passov');
@@ -7258,8 +7395,8 @@ async function openPass() {
   ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
   playSfx('swoosh', { gain: 0.6 });
   const t = passTier(), card = $('#passTrack .ptier.ready') || $$('#passTrack .ptier')[Math.min(t, PASS.length - 1)];
-  if (card) card.scrollIntoView({ inline: 'center', block: 'nearest' });
-  if (!reduce) $$('#passTrack .ptier').forEach((c, k) => c.animate([{ transform: 'translateY(30px) scale(.9)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 360, delay: 60 + Math.min(k, 8) * 45, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' }));
+  $('#passScroll').scrollTop = 0; if (card) setTimeout(() => { const sc = $('#passScroll'); sc.scrollTo({ top: Math.max(0, card.offsetTop + card.parentNode.offsetTop + $('#passTrack').offsetTop - sc.clientHeight / 2 + 60), behavior: reduce ? 'auto' : 'smooth' }); }, 450);
+  if (!reduce) $$('#passTrack .ptier,.phero,.pgrand').forEach((c, k) => c.animate([{ transform: 'translateY(30px) scale(.9)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 360, delay: 60 + Math.min(k, 8) * 45, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' }));
 }
 $('#passOpen').addEventListener('click', () => { ac(); tick(); openPass(); });
 $('#passBack').addEventListener('click', async () => { tick(); const ov = $('#passov'); ov.classList.remove('show'); await wait(350); ov.hidden = true; syncPassBtn(); });
@@ -7272,6 +7409,20 @@ $('#letterGo').addEventListener('click', () => {
   }
   hideOv('letterov'); if (!$('#collect').hidden) renderCollect();
 });
+let PASS_BULK = false;
+$('#passClaimAll').addEventListener('click', async () => {
+  ac(); tick(); PASS_BULK = true;
+  const ids = PASS.map((_, i) => i).filter(i => i < passTier() && !passState().claimed.includes(i));
+  for (const i of ids) {
+    const c = $(`#passTrack .ptier[data-tier="${i}"]`); if (!c) continue;
+    const sc = $('#passScroll'); sc.scrollTo({ top: Math.max(0, c.offsetTop + c.parentNode.offsetTop + $('#passTrack').offsetTop - sc.clientHeight / 2 + 60), behavior: reduce ? 'auto' : 'smooth' });
+    await wait(260); $(`#passTrack .ptier[data-tier="${i}"]`).click(); await wait(320);
+  }
+  PASS_BULK = false;
+  const story = ids.map(i => PASS[i]).filter(r => r.letter || r.friend).pop();
+  if (story) setTimeout(() => story.letter ? showLetter(story.letter) : showFriend(story.friend), 500);
+});
+$('#passGrand').addEventListener('click', () => { tick(); const c = $(`#passTrack .ptier[data-tier="${PASS.length - 1}"]`), sc = $('#passScroll'); sc.scrollTo({ top: c.offsetTop + c.parentNode.offsetTop + $('#passTrack').offsetTop - sc.clientHeight / 2 + 60, behavior: reduce ? 'auto' : 'smooth' }); });
 $('#passTrack').addEventListener('click', e => {
   const card = e.target.closest('.ptier[data-tier]'); if (!card) return;
   const i = +card.dataset.tier, r = PASS[i], sp = passState();
@@ -7291,6 +7442,7 @@ $('#passTrack').addEventListener('click', e => {
     renderPass(); syncPassBtn();
     const nc = $(`#passTrack .ptier[data-tier="${i}"]`);
     if (nc && !reduce) nc.animate([{ transform: 'scale(.85)' }, { transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+    if (PASS_BULK) return;
     if (r.letter) setTimeout(() => showLetter(r.letter), 500);
     if (r.friend) setTimeout(() => showFriend(r.friend), 500);
     return;
