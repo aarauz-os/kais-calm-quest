@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kai's Calm Quest</title>
+<title>MorQi Kids · Season 1: Kai's Calm Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Nunito:wght@500;700;800;900&display=swap">
@@ -325,7 +325,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .hbadge:empty{display:none}
 .hbadge.ok{background:linear-gradient(#5CB27A,#2B7A4B)}
 .homefoot{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:0 16px 14px;display:flex;flex-direction:column;align-items:center;gap:10px}
-.places{display:flex;justify-content:center;gap:8px}
+.places{display:none}   /* the Journey map now carries the episodes */
 .lvmed{position:relative;width:48px;height:48px;border-radius:50%;padding:3px;
   background:linear-gradient(#FFEFC0,#C79A45 55%,#7A4F1E);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 3px 0 rgba(60,35,10,.7),0 6px 10px rgba(0,0,0,.4)}
 .lvmed.locked{filter:grayscale(.85) brightness(.75)}
@@ -613,6 +613,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .aura{position:absolute;left:50%;top:50%;width:150px;height:150px;border-radius:50%;pointer-events:none;z-index:0;
   transform:translate(-50%,-50%) scale(calc(.45 + var(--c,0) / 180));opacity:calc(.12 + var(--c,0) / 120);transition:transform .6s ease,opacity .6s ease;
   background:radial-gradient(circle,rgba(255,250,225,.95) 0%,rgba(191,232,245,.75) 30%,rgba(191,232,245,.2) 52%,transparent 68%)}
+.lumawrap.dyed .aura{background:radial-gradient(circle,var(--a1) 0%,var(--a2) 32%,transparent 66%)}
 .lumawrap.heavenly .aura{background:radial-gradient(circle,#fff 0%,rgba(255,236,170,.9) 28%,rgba(191,232,245,.35) 50%,transparent 68%),
   repeating-conic-gradient(rgba(255,240,190,.55) 0 8deg,transparent 8deg 24deg);-webkit-mask-image:radial-gradient(circle,#000 30%,transparent 70%);mask-image:radial-gradient(circle,#000 30%,transparent 70%);
   animation:auraspin 9s linear infinite}
@@ -961,33 +962,95 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .wbname{position:relative;padding:5px 16px 6px;border-radius:10px;white-space:nowrap;font-family:"Marcellus SC",Georgia,serif;font-size:16px;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 0 0 2px var(--wood),0 4px 0 2px var(--wood-d)}
 .wmotes i{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--mc,#FFE9A8);box-shadow:0 0 10px 3px var(--mc,#FFE9A8);opacity:0;animation:mote 6s ease-in-out infinite}
 @keyframes mote{15%{opacity:.9}85%{opacity:.7}100%{opacity:0;transform:translate(var(--dx),-120px)}}
-.wtop{position:absolute;top:12px;left:12px;right:12px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:8px;z-index:3}
+.wtop{position:absolute;top:12px;left:12px;right:12px;display:grid;grid-template-columns:64px 1fr 64px;align-items:center;gap:8px;z-index:3}
 .wtitle{text-align:center;color:#FFF6DE;line-height:1.05}
 .wtitle small{display:block;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-hi)}
 .wtitle b{font-size:clamp(24px,7vw,30px);font-weight:400;text-shadow:0 3px 0 rgba(40,24,6,.85),0 0 16px rgba(0,0,0,.6)}
-.wcount{font-size:12px;font-weight:900;color:#FFF6DE;text-align:center}
+.wcount{font-size:11px;font-weight:900;color:#FFF6DE;text-align:right;white-space:nowrap}
 .wnav{position:absolute;top:50%;z-index:3;width:40px;height:56px;margin-top:-28px;border-radius:14px;font-size:28px;font-weight:900;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 0 0 2px var(--wood),0 4px 0 2px var(--wood-d)}
 .wnav.prev{left:8px}.wnav.next{right:8px}
 .wnav[disabled]{opacity:.35}
 .wfoot{position:absolute;left:16px;right:16px;bottom:16px;z-index:3;padding:12px 16px;border-radius:18px;text-align:center;color:#FFF6DE;background:rgba(8,16,14,.62);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.45);backdrop-filter:blur(4px)}
 .wverb{font-size:19px;line-height:1.2}
 .wmeta{margin-top:4px;font-size:12.5px;font-weight:800;opacity:.85}
+
+/* ================= Season 1 ================= */
+.seasontag{display:inline-flex;align-items:center;gap:8px;margin:2px 0 6px;padding:5px 14px 6px 6px;border-radius:99px;background:linear-gradient(#2F5E4E,#1B3B31);color:#FFF6DE;box-shadow:0 0 0 2px var(--gold-mid),0 3px 0 2px var(--wood)}
+.seasontag span{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A)}
+.seasontag b{font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:16px}
+.homeduo{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:300px}
+.homeduo .journeybtn{max-width:none;padding:8px 10px;gap:8px;position:relative}
+.homeduo .journeybtn em{font-size:11px}
+.passgem{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:900;color:#3A2408;background:radial-gradient(circle at 40% 30%,#FFF8DC,#F2CC6A 60%,#C08A26);box-shadow:0 0 0 2px var(--gold-hi),0 0 10px rgba(255,210,120,.7)}
+.passdot{position:absolute;top:-5px;right:-5px;width:14px;height:14px;border-radius:50%;background:#E04B42;box-shadow:0 0 0 2px #fff;animation:ready 1.4s ease-in-out infinite}
+.passov{position:absolute;inset:0;z-index:24;overflow:hidden;color:#FFF6DE;opacity:0;transition:opacity .35s}
+.passov.show{opacity:1}
+.passin{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:12px 0 16px}
+.passin .wtop{position:relative;top:0;left:0;right:0;padding:0 12px}
+.passhead{display:flex;align-items:center;gap:12px;margin:14px 16px 8px}
+.passtier{flex:none;width:66px;height:66px;border-radius:50%;display:grid;place-items:center;align-content:center;line-height:1;color:#3A2408;
+  background:radial-gradient(circle at 40% 30%,#FFF8DC,#F2CC6A 55%,#C08A26);box-shadow:inset 0 3px 3px rgba(255,255,255,.8),0 0 0 3px var(--gold-hi),0 0 0 6px var(--wood),0 5px 0 6px var(--wood-d),0 0 24px rgba(255,210,120,.6)}
+.passtier small{font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
+.passtier b{font-family:"Marcellus SC",Georgia,serif;font-size:30px;font-weight:400}
+.passbarw{flex:1;min-width:0}
+.passbar{height:18px;border-radius:99px;background:rgba(0,0,0,.45);box-shadow:inset 0 2px 4px rgba(0,0,0,.5),0 0 0 2px var(--gold-mid);overflow:hidden}
+.passbar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 3px 0 rgba(255,255,255,.6),0 0 12px rgba(255,210,120,.8);transition:width .6s cubic-bezier(.2,.9,.3,1);position:relative;overflow:hidden}
+.passbar i::after{content:"";position:absolute;top:0;bottom:0;width:30%;left:-40%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.8),transparent);animation:shine 2.4s ease-in-out infinite}
+.passxp{margin-top:5px;font-size:12.5px;font-weight:900;opacity:.9}
+.passtrack{flex:1;min-height:0;display:flex;gap:12px;align-items:center;overflow-x:auto;overflow-y:hidden;padding:10px 16px 18px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.ptier{position:relative;flex:none;width:118px;height:176px;scroll-snap-align:center;border-radius:18px;padding:30px 8px 10px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:6px;text-align:center;color:#3A2408;
+  background:linear-gradient(#FFFDF4,#EEDDB6);box-shadow:inset 0 3px 0 #fff,inset 0 -4px 0 rgba(150,110,50,.3),0 0 0 3px var(--gold-mid),0 0 0 6px var(--wood),0 7px 0 6px var(--wood-d)}
+.ptier .pn{position:absolute;top:-12px;left:50%;transform:translateX(-50%);min-width:34px;height:26px;padding:0 8px;border-radius:99px;display:grid;place-items:center;font-weight:900;font-size:13px;color:#FFF6DE;background:linear-gradient(#2F5E4E,#1B3B31);box-shadow:0 0 0 2px var(--gold-hi)}
+.ptier .pic{position:relative;width:70px;height:70px;border-radius:50%;display:grid;place-items:center;overflow:hidden;font-size:34px;background:radial-gradient(circle at 50% 40%,#fff,#F3E2B8);box-shadow:inset 0 -4px 8px rgba(0,0,0,.15),0 0 0 3px #fff,0 3px 8px rgba(0,0,0,.2)}
+.ptier .pic img{width:100%;height:100%;object-fit:cover}
+.ptier .pic.ring img{border-radius:50%;box-shadow:inset 0 0 0 6px var(--rc)}
+.ptier .pic.ring{box-shadow:0 0 0 5px var(--rc),0 0 16px var(--rc),0 3px 8px rgba(0,0,0,.2)}
+.ptier .pic.aura{background:radial-gradient(circle,var(--a1) 0%,var(--a2) 50%,transparent 72%),#F7EEDB}
+.ptier .pic.aura img{width:62%;height:62%;border-radius:50%}
+.ptier .pic .coin{width:34px;height:34px}
+.ptier b{font-size:12.5px;font-weight:900;line-height:1.15}
+.ptier .pbtn{width:100%;padding:6px 0;border-radius:10px;font-weight:900;font-size:12.5px;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 3px 0 var(--wood-d)}
+.ptier.locked{filter:saturate(.35) brightness(.72)}
+.ptier.locked .pbtn{background:rgba(0,0,0,.18);color:#5A4A2A;box-shadow:none}
+.ptier.ready{animation:tierglow 1.6s ease-in-out infinite}
+@keyframes tierglow{50%{box-shadow:inset 0 3px 0 #fff,0 0 0 3px #fff,0 0 0 6px var(--wood),0 7px 0 6px var(--wood-d),0 0 28px 8px rgba(255,220,130,.8)}}
+.ptier.done{background:linear-gradient(#F1FBEA,#D6EDC9)}
+.ptier.done .pbtn{background:linear-gradient(#7FD06A,#2F8A3C);color:#fff}
+.ptier.worn .pbtn{background:linear-gradient(#2F5E4E,#1B3B31);color:#FFE9A8}
+.ptier.next2{width:150px;background:linear-gradient(#24463B,#132A23);color:#FFF6DE}
+.ptier.next2 .pic{background:#0B1512;font-size:40px;color:rgba(255,233,168,.85)}
+.passhow{margin:0 16px;padding:12px 14px;border-radius:16px;text-align:center;background:rgba(8,16,14,.6);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.4)}
+.passhow b{display:block;font-size:14px}.passhow span{display:block;font-size:12px;font-weight:800;opacity:.85;margin-top:3px;line-height:1.4}
+.passhow em{display:block;font-style:normal;font-size:12px;font-weight:900;color:var(--gold-hi);margin-top:5px}
+.ppass{width:100%;max-width:300px;text-align:center}
+.ppass small{display:block;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-hi);margin-bottom:5px}
+.ppass .passbar{height:14px}
+.lettercard{text-align:center;background:linear-gradient(#FFF9EA,#F1DFB8) !important}
+.lettercard p{font-size:16.5px;line-height:1.55;font-style:italic}
+.avwrap{box-shadow:0 0 0 3px var(--ringc,var(--gold-mid)),0 0 0 6px var(--wood),0 4px 0 var(--wood-d),0 0 var(--ringg,0) var(--ringc,transparent)}
+.herobtn{box-shadow:0 0 0 2.5px var(--ringc,var(--gold-mid)),0 0 0 5px var(--wood),0 4px 0 5px var(--wood-d),0 0 var(--ringg,0) var(--ringc,transparent)}
+.wseason{position:absolute;left:0;right:0;top:44%;z-index:4;text-align:center;pointer-events:none}
+.wseason span{display:inline-block;padding:10px 26px 12px;font-family:"Marcellus SC",Georgia,serif;font-size:22px;color:#3A2408;border-radius:12px;transform:rotate(-4deg);
+  background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 3px 0 rgba(255,255,255,.8),0 0 0 3px var(--wood),0 6px 0 3px var(--wood-d),0 16px 30px rgba(0,0,0,.5)}
+.wseason small{display:block;font-family:Nunito,system-ui,sans-serif;font-size:12px;font-weight:900;letter-spacing:.08em}
+.world.later .wimg{filter:saturate(.45) brightness(.6) !important}
 </style>
 
 <div id="app">
   <div class="splash" id="splash" hidden>
     <div class="spl-ring" id="splRing"></div>
     <div class="spl-flash"></div>
-    <div class="spl-title display" id="splTitle">Kai's Calm Quest</div>
-    <div class="spl-sub">MorQi Kids</div>
+    <div class="spl-title display" id="splTitle">MorQi Kids</div>
+    <div class="spl-sub">Season 1 · Kai's Calm Quest</div>
     <div class="spl-skip">tap to skip</div>
   </div>
   <!-- MAP -->
   <section class="screen" id="welcome">
     <div class="wwrap">
       <div class="whero">
-        <div class="eyebrow">MorQi Kids · playable prototype</div>
-        <h1 class="display">Kai's Calm Quest</h1>
+        <div class="eyebrow">Season 1 · playable prototype</div>
+        <h1 class="display">MorQi Kids</h1>
+        <div class="seasontag"><span>Season 1</span><b>Kai's Calm Quest</b></div>
         <p class="lede">A puzzle game where kids clear a storm by actually breathing.</p>
         <div class="heroart">
           <img src="img/kai-3d.jpg" alt="Kai, the game's hero">
@@ -1086,8 +1149,8 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       </div>
     </div>
     <div class="hometitle">
-      <div class="eyebrow" id="homeEyebrow">MorQi Kids</div>
-      <h1 class="display">Kai's Calm Quest</h1>
+      <div class="eyebrow" id="homeEyebrow">Season 1 · Kai's Calm Quest</div>
+      <h1 class="display">MorQi Kids</h1>
       <div class="seasonline" id="seasonLine"></div>
     </div>
     <div class="ribbon" id="homeRibbon"></div>
@@ -1107,7 +1170,10 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     </div>
     <div class="homefoot">
       <div class="places" id="places"></div>
-      <button class="journeybtn" id="journeyOpen"><span class="jorbs"><i style="background:#6FBF4A"></i><i style="background:#E04B42"></i><i style="background:#F0B93A"></i><i style="background:#DCE3E9"></i><i style="background:#3C86C9"></i></span><span><b>The Feelings Journey</b><em>16 worlds · 1,000 places</em></span></button>
+      <div class="homeduo">
+        <button class="journeybtn" id="journeyOpen"><span class="jorbs"><i style="background:#6FBF4A"></i><i style="background:#E04B42"></i><i style="background:#F0B93A"></i><i style="background:#DCE3E9"></i><i style="background:#3C86C9"></i></span><span><b>Journey</b><em>Season 1 · 4 chapters</em></span></button>
+        <button class="journeybtn passbtn" id="passOpen"><span class="passgem">S1</span><span><b>Season Pass</b><em id="passTease">Tier 1</em></span><i class="passdot" id="passDot" hidden></i></button>
+      </div>
       <button class="btn gold big" id="playNext">Play</button>
       <div class="promise">Free to play, always. No forced ads.</div>
     </div>
@@ -1421,6 +1487,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       <svg class="wpath" id="wPath" viewBox="0 0 100 100" preserveAspectRatio="none"><path id="wGlow" class="wglow"/><path id="wStones" class="wstones"/></svg>
       <div class="wmotes" id="wMotes"></div>
       <div id="wNodes"></div>
+      <div class="wseason" id="wSeason" hidden></div>
       <button class="wboss" id="wBoss"><span class="wbglow"></span><span class="wbimg"><img id="wBossImg" alt=""></span><span class="wbname" id="wBossName"></span></button>
     </div>
     <div class="wtop">
@@ -1432,6 +1499,29 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <button class="wnav next" id="wdNext" aria-label="Next world">›</button>
     <div class="wfoot"><div class="wverb display" id="wVerb"></div><div class="wmeta" id="wMeta"></div></div>
   </div>
+  <div class="passov" id="passov" hidden>
+    <div class="stbg" id="passBg"></div>
+    <div class="passin">
+      <div class="wtop"><button class="iconbtn" id="passBack" aria-label="Back">‹</button>
+        <div class="wtitle"><small>Season 1 · free for everyone</small><b class="display">Season Pass</b></div><span></span></div>
+      <div class="passhead">
+        <div class="passtier"><small>Tier</small><b id="passTier">1</b></div>
+        <div class="passbarw"><div class="passbar"><i id="passFill"></i></div><div class="passxp" id="passXp"></div></div>
+      </div>
+      <div class="passtrack" id="passTrack"></div>
+      <div class="passhow">
+        <b>Earn Season XP by playing</b>
+        <span>Finish an episode +100 · each star +25 · a deep breath +20 · a quest +40 · a seal +50</span>
+        <em>Rewards never expire. No timers. Play at your own pace.</em>
+      </div>
+    </div>
+  </div>
+  <div class="ov" id="letterov" hidden style="align-items:center"><div class="card lettercard" role="dialog" aria-labelledby="letterTitle">
+    <div class="eyebrow">A letter from Sorin</div>
+    <h2 class="display" id="letterTitle"></h2>
+    <p id="letterText"></p>
+    <div class="stack"><button class="btn gold" id="letterGo">Keep it in my journal</button></div>
+  </div></div>
   <div class="ov" id="bossov" hidden style="align-items:center"><div class="card bosscard" role="dialog" aria-labelledby="bossTitle">
     <div class="bossart"><span class="bossrays"></span><img id="bossImg" alt=""></div>
     <div class="eyebrow" id="bossEyebrow"></div>
@@ -1459,6 +1549,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <div class="pstars" id="pStars"><i></i><i></i><i></i></div>
     <div class="pfeel" id="pFeel"></div>
     <div class="pcoins"><i class="coin"></i><b id="pCoins">0</b></div>
+    <div class="ppass" id="pPass"><small id="pPassLbl">Season Pass</small><div class="passbar"><i id="pPassFill"></i></div></div>
     <button class="btn gold big" id="pGo">Continue</button>
   </div>
   <div class="arrive" id="arrive" hidden>
@@ -2033,7 +2124,7 @@ function awardSeal(id) {
   if (!S.sealsEarned) S.sealsEarned = {};
   if (S.sealsEarned[id]) return null;
   const sl = SEALS.find(x => x.id === id);
-  S.sealsEarned[id] = dayKey(); S.seals = sealCount(); save();
+  S.sealsEarned[id] = dayKey(); S.seals = sealCount(); save(); addXP(50);
   renderSeals();
   showSealWin(sl);
   return sl;
@@ -2112,7 +2203,7 @@ function questBump(id, amount = 1, elem) {
     it.n += amount;
     if (it.n >= it.goal) {
       it.done = true; changed = true;
-      grant(it.reward);
+      grant(it.reward); addXP(40);
       toast(`Quest done: ${it.text}. ${rewardText(it.reward)}.`);
       chord([659.25, 880], 0.07);
     }
@@ -2586,7 +2677,7 @@ let storyRun = 0;
 async function runStory() {
   const run = ++storyRun, st = $('#story');
   $('#stBg').style.backgroundImage = `url(img/home/${HOME_SCENE[L.elem]}.jpg)`;
-  $('#stVerb').textContent = `Place ${LI + 1} · ${EMO_VERB[L.elem]}`;
+  $('#stVerb').textContent = `Chapter 1 · Episode ${LI + 1} · ${EMO_VERB[L.elem]}`;
   $('#stName').textContent = L.place;
   st.style.setProperty('--sg', ELEM[L.elem].glow);
   const g = goalNums();
@@ -3348,7 +3439,7 @@ async function applyBreath(q) {
   const p = breathPlan(q);
   glowGoal(false);
   stillDrop = false;
-  if (p.tier === 'deep') { deepBreaths++; questBump('deep'); }
+  if (p.tier === 'deep') { deepBreaths++; questBump('deep'); addXP(20); }
   if (p.sang) { questBump('sound'); bumpTally('voiced'); }
   if (p.cloudsOff) questBump('clouds', p.cloudsOff);
   S.coins += p.coins; save();
@@ -4114,7 +4205,7 @@ function startLevel() {
   deepBreaths = 0; breathing = false;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   setAim(null); monkeyFirst = null; lastPower = null;
-  makeRig($('#kaiFace'), heroId());
+  makeRig($('#kaiFace'), heroId()); applyLooks();
   paintBuddyGame();
   syncBoosts();
   playGate();
@@ -4227,9 +4318,13 @@ async function openWorld(i = 0, dir = 0) {
   }
   $('#wImg').src = `img/journey/${WI === 0 ? 'map-first' : WORLD_MAP[ch.elem]}.jpg`;
   $('#wImg').style.filter = WI === 15 ? 'saturate(.7) brightness(.8)' : '';
-  $('#wCh').textContent = `World ${WI + 1} of ${CHAPTERS.length}`;
+  const season = Math.floor(WI / 4) + 1;
+  $('#wCh').textContent = `Season ${season} · Chapter ${WI + 1}`;
+  w.classList.toggle('later', season > 1);
+  $('#wSeason').hidden = season === 1;
+  $('#wSeason').innerHTML = `<span>Season ${season}<small>coming after Season 1</small></span>`;
   $('#wName').textContent = WI === 0 ? 'First Breaths' : ch.name;
-  $('#wCount').textContent = `${WI * 60 + 1}–${WI * 60 + 60}`;
+  $('#wCount').textContent = `Ep ${WI * 60 + 1}–${WI * 60 + 60}`;
   $('#wVerb').textContent = ch.verb;
   const n = chapterBoard(WI);
   $('#wMeta').textContent = `${n}×${n} board · watch for ${ch.obstacle} · earn ${ch.reward}`;
@@ -4294,7 +4389,7 @@ $('#wNodes').addEventListener('click', async e => {
   if (b.classList.contains('locked')) {
     b.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' }], { duration: 260 });
     bell(392, 0, 0.05);
-    toast(pn <= LEVELS.length ? `Finish place ${pn - 1} to open this one.` : `Place ${pn} opens as the journey grows.`);
+    toast(pn <= LEVELS.length ? `Finish episode ${pn - 1} to open this one.` : `Episode ${pn} opens as the season grows.`);
     return;
   }
   chord([659.25, 783.99, 1046.5], 0.05);
@@ -4306,7 +4401,7 @@ $('#wBoss').addEventListener('click', () => {
   img.src = $('#wBossImg').src; img.className = WI === 0 || WI === 15 ? 'wide' : '';
   img.style.filter = known ? '' : 'brightness(.12) saturate(0)';
   $('.bosscard').style.setProperty('--bg', ch.elem === 'all' ? '#FFE9A8' : ELEM[ch.elem].glow);
-  $('#bossEyebrow').textContent = `World ${WI + 1} · place ${WI * 60 + 60}`;
+  $('#bossEyebrow').textContent = `Chapter ${WI + 1} finale · episode ${WI * 60 + 60}`;
   $('#bossTitle').textContent = WI === 0 ? 'The Round Table' : known ? ch.name : 'A new feeling';
   $('#bossText').textContent = WI === 0
     ? 'At the end of this world, all five feelings meet you at once: Anger, the Fizzies, Worry, Sadness and Fear. Calm sits with them too. Every one of them is welcome at the table.'
@@ -4317,6 +4412,130 @@ $('#wBoss').addEventListener('click', () => {
   if (!reduce) img.animate([{ transform: 'scale(.3) rotate(-10deg)', opacity: 0 }, { transform: 'scale(1.08)', opacity: 1, offset: .6 }, { transform: 'none', opacity: 1 }], { duration: 560, delay: 80, easing: 'cubic-bezier(.3,1.5,.5,1)', fill: 'backwards' });
 });
 $('#bossGo').addEventListener('click', () => { tick(); hideOv('bossov'); });
+
+/* ---------- Season 1 Pass: free, never expires, fed by play you already do ---------- */
+const RINGS = { jade: { name: 'Jade Ring', c: '#58C08A' }, ember: { name: 'Ember Ring', c: '#FF6A4A' }, river: { name: 'River Ring', c: '#4AA8FF' }, lotus: { name: 'Golden Lotus Ring', c: '#FFD45A' } };
+const AURAS = { blossom: { name: 'Blossom Aura', a1: 'rgba(255,214,232,.95)', a2: 'rgba(255,150,200,.6)' }, moon: { name: 'Moonlight Aura', a1: 'rgba(235,240,255,.95)', a2: 'rgba(160,180,255,.6)' },
+  sunrise: { name: 'Sunrise Aura', a1: 'rgba(255,240,200,.95)', a2: 'rgba(255,170,90,.6)' }, gold: { name: 'Heavenly Gold Aura', a1: 'rgba(255,250,220,1)', a2: 'rgba(255,205,90,.75)' } };
+const LETTERS = {
+  cycle: { title: 'The Creation Cycle', text: 'Wood feeds Fire. Fire makes Earth. Earth holds Metal. Metal carries Water. Water grows Wood. Nothing in the circle works alone, and neither do you. When one part of you feels quiet, the one before it can help it wake up.' },
+  breath: { title: 'Why the Out-Breath Matters', text: 'When you breathe out long and slow, your heart gets the message that you are safe. That is why every breath in this game asks you to go slower on the way out. Try it anywhere: in for four, out for six.' }
+};
+const PASS_XP = 200;
+const PASS = [
+  { coins: 100 }, { charm: 'sprout' }, { ring: 'jade' }, { lanterns: 1 }, { aura: 'blossom' },
+  { coins: 200 }, { charm: 'heart' }, { shields: 1 }, { ring: 'ember' }, { letter: 'cycle' },
+  { coins: 250 }, { swirls: 2 }, { aura: 'moon' }, { charm: 'drop' }, { ring: 'river' },
+  { coins: 300 }, { pw: 'bear' }, { aura: 'sunrise' }, { letter: 'breath' }, { ring: 'lotus', aura: 'gold', final: true }
+];
+function passState() { if (!S.sp) S.sp = { xp: 0, claimed: [] }; return S.sp; }
+const passTier = () => Math.min(PASS.length, Math.floor(passState().xp / PASS_XP));   // tiers fully earned
+function passLabel(r) {
+  if (r.final) return 'Golden Lotus + Heavenly Gold';
+  if (r.ring) return RINGS[r.ring].name;
+  if (r.aura) return AURAS[r.aura].name;
+  if (r.letter) return `Sorin's letter`;
+  if (r.charm) return CHARMS.find(c => c.id === r.charm).name + ' charm';
+  if (r.pw) return POWERS.find(x => x.id === r.pw).name;
+  return rewardText(r);
+}
+function passIcon(r) {
+  if (r.ring) return `<span class="pic ring" style="--rc:${RINGS[r.ring].c}"><img src="${faceSrc(heroId(), 'happy')}" alt=""></span>`;
+  if (r.aura) return `<span class="pic aura" style="--a1:${AURAS[r.aura].a1};--a2:${AURAS[r.aura].a2}"><img src="img/faces/luma-happy.jpg" alt=""></span>`;
+  if (r.letter) return `<span class="pic"><img src="img/icons/icon-quests.jpg" alt=""></span>`;
+  if (r.charm) return `<span class="pic"><img src="img/icons/boost-${r.charm}.jpg" alt=""></span>`;
+  if (r.pw) return `<span class="pic"><img src="img/icons/pw-${r.pw}.jpg" alt=""></span>`;
+  if (r.lanterns) return `<span class="pic"><img src="img/icons/pw-tiger.jpg" alt=""></span>`;
+  if (r.swirls) return `<span class="pic"><img src="img/icons/pw-deer.jpg" alt=""></span>`;
+  if (r.shields) return `<span class="pic">🛡</span>`;
+  return `<span class="pic"><i class="coin"></i></span>`;
+}
+function addXP(n) {
+  if (babyOn()) return 0;
+  const sp = passState(), before = passTier();
+  sp.xp += n; save();
+  const after = passTier();
+  syncPassBtn();
+  if (after > before && $('#party').hidden) {
+    toast(`Season Pass tier ${after} unlocked. Open the pass to claim it.`);
+    chord([659.25, 830.61, 987.77, 1318.5], 0.06);
+  }
+  return after - before;
+}
+function passReady() { const sp = passState(), t = passTier(); return PASS.some((_, i) => i < t && !sp.claimed.includes(i)); }
+function syncPassBtn() {
+  const sp = passState(), t = passTier();
+  const e = $('#passTease'); if (!e) return;
+  e.textContent = t >= PASS.length ? 'Complete' : `Tier ${t + 1} · ${Math.round((sp.xp % PASS_XP) / PASS_XP * 100)}%`;
+  $('#passDot').hidden = !passReady();
+}
+function applyLooks() {
+  const r = RINGS[S.ring], a = AURAS[S.aura];
+  const root = document.documentElement.style;
+  if (r) { root.setProperty('--ringc', r.c); root.setProperty('--ringg', '12px'); } else { root.removeProperty('--ringc'); root.removeProperty('--ringg'); }
+  const lw = $('#lumaWrap');
+  if (lw) { if (a) { lw.style.setProperty('--a1', a.a1); lw.style.setProperty('--a2', a.a2); lw.classList.add('dyed'); } else lw.classList.remove('dyed'); }
+}
+function renderPass() {
+  const sp = passState(), t = passTier();
+  $('#passTier').textContent = Math.min(PASS.length, t + (t < PASS.length ? 1 : 0));
+  $('#passFill').style.width = t >= PASS.length ? '100%' : `${(sp.xp % PASS_XP) / PASS_XP * 100}%`;
+  $('#passXp').textContent = t >= PASS.length ? 'Season 1 pass complete' : `${sp.xp % PASS_XP} / ${PASS_XP} XP to tier ${t + 1}`;
+  $('#passTrack').innerHTML = PASS.map((r, i) => {
+    const got = sp.claimed.includes(i), open = i < t;
+    const worn = got && ((r.ring && S.ring === r.ring) || (r.aura && !r.ring && S.aura === r.aura) || (r.final && S.ring === 'lotus'));
+    const btn = !open ? `${(i + 1) * PASS_XP - sp.xp} XP` : !got ? 'Claim' : (r.ring || r.aura) ? (worn ? 'Wearing' : 'Wear') : r.letter ? 'Read' : 'Claimed ✓';
+    return `<div class="ptier ${open ? '' : 'locked'} ${open && !got ? 'ready' : ''} ${got ? 'done' : ''} ${worn ? 'worn' : ''}" data-tier="${i}"><span class="pn">${i + 1}</span>${passIcon(r)}<b>${passLabel(r)}</b><button class="pbtn">${btn}</button></div>`;
+  }).join('') + `<div class="ptier next2"><span class="pn">S2</span><span class="pic">?</span><b>Season 2: new friends from Kai's village</b><span style="font-size:11px;font-weight:800;opacity:.8">Coming next</span></div>`;
+}
+async function openPass() {
+  const ov = $('#passov');
+  $('#passBg').style.backgroundImage = `url(img/journey/map-first.jpg)`;
+  renderPass();
+  ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
+  playSfx('swoosh', { gain: 0.6 });
+  const t = passTier(), card = $('#passTrack .ptier.ready') || $$('#passTrack .ptier')[Math.min(t, PASS.length - 1)];
+  if (card) card.scrollIntoView({ inline: 'center', block: 'nearest' });
+  if (!reduce) $$('#passTrack .ptier').forEach((c, k) => c.animate([{ transform: 'translateY(30px) scale(.9)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 360, delay: 60 + Math.min(k, 8) * 45, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' }));
+}
+$('#passOpen').addEventListener('click', () => { ac(); tick(); openPass(); });
+$('#passBack').addEventListener('click', async () => { tick(); const ov = $('#passov'); ov.classList.remove('show'); await wait(350); ov.hidden = true; syncPassBtn(); });
+$('#letterGo').addEventListener('click', () => { tick(); hideOv('letterov'); });
+$('#passTrack').addEventListener('click', e => {
+  const card = e.target.closest('.ptier[data-tier]'); if (!card) return;
+  const i = +card.dataset.tier, r = PASS[i], sp = passState();
+  if (i >= passTier()) { card.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'none' }], { duration: 260 }); bell(392, 0, 0.05); return; }
+  if (!sp.claimed.includes(i)) {
+    sp.claimed.push(i);
+    if (r.charm) { S.charms[r.charm] = (S.charms[r.charm] || 0) + 1; }
+    if (r.pw) { S.pw[r.pw] = (S.pw[r.pw] || 0) + 1; }
+    grant(r);
+    if (r.ring) S.ring = r.ring;
+    if (r.aura) S.aura = r.aura;
+    save(); applyLooks(); syncBoosts && syncBoosts();
+    playSfx('stamp', { gain: 0.9 }); chord([659.25, 830.61, 987.77, 1318.5], 0.06);
+    try { navigator.vibrate && navigator.vibrate([10, 40, 16]); } catch (e2) {}
+    const a = $('#passov').getBoundingClientRect(), b = card.getBoundingClientRect();
+    sparkleAt($('#passov'), b.left - a.left + b.width / 2, b.top - a.top + b.height / 2, ['#FFE9A8', '#FFFFFF', '#F2CC6A'], 22);
+    renderPass(); syncPassBtn();
+    const nc = $(`#passTrack .ptier[data-tier="${i}"]`);
+    if (nc && !reduce) nc.animate([{ transform: 'scale(.85)' }, { transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+    if (r.letter) setTimeout(() => showLetter(r.letter), 500);
+    return;
+  }
+  if (r.letter) return showLetter(r.letter);
+  if (r.ring || r.aura) {                               // wear or take off
+    if (r.ring) S.ring = S.ring === r.ring ? null : r.ring;
+    else S.aura = S.aura === r.aura ? null : r.aura;
+    save(); applyLooks(); renderPass(); tick(); bell(783.99, 0, 0.06);
+  }
+});
+function showLetter(id) {
+  const l = LETTERS[id];
+  $('#letterTitle').textContent = l.title; $('#letterText').textContent = l.text;
+  $('#letterov').style.zIndex = 30;
+  showOv('letterov');
+}
 async function playGate() {
   const g = $('#gate'), el = L.elem;
   $('#gateOrb').innerHTML = orbHTML(el);
@@ -4344,7 +4563,7 @@ $('#toMap').addEventListener('click', toMap);
 
 // The win moment: banner, the hero and Luma cheering, stars slamming in one by one with rising
 // chimes, the feeling earned, and coins counting up. Every beat has a sound and a sparkle.
-async function party(stars, coins) {
+async function party(stars, coins, xpFrom = 0, xpGain = 0) {
   const pt = $('#party'), [from, to] = L.shift.split(' → ');
   pt.style.setProperty('--pc', ELEM[L.elem].hue);
   const heroImg = $('#pHero'), lumaImg = $('#pLuma');
@@ -4353,7 +4572,7 @@ async function party(stars, coins) {
   $('#pFeel').innerHTML = `${from[0].toUpperCase() + from.slice(1)} → <b>${to[0].toUpperCase() + to.slice(1)}</b> · you earned ${to[0].toUpperCase() + to.slice(1)}`;
   $$('#pStars i').forEach(s => s.classList.remove('lit'));
   $('#pCoins').textContent = '0';
-  [$('#pWord'), $('#pFeel'), $('.pcoins'), $('#pGo')].forEach(e => e.style.opacity = 0);
+  [$('#pWord'), $('#pFeel'), $('.pcoins'), $('#pPass'), $('#pGo')].forEach(e => e.style.opacity = 0);
   $$('#pHeroW,#pLumaW').forEach(e => e.style.opacity = 0);
   pt.hidden = false; void pt.offsetWidth; pt.classList.add('show');
   const A = (el, kf, o) => reduce ? null : el.animate(kf, o);
@@ -4389,6 +4608,24 @@ async function party(stars, coins) {
   $('.pcoins').style.opacity = 1;
   const steps = Math.min(20, coins);
   for (let k = 1; k <= steps; k++) { $('#pCoins').textContent = Math.round(coins * k / steps); if (k % 2) boop(Math.min(9, 2 + Math.floor(k / 3)), 0.05); await wait(reduce ? 0 : 40); }
+  if (xpGain && !babyOn()) {                                  // the season bar fills; crossing a tier gets its own burst
+    const bar = $('#pPassFill'), lbl = $('#pPassLbl'), pp = $('#pPass');
+    const t0 = Math.floor(xpFrom / PASS_XP), t1 = Math.min(PASS.length, Math.floor((xpFrom + xpGain) / PASS_XP));
+    bar.style.transition = 'none'; bar.style.width = `${(xpFrom % PASS_XP) / PASS_XP * 100}%`;
+    lbl.textContent = `Season Pass · tier ${Math.min(PASS.length, t0 + 1)} · +${xpGain} XP`;
+    pp.style.opacity = 1; void bar.offsetWidth; bar.style.transition = '';
+    await wait(120);
+    if (t1 > t0) {
+      bar.style.width = '100%'; boop(6, 0.06); await wait(650);
+      lbl.textContent = t1 >= PASS.length ? 'Season Pass complete!' : `Tier ${t1} unlocked! Claim it in the Season Pass`;
+      chord([659.25, 830.61, 987.77, 1318.5], 0.06); playSfx('stamp', { gain: 0.7 });
+      const r = pp.getBoundingClientRect(), a = pt.getBoundingClientRect(); sparkleAt(pt, r.left - a.left + r.width / 2, r.top - a.top + r.height / 2, ['#FFE9A8', '#FFFFFF'], 18);
+      bar.style.transition = 'none'; bar.style.width = '0%'; void bar.offsetWidth; bar.style.transition = '';
+      await wait(60);
+    }
+    bar.style.width = t1 >= PASS.length ? '100%' : `${((xpFrom + xpGain) % PASS_XP) / PASS_XP * 100}%`; boop(4, 0.05);
+    await wait(650);
+  }
   $('#pGo').style.opacity = 1; A($('#pGo'), pop, { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
   await new Promise(r => { $('#pGo').onclick = r; });
   clearInterval(faceT); tick();
@@ -4455,7 +4692,9 @@ async function winLevel() {
   renderStreak(); renderBal(); teaseBal(); renderBuddy();
   $('#wNext').hidden = n >= LEVELS.length;
   $('#wTitle').textContent = n >= LEVELS.length ? 'Every lantern is home.' : 'The storm has passed.';
-  await party(stars, coins);
+  const xpFrom = passState().xp, xpGain = 100 + stars * 25;
+  addXP(xpGain);
+  await party(stars, coins, xpFrom, xpGain);
   showOv('win');
 }
 $('#wNext').addEventListener('click', async () => { await hideOv('win'); toMap(); openLevel(LI + 1); });
@@ -4560,7 +4799,7 @@ $('#gDone').addEventListener('click', () => { guideRun++; breathSound('out', 0.3
 
 /* ---------- boot ---------- */
 document.documentElement.style.setProperty('--scene', `url(img/home/${HOME_SCENE[homeElement()]}.jpg)`);
-syncHero();
+syncHero(); syncPassBtn(); applyLooks();
 $$('[data-play]').forEach(b => b.addEventListener('click', () => {
   ac();
   $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome();
