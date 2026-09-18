@@ -757,7 +757,8 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .hpprev.empty{opacity:.45;filter:grayscale(.6)}
 .story,.heroov,.party{position:absolute;inset:0;z-index:24;overflow:hidden;color:#FFF6DE;opacity:0;transition:opacity .35s}
 .story.show,.heroov.show,.party.show{opacity:1}
-.stbg{position:absolute;inset:-4%;background-size:cover;background-position:center;filter:saturate(1.1);animation:kenburns 18s ease-in-out infinite alternate}
+.stbg{position:absolute;inset:-4%;background-size:cover;background-position:center;filter:saturate(1.1);animation:kenburns 18s ease-in-out infinite alternate;transition:opacity .9s ease}
+.stbubble p .w{display:inline-block;white-space:pre}
 .stbg::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 35%,rgba(8,16,14,.15),rgba(8,16,14,.78) 70%),linear-gradient(transparent 40%,rgba(8,14,12,.85))}
 @keyframes kenburns{to{transform:scale(1.08) translate(-1.5%,-1%)}}
 .sttop{position:absolute;top:14px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:center;z-index:3}
@@ -1486,6 +1487,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 
   <div class="story" id="story" hidden>
     <div class="stbg" id="stBg"></div>
+    <div class="stbg" id="stBg2" style="opacity:0"></div>
     <div class="sttop"><div class="stpips" id="stPips"></div><button class="stskip" id="stSkip">Skip</button></div>
     <div class="stplace"><div class="stverb" id="stVerb"></div><div class="stname display" id="stName"></div></div>
     <div class="ststage" id="stStage">
@@ -1795,10 +1797,130 @@ try { muted = localStorage.getItem('kcq-mute') === '1'; } catch (e) {}
 function ac() {
   if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
   if (AC.state === 'suspended') AC.resume();
-  loadSfx();
+  loadSfx(); startGroove();
   return AC;
 }
 const PENTA = [392, 440, 523.25, 587.33, 659.25, 783.99, 880, 1046.5, 1174.66, 1318.5, 1568, 1760];
+
+/* ---------- the groove -------------------------------------------------------------
+   Home and menus: laid-back hip-hop (86 BPM, swung hats, boom-bap kick and snare).
+   Play: light afro house (118 BPM, four-on-the-floor, off-beat hats, shaker, congas and the
+   signature log-drum bass). Every breath screen fades the drums out and keeps only the pad.
+   One loop of warm chords under both, Am7 → Fmaj7 → Cmaj7 → G6, and every match note snaps
+   to a tone of the chord that is playing, so matches always land in harmony with the music.
+   Nothing is random: the same bar always plays the same way. */
+const CHORDS = [
+  { root: 110, pad: [220, 261.63, 329.63, 392], pcs: [9, 0, 4, 7] },
+  { root: 87.31, pad: [174.61, 220, 261.63, 329.63], pcs: [5, 9, 0, 4] },
+  { root: 130.81, pad: [196, 246.94, 329.63, 392], pcs: [0, 4, 7, 11] },
+  { root: 98, pad: [196, 246.94, 293.66, 329.63], pcs: [7, 11, 2, 4] }
+];
+const GROOVES = {
+  home: { bpm: 86, swing: 0.17, kick: { 0: .55, 7: .35, 10: .45 }, snare: { 4: .32, 12: .32 }, hat: { 0: .09, 2: .07, 4: .09, 6: .07, 8: .09, 10: .07, 12: .09, 14: .08, 15: .04 }, shaker: {}, bass: { 0: 1, 7: .7, 10: .8 }, conga: {}, log: false, pad: .045 },
+  play: { bpm: 118, swing: 0.05, kick: { 0: .5, 4: .45, 8: .5, 12: .45 }, clap: { 4: .18, 12: .18 }, hat: { 2: .1, 6: .1, 10: .1, 14: .12 }, shaker: { 0: .025, 1: .018, 3: .03, 5: .018, 7: .03, 9: .018, 11: .03, 13: .018, 15: .03 }, bass: { 0: 1, 3: .7, 6: .8, 10: .9, 13: .6 }, conga: { 7: [392, .09], 11: [293.66, .08], 15: [392, .07] }, log: true, pad: .035 },
+  calm: { bpm: 70, swing: 0, kick: {}, snare: {}, hat: {}, shaker: {}, bass: {}, conga: {}, log: false, pad: .05 }
+};
+let gMode = null, gWant = 'home', gNext = 0, gStep = 0, gChord = 0, gTimer = null, gBus = null, gDrums = null, gPad = null;
+function grooveInit() {
+  const a = AC, m = mix();
+  gBus = a.createGain(); gBus.gain.value = muted ? 0 : 0.7; gBus.connect(m.dry);
+  const send = a.createGain(); send.gain.value = 0.12; gBus.connect(send); send.connect(m.rev);
+  gDrums = a.createGain(); gDrums.gain.value = 1; gDrums.connect(gBus);
+  gPad = a.createGain(); gPad.gain.value = 1;
+  const lp = a.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1900; gPad.connect(lp).connect(gBus);
+}
+function setGroove(mode) {
+  gWant = mode;
+  if (!AC || !gBus) return;
+  const t = AC.currentTime;
+  gDrums.gain.cancelScheduledValues(t); gDrums.gain.setValueAtTime(gDrums.gain.value, t);
+  gDrums.gain.linearRampToValueAtTime(mode === 'calm' ? 0 : 1, t + (mode === 'calm' ? 1.2 : 2));
+}
+function startGroove() {
+  if (!AC || gTimer) return;
+  gTimer = -1;                                   // claim the start first: building the mix calls ac() again
+  grooveInit(); gNext = AC.currentTime + 0.1; gStep = 0; gMode = gWant;
+  gTimer = setInterval(grooveTick, 25);
+}
+function grooveTick() {
+  const a = AC; if (!a) return;
+  gBus.gain.setTargetAtTime(muted || document.hidden ? 0 : 0.7, a.currentTime, 0.1);
+  while (gNext < a.currentTime + 0.12) {
+    if (gStep % 16 === 0) { gMode = gWant; gChord = (gStep / 16) % 4; }   // styles change on the bar line
+    const G = GROOVES[gMode] || GROOVES.home, st = gStep % 16, t = gNext, ch = CHORDS[gChord];
+    if (!muted && !document.hidden) playStep(G, st, t, ch);
+    const six = 60 / G.bpm / 4;
+    gNext += six * (st % 2 === 0 ? 1 + G.swing : 1 - G.swing);
+    gStep = (gStep + 1) % 64;
+  }
+}
+function playStep(G, st, t, ch) {
+  if (st === 0) padChord(t, ch, G);
+  if (G.kick[st]) { kickAt(t, G.kick[st]); if (G.log) duck(t); }
+  if (G.snare && G.snare[st]) snareAt(t, G.snare[st]);
+  if (G.clap && G.clap[st]) clapAt(t, G.clap[st]);
+  if (G.hat[st]) hatAt(t, G.hat[st]);
+  if (G.shaker[st]) shakerAt(t, G.shaker[st]);
+  if (G.bass[st]) { if (G.log) logAt(t, ch.root * (st === 6 || st === 13 ? 1.5 : 1), G.bass[st] * 0.32); else bassAt(t, ch.root, G.bass[st] * 0.26); }
+  if (G.conga[st]) congaAt(t, ...G.conga[st]);
+}
+const nz = (t, dur, type, f, q, v, dest, attack = 0.001) => {
+  const a = AC, n = noise(), fl = a.createBiquadFilter(), g = a.createGain();
+  fl.type = type; fl.frequency.value = f; fl.Q.value = q;
+  n.connect(fl).connect(g).connect(dest); g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + attack); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  n.start(t); n.stop(t + dur + 0.02);
+};
+function kickAt(t, v) {
+  const a = AC, o = a.createOscillator(), g = a.createGain();
+  o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(46, t + 0.11);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.003); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.38);
+  o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.4);
+  nz(t, 0.012, 'highpass', 3000, 0.7, v * 0.12, gDrums);
+}
+function snareAt(t, v) { nz(t, 0.16, 'bandpass', 1900, 0.8, v, gDrums); const o = AC.createOscillator(), g = AC.createGain(); o.frequency.value = 196; g.gain.setValueAtTime(v * 0.5, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.08); o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.1); }
+function clapAt(t, v) { [0, 0.011, 0.022].forEach((d, i) => nz(t + d, i === 2 ? 0.14 : 0.02, 'bandpass', 1400, 0.9, v, gDrums)); }
+function hatAt(t, v) { nz(t, 0.04, 'highpass', 7800, 0.6, v, gDrums); }
+function shakerAt(t, v) { nz(t, 0.06, 'bandpass', 5600, 1.4, v, gDrums, 0.012); }
+function logAt(t, f, v) {                     // the afro-house log drum: a woody, pitch-dropping bass
+  const a = AC, o = a.createOscillator(), g = a.createGain(), sh = a.createWaveShaper(), lp = a.createBiquadFilter();
+  const c = new Float32Array(256); for (let i = 0; i < 256; i++) { const x = i / 128 - 1; c[i] = Math.tanh(2.2 * x); } sh.curve = c;
+  lp.type = 'lowpass'; lp.frequency.value = 900;
+  o.frequency.setValueAtTime(f * 1.5, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.05);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.004); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.42);
+  o.connect(sh).connect(lp).connect(g).connect(gDrums); o.start(t); o.stop(t + 0.45);
+}
+function bassAt(t, f, v) {
+  const a = AC, o = a.createOscillator(), g = a.createGain();
+  o.type = 'triangle'; o.frequency.value = f;
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.01); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.55);
+  o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.6);
+}
+function congaAt(t, f, v) {
+  const a = AC, o = a.createOscillator(), g = a.createGain();
+  o.frequency.setValueAtTime(f * 1.06, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.03);
+  g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + 0.003); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+  o.connect(g).connect(gDrums); o.start(t); o.stop(t + 0.22);
+  nz(t, 0.012, 'bandpass', 2200, 1, v * 0.4, gDrums);
+}
+function padChord(t, ch, G) {
+  const a = AC, bar = 60 / G.bpm * 4;
+  ch.pad.forEach((f, i) => [1, 1.003].forEach((m, j) => {    // two voices a hair apart: a warm, steady chorus
+    const o = a.createOscillator(), g = a.createGain();
+    o.type = j ? 'sine' : 'triangle'; o.frequency.value = f * m;
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(G.pad / (j ? 2 : 1), t + 0.35);
+    g.gain.setValueAtTime(G.pad / (j ? 2 : 1), t + bar - 0.2); g.gain.linearRampToValueAtTime(0.0001, t + bar + 0.5);
+    o.connect(g).connect(gPad); o.start(t); o.stop(t + bar + 0.6);
+  }));
+}
+function duck(t) { gPad.gain.setValueAtTime(0.5, t); gPad.gain.linearRampToValueAtTime(1, t + 0.22); }   // the pad breathes with the kick
+// match notes land on a tone of the chord that is playing
+const pcOf = f => ((Math.round(12 * Math.log2(f / 261.63)) % 12) + 12) % 12;
+function chordNote(idx) {
+  if (!gTimer || gTimer === -1) return PENTA[idx];
+  const pcs = CHORDS[gChord].pcs;
+  for (const d of [0, 1, -1, 2, -2]) { const j = idx + d; if (j >= 0 && j < PENTA.length && pcs.includes(pcOf(PENTA[j]))) return PENTA[j]; }
+  return PENTA[idx];
+}
 // ---- real element foley ---------------------------------------------------------
 // Recorded-style one-shots (snd/*.mp3), trimmed and loudness-matched offline. The two with a
 // clear pitch are tuned to their element's note: the wood thump rang at 74 Hz (≈ D2, wood's D)
@@ -1953,7 +2075,7 @@ function syncWallet() {
 }
 async function showOv(id) {
   const o = $('#' + id); o.hidden = false; void o.offsetWidth; await wait(20); o.classList.add('show');
-  if (id === 'breathe') return;                                   // the breath screen stays quiet
+  if (id === 'breathe' || id === 'bedov') { setGroove('calm'); return; }   // every breath: drums out, only the pad
   playSfx('swoosh', { gain: 0.55 });
   if (reduce) return;
   const items = [...o.querySelectorAll('.quest,.sealslot,.buddyrow,.jrow,.streakrow,.rung,.light,.pack,.charm')].filter(x => x.offsetParent);
@@ -1962,7 +2084,7 @@ async function showOv(id) {
     if (k < 8) setTimeout(() => boop(k, 0.028), 90 + k * 55);
   });
 }
-async function hideOv(id) { const o = $('#' + id); o.classList.remove('show'); await wait(250); o.hidden = true; if (!$('#map').hidden && typeof renderHome === 'function') renderHome(); }
+async function hideOv(id) { const o = $('#' + id); o.classList.remove('show'); await wait(250); o.hidden = true; if (id === 'breathe' || id === 'bedov') setGroove($('#game').hidden ? 'home' : 'play'); if (!$('#map').hidden && typeof renderHome === 'function') renderHome(); }
 function bump(el) { el.classList.remove('bump'); void el.offsetWidth; el.classList.add('bump'); }
 
 /* ---------- five lights: balance across the elements ---------- */
@@ -2727,8 +2849,9 @@ const VOICE = { hero: 520, sorin: 290, luma: 780 };
 const goalNums = () => { const b = LEVELS[LI]; return S.boardSize === 'little' ? { clouds: Math.min(4, b.clouds), moves: b.moves - 2 } : { clouds: b.clouds, moves: b.moves }; };
 let storyRun = 0;
 async function runStory() {
-  const run = ++storyRun, st = $('#story');
-  $('#stBg').style.backgroundImage = `url(img/home/${HOME_SCENE[L.elem]}.jpg)`;
+  const run = ++storyRun, st = $('#story'); lastSpeaker = null;
+  stBgFront = 0; $('#stBg').style.opacity = 1; $('#stBg2').style.opacity = 0;
+  $('#stBg').style.backgroundImage = `url(${storyBg(0, 'hero')})`;
   $('#stVerb').textContent = `Chapter 1 · Episode ${LI + 1} · ${EMO_VERB[L.elem]}`;
   $('#stName').textContent = L.place;
   st.style.setProperty('--sg', ELEM[L.elem].glow);
@@ -2751,7 +2874,7 @@ async function runStory() {
   for (let i = 0; i < beats.length && !skip; i++) {
     const b = beats[i];
     $$('#stPips i').forEach((p, k) => p.classList.toggle('on', k <= i));
-    await showBeat(b, run, () => skip, nextTap);
+    await showBeat(b, run, () => skip, nextTap, i);
     if (run !== storyRun) return;
   }
   // loadout
@@ -2759,42 +2882,59 @@ async function runStory() {
   $('#stStage').hidden = true; tapped = null;
   showLoadout();
 }
-async function showBeat(b, run, skipped, nextTap) {
+// backdrops: the place itself first, then the rest of Kai's world, rotating by episode
+const STORY_BGS = {
+  hero: [null, 'img/story/bg-village.jpg', 'img/story/bg-school.jpg', 'img/story/bg-bedroom.jpg'],
+  sorin: ['img/story/bg-study.jpg', 'img/story/bg-hill.jpg', 'img/story/bg-study.jpg', 'img/story/bg-village.jpg'],
+  luma: ['img/story/bg-moonpond.jpg', 'img/journey/map-first.jpg', 'img/story/bg-hill.jpg', 'img/story/bg-moonpond.jpg']
+};
+let stBgFront = 0;
+function storyBg(k, voice) {
+  const pool = STORY_BGS[voice] || STORY_BGS.hero, pick = pool[(LI + k) % pool.length];
+  return pick || `img/home/${HOME_SCENE[L.elem]}.jpg`;
+}
+function crossfadeBg(url) {
+  const a = $('#stBg'), b = $('#stBg2'), front = stBgFront ? b : a, back = stBgFront ? a : b;
+  if (front.style.backgroundImage.includes(url)) return;
+  back.style.backgroundImage = `url(${url})`;
+  back.style.opacity = 1; front.style.opacity = 0; stBgFront = 1 - stBgFront;
+}
+let lastSpeaker = null;
+async function showBeat(b, run, skipped, nextTap, k = 0) {
   const face = $('#stFace'), txt = $('#stText'), bub = $('#stBubble'), por = $('#stPor');
+  if (k > 0) crossfadeBg(storyBg(k, b.voice));
+  const newSpeaker = lastSpeaker !== b.name; lastSpeaker = b.name;
   $('#stPlate').textContent = b.name;
-  face.src = faceSrc(b.who, 'calm');
+  // the portrait stays still: one calm expression, no mouth-flapping, no bouncing
+  face.src = faceSrc(b.who, b.voice === 'luma' ? 'happy' : 'calm');
   const goal = $('#stGoal');
   goal.hidden = !b.goal;
   if (b.goal) {
     const g = goalNums();
     goal.innerHTML = `<div class="cloudpile"><i style="left:6px;top:30px;width:58px;height:50px"></i><i style="left:40px;top:6px;width:70px;height:66px"></i><i style="left:88px;top:28px;width:56px;height:50px"></i><b>${g.clouds}</b></div>
       <div class="goalchips"><span class="gchip">${g.moves} moves</span><span class="gchip"><i style="background:${ELEM[L.elem].hue}"></i>${ELEM[L.elem].name} · ${L.shift}</span></div>`;
-    if (!reduce) goal.animate([{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1.1)', opacity: 1, offset: .6 }, { transform: 'scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.5,.5,1)' });
-    playSfx('swoosh', { gain: 0.6 }) || swish();
+    if (!reduce) goal.animate([{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' });
   }
-  if (!reduce) {
-    por.animate([{ transform: 'translateY(30px) scale(.7)', opacity: 0 }, { transform: 'translateY(-6px) scale(1.05)', opacity: 1, offset: .6 }, { transform: 'none', opacity: 1 }], { duration: 480, easing: 'cubic-bezier(.3,1.4,.5,1)' });
-    bub.animate([{ transform: 'translateY(16px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 320, delay: 120, easing: 'ease-out', fill: 'backwards' });
+  if (!reduce && newSpeaker) {
+    por.animate([{ transform: 'translateY(10px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)' });
+    bub.animate([{ transform: 'translateY(10px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 520, delay: 80, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards' });
   }
-  bub.classList.remove('done'); txt.textContent = '';
-  // typewriter with a soft voice blip; the face opens and closes its mouth while it talks
-  let full = false, i = 0;
-  const done = nextTap().then(() => { full = true; });
-  const words = b.text;
-  const a = ac(), f0 = VOICE[b.voice];
-  while (i < words.length && !full && !skipped()) {
-    i++; txt.textContent = words.slice(0, i);
-    if (i % 2 === 0) face.src = faceSrc(b.who, (i / 2) % 2 ? 'happy' : 'calm');
-    if (a && !muted && i % 3 === 0 && /\w/.test(words[i - 1])) {
-      const t = a.currentTime, gn = a.createGain(); gn.connect(voice(0, 0.2)); env(gn, t, 0.03, 0.004, 0.05);
-      osc(a, 'sine', f0 * (0.92 + Math.random() * 0.18), t, 0.07, gn);
-    }
-    await wait(reduce ? 0 : band() === '2-4' ? 38 : 26);        // slower for the littlest readers
-  }
-  txt.textContent = words; face.src = faceSrc(b.who, b.voice === 'hero' ? 'calm' : 'happy');
-  bub.classList.add('done');
+  bub.classList.remove('done');
+  // the words arrive one at a time, rising softly out of a blur; one soft note, in key, per line
+  const words = b.text.split(' ');
+  txt.innerHTML = words.map(w => `<span class="w">${w}</span>`).join(' ');
+  const spans = $$('#stText .w'), step = band() === '2-4' ? 120 : 70;
+  const anims = reduce ? [] : spans.map((sp, i) => sp.animate([{ opacity: 0, transform: 'translateY(.35em)', filter: 'blur(4px)' }, { opacity: 1, transform: 'none', filter: 'blur(0)' }],
+    { duration: 420, delay: 140 + i * step, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'both' }));
+  bell(({ hero: 659.25, sorin: 392, luma: 783.99 })[b.voice] || 523.25, 0.1, 0.035);
+  let full = false;
+  const tapped = nextTap().then(() => { full = true; anims.forEach(an => an.finish()); });
+  const readTime = reduce ? 0 : 140 + spans.length * step + 420;
+  await Promise.race([tapped, wait(readTime)]);
   if (skipped()) return;
-  if (!full) await nextTap(); else await nextTap();
+  bub.classList.add('done');
+  if (full) await nextTap();               // a tap mid-line only finished it; the next tap moves on
+  else await tapped;                        // the line finished by itself; one tap moves on
   tick();
 }
 function showLoadout() {
@@ -3950,7 +4090,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, tiles: () => all(), charge: v => { charge = v; hud(); } };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ mode: gMode, want: gWant, step: gStep, chord: gChord, on: !!gTimer, drums: gDrums && +gDrums.gain.value.toFixed(2) }), tiles: () => all(), charge: v => { charge = v; hud(); } };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -4023,7 +4163,7 @@ function elemSound(type, pan = 0, step = 0, w = 3) {
   const a = ac(); if (!a || muted) return;
   if (w) clearTexture(type, pan, w, step);
   const deg = ELEM_DEG[type] ?? 4;
-  const f = PENTA[Math.min(PENTA.length - 1, deg + step)];          // one scale for every element
+  const f = chordNote(Math.min(PENTA.length - 1, deg + step));      // one scale, snapped to the chord that is playing
   const t = a.currentTime;
   if (type === 'wood') {
     // marimba: warm wooden bar, the 4th partial that makes it "wood", a felt mallet tap
@@ -4245,6 +4385,7 @@ addEventListener('resize', () => { if (tut === 'swap') showSwapHint(); else if (
 
 /* ---------- level flow ---------- */
 function startLevel() {
+  setGroove('play');
   // Little board: 5x5 with the place's element and its two cycle neighbours, and fewer clouds
   const little = S.boardSize === 'little' && !babyOn(), base = LEVELS[LI];
   R = little ? 5 : 8; C = little ? 5 : 7;
@@ -4278,6 +4419,7 @@ function startLevel() {
 // One breath to arrive. Required before every board (baby mode skips it). It never fails:
 // a steadier breath just starts Luma's Aura brighter.
 async function arrivalBreath() {
+  setGroove('calm');
   const ov = $('#arrive'), ring = $('#arRing'), img = $('#arLuma'), cue = $('#arCue'), sub = $('#arSub'), go = $('#arStart');
   const face = e => { img.src = `img/faces/luma-${e}.jpg`; };
   $('#arPlace').textContent = L.place;
@@ -4324,6 +4466,7 @@ async function arrivalBreath() {
   hud();
   await wait(1500);
   ov.classList.remove('show'); await wait(400); ov.hidden = true;
+  setGroove('play');
 }
 function renderJourney() {
   let start = 1;
@@ -4709,6 +4852,7 @@ async function playGate() {
   g.hidden = true;
 }
 function toMap() {
+  setGroove('home');
   running = false; busy = true;
   brRun++; closeMic(); breathing = false; babyRun++;
   $('#babyBar').hidden = true;
