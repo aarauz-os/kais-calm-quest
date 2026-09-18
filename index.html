@@ -1962,6 +1962,29 @@ body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--tabh) + v
 .prow.s2 .ptier{opacity:.9;background:linear-gradient(180deg,rgba(20,36,32,.95),rgba(10,22,19,.97))}
 .prow.s2 .picw{font-size:34px;color:rgba(255,233,168,.85);font-family:"Marcellus SC",Georgia,serif}
 .pscroll .passhow{margin:16px 0 4px}
+
+/* Season Pass banner on Home (v57) */
+.passban{position:relative;display:flex;align-items:center;gap:10px;width:100%;max-width:320px;margin:10px auto 0;height:66px;padding:0 10px 0 78px;border-radius:22px;text-align:left;color:#FFF6DE;overflow:visible;
+  background:radial-gradient(70% 140% at 0% 50%,rgba(255,214,120,.38),transparent 60%),linear-gradient(180deg,#2E6A55,#173F33 60%,#11332A);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.25),0 0 0 1.5px #F4D78C,0 0 0 4.5px #1B4538,0 0 0 6px #C99A45,0 8px 0 5px #7A4F1E,0 14px 22px rgba(0,0,0,.4);transition:transform .15s}
+.passban:active{transform:translateY(3px) scale(.985)}
+.passban::after{content:"";position:absolute;inset:0;border-radius:22px;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.22) 50%,transparent 58%);background-size:260% 100%;animation:pbsheen 6s ease-in-out infinite;pointer-events:none}
+@keyframes pbsheen{0%,55%{background-position:130% 0}85%,100%{background-position:-30% 0}}
+.pbglow{position:absolute;left:-8px;top:50%;width:104px;height:104px;margin-top:-52px;border-radius:50%;pointer-events:none;
+  background:repeating-conic-gradient(rgba(255,230,160,.4) 0 7deg,transparent 7deg 20deg);-webkit-mask-image:radial-gradient(circle,#000 22%,transparent 66%);mask-image:radial-gradient(circle,#000 22%,transparent 66%);animation:rays 18s linear infinite}
+.pbtro{position:absolute;left:2px;top:50%;width:80px;height:80px;margin-top:-46px;object-fit:contain;filter:drop-shadow(0 6px 6px rgba(0,0,0,.45)) drop-shadow(0 0 10px rgba(255,214,120,.6));animation:pbloom 4.6s ease-in-out infinite;transform-origin:50% 85%}
+.pbmid{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.pbmid small{font-size:9.5px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#F4D78C;line-height:1}
+.pbmid b{font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:19px;line-height:1;color:#FFF3CF;text-shadow:0 2px 0 rgba(40,24,6,.8),0 0 12px rgba(255,214,120,.35)}
+.pbbar{position:relative;height:7px;border-radius:99px;background:rgba(0,0,0,.4);box-shadow:inset 0 1px 2px rgba(0,0,0,.6),0 0 0 1px rgba(244,215,140,.55);overflow:hidden}
+.pbbar i{position:absolute;left:0;top:0;bottom:0;border-radius:99px;background:linear-gradient(90deg,#FFE7A0,#F2CC6A,#FFF6D8);box-shadow:0 0 8px rgba(255,214,120,.9)}
+.pbmid em{font-style:normal;font-size:11px;font-weight:800;opacity:.85;line-height:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbnext{position:relative;flex:none;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 40% 30%,#3E7A64,#17392F);box-shadow:0 0 0 2px #F4D78C,0 0 0 4px rgba(20,50,40,.9),0 3px 6px rgba(0,0,0,.4)}
+.pbnext img{width:40px;height:40px;object-fit:contain;animation:pnextbob 2.8s ease-in-out infinite}
+.pbnext img.photo{width:36px;height:36px;border-radius:50%;object-fit:cover}
+.passban.ready .pbnext{width:auto;height:34px;padding:0 14px;border-radius:99px;font-weight:900;font-size:14px;color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 3px 0 #8A5A1C,0 0 18px rgba(255,214,120,.8);animation:pcall 1.8s ease-in-out infinite}
+.passban .passdot{top:-6px;right:-6px}
+body.tabs .homeduo{max-width:320px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2113,7 +2136,7 @@ body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--tabh) + v
       <div class="places" id="places"></div>
       <div class="homeduo">
         <button class="journeybtn" id="journeyOpen"><span class="jorbs"><i style="background:#6FBF4A"></i><i style="background:#E04B42"></i><i style="background:#F0B93A"></i><i style="background:#DCE3E9"></i><i style="background:#3C86C9"></i></span><span><b>Journey</b><em>Season 1 · 4 chapters</em></span></button>
-        <button class="journeybtn passbtn" id="passOpen"><span class="passgem">S1</span><span><b>Season Pass</b><em id="passTease">Tier 1</em></span><i class="passdot" id="passDot" hidden></i></button>
+        <button class="passban" id="passOpen" aria-label="Season Pass"><span class="pbglow"></span><img class="pbtro" src="img/pass/trophy-lotus.png" alt=""><span class="pbmid"><small>Season 1</small><b>Season Pass</b><span class="pbbar"><i id="passBanFill"></i></span><em id="passTease">Tier 1</em></span><span class="pbnext" id="passBanNext"></span><i class="passdot" id="passDot" hidden></i></button>
       </div>
       <button class="btn gold big" id="playNext">Play</button>
       <div class="promise">Free to play, always. No forced ads.</div>
@@ -4129,10 +4152,7 @@ function renderHome() {
   $('#bSeals').className = 'hbadge ok';
   $('#bBaby').textContent = babyOn() ? 'on' : '';
   $('#bBaby').className = 'hbadge ok';
-  $('#bBuddy').textContent = !S.buddy ? '!' : caredToday(S.buddy) ? '' : '💛';
-  // your buddy's own face, blinking and glancing; before you have one, the glowing paw coin
-  const bi = $('#buddyIcon'); bi.hidden = !S.buddy; $('#buddyCoin').hidden = !!S.buddy;
-  if (S.buddy && (!rigs.get(bi) || rigs.get(bi).who !== buddyWho(S.buddy))) makeRig(bi, buddyWho(S.buddy));
+  // the buddy now lives on the Companions tab (its face is the tab icon)
   // one line that tells you what matters right now
   const rib = $('#homeRibbon'), m = nextMile(), played = S.lastDay === dayKey();
   rib.className = 'ribbon' + (!played && S.streak ? ' warn' : '');
@@ -7324,8 +7344,13 @@ function passReady() { const sp = passState(), t = passTier(); return PASS.some(
 function syncPassBtn() {
   const sp = passState(), t = passTier();
   const e = $('#passTease'); if (!e) return;
-  e.textContent = t >= PASS.length ? 'Complete' : `Tier ${t + 1} · ${Math.round((sp.xp % PASS_XP) / PASS_XP * 100)}%`;
-  $('#passDot').hidden = !passReady();
+  const done = t >= PASS.length, n = PASS.filter((_, i) => i < t && !sp.claimed.includes(i)).length;
+  e.textContent = done ? 'Season complete · every reward is yours' : `Tier ${t + 1} · ${sp.xp % PASS_XP} / ${PASS_XP} XP`;
+  $('#passBanFill').style.width = done ? '100%' : `${Math.max(4, (sp.xp % PASS_XP) / PASS_XP * 100)}%`;
+  const ban = $('#passOpen'); ban.classList.toggle('ready', n > 0);
+  if (n > 0) $('#passBanNext').textContent = n > 1 ? `Claim ${n}` : 'Claim';
+  else { const nx = passArt(PASS[Math.min(t, PASS.length - 1)]); $('#passBanNext').innerHTML = `<img class="${nx.m === 'photo' ? 'photo' : ''}" src="${done ? 'img/pass/trophy-lotus.png' : nx.src}" alt="">`; }
+  $('#passDot').hidden = true;
 }
 function applyLooks() {
   const r = RINGS[S.ring], a = AURAS[S.aura];
