@@ -441,10 +441,10 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .avwrap img.hop{animation:hop .5s ease-out}
 .avwrap{position:relative;width:56px;height:56px;border-radius:50%;overflow:hidden;flex:none;background:#F5EBD8;
   box-shadow:0 0 0 3px var(--bhue,var(--gold-mid)),0 0 0 6px var(--wood),0 4px 0 var(--wood-d)}
-.avwrap img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 20%;
-  transform-origin:50% 88%;animation:faceIdle 4.8s ease-in-out infinite;transition:opacity .2s}
+.avwrap img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 34%;
+  transition:transform .5s ease-out}
 .avwrap.buddy{width:48px;height:48px;margin-left:-10px}
-.avwrap.buddy img{object-fit:contain;background:#FFEEDF}
+.avwrap.buddy img{object-fit:cover;object-position:50% 34%;background:#FFEEDF}
 .avwrap img.cheer{animation:faceCheer .7s cubic-bezier(.3,1.5,.5,1)}
 .avwrap img.big{animation:faceBig .9s cubic-bezier(.3,1.5,.5,1)}
 .avwrap img.worry{animation:faceWorry .6s ease-in-out}
@@ -760,7 +760,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
         <div class="bubble" id="bubble">Swap two orbs to make a line of three.</div>
       </div>
       <div class="tools">
-        <button class="breathbtn" id="breathBtn" aria-label="Luma's breath: fill it with matches, then tap to breathe with Luma"><img src="img/luma-3d.jpg" alt=""></button>
+        <button class="breathbtn" id="breathBtn" aria-label="Luma's breath: fill it with matches, then tap to breathe with Luma"><img src="img/faces/luma-calm.jpg" alt=""></button>
         <div class="breathlbl" id="breathLbl">Luma's<br>breath</div>
       </div>
     </div>
@@ -795,7 +795,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <div id="brPlay" hidden>
       <div class="stage" id="brStage">
         <div class="meter" id="brMeter" hidden aria-hidden="true"><i></i><span class="pitch" id="brPitch" hidden></span></div>
-        <div class="track" id="brTrack"><div class="fill" id="brFill"></div><div class="pacelight" id="brGhost"></div><div class="knob" id="brKnob"><img src="img/luma-3d.jpg" alt="Luma" id="brKnobImg"><span class="airin" id="airIn"></span><span class="airout" id="airOut"></span></div><div class="brhand" id="brHand" hidden aria-hidden="true">👆</div></div>
+        <div class="track" id="brTrack"><div class="fill" id="brFill"></div><div class="pacelight" id="brGhost"></div><div class="knob" id="brKnob"><img src="img/faces/luma-calm.jpg" alt="Luma" id="brKnobImg"><span class="airin" id="airIn"></span><span class="airout" id="airOut"></span></div><div class="brhand" id="brHand" hidden aria-hidden="true">👆</div></div>
         <svg id="dand" viewBox="0 0 100 120" aria-hidden="true"></svg>
       </div>
       <div class="row" style="justify-content:center;margin-top:8px"><button class="linkbtn" id="brSwitch">Use my finger instead</button></div>
@@ -846,7 +846,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <div class="eyebrow" style="color:var(--gold2)">Bedtime</div>
     <div class="bedstage">
       <div class="bedring" id="bedRing"></div>
-      <img id="bedLuma" src="img/luma-3d.jpg" alt="Luma breathing">
+      <img id="bedLuma" src="img/faces/luma-calm.jpg" alt="Luma breathing">
       <span class="airin" id="bedIn"></span><span class="airout" id="bedOut"></span>
     </div>
     <div class="btext" id="bedText">Breathe in…</div>
@@ -2131,7 +2131,8 @@ async function openMic() {
 }
 function closeMic() { if (micH) { micH.close(); micH = null; } }
 
-const LUMA = { idle: 'img/luma-3d.jpg', in: 'img/luma-inhale.jpg', out: 'img/luma-exhale.jpg', happy: 'img/luma-happy.jpg' };
+// in = eyes closed and filling, out = the small round mouth
+const LUMA = { idle: 'img/faces/luma-calm.jpg', in: 'img/faces/luma-blink.jpg', out: 'img/faces/luma-breath.jpg', happy: 'img/faces/luma-joy.jpg' };
 function lumaPhase(phase) {
   const img = $('#brKnobImg'), ai = $('#airIn'), ao = $('#airOut');
   if (!img) return;
@@ -2453,11 +2454,11 @@ function say(msg) {
 }
 function paintBuddyGame() {
   const el = S.buddy, img = $('#buddyGame'), wrap = $('#buddyWrap');
-  if (!el) { wrap.hidden = true; return; }
+  if (!el) { wrap.hidden = true; rigs.delete(img); return; }
   wrap.hidden = false;
-  if (!img.src.includes(`buddy-${el}`)) img.src = buddyArt(el);
   wrap.style.setProperty('--bhue', ELEM[el].hue);
   img.alt = `${BUDDY[el].name} the ${BUDDY[el].animal}`;
+  makeRig(img, `buddy-${el}`);
 }
 function buddyHop() {
   const img = $('#buddyGame');
@@ -2465,35 +2466,67 @@ function buddyHop() {
   img.classList.remove('hop'); void img.offsetWidth; img.classList.add('hop');
   setTimeout(() => img.classList.remove('hop'), 520);
 }
-// the portraits are alive: they idle, they react, and the face changes when things go well
-const FACES = { calm: 'img/kai-3d.jpg', happy: 'img/kai-happy.jpg', cheer: 'img/kai-cheer.jpg' };
+// ---- face rig -------------------------------------------------------------
+// Heads only, and the head itself acts: it blinks, it glances, and the mouth and eyes
+// change with a real frame per expression. The ring never moves.
+const EXPR = ['calm', 'blink', 'happy', 'joy', 'cheer', 'breath'];
+const faceSrc = (who, expr) => `img/faces/${who}-${expr}.jpg`;
+const rigs = new Map();
+function makeRig(img, who) {
+  if (!img) return null;
+  const rig = { img, who, level: 0, blinking: false, hold: 0, glance: 0 };
+  rigs.set(img, rig);
+  setExpr(rig, 'calm');
+  return rig;
+}
+function setExpr(rig, expr) {
+  const url = faceSrc(rig.who, expr);
+  if (!rig.img.src.endsWith(url.split('/').pop())) rig.img.src = url;
+}
+const LEVEL_EXPR = ['calm', 'happy', 'joy', 'cheer'];
+function faceLevel(rig, level, holdMs = 1800) {
+  if (!rig) return;
+  rig.level = Math.max(rig.level, Math.min(3, level));
+  rig.hold = performance.now() + holdMs;
+  setExpr(rig, LEVEL_EXPR[rig.level]);
+}
+function faceBreath(rig, on) { if (rig) { rig.breath = on; setExpr(rig, on ? 'breath' : LEVEL_EXPR[rig.level]); } }
+// blink + glance loop: a head that never moves reads as dead, a head that drifts reads as floating
+setInterval(() => {
+  const now = performance.now();
+  rigs.forEach(rig => {
+    if (rig.breath) return;
+    if (rig.hold && now > rig.hold) { rig.level = 0; rig.hold = 0; setExpr(rig, 'calm'); }
+    if (!rig.blinking && Math.random() < 0.13) {
+      rig.blinking = true;
+      const back = LEVEL_EXPR[rig.level];
+      setExpr(rig, 'blink');
+      setTimeout(() => { setExpr(rig, rig.breath ? 'breath' : back); rig.blinking = false; }, 120);
+    }
+    if (Math.random() < 0.08) {
+      const dx = (Math.random() * 2 - 1) * 2.2, dy = (Math.random() * 2 - 1) * 1.2;
+      rig.img.style.transform = `translate(${dx}px, ${dy}px)`;
+      setTimeout(() => { rig.img.style.transform = ''; }, 700 + Math.random() * 600);
+    }
+  });
+}, 620);
 let faceTimer = null;
 function kaiFace(kind, hold = 1800) {
-  const img = $('#kaiFace'), src = FACES[kind] || FACES.calm;
-  const set = url => { if (!img.src.endsWith(url.split('/').pop())) img.src = url; };
-  set(src);
-  clearTimeout(faceTimer);
-  if (kind !== 'calm') faceTimer = setTimeout(() => set(FACES.calm), hold);
+  const map = { calm: 0, happy: 1, cheer: 3 };
+  faceLevel(rigs.get($('#kaiFace')), map[kind] ?? 0, hold);
 }
-// joy scales with the move: 4 in a row is happy, 5+ or a cascade is a cheer, and a run of
-// good moves keeps the face lit for longer
+// joy scales with the move: 4 orbs is a smile, 5+ or a cascade is a grin, a run of good
+// moves gets the full cheer. Nothing floats; the face itself changes.
 let joyRun = 0, joyTimer = null;
 function avatarReact(kind, size = 0) {
-  const img = $('#kaiFace'), bud = $('#buddyGame');
-  if (kind === 'worry') { joyRun = 0; playFace([img, bud], 'worry', 620); return; }
+  const kr = rigs.get($('#kaiFace')), br = rigs.get($('#buddyGame'));
+  if (kind === 'worry') { joyRun = 0; [kr, br].forEach(r => r && faceLevel(r, 0, 0)); return; }
   joyRun++;
   clearTimeout(joyTimer);
   joyTimer = setTimeout(() => { joyRun = 0; }, 6000);
-  const big = size >= 5 || joyRun >= 3 || kind === 'cheer';
-  playFace([img, bud], big ? 'big' : 'cheer', big ? 920 : 760);
-  kaiFace(big ? 'cheer' : 'happy', big ? 2600 : 1800);
-}
-function playFace(els, cls, hold) {
-  els.forEach(el => {
-    if (!el || el.closest('[hidden]')) return;
-    el.classList.remove('cheer', 'big', 'worry'); void el.offsetWidth; el.classList.add(cls);
-    setTimeout(() => el.classList.remove(cls), hold);
-  });
+  const level = (size >= 7 || joyRun >= 3 || kind === 'cheer') ? 3 : size >= 5 ? 2 : 1;
+  const hold = 1200 + level * 700;
+  [kr, br].forEach(r => r && faceLevel(r, level, hold));
 }
 function hud() {
   const cl = clouds().length;
@@ -2837,6 +2870,7 @@ function startLevel() {
   deepBreaths = 0; breathing = false;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   boardEl.classList.remove('aiming'); $('#bLantern').classList.remove('on');
+  makeRig($('#kaiFace'), 'kai');
   paintBuddyGame();
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); hud();
