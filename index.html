@@ -132,7 +132,7 @@ button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .babybar{position:relative;z-index:4;align-self:center;margin:6px auto 0;display:flex;align-items:center;gap:10px;padding:5px 6px 5px 14px;border-radius:999px;color:#43290A;font-size:12px;font-weight:900;
   background:linear-gradient(#FFEFC0,#E8B551);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 0 0 2px #B9832A,0 0 0 4px var(--wood),0 3px 0 var(--wood-d)}
 .babybar button{padding:5px 12px;border-radius:999px;background:linear-gradient(#2F5E4E,#16342B);color:#FBF3E2;font-weight:900;font-size:12px;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.25),0 2px 0 rgba(0,0,0,.4)}
-body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
+body.baby .boosters, body.baby #shopOpen2{display:none}
 .sealcard{flex:none;display:block;text-align:left;margin:12px 16px 0;width:calc(100% - 32px);padding:12px 14px;border-radius:16px;background:linear-gradient(var(--paper),var(--paper-d));box-shadow:inset 0 2px 0 rgba(255,255,255,.9),inset 0 -3px 0 rgba(150,110,50,.25),0 0 0 3px var(--gold-mid),0 0 0 5px var(--wood),0 5px 0 var(--wood-d),0 10px 18px rgba(0,0,0,.3)}
 .sealrow{display:flex;gap:5px;margin-top:8px}
 .sealrow i{width:100%;height:6px;border-radius:4px;background:rgba(31,74,61,.14)}
@@ -1985,6 +1985,64 @@ body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--tabh) + v
 .passban.ready .pbnext{width:auto;height:34px;padding:0 14px;border-radius:99px;font-weight:900;font-size:14px;color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 3px 0 #8A5A1C,0 0 18px rgba(255,214,120,.8);animation:pcall 1.8s ease-in-out infinite}
 .passban .passdot{top:-6px;right:-6px}
 body.tabs .homeduo{max-width:320px}
+
+/* ================= v58: top pass banner with season milestones, Why MorQi page ================= */
+.homepass{position:relative;z-index:4;margin:10px 16px 0;display:flex;justify-content:center}
+.homepass .passban{margin:0;height:62px}
+.pbsegs{display:flex;gap:2px;height:8px;margin-top:1px}
+.pbsegs i{flex:1;border-radius:2px;background:rgba(0,0,0,.42);box-shadow:inset 0 1px 1px rgba(0,0,0,.5)}
+.pbsegs i:first-child{border-radius:99px 2px 2px 99px}.pbsegs i:last-child{border-radius:2px 99px 99px 2px}
+.pbsegs i.on{background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:0 0 5px rgba(255,214,120,.8)}
+.pbsegs i.part{background:linear-gradient(90deg,#FFE7A0 var(--p),rgba(0,0,0,.42) var(--p));box-shadow:0 0 5px rgba(255,214,120,.6)}
+.pbsegs i.big{flex:1.6}
+.pbsegs i.big.on{background:linear-gradient(#FFF6D8,#F2CC6A);box-shadow:0 0 8px rgba(255,214,120,1)}
+.rails{top:calc(264px + var(--sat)) !important}
+body.tabs .rails{bottom:calc(112px + var(--tabh) + var(--sab))}
+body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
+.gupbtn img{width:26px;height:26px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
+.whypage .stbg::after{background:radial-gradient(120% 70% at 50% 25%,rgba(8,16,14,.35),rgba(8,16,14,.85) 70%)}
+.whyhero{margin:14px 0 4px;padding:18px 16px 16px;border-radius:24px;text-align:center;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.4)}
+.whyplaque{display:inline-block;padding:6px 22px 8px;border-radius:22px;font-family:"Marcellus SC",Georgia,serif;font-size:30px;line-height:1;color:#23493C;
+  background:linear-gradient(#FFFFFF,#EFE9DA);box-shadow:inset 0 2px 0 #fff,inset 0 -3px 0 rgba(0,0,0,.12),0 0 0 2px #E3BC6A,0 5px 0 #B98331,0 8px 14px rgba(0,0,0,.35)}
+.whyplaque .qi{color:#C58A1E}
+.whyhero b{display:block;margin-top:14px;font-size:18px;line-height:1.25;color:#FFE9A8}
+.whyhero p{margin:8px 0 0;font-size:14px;font-weight:700;line-height:1.5;opacity:.92}
+.wkcard{padding:14px;border-radius:22px;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.4)}
+.wkbars{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;align-items:end;height:112px;padding:0 2px}
+.wkbar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;height:100%;font-size:11px;font-weight:900}
+.wkbar i{display:block;width:100%;max-width:30px;border-radius:8px 8px 4px 4px;background:linear-gradient(#BFF0A8,#4FA06A);box-shadow:0 0 10px rgba(150,230,140,.35);min-height:4px}
+.wkbar i.zero{background:rgba(255,255,255,.12);box-shadow:none}
+.wkbar.today span{color:#FFE9A8}
+.wkbar small{font-size:10px;opacity:.85}
+.wkstats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:14px;text-align:center}
+.wkstats div{padding:8px 2px;border-radius:14px;background:rgba(0,0,0,.22)}
+.wkstats b{display:block;font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:22px;color:#FFE9A8;line-height:1.1}
+.wkstats small{display:block;font-size:10.5px;font-weight:800;opacity:.85;line-height:1.2}
+.wkfeel{margin-top:12px;font-size:13px;font-weight:800;line-height:1.4}
+.wkfeel .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.wkfeel .chips span{padding:4px 10px;border-radius:99px;font-size:12px;font-weight:900;color:#1D2A24;background:var(--c)}
+.wkask{margin-top:12px;padding:12px;border-radius:16px;background:rgba(255,233,168,.12);box-shadow:inset 0 0 0 1px rgba(255,233,168,.4)}
+.wkask small{display:block;font-size:10.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi)}
+.wkask p{margin:4px 0 0;font-size:14.5px;font-weight:800;font-style:italic;line-height:1.4}
+.wkempty{text-align:center;font-size:14px;font-weight:800;line-height:1.5;opacity:.9;padding:6px 4px}
+.whygrid{display:grid;gap:10px}
+.whyc{display:grid;grid-template-columns:52px 1fr;column-gap:12px;align-items:center;padding:12px 14px;border-radius:18px;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2px rgba(227,188,106,.8),0 6px 14px rgba(0,0,0,.35)}
+.whyc img{grid-row:1/3;width:52px;height:52px;object-fit:contain}
+.whyc img.rnd{border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #F4D78C}
+.whyc b{font-size:16px;color:#FFE9A8}
+.whyc em{font-style:normal;font-size:13px;font-weight:700;line-height:1.45;opacity:.92}
+.whyages{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.whyages div{padding:12px;border-radius:18px;background:rgba(8,16,14,.62);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.45)}
+.whyages div.me{box-shadow:inset 0 0 0 2px #F4D78C,0 0 16px rgba(255,214,120,.35)}
+.whyages b{display:block;font-size:14.5px}.whyages small{display:block;font-size:11px;font-weight:900;color:var(--gold-hi);letter-spacing:.06em}
+.whyages em{display:block;font-style:normal;font-size:12px;font-weight:700;opacity:.88;line-height:1.4;margin-top:4px}
+.whyprom{list-style:none;margin:0;padding:6px 14px;border-radius:20px;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.4)}
+.whyprom li{position:relative;padding:10px 0 10px 28px;font-size:13.5px;font-weight:700;line-height:1.45;border-bottom:1px solid rgba(255,233,168,.15)}
+.whyprom li:last-child{border-bottom:0}
+.whyprom li::before{content:"✓";position:absolute;left:0;top:10px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:900;color:#fff;background:linear-gradient(#7FD06A,#2F8A3C)}
+.whyprom b{color:#FFE9A8}
+.whytry{margin-top:18px;padding:16px;border-radius:22px;text-align:center;background:radial-gradient(120% 90% at 50% 0%,rgba(180,218,247,.25),transparent 60%),linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A}
+.whytry b{display:block;font-size:17px}.whytry em{display:block;font-style:normal;font-size:13.5px;font-weight:800;opacity:.9;margin:6px 0 12px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2110,7 +2168,7 @@ body.tabs .homeduo{max-width:320px}
         <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
         <button class="iconbtn" data-music aria-label="Music off">♫</button>
         <button class="iconbtn" id="howOpen" aria-label="How to play">?</button>
-        <button class="iconbtn" id="shopOpen1" aria-label="Open shop">+</button>
+        <button class="iconbtn gupbtn" id="shopOpen1" aria-label="Why MorQi, for grown-ups"><img src="img/ui/heart.png" alt=""></button>
       </div>
     </div>
     <div class="hometitle">
@@ -2118,7 +2176,8 @@ body.tabs .homeduo{max-width:320px}
       <h1 class="display">Mor<span class="qi">Qi</span> Kids</h1>
       <div class="seasonline" id="seasonLine"></div>
     </div>
-    <div class="ribbon" id="homeRibbon"></div>
+    <div class="ribbon" id="homeRibbon" hidden></div>
+    <div class="homepass"><button class="passban" id="passOpen" aria-label="Season Pass"><span class="pbglow"></span><img class="pbtro" src="img/pass/trophy-lotus.png" alt=""><span class="pbmid"><small>Season 1</small><b>Season Pass</b><span class="pbsegs" id="passSegs"></span><em id="passTease">Tier 1</em></span><span class="pbnext" id="passBanNext"></span><i class="passdot" id="passDot" hidden></i></button></div>
     <div class="rails">
       <div class="rail">
         <button class="hicon" data-open="streakChip"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-streak.mp4" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Streak</b><i class="hbadge" id="bStreak"></i></button>
@@ -2136,7 +2195,7 @@ body.tabs .homeduo{max-width:320px}
       <div class="places" id="places"></div>
       <div class="homeduo">
         <button class="journeybtn" id="journeyOpen"><span class="jorbs"><i style="background:#6FBF4A"></i><i style="background:#E04B42"></i><i style="background:#F0B93A"></i><i style="background:#DCE3E9"></i><i style="background:#3C86C9"></i></span><span><b>Journey</b><em>Season 1 · 4 chapters</em></span></button>
-        <button class="passban" id="passOpen" aria-label="Season Pass"><span class="pbglow"></span><img class="pbtro" src="img/pass/trophy-lotus.png" alt=""><span class="pbmid"><small>Season 1</small><b>Season Pass</b><span class="pbbar"><i id="passBanFill"></i></span><em id="passTease">Tier 1</em></span><span class="pbnext" id="passBanNext"></span><i class="passdot" id="passDot" hidden></i></button>
+        
       </div>
       <button class="btn gold big" id="playNext">Play</button>
       <div class="promise">Free to play, always. No forced ads.</div>
@@ -2559,6 +2618,42 @@ body.tabs .homeduo{max-width:320px}
       <div class="csec"><h3>Companions</h3><span id="colBudN"></span></div>
       <div id="colBuds"></div>
       <div class="cgrand" id="colGrand"></div>
+    </div>
+  </div>
+  <div class="collect whypage" id="why" hidden>
+    <div class="stbg" id="whyBg"></div>
+    <div class="cin" id="whyIn">
+      <div class="wtop"><button class="iconbtn" id="whyBack" aria-label="Back home">‹</button>
+        <div class="wtitle"><small>For grown-ups</small><b class="display">Why MorQi</b></div><span></span></div>
+      <div class="whyhero">
+        <div class="whyplaque">Mor<span class="qi">Qi</span></div>
+        <b>Calm is a skill. MorQi makes it a game.</b>
+        <p>Your child wins every level by slowing their breath, then meets the feeling behind the storm. Little by little, a slow out-breath becomes the thing they reach for when a big feeling shows up.</p>
+      </div>
+      <div class="csec"><h3>This week</h3><span id="wkRange"></span></div>
+      <div class="wkcard" id="wkCard"></div>
+      <div class="csec"><h3>What your child practises</h3></div>
+      <div class="whygrid">
+        <div class="whyc"><img src="img/faces/luma-happy.jpg" alt="" class="rnd"><b>Breathe</b><em>Every level is cleared with a real, slow breath: in through the nose, a longer breath out. A long out-breath is one of the simplest ways to help the body settle.</em></div>
+        <div class="whyc"><img src="img/ui/letter.png" alt=""><b>Name it</b><em>Each episode is about one feeling, told at your child's age. Naming a feeling makes it smaller and easier to talk about.</em></div>
+        <div class="whyc"><img src="img/pass/trophy-lotus.png" alt=""><b>Turn it</b><em>From qigong's five elements: worry can turn into trust, anger into kindness, fear into wisdom. Feelings are never bad. They are energy that can change.</em></div>
+      </div>
+      <div class="csec"><h3>Grows with your child</h3></div>
+      <div class="whyages" id="whyAges"></div>
+      <div class="csec"><h3>Our promises</h3></div>
+      <ul class="whyprom">
+        <li><b>Free to play, always.</b> No forced ads, no timers that pressure your child.</li>
+        <li><b>No chat, no leaderboards, no strangers.</b> Your child only plays with Kai's village.</li>
+        <li><b>Small extras only, behind a grown-up gate.</b> $0.99, $1.99 or $4.99, never pushed.</li>
+        <li><b>Feelings are never "bad".</b> School-safe language throughout.</li>
+        <li><b>Written by people.</b> Stories are written ahead of time and checked with a qigong teacher and a school counselor, never generated on your child's device.</li>
+        <li><b>Baby mode</b> for the littlest ones: the game plays itself while Luma leads the breathing.</li>
+      </ul>
+      <div class="whytry">
+        <b>Try it together tonight</b>
+        <em>Breathe in for 4, out for 6. Three times. Ask what felt different.</em>
+        <button class="btn gold" id="whyBed">Bedtime with Luma</button>
+      </div>
     </div>
   </div>
   <nav class="tabbar off" id="tabbar" aria-label="Main">
@@ -3385,6 +3480,7 @@ $('#babyStop').addEventListener('click', async () => { if (await leaveBaby()) to
 // use it themselves. Nothing here is recorded.
 let bedRun = 0;
 async function bedtime() {
+  logDay('bed');
   const run = ++bedRun;
   ac();
   $('#bedCount').textContent = '';
@@ -3449,6 +3545,15 @@ async function showSealWin(sl) {
   confetti('#sealwin .card');
 }
 $('#sealWinGo').addEventListener('click', () => hideOv('sealwin'));
+// a small daily practice log for the grown-ups' weekly summary (baby mode never counts)
+function logDay(k, n = 1, el) {
+  if (babyOn()) return;
+  const d = dayKey(); S.wk = S.wk || {};
+  const r = S.wk[d] = S.wk[d] || { b: 0, d: 0, e: 0, c: 0, bed: 0, f: {} };
+  r[k] = (r[k] || 0) + n; if (el) r.f[el] = (r.f[el] || 0) + 1;
+  const keys = Object.keys(S.wk).sort(); while (keys.length > 21) delete S.wk[keys.shift()];
+  save();
+}
 function bumpTally(key, n = 1) {
   if (babyOn()) return;
   if (!S.tally) S.tally = { harmony: 0, flow3: 0, voiced: 0 };
@@ -3587,6 +3692,7 @@ function buddyLevelGifts() {
 }
 async function careBreath() {
   const el = S.buddy; if (!el) return;
+  logDay('c');
   const b = BUDDY[el], img = $('#careImg'), txt = $('#careText'), ring = $('#careRing'), who = buddyWho(el);
   $('#careTitle').textContent = `Breathe with ${b.name}`;
   $('#careEyebrow').textContent = caredToday(el) ? 'Already cared for today' : 'Care time · +1 Bond';
@@ -4314,7 +4420,7 @@ $('#path').addEventListener('click', e => {
   openLevel(+b.dataset.lv);
 });
 $('#playNext').addEventListener('click', () => { ac(); openLevel(Math.min(S.unlocked, LEVELS.length) - 1); });
-$('#shopOpen1').addEventListener('click', () => showOv('shop'));
+$('#shopOpen1').addEventListener('click', () => { ac(); tick(); openWhy(); });
 
 /* ---------- level intro ---------- */
 let LI = 0, L = LEVELS[0];
@@ -5858,6 +5964,7 @@ $('#brBack').addEventListener('click', async () => {
 async function applyBreath(q) {
   levelBreaths++;
   const p = breathPlan(q);
+  logDay('b'); if (p.tier === 'deep') logDay('d');
   glowGoal(false);
   stillDrop = false;
   if (p.tier === 'deep') { deepBreaths++; questBump('deep'); addXP(20); }
@@ -7345,8 +7452,10 @@ function syncPassBtn() {
   const sp = passState(), t = passTier();
   const e = $('#passTease'); if (!e) return;
   const done = t >= PASS.length, n = PASS.filter((_, i) => i < t && !sp.claimed.includes(i)).length;
-  e.textContent = done ? 'Season complete · every reward is yours' : `Tier ${t + 1} · ${sp.xp % PASS_XP} / ${PASS_XP} XP`;
-  $('#passBanFill').style.width = done ? '100%' : `${Math.max(4, (sp.xp % PASS_XP) / PASS_XP * 100)}%`;
+  const left = PASS.length - t;
+  e.textContent = done ? 'Season complete · every reward is yours' : `${t} / ${PASS.length} rewards · ${left} to go`;
+  const part = Math.round((sp.xp % PASS_XP) / PASS_XP * 100);
+  $('#passSegs').innerHTML = PASS.map((r, i) => `<i class="${i < t ? 'on' : i === t ? 'part' : ''} ${r.final ? 'big' : ''}" style="--p:${part}%"></i>`).join('');
   const ban = $('#passOpen'); ban.classList.toggle('ready', n > 0);
   if (n > 0) $('#passBanNext').textContent = n > 1 ? `Claim ${n}` : 'Claim';
   else { const nx = passArt(PASS[Math.min(t, PASS.length - 1)]); $('#passBanNext').innerHTML = `<img class="${nx.m === 'photo' ? 'photo' : ''}" src="${done ? 'img/pass/trophy-lotus.png' : nx.src}" alt="">`; }
@@ -7482,6 +7591,44 @@ $('#passTrack').addEventListener('click', e => {
 });
 let STORY_OPEN = null;
 
+/* ---------- Why MorQi: for grown-ups, with a weekly calm summary ---------- */
+const FEEL_OF = { wood: 'anger', fire: 'over-excitement', earth: 'worry', metal: 'sadness', water: 'fear' };
+const ASK_OF = {
+  wood: 'When did something feel unfair this week? What helped your body cool down?',
+  fire: 'When did you feel super fizzy or too excited? What helped you settle?',
+  earth: 'What did you wonder or worry about this week? Who helped you feel steady?',
+  metal: 'Was there a moment you missed someone or something? What made you feel strong again?',
+  water: 'What felt scary or new this week? What helped you feel brave?'
+};
+const AGE_NOTE = { '2-4': 'Short, warm stories and humming breaths. Baby mode for the very small.', '5-7': 'Everyday moments: bedtime, school, friends. Simple words for big feelings.', '8-11': 'Real situations with more detail, and why the breath works.', '12-15': 'Honest stories about pressure, friendships and power, told with respect.' };
+function renderWhy() {
+  const days = [...Array(7)].map((_, i) => dayKey(i - 6)), wk = S.wk || {}, rows = days.map(d => wk[d] || { b: 0, d: 0, e: 0, c: 0, bed: 0, f: {} });
+  const tot = k => rows.reduce((n, r) => n + (r[k] || 0), 0), active = rows.filter(r => r.b || r.e || r.c || r.bed).length;
+  const max = Math.max(3, ...rows.map(r => r.b + r.c));
+  const feel = {}; rows.forEach(r => Object.entries(r.f || {}).forEach(([k, v]) => { feel[k] = (feel[k] || 0) + v; }));
+  const top = Object.entries(feel).sort((a, b) => b[1] - a[1]);
+  const fmt = d => new Date(d + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  $('#wkRange').textContent = `${fmt(days[0])} – ${fmt(days[6])}`;
+  $('#wkCard').innerHTML = !active ? `<div class="wkempty">This week's summary starts with the first breath.<br>Every calm breath, episode and bedtime shows up here.</div>` :
+    `<div class="wkbars">${rows.map((r, i) => { const v = r.b + r.c, day = new Date(days[i] + 'T12:00:00').toLocaleDateString(undefined, { weekday: 'narrow' }); return `<div class="wkbar ${i === 6 ? 'today' : ''}"><small>${v || ''}</small><i class="${v ? '' : 'zero'}" style="height:${Math.max(4, v / max * 80)}px"></i><span>${day}</span></div>`; }).join('')}</div>
+    <div class="wkstats"><div><b>${tot('b') + tot('c')}</b><small>calm breaths</small></div><div><b>${tot('d')}</b><small>deep breaths</small></div><div><b>${tot('e')}</b><small>episodes</small></div><div><b>${active}/7</b><small>days practised</small></div></div>
+    ${top.length ? `<div class="wkfeel">Feelings explored this week<div class="chips">${top.map(([k, v]) => `<span style="--c:${ELEM[k].glow}">${FEEL_OF[k]} · ${v}</span>`).join('')}</div></div>
+    <div class="wkask"><small>A question to ask tonight</small><p>“${ASK_OF[top[0][0]]}”</p></div>` : ''}
+    ${tot('bed') ? `<div class="wkfeel">🌙 ${tot('bed')} bedtime breathing session${tot('bed') === 1 ? '' : 's'} with Luma.</div>` : ''}`;
+  $('#whyAges').innerHTML = Object.entries(BANDS).map(([k, v]) => `<div class="${band() === k ? 'me' : ''}"><small>Ages ${k}</small><b>${v}</b><em>${AGE_NOTE[k]}</em></div>`).join('');
+}
+async function openWhy() {
+  const p = $('#why');
+  $('#whyBg').style.backgroundImage = `url(img/world/s1g-${WORLD_OF[timeOfDay()] || 'day'}.jpg)`;
+  renderWhy(); p.hidden = false; $('#whyIn').scrollTop = 0;
+  playSfx('swoosh', { gain: 0.5 });
+  if (!reduce) { p.animate([{ transform: 'translateY(6%)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 380, easing: 'cubic-bezier(.2,.9,.3,1.1)' });
+    $$('#why .whyhero,#why .wkcard,#why .whyc').forEach((x, k) => x.animate([{ transform: 'translateY(18px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 360, delay: 120 + k * 60, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' })); }
+}
+async function closeWhy() { const p = $('#why'); tick(); if (!reduce) await p.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220 }).finished; p.hidden = true; }
+$('#whyBack').addEventListener('click', closeWhy);
+$('#whyBed').addEventListener('click', async () => { await closeWhy(); bedtime(); });
+
 /* ---------- bottom tab bar: Shop · Companions · Home · Journey · Collection ----------
    The active tab is always derived from what's on screen, so every back button keeps it honest. */
 const TABS = ['shop', 'companions', 'home', 'journey', 'collection'];
@@ -7496,7 +7643,7 @@ function currentTab() {
 const tabPageOpen = () => currentTab() !== 'home';
 function tabbarWanted() {
   if ($('#map').hidden || !$('#game').hidden) return false;
-  const cover = '.story:not([hidden]),.heroov:not([hidden]),.party:not([hidden]),.arrive:not([hidden]),.enter:not([hidden]),#bossov:not([hidden]),.gate:not([hidden]),.splash:not([hidden]),.evolveov:not([hidden]),#passov:not([hidden])';
+  const cover = '#why:not([hidden]),.story:not([hidden]),.heroov:not([hidden]),.party:not([hidden]),.arrive:not([hidden]),.enter:not([hidden]),#bossov:not([hidden]),.gate:not([hidden]),.splash:not([hidden]),.evolveov:not([hidden]),#passov:not([hidden])';
   if ($(cover)) return false;
   return !$$('.ov').some(o => !o.hidden && !o.classList.contains('pagemode'));
 }
@@ -7897,7 +8044,7 @@ async function winLevel() {
   bl.innerHTML = bonus ? `<b>All five lights are lit.</b> Balance bonus: ${rewardText(bonus)}.`
     : bst.lit >= 2 ? `<b>${ELEM[L.elem].name} is brighter.</b> Your quietest is ${ELEM[bst.low.t].name} — that is your ${ELEM[bst.low.t].body}.`
       : `<b>${ELEM[L.elem].name} is lit.</b> Four more elements to balance.`;
-  questBump('win');
+  questBump('win'); logDay('e', 1, L.elem);
   awardSeal(LEVELS[LI].elem);
   if (!S.sealsEarned || !S.sealsEarned.first) awardSeal('first');
   const newDay = S.lastDay !== dayKey();
