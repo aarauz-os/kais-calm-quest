@@ -2207,6 +2207,39 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .tenergy .eorbit b{position:absolute;left:50%;top:50%;width:11px;height:11px;margin:-5.5px;border-radius:50%;opacity:var(--o);
   background:radial-gradient(circle at 35% 30%,#fff,var(--g) 40%,var(--c));box-shadow:0 0 8px 2px var(--g),0 0 0 1px rgba(255,255,255,.6);transform:rotate(var(--a)) translateX(19px) scale(var(--z))}
 .tab.on .tenergy .ecore{box-shadow:0 0 16px 6px rgba(255,226,150,.9)}
+
+/* v63: breath result, rebuilt to match the new UI */
+.bcard.res #brCancel{display:none}
+.bcard.res #brSub{min-height:0;margin:6px 4px 0;text-align:center;font-size:15px;font-weight:800;line-height:1.4;color:#EAF4EE}
+.bcard.res #brTitle{margin-top:4px}
+.bcard.res .eyebrow{margin:0 auto;text-align:center}
+.brhero{position:relative;width:118px;height:118px;margin:4px auto 2px;display:grid;place-items:center}
+.brhero img{position:relative;width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #FFF3CF,0 0 0 6px #D9A94A,0 0 26px 8px rgba(180,230,255,.55);animation:brluma 3.4s ease-in-out infinite}
+@keyframes brluma{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.brrays{position:absolute;inset:-18px;border-radius:50%;background:repeating-conic-gradient(rgba(190,235,255,.4) 0 7deg,transparent 7deg 20deg);-webkit-mask-image:radial-gradient(circle,#000 30%,transparent 70%);mask-image:radial-gradient(circle,#000 30%,transparent 70%);animation:rays 18s linear infinite}
+.bcard[data-tier="deep"] .brhero img{box-shadow:0 0 0 3px #fff,0 0 0 6px #F2CC6A,0 0 36px 14px rgba(255,226,150,.8)}
+.bcard[data-tier="deep"] .brrays{background:repeating-conic-gradient(rgba(255,230,160,.5) 0 7deg,transparent 7deg 20deg)}
+.brmeter{display:flex;align-items:center;justify-content:center;margin:14px 0 4px}
+.brmeter em{width:26px;height:4px;border-radius:4px;background:rgba(255,255,255,.18);margin:0 2px 18px}
+.brmeter span{display:flex;flex-direction:column;align-items:center;gap:5px}
+.brmeter span i{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 2px rgba(255,255,255,.25)}
+.brmeter span b{font-size:12px;font-weight:900;color:rgba(234,244,238,.55)}
+.brmeter span.on i{background:radial-gradient(circle at 38% 30%,#FFFBEA,#F2CC6A 60%,#C08A26);box-shadow:0 0 0 2px #FFF3CF,0 0 14px rgba(255,214,120,.8)}
+.brmeter span.on b{color:#FFE9A8}
+.brmeter span.me i{transform:scale(1.25);animation:pcall 1.8s ease-in-out infinite}
+.brmeter span.on + em{background:linear-gradient(90deg,#F2CC6A,#FFE9A8)}
+.brtiles{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:12px}
+.brt{flex:1;max-width:120px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 6px;border-radius:18px;text-align:center;
+  background:radial-gradient(circle at 50% 30%,rgba(255,255,255,.14),rgba(0,0,0,.2));box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.45)}
+.brt .bi{width:48px;height:48px;display:grid;place-items:center;position:relative}
+.brt .bi img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4))}
+.brt .bi img.rnd{border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #F4D78C;filter:none}
+.brt .bi .orbw{position:relative;width:40px;height:40px}
+.brt b{font-size:16px;color:#FFF6DE;line-height:1.1}
+.brt small{font-size:11.5px;font-weight:800;color:#CFE6DA}
+.braim{flex-basis:100%;margin:4px 0 0 !important;min-height:0 !important;text-align:center;font-size:13.5px !important;font-weight:900;color:#FFE9A8 !important}
+.brgo{width:100%;margin-top:14px;font-size:21px !important;color:#fff !important;text-shadow:0 2px 0 rgba(20,70,30,.7);
+  background:linear-gradient(180deg,#9BE07F,#4FB05A 55%,#2F8A3C) !important;box-shadow:inset 0 3px 0 rgba(255,255,255,.55),inset 0 -4px 0 rgba(0,0,0,.2),0 0 0 3px #F4D78C,0 6px 0 3px #1E5A2A,0 12px 18px rgba(0,0,0,.35) !important;animation:loplay 2.4s ease-in-out infinite}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2497,9 +2530,10 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
       <div class="row" style="justify-content:center;margin-top:8px"><button class="linkbtn" id="brSwitch">Use my finger instead</button></div>
     </div>
     <div id="brResult" hidden>
-      <div class="feathers" id="brFeathers"></div>
-      <div class="gains" id="brGains"></div>
-      <div class="stack"><button class="btn gold" id="brBack">Back to the storm</button></div>
+      <div class="brhero" id="brHero"><i class="brrays"></i><img id="brLuma" src="img/faces/luma-happy.jpg" alt="Luma"></div>
+      <div class="brmeter" id="brFeathers"></div>
+      <div class="brtiles" id="brGains"></div>
+      <button class="btn big brgo" id="brBack">Aim Luma's Dive</button>
     </div>
   </div></div>
 
@@ -3613,7 +3647,7 @@ async function babyLoop(run) {
 async function babyBreath(run) {
   if (S.babyLog) { S.babyLog.breaths = (S.babyLog.breaths || 0) + 1; save(); }
   busy = true; breathing = true;
-  $('#brChoose').hidden = true; $('#brPlay').hidden = false; $('#brResult').hidden = true;
+  $('#brChoose').hidden = true; $('#brPlay').hidden = false; $('#brResult').hidden = true; $('#breathe .bcard').classList.remove('res');
   $('#brSwitch').hidden = true; $('#brCancel').hidden = true; $('#brMeter').hidden = true;
   buildDandelion(); seeds(0); $('#dand').classList.remove('show');
   $('#brEyebrow').textContent = `${L.power} · breathe with Luma`;
@@ -5133,7 +5167,7 @@ let stillDrop = false;
 
 
 /* ---------- board ---------- */
-let R = 8, C = 7, POOL = TYPES;
+let R = 8, C = 7, POOL = TYPES, moveAura = 0;
 const boardEl = $('#board'), wrap = $('#boardwrap');
 let board = [], ids = new Map(), nid = 1, T = 44;
 let aimT = null, busy = false, sel = null, drag = null, moves = 0, charge = 0, combo = 0, mode = null, cheerAt = 0, running = false;
@@ -5420,7 +5454,7 @@ async function shuffle() {
 }
 
 /* ---------- turn resolution ---------- */
-function useMove() { moves--; movesUsed++; hud(); bump($('#movesStat')); }
+function useMove() { moves--; movesUsed++; moveAura = 0; hud(); bump($('#movesStat')); }
 function swapCells(a, b) {
   const { r: ar, c: ac_ } = a, { r: br, c: bc } = b;
   board[ar][ac_] = b; board[br][bc] = a;
@@ -5762,8 +5796,11 @@ async function popSet(set) {
     let gain = 0;
     // episode 1 takes roughly 10 matches to reach Heavenly, and each episode after asks for more
     // big blasts feel huge but can't fill the Aura in one go: past six orbs each counts a quarter, and one wave adds at most 25
-    arr.forEach((t, i) => { gain += (t.type === boostEl ? 4 : 3) * (t.fed ? 2 : 1) * auraRate() * (i < 6 ? 1 : 0.25); });
-    charge = Math.min(100, charge + Math.min(25, gain));
+    // v63: slower — about 2 per orb, chain reactions count half, and one move can add at most 12%
+    arr.forEach((t, i) => { gain += (t.type === boostEl ? 2.6 : 2) * (t.fed ? 1.5 : 1) * auraRate() * (i < 6 ? 1 : 0.25); });
+    if (combo > 0) gain *= 0.5;
+    const room = Math.max(0, 12 - moveAura); gain = Math.min(gain, room); moveAura += gain;
+    charge = Math.min(100, charge + gain);
   }
   const n = Math.min(arr.length, 5);
   if (combo >= 2) setTimeout(() => boop(Math.min(combo * 2, 9), 0.08), 120);
@@ -5773,6 +5810,14 @@ async function popSet(set) {
   await wait(reduce ? 40 : 250);
 }
 
+// Refills lean away from ready-made lines (about 3 times in 4), so chain reactions stay a treat, not constant.
+function calmPick(r, c) {
+  const ty = (rr, cc) => board[rr] && board[rr][cc] && !board[rr][cc].cloud ? board[rr][cc].type : null;
+  const makes = t => (ty(r + 1, c) === t && ty(r + 2, c) === t) || (ty(r, c - 1) === t && ty(r, c - 2) === t) || (ty(r, c + 1) === t && ty(r, c + 2) === t) || (ty(r, c - 1) === t && ty(r, c + 1) === t);
+  if (practice || Math.random() < 0.25) return rnd(POOL);
+  const ok = POOL.filter(t => !makes(t));
+  return ok.length ? rnd(ok) : rnd(POOL);
+}
 function gravity() {
   for (let c = 0; c < C; c++) {
     const top = colTop(c);
@@ -5783,7 +5828,7 @@ function gravity() {
     }
     const n = w + 1 - top;
     for (let r = w; r >= top; r--) {
-      const t = newTile(rnd(POOL)); board[r][c] = t;
+      const t = newTile(calmPick(r, c)); board[r][c] = t;
       t.el.style.transitionDelay = `${c * 26 + (w - r) * 16}ms`;
       setTimeout(() => { t.el.style.transitionDelay = ''; }, 900);
       if (growNext) { t.el.classList.add('grow'); setTimeout(() => t.el.classList.remove('grow'), 1300); }
@@ -5812,7 +5857,7 @@ function flowStep(el) {
   if (lastElem && CREATES[lastElem] === el) flow++; else flow = 1;
   lastElem = el;
   if (flow < 2) { bar.hidden = true; return; }
-  const bonus = flow >= 3 ? 6 : 3;
+  const bonus = flow >= 3 ? 4 : 2;
   charge = Math.min(100, charge + bonus);
   $('#flowText').innerHTML = `${ELEM[prevOf(el)].feeds} · <b>flow ×${flow}</b> · Luma +${bonus}`;
   bar.hidden = false;
@@ -6047,7 +6092,7 @@ async function openBreath() {
   coachBreathOpened();
   $('#brChoose').hidden = !!S.breathMode ? true : false;
   $('#brPlay').hidden = !S.breathMode;
-  $('#brResult').hidden = true;
+  $('#brResult').hidden = true; $('#breathe .bcard').classList.remove('res');
   $('#brEyebrow').textContent = `${L.power} · Luma's breath`;
   brText('How will you breathe out?', 'Clouds only leave when you breathe.');
   await showOv('breathe');
@@ -6075,7 +6120,7 @@ async function runBreath() {
   [$('#brKnob'), $('#brGhost')].forEach(el => { el.style.transition = 'none'; });
   closeMic();
   breathing = true;
-  $('#brResult').hidden = true; $('#brPlay').hidden = false;
+  $('#brResult').hidden = true; $('#breathe .bcard').classList.remove('res'); $('#brPlay').hidden = false;
   buildDandelion(); seeds(0);
   $('#dand').classList.remove('show');
   $('#brMeter').hidden = true;
@@ -6144,7 +6189,8 @@ function breathPlan(q) {
 function showBreathResult(q) {
   pendingQ = q;
   const p = breathPlan(q);
-  $('#brPlay').hidden = true; $('#brResult').hidden = false;
+  $('#brPlay').hidden = true; $('#brResult').hidden = false; $('#breathe .bcard').classList.add('res');
+  $('#breathe .bcard').dataset.tier = p.tier;
   $('#brEyebrow').textContent = `${L.power} · Luma's breath`;
   const head = { deep: 'Deep breath.', nice: 'Nice breath.', small: 'A little breath.' }[p.tier];
   const tip = p.sang
@@ -6152,8 +6198,14 @@ function showBreathResult(q) {
     : micH ? `Use your voice next time: ${SOUND[L.elem].say}. A real sound clears an extra cloud.`
       : { deep: 'Slow in, long and soft out. That clears the most clouds.', nice: 'Go even slower next time to blow away 4 clouds.', small: 'Stay with the light the whole way. Slow breaths blow away 4 clouds.' }[p.tier];
   brText(head, tip);
-  $('#brFeathers').innerHTML = [1, 2, 3].map(i => `<span class="${i <= ({ deep: 3, nice: 2, small: 1 })[p.tier] ? '' : 'off'}">❋</span>`).join('');
-  $('#brGains').innerHTML = `<span class="chip">🌀 Luma’s Dive · ${({ small: 'small', nice: 'big', deep: 'huge' })[p.tier]}</span>${p.sang ? `<span class="chip sangchip">${ELEM[L.elem].name} sound${lastHz ? ` · ${lastHz} Hz` : ''}</span>` : ''}<span class="chip"><i class="coin"></i>+${p.coins}</span><span class="chip">✦ You choose where she lands</span>`;
+  const lv = ({ small: 1, nice: 2, deep: 3 })[p.tier];
+  $('#brLuma').src = `img/faces/luma-${p.tier === 'small' ? 'happy' : 'joy'}.jpg`;
+  $('#brFeathers').innerHTML = ['Little', 'Nice', 'Deep'].map((w, i) => `<span class="${i < lv ? 'on' : ''} ${i === lv - 1 ? 'me' : ''}"><i></i><b>${w}</b></span>`).join('<em></em>');
+  const dive = ({ small: ['Small dive', '3×3 area'], nice: ['Big dive', '3×3 + a cross'], deep: ['Huge dive', '5×5 area'] })[p.tier];
+  $('#brGains').innerHTML = `<div class="brt"><span class="bi"><img class="rnd" src="img/faces/luma-happy.jpg" alt=""></span><b>${dive[0]}</b><small>${dive[1]}</small></div>`
+    + `<div class="brt"><span class="bi"><img src="img/ui/coins.png" alt=""></span><b>+${p.coins}</b><small>coins</small></div>`
+    + (p.sang ? `<div class="brt"><span class="bi"><span class="orbw">${orbHTML(L.elem)}</span></span><b>${ELEM[L.elem].name} sound</b><small>${lastHz ? `${lastHz} Hz · ` : ''}+1 cloud</small></div>` : '')
+    + `<p class="braim">✦ You choose where she lands</p>`;
   chord(p.tier === 'deep' ? [523.25, 659.25, 783.99, 1046.5] : p.tier === 'nice' ? [523.25, 659.25, 783.99] : [523.25, 659.25], 0.12);
 }
 /* ---------- Luma's Dive ---------- */
@@ -6290,7 +6342,7 @@ async function paidFor(pw) {
 function cycleCheck(pw) {
   if (lab) return;
   if (lastPower && CREATES[lastPower] === pw.elem) {
-    charge = Math.min(100, charge + 20);
+    charge = Math.min(100, charge + 10);
     if (!babyOn()) { S.coins += 30; save(); }
     say(`${ELEM[lastPower].feeds}. You followed the creation cycle.`);
     chord([ELEM[lastPower].tone, ELEM[pw.elem].tone, ELEM[pw.elem].tone * 1.5], 0.08);
@@ -6318,7 +6370,7 @@ $('#pwBar').addEventListener('click', async e => {
   playSfx('sfx-deer', { gain: 0.9 }) || elemSound('wood', 0, 4);
   await fxDeerStream();
   await shuffle();
-  charge = Math.min(100, charge + 20); hud();
+  charge = Math.min(100, charge + 10); hud();
   busy = false;
 });
 function powerArea(id, t) {
@@ -6385,6 +6437,7 @@ function pwDemo(pw) {
   });
 }
 async function usePowerOn(t) {
+  moveAura = 0;
   const pw = POWERS.find(p => p.id === mode); if (!pw) return;
   if (pw.id === 'monkey') {
     if (!monkeyFirst) { monkeyFirst = t; t.el.classList.add('sel'); say('Now tap the orb to swap it with.'); return; }
@@ -6915,7 +6968,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -7063,11 +7116,11 @@ function harmony(types) {
     gone(b.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: .85, offset: .35 }, { transform: 'translate(-50%,-50%) scale(1.5)', opacity: 0 }], { duration: 900, easing: 'ease-out' }));
   }
   const chip = $('#flowBar');
-  chip.innerHTML = `<span>${list.map(t => ELEM[t].name).join(' + ')} · <b>harmony</b> · Luma +5</span>`;
+  chip.innerHTML = `<span>${list.map(t => ELEM[t].name).join(' + ')} · <b>harmony</b> · Luma +3</span>`;
   chip.hidden = false;
   chip.animate([{ transform: 'scale(.85)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
   clearTimeout(chip._t); chip._t = setTimeout(() => { chip.hidden = true; chip.innerHTML = '<span id="flowText"></span>'; }, 3500);
-  charge = Math.min(100, charge + 5);
+  charge = Math.min(100, charge + 3);
   buddyHop();
   avatarReact('cheer');
 
@@ -7406,7 +7459,7 @@ function startLevel() {
   $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
   $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
-  moves = L.moves; charge = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
+  moves = L.moves; charge = 0; moveAura = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
   deepBreaths = 0; breathing = false; movesUsed = 0; cloudsFreed = 0; levelBreaths = 1;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   setAim(null); monkeyFirst = null; lastPower = null;
