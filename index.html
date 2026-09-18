@@ -3,7 +3,7 @@
 <title>MorQi Kids · Season 1: Kai's Calm Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus+SC&family=Nunito:wght@500;700;800;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=Marcellus+SC&family=Nunito:wght@500;700;800;900&display=swap">
 <style>
 :root{
   --parch:#F5EBD8; --parch2:#EADBBE; --forest:#1F4A3D; --teal:#0F4C4F;
@@ -462,12 +462,12 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .shard{position:absolute;pointer-events:none;z-index:6;border-radius:2px}
 .scorepop{position:absolute;pointer-events:none;z-index:7;font-weight:900;font-size:calc(var(--t) * 0.42);color:#FFF3CF;text-shadow:0 2px 0 rgba(90,60,10,.85),0 0 12px rgba(255,214,130,.9);transform:translate(-50%,-50%)}
 .comboword{position:absolute;left:50%;top:42%;z-index:8;pointer-events:none;transform:translate(-50%,-50%);
-  font-family:"Marcellus SC",Georgia,serif;font-size:clamp(26px,8vw,40px);color:#FFF6DE;white-space:nowrap;text-align:center;line-height:1;
+  font-family:Fredoka,"Nunito",system-ui,sans-serif;font-weight:700;font-size:clamp(30px,9vw,46px);color:#FFF6DE;white-space:nowrap;text-align:center;line-height:1;letter-spacing:.01em;
   text-shadow:0 3px 0 rgba(120,70,10,.9),0 0 22px rgba(255,205,110,.95)}
 .comboword::before{content:"";position:absolute;inset:-18% -10%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,rgba(20,12,4,.62),transparent)}
-.comboword .ch{display:inline-block;font-weight:900;color:#FFF8E6;text-shadow:none;-webkit-text-stroke:1px rgba(60,30,5,.6);
-  background:linear-gradient(180deg,#FFFFFF 0%,#FFF8E0 50%,color-mix(in srgb,var(--c,#FFC857) 75%,#fff) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 3px 0 rgba(60,30,5,.95)) drop-shadow(0 0 2px rgba(60,30,5,.9)) drop-shadow(0 0 14px var(--g,rgba(255,205,110,.9)))}
+.comboword .ch{display:inline-block;font-weight:700;color:#FFF8E6;text-shadow:none;-webkit-text-stroke:2.5px #fff;paint-order:stroke fill;
+  background:linear-gradient(180deg,#FFFFFF 0%,color-mix(in srgb,var(--c,#FFC857) 45%,#fff) 38%,var(--c,#FFC857) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 4px 0 color-mix(in srgb,var(--c,#E0A93E) 55%,#3A2408)) drop-shadow(0 0 1.5px color-mix(in srgb,var(--c,#E0A93E) 60%,#3A2408)) drop-shadow(0 0 16px var(--g,rgba(255,205,110,.9)))}
 .comboword .sub{display:block;margin-top:6px;font-family:Nunito,system-ui,sans-serif;font-weight:900;font-size:max(12px,.3em);letter-spacing:.16em;
   text-transform:uppercase;color:#FFF8E6;text-shadow:0 2px 0 rgba(80,45,10,.8),0 0 10px var(--g,#fff)}
 .wordburst{position:absolute;left:50%;top:42%;z-index:7;pointer-events:none;border-radius:50%;
@@ -1160,7 +1160,77 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .odcap{min-height:2.8em;font-size:15px;font-weight:800;line-height:1.35;display:flex;gap:8px;align-items:flex-start;justify-content:center;text-align:left}
 .odcap b{flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A)}
 .story.demoing .stpor{width:120px;height:120px}
+.story.demoing .stplace{opacity:0;transition:opacity .3s}
+.story.demoing .ststage{top:56px}
 .story.demoing .stbubble p{font-size:17px;min-height:0}
+.tile.fed .orb{animation:fedglow 1.6s ease-in-out infinite}
+@keyframes fedglow{50%{filter:brightness(1.2) drop-shadow(0 0 6px #FFE9A8) drop-shadow(0 0 12px rgba(255,210,120,.9))}}
+.tile.fed::after{content:"";position:absolute;inset:-6%;border-radius:50%;pointer-events:none;z-index:2;box-shadow:0 0 0 2px rgba(255,233,168,.9),0 0 12px 3px rgba(255,210,120,.7)}
+.fx.feedstream{width:14px;height:14px;border-radius:50%;z-index:9;background:radial-gradient(circle,#fff 0 25%,var(--sc) 45%,var(--tc) 75%,transparent 80%);box-shadow:0 0 12px 4px var(--sc)}
+.cyclelabel{position:absolute;z-index:9;pointer-events:none;white-space:nowrap;padding:5px 12px;border-radius:99px;font-weight:900;font-size:13px;color:#3A2408;
+  background:linear-gradient(#FFF6D8,#F2D38A);box-shadow:0 0 0 2px var(--lc),0 0 14px var(--lc),0 4px 10px rgba(0,0,0,.35)}
+.odhead .odel{font-style:normal;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:900;color:#3A2408;background:#F0B93A}
+.odcycle{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:4px;margin:-2px 0 10px;font-size:11px;font-weight:900}
+.odcycle span{display:inline-flex;align-items:center;gap:4px;padding:3px 7px;border-radius:99px;background:rgba(255,255,255,.08);opacity:.65}
+.odcycle span.hot{opacity:1;background:rgba(255,233,168,.2);box-shadow:inset 0 0 0 1px rgba(255,233,168,.6)}
+.odcycle span i{width:9px;height:9px;border-radius:50%}
+.odcycle b{opacity:.6}
+.odstream{position:absolute;z-index:6;width:14px;height:14px;margin:6px 0 0 6px;border-radius:50%;background:radial-gradient(circle,#fff 0 25%,#CDF0A6 45%,#E04B42 80%);box-shadow:0 0 12px 4px #CDF0A6}
+.dcell.fedd .tile{filter:drop-shadow(0 0 7px #FFE9A8) drop-shadow(0 0 12px rgba(255,190,90,.9))}
+.odplus{position:absolute;z-index:7;margin:6px 0 0 6px;padding:1px 7px;border-radius:99px;font-style:normal;font-weight:900;font-size:12px;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A);transform:translate(-50%,-120%)}
+.lumawrap.bursting .aura{animation:auraspin 1.2s linear infinite;transform:translate(-50%,-50%) scale(1.5) !important;opacity:1 !important}
+.lumawrap.bursting .breathbtn{box-shadow:0 0 0 3px #fff,0 0 0 6px var(--gold-hi),0 0 40px 16px rgba(255,236,170,.9)}
+.burstring{position:absolute;z-index:40;width:80px;height:80px;border-radius:50%;pointer-events:none;box-shadow:0 0 0 4px var(--rc),0 0 24px 6px var(--rh),inset 0 0 18px var(--rc)}
+.burstspark{position:absolute;z-index:40;width:9px;height:9px;border-radius:50%;pointer-events:none}
+.maphead .row{gap:5px}
+.maphead .iconbtn{width:36px;height:36px;font-size:15px;border-radius:11px}
+.maphead .chip{padding:6px 9px;font-size:13px}
+.maphead .herobtn{width:40px;height:40px}
+[data-music].off{position:relative}
+[data-music].off::after{content:"";position:absolute;left:22%;right:22%;top:50%;height:2.5px;border-radius:2px;background:currentColor;transform:rotate(-40deg)}
+/* ================= the cover: one page, the whole idea ================= */
+.cover{display:flex;flex-direction:column;gap:0;background:linear-gradient(#F7EEDB,#EFE2C6)}
+.chero{position:relative;overflow:hidden;padding:40px 16px 26px;text-align:center;color:#FFF6DE}
+.chbg{position:absolute;inset:-4%;background:url(img/journey/roundtable.jpg) center 35%/cover;animation:kenburns 24s ease-in-out infinite alternate}
+.chbg::after{content:"";position:absolute;inset:0;background:linear-gradient(rgba(8,16,14,.35),rgba(8,16,14,.55) 45%,rgba(8,16,14,.94))}
+.chin{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;max-width:420px;margin:0 auto}
+.chero h1{margin:0;font-size:clamp(46px,14vw,64px);line-height:.95;font-weight:400;color:#FFF6DE;text-shadow:0 4px 0 rgba(40,24,6,.85),0 0 30px rgba(255,210,140,.5)}
+.clede{margin:0;max-width:32ch;font-size:17px;font-weight:800;line-height:1.4;text-wrap:balance}
+.cfaces{display:flex;flex-wrap:wrap;justify-content:center;gap:0;max-width:340px;margin:8px 0 6px}
+.cfaces img{width:40px;height:40px;margin:-3px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2.5px var(--gold-mid),0 3px 8px rgba(0,0,0,.4);background:#F5EBD8}
+.cfaces img.cluma{width:52px;height:52px;box-shadow:0 0 0 3px #fff,0 0 0 5px var(--gold-mid),0 0 18px rgba(191,232,245,.8)}
+.chero .btn.big{width:100%;max-width:320px;margin-top:6px}
+.cnote{margin:0;font-size:12.5px;font-weight:800;opacity:.8}
+.csec{padding:26px 18px 6px;max-width:560px;width:100%;margin:0 auto;box-sizing:border-box}
+.ckick{font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#96682A;margin-bottom:6px}
+.csec h2{margin:0 0 12px;font-size:clamp(24px,7vw,30px);line-height:1.1;font-weight:400;color:#1D5044;text-wrap:balance}
+.cloop{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cstep{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 8px 12px;border-radius:18px;text-align:center;
+  background:linear-gradient(#FFFFFF,#F4E8CC);box-shadow:inset 0 2px 0 #fff,0 0 0 1.5px rgba(184,134,47,.45),0 4px 0 rgba(120,88,40,.35)}
+.cstep b{font-size:15px;color:#1D5044}
+.cstep em{font-style:normal;font-size:12px;font-weight:700;line-height:1.35;color:#5A5444}
+.cvis{width:64px;height:64px;border-radius:50%;display:grid;place-items:center;overflow:hidden;background:#1F4A3D;box-shadow:0 0 0 3px var(--gold-mid)}
+.cvis img{width:100%;height:100%;object-fit:cover}
+.cvis .orbrow{display:flex;gap:0}
+.cvis .orbrow span{position:relative;width:20px;height:20px;display:block}
+.cfeels{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:0 0 12px}
+.cfeels figure{margin:0;text-align:center}
+.cfeels img{width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;background:#FFF7E4;box-shadow:0 0 0 2.5px var(--gold-mid),0 4px 10px rgba(80,50,10,.2)}
+.cfeels figcaption{margin-top:5px;font-size:11.5px;font-weight:900;color:#5A4A2A}
+.cmaps{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:14px}
+.cmaps img{width:100%;aspect-ratio:9/13;object-fit:cover;border-radius:12px;box-shadow:0 0 0 2px var(--gold-mid),0 4px 10px rgba(0,0,0,.25)}
+.cfacts{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.cfacts li{padding:10px 12px;border-radius:14px;font-size:14.5px;font-weight:700;line-height:1.4;color:#3F3A2C;background:rgba(255,255,255,.6);box-shadow:inset 0 0 0 1.5px rgba(184,134,47,.28)}
+.cfacts b{color:#1D5044}
+.cp{margin:12px 0 0;font-size:14.5px;font-weight:700;line-height:1.55;color:#4A4536}
+.csec .cycle{justify-content:center}
+.cfund .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cgrid div{padding:12px;border-radius:16px;background:linear-gradient(#24463B,#132A23);color:#FFF6DE;box-shadow:0 0 0 2px var(--gold-mid),0 4px 0 2px var(--wood)}
+.cgrid b{display:block;font-size:14.5px;color:var(--gold-hi)}
+.cgrid em{display:block;margin-top:3px;font-style:normal;font-size:12.5px;font-weight:700;line-height:1.4;opacity:.9}
+.cfoot{padding:26px 16px 36px;text-align:center}
+.cfoot .btn.big{width:100%;max-width:320px}
+@media (max-width:360px){.cloop{grid-template-columns:1fr}.cfund .cgrid{grid-template-columns:1fr}}
 </style>
 
 <div id="app">
@@ -1173,89 +1243,85 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   </div>
   <!-- MAP -->
   <section class="screen" id="welcome">
-    <div class="wwrap">
-      <div class="whero">
-        <div class="eyebrow">Season 1 · playable prototype</div>
-        <h1 class="display">MorQi Kids</h1>
-        <div class="seasontag"><span>Season 1</span><b>Kai's Calm Quest</b></div>
-        <p class="lede">A puzzle game where kids clear a storm by actually breathing.</p>
-        <div class="heroart">
-          <img src="img/kai-3d.jpg" alt="Kai, the game's hero">
-          <img class="luma" src="img/luma-3d.jpg" alt="Luma, the spirit fox">
+    <div class="cover">
+      <header class="chero">
+        <div class="chbg"></div>
+        <div class="chin">
+          <div class="seasontag"><span>Season 1</span><b>Kai's Calm Quest</b></div>
+          <h1 class="display">MorQi Kids</h1>
+          <p class="clede">A puzzle game where kids clear the storm by actually breathing, and learn to understand the feelings behind it.</p>
+          <div class="cfaces"><img src="img/faces/hero-g1-happy.jpg" alt=""><img src="img/faces/hero-b3-happy.jpg" alt=""><img src="img/faces/hero-g4-happy.jpg" alt=""><img src="img/faces/kai-happy.jpg" alt=""><img src="img/faces/hero-g6-happy.jpg" alt=""><img src="img/faces/hero-b5-happy.jpg" alt=""><img src="img/faces/hero-g2-happy.jpg" alt=""><img src="img/faces/hero-b2-happy.jpg" alt=""><img src="img/faces/hero-g5-happy.jpg" alt=""><img src="img/faces/hero-b4-happy.jpg" alt=""><img src="img/faces/hero-g3-happy.jpg" alt=""><img src="img/faces/hero-b6-happy.jpg" alt=""><img class="cluma" src="img/faces/luma-happy.jpg" alt="Luma"></div>
+          <button class="btn gold big" data-play>Play the demo</button>
+          <p class="cnote">About 3 minutes. Best on a phone with the sound on.</p>
         </div>
-        <button class="btn gold big" data-play>Play the demo</button>
-        <p class="small">Takes about 2 minutes. Best on a phone with the sound on.</p>
-      </div>
+      </header>
 
-      <div class="wsec" id="how">
-        <h2 class="display">How to play</h2>
-        <p class="small" style="text-align:left;margin:0 0 10px">The first level walks you through all of this with a guiding hand.</p>
-        <div class="steps">
-          <div class="step">
-            <div class="vis"><div class="orbrow" data-types="fire fire fire"></div></div>
-            <div><h3><b class="n">1</b>Match 3</h3><p>Slide an orb onto the one next to it so three of the same element line up. They pop.</p></div>
-          </div>
-          <div class="step">
-            <div class="vis"><div class="minil"><img src="img/luma-3d.jpg" alt=""></div></div>
-            <div><h3><b class="n">2</b>Fill Luma</h3><p>Every match fills Luma, the fox in the bottom corner. When her ring is full she glows. Tap her.</p></div>
-          </div>
-          <div class="step">
-            <div class="vis"><div class="minitrack"><i></i><img src="img/luma-3d.jpg" alt=""></div><span class="wave">↑ in<br>↓ out</span></div>
-            <div><h3><b class="n">3</b>Breathe with her</h3><p><b>Breathe in:</b> press Luma and slide her up slowly with the glowing ring. <b>Breathe out:</b> slide her back down, or turn on the mic and blow gently on the dandelion. Going too fast doesn't work.</p></div>
-          </div>
-          <div class="step">
-            <div class="vis"><div class="cloudrow"><i class="mini cloudicon"></i><i class="mini cloudicon"></i><i class="mini cloudicon"></i></div></div>
-            <div><h3><b class="n">4</b>Clear the storm</h3><p>A slow, deep breath blows away 4 clouds. A rushed one blows away 1. Clear every cloud to win the level.</p></div>
-          </div>
+      <section class="csec">
+        <div class="ckick">How it plays</div>
+        <div class="cloop">
+          <div class="cstep"><span class="cvis"><span class="orbrow" data-types="wood wood wood"></span></span><b>Match</b><em>Match orbs to grow Luma's Aura. Each match feeds the next element.</em></div>
+          <div class="cstep"><span class="cvis"><img src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe</b><em>A real, slow breath clears the storm. Rushing doesn't work.</em></div>
+          <div class="cstep"><span class="cvis"><img src="img/journey/feel-worry.jpg" alt=""></span><b>Understand</b><em>Every episode is one feeling, told at the child's age.</em></div>
         </div>
-        <div class="tipbox"><b>On a laptop?</b> Use the mouse to drag orbs and Luma. When the game asks how to breathe out, pick <b>Trace it with a finger</b>.</div>
-      </div>
+      </section>
 
-      <div class="wsec">
-        <h2 class="display">Why this matters</h2>
-        <ul>
-          <li>Kids are told to "calm down" and never shown how. Here the breath is the only way to win, so every level is practice.</li>
-          <li>The game scores the breath itself. Slow, long breaths win, so kids learn the pace that actually settles the body.</li>
-          <li>It's built on Demaris's qigong practice: the five elements, each with its own colour, symbol, organ, emotion, and sound, straight off his teaching sheets.</li>
-          <li>Each level takes one hard feeling and moves it: worry to trust, anger to kindness, too much to peace, sadness to strength, fear to wisdom.</li>
-          <li>Every level ends with a real practice kids can do off the screen, with a guided breath from Sorin.</li>
+      <section class="csec">
+        <div class="ckick">The Feelings Journey</div>
+        <h2 class="display">Every feeling is welcome</h2>
+        <div class="cfeels">
+          <figure><img src="img/journey/feel-anger.jpg" alt=""><figcaption>Anger</figcaption></figure>
+          <figure><img src="img/journey/feel-fizzies.jpg" alt=""><figcaption>Fizzies</figcaption></figure>
+          <figure><img src="img/journey/feel-worry.jpg" alt=""><figcaption>Worry</figcaption></figure>
+          <figure><img src="img/journey/feel-sadness.jpg" alt=""><figcaption>Sadness</figcaption></figure>
+          <figure><img src="img/journey/feel-fear.jpg" alt=""><figcaption>Fear</figcaption></figure>
+        </div>
+        <div class="cmaps"><img src="img/journey/map-first.jpg" alt=""><img src="img/journey/map-wood.jpg" alt=""><img src="img/journey/map-water.jpg" alt=""><img src="img/journey/map-fire.jpg" alt=""></div>
+        <ul class="cfacts">
+          <li><b>12 heroes</b> kids pick to look like them, with no labels</li>
+          <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
+          <li><b>Seasons, chapters, episodes</b>, with a free Season Pass that never expires</li>
+          <li><b>A real conversation</b> each episode: you feel it, Kai gets it, Sorin helps</li>
         </ul>
-      </div>
+      </section>
 
-      <div class="wsec">
-        <h2 class="display">The five elements</h2>
-        <p class="small" style="text-align:left;margin:0 0 10px">Every orb is an element off Demaris's teaching sheets. Each carries a feeling, and the level teaches the shift.</p>
-        <div class="elemtable" id="elemTable"></div>
+      <section class="csec">
+        <div class="ckick">Built on real practice</div>
+        <h2 class="display">Demaris's five elements, as rules of play</h2>
         <div class="cycle" id="cycleRow"></div>
-        <div class="tipbox" style="margin-top:12px"><b>The cycle is the bonus.</b> Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. Match along that circle and Luma fills faster, so kids learn the creation cycle by playing it.</div>
-      </div>
+        <p class="cp">Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. A match lights up the next element. Obstacles break by the element that controls them. Each place pairs an element with an organ, a feeling, a sound and a breath from Demaris's qigong teaching sheets.</p>
+      </section>
 
-      <div class="wsec">
-        <h2 class="display">How it makes money</h2>
-        <ul>
-          <li><b>The game is free, always.</b> No price to download and no paywall on levels.</li>
-          <li><b>No forced ads.</b> Nothing interrupts a level. Parents can trust it and kids just play.</li>
-          <li><b>We sell extras:</b> power-up bundles, heart refills, and time-limited boosts like double coins for 30 minutes. Demo prices ($0.99 to $1.99) are placeholders, and nothing is charged.</li>
-          <li><b>Optional reward videos:</b> a player can choose to watch a short video for a free heart, power-up, or boost.</li>
-          <li>Good breaths earn coins too, so kids who practice can keep playing without paying.</li>
+      <section class="csec cfair">
+        <div class="ckick">Fair by design</div>
+        <ul class="cfacts">
+          <li><b>Free forever.</b> No paywall, no forced ads.</li>
+          <li><b>Extras only.</b> The headline offer: Nine Days of Calm, $1.99 for nine days.</li>
+          <li><b>A grown-up approves</b> every purchase. No countdowns, no pressure.</li>
+          <li><b>School-safe.</b> Feelings are never "bad". No leaderboards, no shame.</li>
         </ul>
-      </div>
+      </section>
 
-      <div class="wsec">
-        <h2 class="display">What's built, and what's next</h2>
-        <div class="twocol">
-          <div><h3>In this demo</h3><ul><li>5 levels in 5 places</li><li>Breath game with finger or mic</li><li>Guided first level</li><li>Shop with power-ups, hearts, boosts, and optional reward videos</li><li>A guided practice after each level</li></ul></div>
-          <div><h3>With funding</h3><ul><li>Full art and animation for Kai, Luma, and Sorin</li><li>Hundreds of levels, released in seasons</li><li>Sorin's voice guiding each breath</li><li>A parent view of practice minutes</li><li>Linked to the MorQi adult app: "How's your kid today?"</li><li>Versions for schools and programs</li></ul></div>
+      <section class="csec cfund">
+        <div class="ckick">What funding builds</div>
+        <h2 class="display">From prototype to a place kids return to</h2>
+        <div class="cgrid">
+          <div><b>Season 1, complete</b><em>240 episodes across four chapters, each with its own obstacle and finale</em></div>
+          <div><b>Voice &amp; music</b><em>Sorin's real voice guiding each breath; an original healer score</em></div>
+          <div><b>iPhone &amp; Android</b><em>Native apps with real mic breath-sensing and haptics</em></div>
+          <div><b>Kai's village</b><em>Ten friends from every kind of family, as Season Pass story cards</em></div>
+          <div><b>Parent companion</b><em>Practice minutes, a weekly note, and gentle controls</em></div>
+          <div><b>Schools edition</b><em>Classroom mode aligned with social-emotional learning</em></div>
         </div>
-      </div>
+        <p class="cp">Then MorQi for ages 16+, and one ecosystem for the healer's path: breath, feelings and medicine, learned through play.</p>
+      </section>
 
-      <div class="whero" style="padding-bottom:8px">
+      <footer class="cfoot">
         <button class="btn gold big" data-play>Play the demo</button>
         <div class="row" style="justify-content:center;gap:14px;margin-top:10px">
-          <button class="linkbtn dark" id="toMapFromWelcome">Pick a level</button>
+          <button class="linkbtn dark" id="toMapFromWelcome">Go to the home screen</button>
           <button class="linkbtn dark" id="retut">Replay the walkthrough</button>
         </div>
-      </div>
+      </footer>
     </div>
   </section>
 
@@ -1271,6 +1337,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       </div>
       <div class="row">
         <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
+        <button class="iconbtn" data-music aria-label="Music off">♫</button>
         <button class="iconbtn" id="howOpen" aria-label="How to play">?</button>
         <button class="iconbtn" id="shopOpen1" aria-label="Open shop">+</button>
       </div>
@@ -1345,6 +1412,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       <button class="iconbtn" id="toMap" aria-label="Back to map">‹</button>
       <div class="place"><b class="display" id="gPlace">The Root Grounds</b><span id="gShift">worry → safe</span></div>
       <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
+      <button class="iconbtn" data-music aria-label="Music off">♫</button>
     </div>
     <div class="stats">
       <div class="stat goal" id="cloudStat"><div class="mini cloudicon"></div><div><div class="lbl">Clear the storm</div><div class="val"><span id="gClouds">0</span> <small id="gCloudWord">clouds left</small></div></div></div>
@@ -1950,7 +2018,7 @@ const HANG_PAT = [
 const HANG_FILL = { 1: 5, 5: 7, 9: 6, 13: 8 };           // the doubled notes when the board is on fire
 let gWant = 'home', gLevel = 1, gHeat = 0, gBpm = 76, gNext = 0, gStep = 0, gChord = 0, gTimer = null, gBus = null, gDrums = null, gPad = null, gPadLp = null, gHang = null;
 const gLv = [1, 1, 0, 0, 0, 0];
-const MUSIC_VOL = () => (S.musicVol ?? 0.32);     // low by default
+const MUSIC_VOL = () => S.musicOn ? (S.musicVol ?? 0.32) : 0;   // off by default; low when on
 function grooveInit() {
   const a = AC, m = mix();
   gBus = a.createGain(); gBus.gain.value = 0; gBus.connect(m.dry);
@@ -2211,6 +2279,13 @@ function breathSound(phase, secs) {
     s.stop(t + secs + 0.05);
   }
 }
+function syncMusic() {
+  $$('[data-music]').forEach(b => { b.classList.toggle('off', !S.musicOn); b.setAttribute('aria-label', S.musicOn ? 'Music on' : 'Music off'); b.style.opacity = S.musicOn ? 1 : .55; });
+}
+$$('[data-music]').forEach(b => b.addEventListener('click', () => {
+  ac(); S.musicOn = !S.musicOn; save(); syncMusic();
+  toast(S.musicOn ? 'Music on' : 'Music off');
+}));
 function syncMute() {
   $$('[data-mute]').forEach(b => { b.textContent = muted ? '♪̸' : '♪'; b.setAttribute('aria-label', muted ? 'Sound off' : 'Sound on'); b.style.opacity = muted ? .55 : 1; });
 }
@@ -3021,11 +3096,16 @@ async function runStory() {
     { who: 'sorin', voice: 'sorin', name: 'Sorin', text: storyLines(L).sorin, face: 'calm' },
     { who: 'luma', voice: 'luma', name: 'Luma', goal: true, text: GOAL_LINE(g.clouds, g.moves) }
   ];
+  if (LI >= 1 && !(S.seen || {}).feed) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', demo: 'feed', text: {
+    '2-4': "Look! Wood makes Fire glow. Match Wood, then pop the glowing Fire!",
+    '5-7': "Here's a secret: the elements help each other. Wood feeds Fire, Fire makes Earth, and so on. Match one, and the next one lights up. Lit orbs make me glow twice as much.",
+    '8-11': "The elements feed each other in a circle: Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. Match one and the next element lights up. Clearing a lit orb gives double Aura.",
+    '12-15': "This is the Creation Cycle: Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. Every match feeds the next element in the circle. Clear the lit orbs and my Aura fills twice as fast." }[band()] });
   if (L.knots && !(S.seen || {}).knots) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', knotDemo: true, text: {
     '2-4': "New! Some orbs are tied in knots. Match them to untie them!",
     '5-7': "Something new: Worry tied some orbs in knots. A knotted orb can't move, but a match that includes it unties the knot.",
-    '8-11': "New here: knots. Worry ties orbs down so you can't swap them. Line up a match that includes a knotted orb and it comes loose. Plan around them.",
-    '12-15': "New obstacle: knots. A knotted orb is locked in place and can't be swapped. Build matches through it to untie it. Knots near the clouds are worth freeing first." }[band()] });
+    '8-11': "New here: knots. Worry ties orbs down so you can't swap them. Line up a match through a knot, or match Wood right next to it. Wood breaks up Earth, like roots in soil.",
+    '12-15': "New obstacle: knots. They're Earth, so they follow the control cycle: a Wood match right next to one breaks it loose, the way roots split soil. Or build a match straight through it." }[band()] });
   if (LI === 0 || !S.tutDone || band() === '2-4') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: HOWTO[band()] });
   $('#stPips').innerHTML = beats.map(() => '<i></i>').join('') + '<i></i>';
   $('#loadout').hidden = true; $('#loadout').classList.remove('up');
@@ -3074,11 +3154,60 @@ const DEMO_T = 44;                                        // demo tile size, px
 function demoBoard(rows) {
   return rows.map((row, r) => row.map((type, c) => `<span class="dcell" data-r="${r}" data-c="${c}" style="left:${c * DEMO_T}px;top:${r * DEMO_T}px">${orbHTML(type)}</span>`).join('')).join('');
 }
+
+// the Creation Cycle, taught on the mini board: match Wood, watch it feed Fire, clear a fed orb
+async function feedDemo(host) {
+  const run = demoRun;
+  const rows = [['fire', 'water', 'metal', 'fire', 'earth'], ['wood', 'wood', 'earth', 'wood', 'metal'], ['metal', 'earth', 'fire', 'water', 'fire']];
+  host.innerHTML = `<div class="odemo">
+      <div class="odhead"><span class="odnew">New</span><b>The Creation Cycle</b></div>
+      <div class="odcycle">${['wood', 'fire', 'earth', 'metal', 'water'].map((e, i) => `<span class="${i < 2 ? 'hot' : ''}"><i style="background:${ELEM[e].hue}"></i>${ELEM[e].name}</span>`).join('<b>→</b>')}</div>
+      <div class="odboard" style="width:${5 * DEMO_T}px;height:${3 * DEMO_T}px">${demoBoard(rows)}<i class="odhand">👆</i></div>
+      <div class="odsteps"><i></i><i></i><i></i></div>
+      <div class="odcap" id="odCap"></div>
+    </div>`;
+  const cell = (r, c) => host.querySelector(`.dcell[data-r="${r}"][data-c="${c}"]`), board = host.querySelector('.odboard');
+  const hand = host.querySelector('.odhand'), cap = host.querySelector('#odCap'), steps = [...host.querySelectorAll('.odsteps i')];
+  const at = (el, r, c) => { el.style.left = `${c * DEMO_T + DEMO_T / 2}px`; el.style.top = `${r * DEMO_T + DEMO_T / 2}px`; };
+  const alive = () => run === demoRun && host.isConnected && !host.hidden;
+  const step = (i, text) => { steps.forEach((s2, k) => s2.classList.toggle('on', k === i)); cap.innerHTML = `<b>${i + 1}</b>${text}`; if (!reduce) cap.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: 'ease-out' }); };
+  const mv = (el, kf, ms) => reduce ? Promise.resolve() : el.animate(kf, { duration: ms, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' }).finished.catch(() => {});
+  const fires = [[0, 0], [0, 3], [2, 2]];
+  while (alive()) {
+    host.querySelectorAll('.dcell').forEach(c => { c.getAnimations().forEach(a => a.cancel()); c.classList.remove('fedd'); c.style.opacity = 1; });
+    host.querySelectorAll('.odstream,.odplus').forEach(x => x.remove());
+    // 1 · match Wood
+    step(0, 'Match three Wood orbs.');
+    const a = cell(1, 2), b = cell(1, 3);
+    at(hand, 1, 3); hand.style.opacity = 1; await wait(600); if (!alive()) return;
+    await Promise.all([mv(hand, [{ transform: 'translate(-30%,-10%)' }, { transform: `translate(calc(-30% - ${DEMO_T}px),-10%)` }], 500),
+      mv(b, [{ transform: 'none' }, { transform: `translateX(${-DEMO_T}px)` }], 500), mv(a, [{ transform: 'none' }, { transform: `translateX(${DEMO_T}px)` }], 500)]);
+    hand.style.opacity = 0;
+    await Promise.all([cell(1, 0), cell(1, 1), b].map(c => mv(c, [{ opacity: 1 }, { opacity: 0, transform: `${c === b ? `translateX(${-DEMO_T}px) ` : ''}scale(1.3)` }], 420)));
+    await wait(300); if (!alive()) return;
+    // 2 · Wood feeds Fire: light flows from where the wood was to the nearest fire
+    step(1, '<span>Wood feeds Fire. The Fire orbs light up.</span>');
+    await Promise.all(fires.map(([r, c], i) => new Promise(res => {
+      const d = document.createElement('i'); d.className = 'odstream'; board.appendChild(d); at(d, 1, 1);
+      const dx = (c - 1) * DEMO_T, dy = (r - 1) * DEMO_T;
+      if (reduce) { d.remove(); return res(); }
+      d.animate([{ transform: 'translate(-50%,-50%) scale(.6)', opacity: 0 }, { transform: `translate(calc(-50% + ${dx * 0.5}px), calc(-50% + ${dy * 0.5 - 18}px)) scale(1)`, opacity: 1, offset: .5 }, { transform: `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px)) scale(.5)`, opacity: .9 }],
+        { duration: 700, delay: i * 140, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' }).finished.then(() => { d.remove(); cell(r, c).classList.add('fedd'); res(); });
+    })));
+    await wait(1400); if (!alive()) return;
+    // 3 · clear a fed orb: triple glow for Luma
+    step(2, 'Clear a lit orb and Luma glows twice as much.');
+    fires.forEach(([r, c], i) => { const plus = document.createElement('i'); plus.className = 'odplus'; plus.textContent = '2×'; board.appendChild(plus); at(plus, r, c);
+      if (!reduce) plus.animate([{ transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 }, { transform: 'translate(-50%,-120%) scale(1)', opacity: 1 }], { duration: 420, delay: i * 120, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'backwards' }); });
+    await wait(2600); if (!alive()) return;
+  }
+}
 async function obstacleDemo(host, kind) {
+  if (kind === 'feed') return feedDemo(host);
   const run = demoRun;
   const rows = [['wood', 'fire', 'water', 'earth', 'metal'], ['fire', 'earth', 'earth', 'water', 'wood'], ['metal', 'water', 'wood', 'fire', 'earth']];
   host.innerHTML = `<div class="odemo">
-      <div class="odhead"><span class="odnew">New</span><b>Knots</b></div>
+      <div class="odhead"><span class="odnew">New</span><b>Knots</b><em class="odel">Earth</em></div>
       <div class="odboard" style="width:${5 * DEMO_T}px;height:${3 * DEMO_T}px">${demoBoard(rows)}<i class="odline"></i><i class="odhand">👆</i><i class="odx">✕</i></div>
       <div class="odsteps"><i></i><i></i><i></i></div>
       <div class="odcap" id="odCap"></div>
@@ -3128,13 +3257,18 @@ async function showBeat(b, run, skipped, nextTap, k = 0) {
   const face = $('#stFace'), txt = $('#stText'), bub = $('#stBubble'), por = $('#stPor');
   if (k > 0) crossfadeBg(storyBg(k, b.voice));
   const newSpeaker = lastSpeaker !== b.name; lastSpeaker = b.name;
-  $('#story').classList.toggle('demoing', !!b.knotDemo); demoRun++;
+  $('#story').classList.toggle('demoing', !!(b.knotDemo || b.demo)); demoRun++;
   $('#stPlate').textContent = b.name;
   // the portrait stays still: one calm expression, no mouth-flapping, no bouncing
   face.onerror = () => { face.onerror = null; face.src = faceSrc(b.who, 'calm'); };
   face.src = faceSrc(b.who, b.face || (b.voice === 'luma' ? 'happy' : 'calm'));
   const goal = $('#stGoal');
-  goal.hidden = !b.goal && !b.knotDemo;
+  goal.hidden = !b.goal && !b.knotDemo && !b.demo;
+  if (b.demo) {
+    obstacleDemo(goal, b.demo);
+    if (!reduce) goal.animate([{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' });
+    S.seen = Object.assign(S.seen || {}, { [b.demo]: 1 }); save();
+  }
   if (b.knotDemo) {
     obstacleDemo(goal, 'knots');
     if (!reduce) goal.animate([{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' });
@@ -3255,7 +3389,7 @@ function newTile(type, sp = null) {
   return t;
 }
 function paint(t) {
-  t.el.className = `tile t-${t.type}${t.sp ? ' sp-' + t.sp : ''}${t.cloud ? ' clouded' : ''}${t.knot ? ' knotted' : ''}`;
+  t.el.className = `tile t-${t.type}${t.sp ? ' sp-' + t.sp : ''}${t.cloud ? ' clouded' : ''}${t.knot ? ' knotted' : ''}${t.fed ? ' fed' : ''}`;
   const kx = t.el.querySelector('.knotx');
   if (t.knot && !kx) { const k = document.createElement('i'); k.className = 'knotx'; t.el.appendChild(k); } else if (!t.knot && kx) kx.remove();
   t.el.firstChild.innerHTML = GLYPH[t.type];
@@ -3294,6 +3428,61 @@ function untie(t) {
   t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460);
   playSfx('wood', { rate: 1.5, gain: 0.5 }); boop(5, 0.06);
   if (!reduce) sparkleAt(boardEl, t.c * T + T / 2, t.r * T + T / 2, ['#E8C27A', '#FFF1C8', '#B58440'], 10);
+}
+
+/* ---------- the Five Elements, as rules of play ----------------------------------------
+   Creation (sheng): a match feeds the next element. Wood → Fire → Earth → Metal → Water → Wood.
+     The cleared orbs send light to the nearest orbs of the element they feed; those orbs are
+     "fed" and give triple Aura when cleared. Chosen by distance, never at random.
+   Control (ke): each obstacle belongs to an element, and the element that controls it breaks
+     it. Knots are Earth; Wood parts Earth (roots split soil), so a Wood match next to a knot
+     loosens it. Future obstacles follow the same rule: thorn vines (Wood) ← Metal, fog (Water)
+     ← Earth, heat haze (Fire) ← Water, rust (Metal) ← Fire. */
+const auraRate = () => 1 / (1 + 0.12 * (LI || 0));                // gentler at the start, steadily harder
+const CONTROLLED_BY = { earth: 'wood', water: 'earth', fire: 'water', metal: 'fire', wood: 'metal' };
+let cycleTips = 0;
+function floatLabel(text, x, y, color) {
+  if (reduce) return;
+  const d = document.createElement('div'); d.className = 'cyclelabel'; d.textContent = text;
+  d.style.cssText = `left:${x}px;top:${y}px;--lc:${color}`;
+  boardEl.appendChild(d);
+  d.animate([{ transform: 'translate(-50%,-30%) scale(.8)', opacity: 0 }, { transform: 'translate(-50%,-80%) scale(1)', opacity: 1, offset: .25 }, { transform: 'translate(-50%,-150%)', opacity: 0 }], { duration: 1800, easing: 'ease-out' }).onfinish = () => d.remove();
+}
+function feedNext(arr) {
+  if (babyOn() && false) return;
+  const by = {}; arr.forEach(t => { if (ELEM[t.type]) (by[t.type] = by[t.type] || []).push(t); });
+  const lead = Object.keys(by).sort((a, b) => by[b].length - by[a].length)[0]; if (!lead) return;
+  const src = by[lead], cx = src.reduce((a, t) => a + t.c, 0) / src.length, cy = src.reduce((a, t) => a + t.r, 0) / src.length;
+  const target = CREATES[lead], k = src.length >= 5 ? 4 : src.length >= 4 ? 3 : 2;
+  const pool = all().filter(o => o.type === target && !o.cloud && !o.knot && !o.fed && !arr.includes(o))
+    .sort((a, b) => ((a.r - cy) ** 2 + (a.c - cx) ** 2) - ((b.r - cy) ** 2 + (b.c - cx) ** 2) || a.r - b.r || a.c - b.c)
+    .slice(0, k);
+  if (!pool.length) return;
+  pool.forEach((o, i) => {
+    o.fed = true;
+    const x0 = cx * T + T / 2, y0 = cy * T + T / 2, x1 = o.c * T + T / 2, y1 = o.r * T + T / 2;
+    const land = () => { paint(o); o.el.classList.add('born'); setTimeout(() => o.el.classList.remove('born'), 460); };
+    if (reduce) return land();
+    const d = document.createElement('div'); d.className = 'fx feedstream'; d.style.cssText = `left:${x0}px;top:${y0}px;--sc:${ELEM[lead].glow};--tc:${ELEM[target].hue}`;
+    boardEl.appendChild(d);
+    const mx = (x1 - x0) / 2, my = (y1 - y0) / 2 - T * 0.8;
+    d.animate([{ transform: 'translate(-50%,-50%) scale(.5)', opacity: 0 }, { transform: `translate(calc(-50% + ${mx}px), calc(-50% + ${my}px)) scale(1)`, opacity: 1, offset: .5 }, { transform: `translate(calc(-50% + ${x1 - x0}px), calc(-50% + ${y1 - y0}px)) scale(.6)`, opacity: .9 }],
+      { duration: 650, delay: 180 + i * 110, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'backwards' }).onfinish = () => { d.remove(); land(); bell(chordNote(ELEM_DEG[target] + 2), 0, 0.035); };
+  });
+  if (cycleTips < 3) { cycleTips++; setTimeout(() => floatLabel(ELEM[lead].feeds, cx * T + T / 2, cy * T + T / 2, ELEM[target].glow), 250); }
+}
+function controlBreak(clear) {
+  const freed = [];
+  clear.forEach(t => {
+    const by = CONTROLLED_BY.earth;                       // knots are Earth
+    if (t.type !== by) return;
+    [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dr, dc]) => {
+      const n = board[t.r + dr] && board[t.r + dr][t.c + dc];
+      if (n && n.knot && !clear.has(n) && !freed.includes(n)) freed.push(n);
+    });
+  });
+  freed.forEach(n => untie(n));
+  if (freed.length && cycleTips < 6) { cycleTips++; const n = freed[0]; floatLabel('Wood breaks up Earth', n.c * T + T / 2, n.r * T + T / 2, ELEM.wood.glow); }
 }
 function addClouds(n, quiet) {
   const pool = all().filter(t => !t.cloud && t.type !== 'spirit').sort(() => Math.random() - 0.5);
@@ -3371,6 +3560,7 @@ function hasMove() {
 }
 async function shuffle() {
   const tiles = all().filter(t => t.type !== 'spirit' && !t.cloud);
+  tiles.forEach(t => { t.fed = false; });
   for (let tries = 0; tries < 40; tries++) {
     const types = tiles.map(t => t.type).sort(() => Math.random() - 0.5);
     tiles.forEach((t, i) => t.type = types[i]);
@@ -3449,6 +3639,7 @@ async function resolve(clear, groups, moved) {
     const hadSpecial = [...clear].some(t => t.sp || t.type === 'spirit');
     expand(clear);
     [...clear].forEach(t => { if (t.knot) { untie(t); clear.delete(t); } });   // a match unties the knot; the orb stays
+    controlBreak(clear);                                                         // Wood next to a knot breaks it: Wood parts Earth
     if (hadSpecial) flash();
     makes.forEach(m => clear.delete(m.t));
     await popSet(clear);
@@ -3479,8 +3670,9 @@ async function popSet(set) {
   popExit = null; powerUsed = null;
   if (arr.length) {
     // how big this moment is: more orbs, a power, a special or a cascade all turn it up
-    const juice = arr.length + (pw ? 6 : special ? 4 : 0) + combo * 2;
+    const juice = arr.length + (pw ? 6 : special ? 4 : 0) + combo * 2 + arr.filter(t => t.fed).length * 2;
     grooveHeat(juice);
+    if (combo === 0 && !pw) setTimeout(() => feedNext(arr), 120);        // Creation: this match feeds the next element
     sparks(arr, juice);
     shards(arr, juice);
     scorePop(arr, arr.length * (combo + 1) * 10, juice);
@@ -3494,7 +3686,8 @@ async function popSet(set) {
   if (!breathing) {
     const boostEl = spunToday() ? S.todayElem : null;
     let gain = 0;
-    arr.forEach(t => { gain += t.type === boostEl ? 6 : 4; });       // about 8 good matches to reach Heavenly
+    // episode 1 takes roughly 10 matches to reach Heavenly, and each episode after asks for more
+    arr.forEach(t => { gain += (t.type === boostEl ? 4 : 3) * (t.fed ? 2 : 1) * auraRate(); });
     charge = Math.min(100, charge + gain);
   }
   const n = Math.min(arr.length, 5);
@@ -3542,7 +3735,7 @@ function flowStep(el) {
   if (lastElem && CREATES[lastElem] === el) flow++; else flow = 1;
   lastElem = el;
   if (flow < 2) { bar.hidden = true; return; }
-  const bonus = flow >= 3 ? 40 : 20;
+  const bonus = flow >= 3 ? 6 : 3;
   charge = Math.min(100, charge + bonus);
   $('#flowText').innerHTML = `${ELEM[prevOf(el)].feeds} · <b>flow ×${flow}</b> · Luma +${bonus}`;
   bar.hidden = false;
@@ -3900,7 +4093,7 @@ async function applyBreath(q) {
   if (orbs.length) {
     powerUsed = { name: 'Aura Burst', elem: L.elem, sub: 'Heavenly · aligned' };
     auraBurstFx();
-    await wait(reduce ? 0 : 260);
+    await wait(reduce ? 0 : 700);                 // let the light land before the board clears
     await resolve(new Set(orbs), [], null);
   }
   breathing = false;
@@ -4294,6 +4487,7 @@ function bigWord(arr, juice, pw) {
   else if (by[top] >= 5) { word = ELEM_WORDS[top]; sub = `${by[top]} ${ELEM[top].name.toLowerCase()} orbs`; }
   else if (combo >= 2) word = COMBO_WORDS[Math.min(combo - 2, COMBO_WORDS.length - 1)];
   else if (juice >= 5) word = juice >= 8 ? 'Amazing!' : 'Great!';
+  else if (juice >= 4) word = ['Nice!', 'Sweet!', 'Yes!', 'Ooh!'][(bigWord.n = (bigWord.n || 0) + 1) % 4];   // a little cheer for 4-matches
   if (!word) return;
   boardEl.querySelectorAll('.comboword,.wordburst').forEach(x => x.remove());
   const tier = Math.min(4, Math.floor(juice / 4));                                  // 1 small .. 4 huge
@@ -4312,8 +4506,9 @@ function bigWord(arr, juice, pw) {
   d.style.fontSize = `calc(clamp(26px,8vw,40px) * ${1 + tier * 0.16})`;
   [...word].forEach((ch, i) => {
     const sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = ch === ' ' ? ' ' : ch; d.appendChild(sp);
-    sp.animate([{ transform: 'translateY(-60%) scale(2)', opacity: 0 }, { transform: 'translateY(8%) scale(.92)', opacity: 1, offset: .6 }, { transform: 'none', opacity: 1 }],
-      { duration: 380, delay: i * 32, easing: 'cubic-bezier(.3,1.4,.5,1)', fill: 'backwards' });
+    // each letter boings in: squash, stretch, settle
+    sp.animate([{ transform: 'translateY(60%) scale(.3,.3)', opacity: 0 }, { transform: 'translateY(-18%) scale(1.25,.8)', opacity: 1, offset: .45 }, { transform: 'translateY(4%) scale(.9,1.12)', offset: .7 }, { transform: 'none', opacity: 1 }],
+      { duration: 520, delay: i * 38, easing: 'cubic-bezier(.3,1.3,.5,1)', fill: 'backwards' });
   });
   if (sub) { const s2 = document.createElement('span'); s2.className = 'sub'; s2.textContent = sub; d.appendChild(s2); }
   boardEl.appendChild(d);
@@ -4344,13 +4539,33 @@ function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
   if (reduce) return;
-  const w = boardEl.clientWidth, h = boardEl.clientHeight;
+  const w = boardEl.clientWidth, h = boardEl.clientHeight, app = $('#app'), ar = app.getBoundingClientRect(), lr = $('#lumaWrap').getBoundingClientRect();
+  const lx = lr.left - ar.left + lr.width / 2, ly = lr.top - ar.top + lr.height / 2;
+  // 1 · Luma gathers the light: her ring blazes and rays spin behind her
+  $('#lumaWrap').classList.add('bursting'); setTimeout(() => $('#lumaWrap').classList.remove('bursting'), 1800);
+  // 2 · five rings, one per element, roll out from Luma across the whole screen
+  TYPES.forEach((t, i) => {
+    const r = document.createElement('div'); r.className = 'burstring';
+    r.style.cssText = `left:${lx}px;top:${ly}px;--rc:${ELEM[t].glow};--rh:${ELEM[t].hue}`;
+    app.appendChild(r);
+    r.animate([{ transform: 'translate(-50%,-50%) scale(.1)', opacity: 1 }, { transform: 'translate(-50%,-50%) scale(9)', opacity: 0 }], { duration: 1300, delay: i * 110, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'backwards' }).onfinish = () => r.remove();
+  });
+  // 3 · a stream of light from Luma into the board
+  for (let i = 0; i < 28; i++) {
+    const d = document.createElement('div'); d.className = 'burstspark';
+    d.style.cssText = `left:${lx}px;top:${ly}px;background:${ELEM[TYPES[i % 5]].glow};box-shadow:0 0 10px 3px ${ELEM[TYPES[i % 5]].glow}`;
+    app.appendChild(d);
+    const br = boardEl.getBoundingClientRect(), tx = br.left - ar.left + ((i * 37) % 100) / 100 * br.width, ty = br.top - ar.top + ((i * 61) % 100) / 100 * br.height;
+    d.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: 1 }, { transform: `translate(calc(-50% + ${(tx - lx) * 0.5}px), calc(-50% + ${(ty - ly) * 0.5 - 60}px)) scale(1.4)`, opacity: 1, offset: .5 }, { transform: `translate(calc(-50% + ${tx - lx}px), calc(-50% + ${ty - ly}px)) scale(.3)`, opacity: 0 }],
+      { duration: 800, delay: 120 + (i % 7) * 40, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'backwards' }).onfinish = () => d.remove();
+  }
+  // 4 · the board is flooded with light, and shakes
   const b = document.createElement('div');
   b.className = 'fx bloom';
-  b.style.cssText = `left:${w / 2}px;top:${h / 2}px;width:${w * 1.3}px;height:${w * 1.3}px;background:radial-gradient(circle,#fff 0%,rgba(255,236,170,.9) 25%,rgba(191,232,245,.5) 50%,transparent 70%);z-index:7`;
+  b.style.cssText = `left:${w / 2}px;top:${h / 2}px;width:${w * 1.6}px;height:${w * 1.6}px;background:radial-gradient(circle,#fff 0%,rgba(255,236,170,.95) 22%,rgba(191,232,245,.55) 48%,transparent 70%);z-index:7`;
   boardEl.appendChild(b);
-  gone(b.animate([{ transform: 'translate(-50%,-50%) scale(.1)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .4 }, { transform: 'translate(-50%,-50%) scale(1.4)', opacity: 0 }], { duration: 1100, easing: 'ease-out' }));
-  flash();
+  gone(b.animate([{ transform: 'translate(-50%,-50%) scale(.1)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .45 }, { transform: 'translate(-50%,-50%) scale(1.5)', opacity: 0 }], { duration: 1400, delay: 350, easing: 'ease-out', fill: 'backwards' }));
+  setTimeout(() => { flash(); shake(12); impact(22); try { navigator.vibrate && navigator.vibrate([20, 40, 30]); } catch (e) {} }, 450);
 }
 function comboWord(level) {
   if (reduce) return;
@@ -4467,11 +4682,11 @@ function harmony(types) {
     gone(b.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: .85, offset: .35 }, { transform: 'translate(-50%,-50%) scale(1.5)', opacity: 0 }], { duration: 900, easing: 'ease-out' }));
   }
   const chip = $('#flowBar');
-  chip.innerHTML = `<span>${list.map(t => ELEM[t].name).join(' + ')} · <b>harmony</b> · Luma +15</span>`;
+  chip.innerHTML = `<span>${list.map(t => ELEM[t].name).join(' + ')} · <b>harmony</b> · Luma +5</span>`;
   chip.hidden = false;
   chip.animate([{ transform: 'scale(.85)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
   clearTimeout(chip._t); chip._t = setTimeout(() => { chip.hidden = true; chip.innerHTML = '<span id="flowText"></span>'; }, 3500);
-  charge = Math.min(100, charge + 15);
+  charge = Math.min(100, charge + 5);
   buddyHop();
   avatarReact('cheer');
   questBump('harmony');
@@ -4708,7 +4923,7 @@ async function arrivalBreath() {
   }
   ov.removeEventListener('pointerdown', on); removeEventListener('pointerup', off); removeEventListener('pointercancel', off);
   ov.classList.remove('good');
-  charge = Math.max(charge, Math.round(8 + q * 22));   // a Root Stone charm can start it higher                       // 8% to 30%: a good arrival starts the Aura Glowing
+  charge = Math.max(charge, Math.round(5 + q * 10));   // a Root Stone charm can start it higher                       // 8% to 30%: a good arrival starts the Aura Glowing
   face('happy'); cue.textContent = 'You have arrived.';
   sub.textContent = `Luma's Aura starts ${auraName(charge)}. Match orbs to make it Heavenly.`;
   chord([523.25, 659.25, 783.99], 0.1);
@@ -5505,7 +5720,7 @@ $('#gDone').addEventListener('click', () => { guideRun++; breathSound('out', 0.3
 
 /* ---------- boot ---------- */
 document.documentElement.style.setProperty('--scene', `url(img/home/${HOME_SCENE[homeElement()]}.jpg)`);
-syncHero(); syncPassBtn(); applyLooks(); calmDaily();
+syncHero(); syncPassBtn(); applyLooks(); calmDaily(); syncMusic();
 $$('[data-play]').forEach(b => b.addEventListener('click', () => {
   ac();
   $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome();
@@ -5515,7 +5730,7 @@ $('#retut').addEventListener('click', () => { S.tutDone = false; save(); toast('
 $('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome(); });
 $('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#welcome').hidden = false; $('#welcome').scrollTop = 0; });
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
-$('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
+if ($('#elemTable')) $('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
 $('#cycleRow').innerHTML = ['wood', 'fire', 'earth', 'metal', 'water'].map(e => `<span class="eo">${orbHTML(e)}</span>`).join('<i>→</i>') + '<i>↻</i>';
 // the opening: the five elements arrive around the creation cycle, spin into one light,
 // and the name rises out of it. Once per session, skippable.
