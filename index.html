@@ -2188,6 +2188,14 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .lotray .charmhint.on{color:#fff;background:var(--eh)}
 .loplay{position:sticky;bottom:0;z-index:5;margin-top:12px}
 .lo2::after{content:"";display:block;height:2px}
+
+/* v61: Harmony tab icon: your hero inside the five-element ring */
+.tharm{position:relative;width:42px;height:42px;border-radius:50%;padding:4.5px;box-sizing:border-box;filter:drop-shadow(0 0 4px rgba(255,230,160,.6));background:var(--ring,conic-gradient(#6FBF4A 0 72deg,#E04B42 0 144deg,#F0B93A 0 216deg,#DCE3E9 0 288deg,#3C86C9 0));box-shadow:0 3px 4px rgba(0,0,0,.4);animation:tharm 6s linear infinite}
+.tharm img{width:100%;height:100%;border-radius:50%;object-fit:cover;background:#F5EBD8;box-shadow:0 0 0 2px #1A4536;animation:tharmr 6s linear infinite}
+@keyframes tharm{to{transform:rotate(360deg)}}
+@keyframes tharmr{to{transform:rotate(-360deg)}}
+.ov.pagemode#balov .card{display:flex;flex-direction:column;justify-content:center}
+.ov.pagemode#balov #balClose{display:none}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2358,7 +2366,8 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
         <button class="hicon" data-open="streakChip"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-streak.mp4?v=60" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Streak</b><i class="hbadge" id="bStreak"></i></button>
         <button class="hicon" data-open="questCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-quests.mp4?v=60" poster="img/icons/icon-quests-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Quests</b><i class="hbadge" id="bQuests"></i></button>
         <button class="hicon" data-open="wheelCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-wheel.mp4?v=60" poster="img/icons/icon-wheel-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Spin</b><i class="hbadge" id="bWheel"></i></button>
-        <button class="hicon" data-open="balOpen"><span class="hart hring" id="lightsHart"><img id="lightsIcon" src="img/faces/kai-calm.jpg" alt=""></span><b>Harmony</b><i class="hbadge" id="bLights"></i></button>
+        <button class="hicon" data-open="buddyCard"><span class="hart h3d"><video id="buddyCoin" class="hvid" src="img/icons/anim/icon-buddy.mp4?v=60" poster="img/icons/icon-buddy-3d.jpg" muted loop playsinline autoplay preload="auto"></video><img id="buddyIcon" alt="" hidden></span><b>Companion</b><i class="hbadge" id="bBuddy"></i></button>
+        <span hidden><span class="hart hring" id="lightsHart"><img id="lightsIcon" src="img/faces/kai-calm.jpg" alt=""></span><i class="hbadge" id="bLights"></i></span>
       </div>
       <div class="rail">
         <button class="hicon" data-open="sealCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-seal.mp4?v=60" poster="img/icons/icon-seal-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
@@ -2845,7 +2854,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
   </div>
   <nav class="tabbar off" id="tabbar" aria-label="Main">
     <button class="tab" data-tab="shop"><span class="tdisc"></span><span class="ti"><img src="img/ui/tab-shop.png" alt=""></span><b>Shop</b><i class="tdot"></i></button>
-    <button class="tab" data-tab="companions"><span class="tdisc"></span><span class="ti"><img id="tabBuddy" class="rnd" src="img/icons/icon-buddy-3d.jpg" alt=""></span><b>Companions</b><i class="tdot"></i></button>
+    <button class="tab" data-tab="harmony"><span class="tdisc"></span><span class="ti"><span class="tharm" id="tabHarm"><img id="tabHero" src="img/faces/kai-calm.jpg" alt=""></span></span><b>Harmony</b><i class="tdot"></i></button>
     <button class="tab on" data-tab="home"><span class="tdisc"></span><span class="ti"><img src="img/ui/tab-home.png" alt=""></span><b>Home</b><i class="tdot"></i></button>
     <button class="tab" data-tab="journey"><span class="tdisc"></span><span class="ti"><img src="img/ui/tab-map.png" alt=""></span><b>Journey</b><i class="tdot"></i></button>
     <button class="tab" data-tab="collection"><span class="tdisc"></span><span class="ti"><img src="img/ui/journal.png" alt=""></span><b>Collection</b><i class="tdot"></i></button>
@@ -4215,7 +4224,7 @@ function showComeback(days) {
   showOv('comeback');
 }
 $('#streakChip').addEventListener('click', () => { renderStreak(); showOv('streakov'); });
-$('#balOpen').addEventListener('click', () => { renderBal(); showOv('balov'); });
+$('#balOpen').addEventListener('click', () => switchTab('harmony'));
 $('#wheelCard').addEventListener('click', spinWheel);
 $('#balClose').addEventListener('click', () => hideOv('balov'));
 $('#streakClose').addEventListener('click', () => hideOv('streakov'));
@@ -4460,7 +4469,10 @@ function renderHome() {
   $('#bSeals').className = 'hbadge ok';
   $('#bBaby').textContent = babyOn() ? 'on' : '';
   $('#bBaby').className = 'hbadge ok';
-  // the buddy now lives on the Companions tab (its face is the tab icon)
+  $('#bBuddy').textContent = !S.buddy ? '!' : caredToday(S.buddy) ? '' : '💛';
+  // your buddy's own face, blinking and glancing; before you have one, the glowing paw coin
+  const bi = $('#buddyIcon'); bi.hidden = !S.buddy; $('#buddyCoin').hidden = !!S.buddy;
+  if (S.buddy && (!rigs.get(bi) || rigs.get(bi).who !== buddyWho(S.buddy))) makeRig(bi, buddyWho(S.buddy));
   // one line that tells you what matters right now
   const rib = $('#homeRibbon'), m = nextMile(), played = S.lastDay === dayKey();
   rib.className = 'ribbon' + (!played && S.streak ? ' warn' : '');
@@ -5054,7 +5066,7 @@ function renderGoal() {
   $('#loBoard').innerHTML = `<span class="mg"></span>${bf.R}×${bf.C} board · ${bf.n} elements${fresh ? '<span class="new">Bigger board!</span>' : ''}`;
   if (bf.tier > (S.boardTier || 1)) { S.boardTier = bf.tier; save(); }
   $('#loExtra').innerHTML = (g.help ? `<span class="pill help">💛 Luma’s help +${g.help} moves</span>` : '')
-    + ((S.glow || 0) > 0 && !babyOn() ? `<span class="pill glow">🔥 Glow ×${Math.min(3, S.glow)}: ${['', 'a lantern', 'lantern + Blossom', 'lantern, Blossom, spirit star'][Math.min(3, S.glow)]}</span>` : '');
+    + ((S.glow || 0) > 0 && glowOn() ? `<span class="pill glow">🔥 Glow ×${Math.min(3, S.glow)}: ${['', 'a lantern', 'lantern + Blossom', 'lantern, Blossom, spirit star'][Math.min(3, S.glow)]}</span>` : '');
 }
 $('#iGo').addEventListener('click', async () => {
   const st = $('#story');
@@ -5261,8 +5273,10 @@ function placeGifts(kinds) {
     if (k === 'spirit') { t.type = 'spirit'; t.sp = null; } else t.sp = k;
     paint(t); setTimeout(() => { t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460); bell(chordNote(6 + i), 0, 0.05); }, 300 + i * 250); });
 }
+const GLOW_FROM = 8;                                   // free starting gifts unlock at episode 8, once kids can make pieces themselves
+const glowOn = () => !babyOn() && LI + 1 >= GLOW_FROM;
 function applyGlow() {
-  const n = Math.min(3, S.glow || 0); if (!n || babyOn()) return;
+  const n = Math.min(3, S.glow || 0); if (!n || !glowOn()) return;
   placeGifts(['row', 'bomb', 'spirit'].slice(0, n));
   setTimeout(() => say(`Glow streak ×${n}. Luma left you ${n === 1 ? 'a gift' : n + ' gifts'} on the board.`), 900);
 }
@@ -5668,10 +5682,13 @@ async function resolve(clear, groups, moved) {
   while (clear.size) {
     const makes = [];
     for (const g of groups || []) {
-      if (g.cells.length < 4) continue;
+      // Only real shapes make a power piece: 5 in a line → Spirit Star, L or T → Lotus,
+      // 4 in a line → Lantern, a 2×2 square → Firefly. Loose clumps just clear.
+      const kind = g.run >= 5 ? 'spirit' : g.lt ? 'bomb' : g.run === 4 ? g.dir : g.sq ? 'fly' : null;
+      if (!kind) continue;
       const free = g.cells.filter(x => !x.sp && x.type !== 'spirit' && !makes.some(m => m.t === x));
       const anchor = free.find(x => moved && moved.includes(x)) || free[Math.floor(free.length / 2)];
-      if (anchor) makes.push({ t: anchor, kind: g.run >= 5 || g.cells.length >= 7 ? 'spirit' : g.lt ? 'bomb' : g.sq && g.run < 4 ? 'fly' : g.dir });
+      if (anchor) makes.push({ t: anchor, kind });
     }
     const hadSpecial = [...clear].some(t => t.sp || t.type === 'spirit');
     expand(clear);
@@ -7847,11 +7864,11 @@ $('#whyBed').addEventListener('click', async () => { await closeWhy(); bedtime()
 
 /* ---------- bottom tab bar: Shop · Companions · Home · Journey · Collection ----------
    The active tab is always derived from what's on screen, so every back button keeps it honest. */
-const TABS = ['shop', 'companions', 'home', 'journey', 'collection'];
-const tabPage = t => ({ shop: $('#shop'), companions: $('#sanct'), journey: $('#world'), collection: $('#collect') })[t] || null;
+const TABS = ['shop', 'harmony', 'home', 'journey', 'collection'];
+const tabPage = t => ({ shop: $('#shop'), harmony: $('#balov'), journey: $('#world'), collection: $('#collect') })[t] || null;
 function currentTab() {
   if (!$('#collect').hidden) return 'collection';
-  if (!$('#sanct').hidden) return 'companions';
+  if (!$('#balov').hidden && $('#balov').classList.contains('pagemode')) return 'harmony';
   if (!$('#world').hidden) return 'journey';
   if (!$('#shop').hidden && $('#shop').classList.contains('pagemode')) return 'shop';
   return 'home';
@@ -7859,7 +7876,7 @@ function currentTab() {
 const tabPageOpen = () => currentTab() !== 'home';
 function tabbarWanted() {
   if ($('#map').hidden || !$('#game').hidden) return false;
-  const cover = '#why:not([hidden]),.story:not([hidden]),.heroov:not([hidden]),.party:not([hidden]),.arrive:not([hidden]),.enter:not([hidden]),#bossov:not([hidden]),.gate:not([hidden]),.splash:not([hidden]),.evolveov:not([hidden]),#passov:not([hidden])';
+  const cover = '#why:not([hidden]),#sanct:not([hidden]),.story:not([hidden]),.heroov:not([hidden]),.party:not([hidden]),.arrive:not([hidden]),.enter:not([hidden]),#bossov:not([hidden]),.gate:not([hidden]),.splash:not([hidden]),.evolveov:not([hidden]),#passov:not([hidden])';
   if ($(cover)) return false;
   return !$$('.ov').some(o => !o.hidden && !o.classList.contains('pagemode'));
 }
@@ -7871,17 +7888,17 @@ function syncTabbar() {
   bar.classList.toggle('off', !on);
   const t = currentTab();
   if (t !== tabLast) { $$('#tabbar .tab').forEach(b => b.classList.toggle('on', b.dataset.tab === t)); tabLast = t; }
-  $('#tabBuddy').src = S.buddy ? `img/${buddyWho(S.buddy)}.jpg` : 'img/icons/icon-buddy-3d.jpg';
+  const th = $('#tabHero'); if (th && (!rigs.get(th) || rigs.get(th).who !== heroId())) makeRig(th, heroId());
+  const lr = $('#lightsHart'); if (lr) $('#tabHarm').style.setProperty('--ring', lr.style.getPropertyValue('--ring'));
   const readyMile = COL_MILES.some((m, i) => colFound() >= Math.ceil(colTotal() * m.at) && !(S.colMiles || []).includes(i));
   $('#tabbar [data-tab="collection"]').classList.toggle('dot', readyMile);
-  $('#tabbar [data-tab="companions"]').classList.toggle('dot', !!S.buddy && !caredToday(S.buddy));
+  $('#tabbar [data-tab="harmony"]').classList.toggle('dot', S.balBonusDay !== dayKey() && balState().even);
 }
 setInterval(syncTabbar, 300);
 async function closeTabPage(t, dir) {
   const el = tabPage(t); if (!el || el.hidden) return;
   if (!reduce) await el.animate([{ transform: 'none', opacity: 1 }, { transform: `translateX(${-dir * 30}%)`, opacity: 0 }], { duration: 240, easing: 'ease-in' }).finished;
-  if (t === 'companions') { el.classList.remove('show'); el.hidden = true; renderBuddy(); }
-  else if (t === 'shop') { el.classList.remove('show', 'pagemode'); el.hidden = true; }
+  if (t === 'shop' || t === 'harmony') { el.classList.remove('show', 'pagemode'); el.hidden = true; }
   else el.hidden = true;
 }
 let tabBusy = false;
@@ -7895,7 +7912,7 @@ async function switchTab(t) {
   $$('#tabbar .tab').forEach(b => b.classList.toggle('on', b.dataset.tab === t)); tabLast = t;
   if (!playSfx('swoosh', { gain: 0.45 })) {}
   const closing = closeTabPage(from, dir);
-  if (t === 'companions') openSanct();
+  if (t === 'harmony') { $('#balov').classList.add('pagemode'); renderBal(); showOv('balov'); }
   else if (t === 'journey') openWorld(0);
   else if (t === 'collection') openCollect();
   else if (t === 'shop') { $('#shop').classList.add('pagemode'); showOv('shop'); }
@@ -7974,7 +7991,7 @@ $('#collect').addEventListener('click', e => {
   }
   if (e.target.closest('#colSeals')) { tick(); renderSeals(); showOv('sealov'); return; }
   const bd = e.target.closest('.cbud');
-  if (bd) { switchTab('companions').then(() => { SNI = TYPES.indexOf(bd.dataset.bud); renderSanct(); }); }
+  if (bd) { tick(); openSanct().then(() => { SNI = TYPES.indexOf(bd.dataset.bud); renderSanct(); }); }
 });
 
 function showFriend(id) {
@@ -8233,7 +8250,7 @@ async function winLevel() {
   if (flowBonus && !babyOn()) S.coins += flowBonus;
   const dz = DIFF[epDifficulty(LI + 1)];
   const coins = Math.round((30 + Math.min(moves, 20) * 5) * coinMult() * dz.coin);
-  if (!babyOn()) { S.glow = (S.glow || 0) + 1; if (S.fails) delete S.fails[LI + 1]; }
+  if (!babyOn()) { if (LI + 1 >= GLOW_FROM - 1) S.glow = (S.glow || 0) + 1; if (S.fails) delete S.fails[LI + 1]; }
   if (dz.name && !babyOn()) { const ch = CHARMS[LI % CHARMS.length]; S.charms[ch.id] = (S.charms[ch.id] || 0) + 1; if (dz === DIFF.super) S.pw.bear = (S.pw.bear || 0) + 1; }
   S.stars[n] = Math.max(S.stars[n] || 0, stars);
   S.unlocked = Math.max(S.unlocked, Math.min(LEVELS.length, n + 1));
