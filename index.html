@@ -1837,9 +1837,9 @@ body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--tabh) + v
 .cmile.done{background:radial-gradient(circle at 40% 30%,#4FA06A,#1F5C3C);box-shadow:0 0 0 2px #9BE07F}
 @keyframes cready{50%{transform:scale(1.12) rotate(-6deg)}}
 .cprog em{display:block;font-style:normal;font-size:12px;font-weight:800;opacity:.85;text-align:center;line-height:1.35}
-.csec{display:flex;justify-content:space-between;align-items:baseline;margin:20px 2px 10px}
-.csec h3{margin:0;font-family:var(--display,inherit);font-size:21px;font-weight:400;text-shadow:0 2px 0 rgba(40,24,6,.85)}
-.csec span{font-size:12.5px;font-weight:900;color:var(--gold-hi)}
+.cin .csec{display:flex;justify-content:space-between;align-items:baseline;margin:20px 2px 10px;padding:0;max-width:none}
+.cin .csec h3{margin:0;font-family:var(--display,inherit);font-size:21px;font-weight:400;text-shadow:0 2px 0 rgba(40,24,6,.85)}
+.cin .csec span{font-size:12.5px;font-weight:900;color:var(--gold-hi)}
 .cstories{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cstory{position:relative;height:150px;border-radius:18px;overflow:hidden;padding:0;text-align:left;color:#FFF6DE;background:#1B3A31 center/cover;box-shadow:0 0 0 2.5px #E3BC6A,0 8px 16px rgba(0,0,0,.4)}
 .cstory .cbg{position:absolute;inset:0;background:center/cover;transition:transform .5s}
@@ -1996,7 +1996,11 @@ body.tabs .homeduo{max-width:320px}
 .pbsegs i.part{background:linear-gradient(90deg,#FFE7A0 var(--p),rgba(0,0,0,.42) var(--p));box-shadow:0 0 5px rgba(255,214,120,.6)}
 .pbsegs i.big{flex:1.6}
 .pbsegs i.big.on{background:linear-gradient(#FFF6D8,#F2CC6A);box-shadow:0 0 8px rgba(255,214,120,1)}
-.rails{top:calc(264px + var(--sat)) !important}
+.rails{top:calc(246px + var(--sat)) !important}
+#map .hometitle{padding-top:16px}
+#map #homeEyebrow{display:none}
+.homepass{margin-top:18px !important}
+.homepass{margin-top:16px !important}
 body.tabs .rails{bottom:calc(112px + var(--tabh) + var(--sab))}
 body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .gupbtn img{width:26px;height:26px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
@@ -2043,6 +2047,37 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .whyprom b{color:#FFE9A8}
 .whytry{margin-top:18px;padding:16px;border-radius:22px;text-align:center;background:radial-gradient(120% 90% at 50% 0%,rgba(180,218,247,.25),transparent 60%),linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A}
 .whytry b{display:block;font-size:17px}.whytry em{display:block;font-style:normal;font-size:13.5px;font-weight:800;opacity:.9;margin:6px 0 12px}
+
+/* v59: landing page refresh */
+.chvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.chbg{background-image:url(img/world/s1g-golden.jpg) !important}
+.chero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(rgba(8,16,14,.25),rgba(8,16,14,.45) 40%,rgba(8,16,14,.92))}
+.chin{z-index:2}
+.cplaque{display:inline-block;margin:4px 0 2px;padding:8px 26px 10px;border-radius:28px;font-family:"Marcellus SC",Georgia,serif;font-size:clamp(40px,12vw,54px);line-height:1;color:#23493C;
+  background:linear-gradient(#FFFFFF,#EFE9DA);box-shadow:inset 0 3px 0 #fff,inset 0 -4px 0 rgba(0,0,0,.12),0 0 0 2.5px #E3BC6A,0 6px 0 #B98331,0 12px 22px rgba(0,0,0,.45)}
+.cplaque .qi{color:#C58A1E}
+.cbuds{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.cbuds figure{margin:0;text-align:center}
+.cbuds img{width:100%;aspect-ratio:1;border-radius:50%;object-fit:cover;object-position:50% 22%;box-shadow:0 0 0 2.5px var(--gold-mid),0 4px 10px rgba(80,50,10,.25)}
+.cbuds figcaption{margin-top:5px;font-size:10.5px;font-weight:800;line-height:1.2;color:#5A4A2A}
+.cbuds figcaption b{display:block;font-size:12.5px;color:#1D5044}
+.cevo{display:flex;align-items:center;justify-content:center;gap:4px;margin:16px 0 4px;padding:12px 8px;border-radius:18px;background:linear-gradient(#24463B,#132A23);box-shadow:0 0 0 2px var(--gold-mid),0 4px 0 2px var(--wood)}
+.cevo span{display:flex;flex-direction:column;align-items:center;gap:4px;flex:1;min-width:0}
+.cevo img{width:100%;max-width:64px;aspect-ratio:1;border-radius:50%;object-fit:cover;object-position:50% 22%;box-shadow:0 0 0 2px #F4D78C}
+.cevo span:last-child img{box-shadow:0 0 0 2px #fff,0 0 14px 3px rgba(255,214,120,.8)}
+.cevo small{font-size:10.5px;font-weight:900;color:#FFE9A8;text-align:center;line-height:1.1}
+.cevo i{font-style:normal;font-weight:900;color:#F4D78C}
+.cpows{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}
+.cpows span{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center}
+.cpows img{width:100%;max-width:58px;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(80,50,10,.3))}
+.cpows b{font-size:10.5px;line-height:1.15;color:#1D5044}
+.crew{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.crew div{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:14px 10px;border-radius:18px;background:linear-gradient(#24463B,#132A23);color:#FFF6DE;box-shadow:0 0 0 2px var(--gold-mid),0 4px 0 2px var(--wood)}
+.crew img{width:62px;height:62px;object-fit:contain;filter:drop-shadow(0 4px 5px rgba(0,0,0,.4))}
+.crew img.rnd{border-radius:50%;object-fit:cover;filter:none;box-shadow:0 0 0 2px #F4D78C}
+.crew b{font-size:14.5px;color:var(--gold-hi)}
+.crew em{font-style:normal;font-size:12.5px;font-weight:700;line-height:1.4;opacity:.9}
+.csec h2.display{margin-top:0}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2072,22 +2107,41 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
     <div class="cover">
       <header class="chero">
         <div class="chbg"></div>
+        <video class="chvid" src="img/world/s1g-golden.mp4" poster="img/world/s1g-golden.jpg" muted loop playsinline autoplay preload="auto"></video>
         <div class="chin">
           <div class="seasontag"><span>Season 1</span><b>Kai's Calm Quest</b></div>
-          <h1 class="display">MorQi Kids</h1>
-          <p class="clede">A puzzle game where kids clear the storm by actually breathing, and learn to understand the feelings behind it.</p>
-          <div class="cfaces"><img src="img/faces/hero-g1-happy.jpg" alt=""><img src="img/faces/hero-b3-happy.jpg" alt=""><img src="img/faces/hero-g4-happy.jpg" alt=""><img src="img/faces/kai-happy.jpg" alt=""><img src="img/faces/hero-g6-happy.jpg" alt=""><img src="img/faces/hero-b5-happy.jpg" alt=""><img src="img/faces/hero-g2-happy.jpg" alt=""><img src="img/faces/hero-b2-happy.jpg" alt=""><img src="img/faces/hero-g5-happy.jpg" alt=""><img src="img/faces/hero-b4-happy.jpg" alt=""><img src="img/faces/hero-g3-happy.jpg" alt=""><img src="img/faces/hero-b6-happy.jpg" alt=""><img class="cluma" src="img/faces/luma-happy.jpg" alt="Luma"></div>
+          <div class="cplaque">Mor<span class="qi">Qi</span> Kids</div>
+          <p class="clede">The puzzle game kids win by breathing. Clear the storm with a real, slow breath, then understand the feeling behind it.</p>
+          <div class="cfaces"><img src="img/faces/hero-g1-happy.jpg" alt=""><img src="img/faces/hero-b3-happy.jpg" alt=""><img src="img/faces/hero-g4-happy.jpg" alt=""><img src="img/faces/kai-happy.jpg" alt=""><img src="img/faces/hero-g6-happy.jpg" alt=""><img src="img/faces/hero-b5-happy.jpg" alt=""><img class="cluma" src="img/faces/luma-happy.jpg" alt="Luma"><img src="img/faces/hero-g2-happy.jpg" alt=""><img src="img/faces/hero-b2-happy.jpg" alt=""><img src="img/faces/hero-g5-happy.jpg" alt=""><img src="img/faces/hero-b4-happy.jpg" alt=""><img src="img/faces/hero-g3-happy.jpg" alt=""><img src="img/faces/hero-b6-happy.jpg" alt=""></div>
           <button class="btn gold big" data-play>Play the demo</button>
-          <p class="cnote">About 3 minutes. Best on a phone with the sound on.</p>
+          <p class="cnote">About 3 minutes · free forever · best with the sound on</p>
         </div>
       </header>
 
       <section class="csec">
         <div class="ckick">How it plays</div>
+        <h2 class="display">Match. Breathe. Understand.</h2>
         <div class="cloop">
-          <div class="cstep"><span class="cvis"><span class="orbrow" data-types="wood wood wood"></span></span><b>Match</b><em>Match orbs to grow Luma's Aura. Each match feeds the next element.</em></div>
-          <div class="cstep"><span class="cvis"><img src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe</b><em>A real, slow breath clears the storm. Rushing doesn't work.</em></div>
-          <div class="cstep"><span class="cvis"><img src="img/journey/feel-worry.jpg" alt=""></span><b>Understand</b><em>Every episode is one feeling, told at the child's age.</em></div>
+          <div class="cstep"><span class="cvis"><span class="orbrow" data-types="wood wood wood"></span></span><b>Match</b><em>Match orbs to grow Luma's Aura. Big matches make lanterns, lotus blooms, fireflies and the spirit star.</em></div>
+          <div class="cstep"><span class="cvis"><img src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe</b><em>A real, slow breath clears the storm and sends Luma diving. Rushing doesn't work.</em></div>
+          <div class="cstep"><span class="cvis"><img src="img/journey/feel-worry.jpg" alt=""></span><b>Understand</b><em>Every win shows what your breathing did, and why a calm head helped.</em></div>
+        </div>
+      </section>
+
+      <section class="csec">
+        <div class="ckick">Spirit Companions</div>
+        <h2 class="display">Five qigong animals that grow with care</h2>
+        <div class="cbuds">
+          <figure><img src="img/buddy-wood.jpg" alt=""><figcaption><b>Rin</b>Deer · Wood</figcaption></figure>
+          <figure><img src="img/buddy-fire.jpg" alt=""><figcaption><b>Pip</b>Hawk · Fire</figcaption></figure>
+          <figure><img src="img/buddy-earth.jpg" alt=""><figcaption><b>Momo</b>Monkey · Earth</figcaption></figure>
+          <figure><img src="img/buddy-metal.jpg" alt=""><figcaption><b>Sen</b>Tiger · Metal</figcaption></figure>
+          <figure><img src="img/buddy-water.jpg" alt=""><figcaption><b>Nami</b>Bear · Water</figcaption></figure>
+        </div>
+        <div class="cevo"><span><img src="img/buddy-fire.jpg" alt=""><small>Baby</small></span><i>›</i><span><img src="img/buddy-fire-young.jpg" alt=""><small>Young</small></span><i>›</i><span><img src="img/buddy-fire-grown.jpg" alt=""><small>Grown</small></span><i>›</i><span><img src="img/buddy-fire-guardian.jpg" alt=""><small>Spirit Guardian</small></span></div>
+        <p class="cp">A daily care breath with your companion builds Bond. With steady care, they grow up and their gift in the game grows stronger too. Consistency, not spending, is what makes them shine.</p>
+        <div class="cpows">
+          <span><img src="img/ui/pw-deer.png" alt=""><b>Deer Leap</b></span><span><img src="img/ui/pw-hawk.png" alt=""><b>Hawk Dive</b></span><span><img src="img/ui/pw-monkey.png" alt=""><b>Monkey Swap</b></span><span><img src="img/ui/pw-tiger.png" alt=""><b>Tiger Claw</b></span><span><img src="img/ui/pw-bear.png" alt=""><b>Bear Stomp</b></span>
         </div>
       </section>
 
@@ -2105,38 +2159,50 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
         <ul class="cfacts">
           <li><b>12 heroes</b> kids pick to look like them, with no labels</li>
           <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
-          <li><b>Seasons, chapters, episodes</b>, with a free Season Pass that never expires</li>
           <li><b>A real conversation</b> each episode: you feel it, Kai gets it, Sorin helps</li>
+          <li><b>Gentle difficulty</b> that builds slowly, with Luma lending extra moves when a level feels hard</li>
         </ul>
+      </section>
+
+      <section class="csec">
+        <div class="ckick">Rewards that feel good</div>
+        <h2 class="display">A season to finish, a collection to fill</h2>
+        <div class="crew">
+          <div><img src="img/pass/trophy-lotus.png" alt=""><b>Free Season Pass</b><em>20 tiers of rings, auras, charms and story cards. It never expires.</em></div>
+          <div><img src="img/ui/journal.png" alt=""><b>Collection</b><em>Story cards from Kai's village, Spirit Seals and every companion stage.</em></div>
+          <div><img src="img/icons/icon-streak-3d.jpg" alt="" class="rnd"><b>Daily rhythm</b><em>Streaks, quests and a daily spin, all earned by practising.</em></div>
+          <div><img src="img/pass/aura-moon.png" alt=""><b>Bedtime with Luma</b><em>No game, no score. Just slow breathing before sleep.</em></div>
+        </div>
       </section>
 
       <section class="csec">
         <div class="ckick">Built on real practice</div>
         <h2 class="display">Demaris's five elements, as rules of play</h2>
         <div class="cycle" id="cycleRow"></div>
-        <p class="cp">Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. A match lights up the next element. Obstacles break by the element that controls them. Each place pairs an element with an organ, a feeling, a sound and a breath from Demaris's qigong teaching sheets.</p>
+        <p class="cp">Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. A match lights up the next element. Obstacles break by the element that controls them. Each place pairs an element with an organ, a feeling, a sound, a breath and a qigong animal from Demaris's teaching.</p>
       </section>
 
       <section class="csec cfair">
-        <div class="ckick">Fair by design</div>
+        <div class="ckick">For grown-ups</div>
+        <h2 class="display">Fair by design, and you can see the progress</h2>
         <ul class="cfacts">
           <li><b>Free forever.</b> No paywall, no forced ads.</li>
-          <li><b>Extras only.</b> The headline offer: Nine Days of Calm, $1.99 for nine days.</li>
-          <li><b>A grown-up approves</b> every purchase. No countdowns, no pressure.</li>
-          <li><b>School-safe.</b> Feelings are never "bad". No leaderboards, no shame.</li>
+          <li><b>Small extras only</b> at $0.99, $1.99 or $4.99, and a grown-up approves every purchase.</li>
+          <li><b>No chat, no leaderboards, no strangers.</b> Feelings are never "bad".</li>
+          <li><b>A weekly calm summary</b>: breaths, feelings explored and a question to ask your child tonight.</li>
         </ul>
       </section>
 
       <section class="csec cfund">
         <div class="ckick">What funding builds</div>
-        <h2 class="display">From prototype to a place kids return to</h2>
+        <h2 class="display">From prototype to a household name</h2>
         <div class="cgrid">
           <div><b>Season 1, complete</b><em>240 episodes across four chapters, each with its own obstacle and finale</em></div>
-          <div><b>Voice &amp; music</b><em>Sorin's real voice guiding each breath; an original healer score</em></div>
+          <div><b>Voices</b><em>Sorin guiding each breath, plus the heroes and their families</em></div>
           <div><b>iPhone &amp; Android</b><em>Native apps with real mic breath-sensing and haptics</em></div>
           <div><b>Kai's village</b><em>Ten friends from every kind of family, as Season Pass story cards</em></div>
-          <div><b>Parent companion</b><em>Practice minutes, a weekly note, and gentle controls</em></div>
-          <div><b>Schools edition</b><em>Classroom mode aligned with social-emotional learning</em></div>
+          <div><b>Family missions</b><em>Breathe together as a family, with voices for every age</em></div>
+          <div><b>Schools edition</b><em>Group classes and a classroom mode for social-emotional learning</em></div>
         </div>
         <p class="cp">Then MorQi for ages 16+, and one ecosystem for the healer's path: breath, feelings and medicine, learned through play.</p>
       </section>
@@ -2174,7 +2240,6 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
     <div class="hometitle">
       <div class="eyebrow" id="homeEyebrow">Season 1 · Kai's Calm Quest</div>
       <h1 class="display">Mor<span class="qi">Qi</span> Kids</h1>
-      <div class="seasonline" id="seasonLine"></div>
     </div>
     <div class="ribbon" id="homeRibbon" hidden></div>
     <div class="homepass"><button class="passban" id="passOpen" aria-label="Season Pass"><span class="pbglow"></span><img class="pbtro" src="img/pass/trophy-lotus.png" alt=""><span class="pbmid"><small>Season 1</small><b>Season Pass</b><span class="pbsegs" id="passSegs"></span><em id="passTease">Tier 1</em></span><span class="pbnext" id="passBanNext"></span><i class="passdot" id="passDot" hidden></i></button></div>
@@ -4244,7 +4309,6 @@ function renderHome() {
   $$('.hvid').forEach(v => { if (reduce) v.pause(); else if (v.paused && !$('#map').hidden) v.play().catch(() => {}); });
   $('#homeShade').className = `homeshade world`;
   $('#map').classList.toggle('dark-sky', ['night', 'dawn'].includes(WORLD_OF[tod]));
-  $('#seasonLine').textContent = `Kai's village · ${WORLD_NAME[WORLD_OF[tod] || 'day']}`;
   // badges
   $('#bStreak').textContent = S.streak ? S.streak : '';
   const q = ensureQuests(), done = q.items.filter(i => i.done).length;
