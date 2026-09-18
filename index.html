@@ -1261,6 +1261,50 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .cfoot{padding:26px 16px 36px;text-align:center}
 .cfoot .btn.big{width:100%;max-width:320px}
 @media (max-width:360px){.cloop{grid-template-columns:1fr}.cfund .cgrid{grid-template-columns:1fr}}
+/* ================= Spirit Companions ================= */
+.sanct{position:absolute;inset:0;z-index:24;overflow:hidden;color:#FFF6DE;opacity:0;transition:opacity .35s}
+.sanct.show{opacity:1}
+.sngl{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(60% 40% at 50% 38%,color-mix(in srgb,var(--sg,#FFE9A8) 55%,transparent),transparent 70%);transition:background .6s}
+.snin{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;padding:12px 16px 18px;overflow-y:auto}
+.snin .wtop{position:relative;top:0;left:0;right:0;width:100%}
+.snstage{position:relative;width:100%;display:flex;align-items:center;justify-content:center;margin-top:6px}
+.snstage .wnav{position:relative;top:auto;margin:0;left:auto;right:auto}
+.snhero{position:relative;width:214px;height:214px;margin:0 8px}
+.snarch{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 50% 42%,#FFF8E6 0%,color-mix(in srgb,var(--sg,#FFE9A8) 70%,#fff) 45%,color-mix(in srgb,var(--sh,#F0B93A) 60%,#0B1512) 100%);
+  box-shadow:0 0 0 4px var(--gold-hi),0 0 0 8px var(--gold-lo),0 12px 0 8px var(--wood-d),0 0 60px 16px color-mix(in srgb,var(--sg,#FFE9A8) 70%,transparent)}
+.snarch::after{content:"";position:absolute;inset:-30%;border-radius:50%;background:repeating-conic-gradient(color-mix(in srgb,var(--sg,#FFE9A8) 40%,transparent) 0 7deg,transparent 7deg 20deg);
+  -webkit-mask-image:radial-gradient(circle,#000 35%,transparent 68%);mask-image:radial-gradient(circle,#000 35%,transparent 68%);z-index:-1;animation:rays 16s linear infinite}
+.snhero img{position:absolute;inset:6%;width:88%;height:88%;border-radius:50%;object-fit:cover;object-position:50% 22%;animation:snbob 3.2s ease-in-out infinite}
+@keyframes snbob{50%{transform:translateY(-6px)}}
+.snhero.locked img{filter:grayscale(.85) brightness(.75) blur(.5px)}
+.snhero.locked .snarch{filter:saturate(.3) brightness(.7)}
+.snlock{position:absolute;inset:0;display:none;place-items:center;border-radius:50%}
+.snhero.locked .snlock{display:grid;background:radial-gradient(circle,rgba(10,20,18,.1),rgba(10,20,18,.55))}
+.snlock b{display:grid;place-items:center;width:84px;height:84px;border-radius:50%;font-size:13px;font-weight:900;line-height:1.1;text-align:center;
+  background:conic-gradient(var(--gold-hi) calc(var(--p,0)*1%),rgba(255,255,255,.18) 0);-webkit-mask:radial-gradient(circle,transparent 34px,#000 35px);mask:radial-gradient(circle,transparent 34px,#000 35px)}
+.snlock em{position:absolute;font-style:normal;font-size:13px;font-weight:900;text-shadow:0 1px 3px rgba(0,0,0,.8)}
+.sndots{display:flex;gap:8px;margin:14px 0 4px}
+.sndots i{width:12px;height:12px;border-radius:50%;opacity:.4;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
+.sndots i.on{opacity:1;transform:scale(1.25);box-shadow:0 0 0 2px #fff,0 0 10px currentColor}
+.snname{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:6px}
+.snname b{font-size:clamp(28px,8vw,34px);font-weight:400;line-height:1;text-shadow:0 3px 0 rgba(40,24,6,.85),0 0 18px rgba(0,0,0,.4)}
+.snname span{padding:4px 12px;border-radius:99px;font-size:12.5px;font-weight:900;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A)}
+.snnote{margin:10px 0 0;max-width:320px;text-align:center;font-size:15px;font-weight:800;line-height:1.4;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.sngift{width:100%;max-width:360px;margin-top:14px;padding:14px 16px;border-radius:20px;display:flex;gap:12px;align-items:center;text-align:left;
+  background:rgba(8,16,14,.62);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.55),0 10px 24px rgba(0,0,0,.35);backdrop-filter:blur(4px)}
+.sngift .gi{flex:none;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:radial-gradient(circle at 40% 30%,#FFF8DC,#F2CC6A 60%,#C08A26);box-shadow:0 0 0 2px var(--gold-hi),0 0 16px rgba(255,210,120,.6)}
+.sngift small{display:block;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi)}
+.sngift b{display:block;font-size:17px}
+.sngift em{display:block;font-style:normal;font-size:13px;font-weight:700;opacity:.88;line-height:1.35}
+.sngrow{width:100%;max-width:360px;margin-top:12px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;text-align:center;font-size:11.5px;font-weight:900}
+.sngrow span{display:flex;flex-direction:column;align-items:center;gap:4px;opacity:.5}
+.sngrow span.on{opacity:1}
+.sngrow span i{display:block;border-radius:50%;background:center/cover;box-shadow:0 0 0 2px rgba(255,233,168,.6)}
+.sngrow span.on i{box-shadow:0 0 0 2px #fff,0 0 12px rgba(255,220,130,.8)}
+.sngrow small{font-size:10px;font-weight:800;opacity:.8}
+.sanct .btn.big{width:100%;max-width:340px;margin-top:14px}
+.sanct .btn.big.with{background:linear-gradient(#9BE07F,#3E9A48) !important;color:#fff !important}
+.snpass{margin-top:10px;padding:8px 16px;border-radius:99px;font-weight:900;font-size:13px;color:#FFF6DE;background:rgba(0,0,0,.4);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.55)}
 </style>
 
 <div id="app">
@@ -1754,6 +1798,26 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <button class="wnav prev" id="wdPrev" aria-label="Previous world">‹</button>
     <button class="wnav next" id="wdNext" aria-label="Next world">›</button>
     <div class="wfoot"><div class="wverb display" id="wVerb"></div><div class="wmeta" id="wMeta"></div></div>
+  </div>
+  <div class="sanct" id="sanct" hidden>
+    <div class="stbg" id="snBg"></div>
+    <div class="sngl" id="snGlow"></div>
+    <div class="snin">
+      <div class="wtop"><button class="iconbtn" id="snBack" aria-label="Back">‹</button>
+        <div class="wtitle"><small id="snDays"></small><b class="display">Spirit Companions</b></div><span></span></div>
+      <div class="snstage">
+        <button class="wnav prev" id="snPrev" aria-label="Previous companion">‹</button>
+        <div class="snhero" id="snHero"><span class="snarch"></span><img id="snImg" alt=""><span class="snlock" id="snLock"></span></div>
+        <button class="wnav next" id="snNext" aria-label="Next companion">›</button>
+      </div>
+      <div class="sndots" id="snDots"></div>
+      <div class="snname"><b class="display" id="snName"></b><span id="snTag"></span></div>
+      <p class="snnote" id="snNote"></p>
+      <div class="sngift" id="snGift"></div>
+      <div class="sngrow" id="snGrow"></div>
+      <button class="btn gold big" id="snGo"></button>
+      <button class="snpass" id="snPass">Meet all five now · $4.99</button>
+    </div>
   </div>
   <div class="passov" id="passov" hidden>
     <div class="stbg" id="passBg"></div>
@@ -2730,7 +2794,73 @@ $('#earlyPass').addEventListener('click', () => {
   toast('Preview: early pass unlocked, no charge. Loyal players still earn all five free.');
   renderBuddyPicker(); renderBuddy();
 });
-$('#buddyCard').addEventListener('click', () => { renderBuddyPicker(); showOv('buddyov'); });
+
+/* ---------- Spirit Companions: each one brings a real, fair gift while they're with you ---------- */
+const GIFTS = {
+  water: { icon: '🌊', name: 'Calm Waters', text: '+3 moves in every episode' },
+  earth: { icon: '⛰', name: 'Steady Ground', text: "Luma's Aura never starts below 15%" },
+  fire: { icon: '✦', name: 'Warm Heart', text: 'Every match lights one extra orb for the Creation Cycle' },
+  metal: { icon: '🌬', name: 'Clear Lungs', text: 'A deep breath clears one extra cloud' },
+  wood: { icon: '🐾', name: 'Brave Start', text: 'A free Tiger Claw every day you practise' }
+};
+const ORGAN_OF = { wood: 'liver', fire: 'heart', earth: 'spleen', metal: 'lungs', water: 'kidneys' };
+let SNI = 0;
+function renderSanct(dir = 0) {
+  const el = TYPES[SNI], b = BUDDY[el], have = owns(el), days = S.practiceDays || 0, left = Math.max(0, b.unlock - days);
+  const sc = $('#sanct'), hero = $('#snHero'), gift = GIFTS[el];
+  sc.style.setProperty('--sg', ELEM[el].glow); sc.style.setProperty('--sh', ELEM[el].hue);
+  $('#snBg').style.backgroundImage = `url(img/home/${HOME_SCENE[el]}.jpg)`;
+  $('#snDays').textContent = `${days} practice day${days === 1 ? '' : 's'} · stage: ${stageOf().name}`;
+  $('#snImg').src = buddyArt(el);
+  hero.classList.toggle('locked', !have);
+  $('#snLock').innerHTML = have ? '' : `<b style="--p:${Math.round(Math.min(1, days / Math.max(1, b.unlock)) * 100)}"></b><em>${left} day${left === 1 ? '' : 's'}</em>`;
+  $('#snDots').innerHTML = TYPES.map((t, i) => `<i class="${i === SNI ? 'on' : ''}" style="background:${ELEM[t].hue};color:${ELEM[t].glow}"></i>`).join('');
+  $('#snName').textContent = `${b.name} the ${b.animal}`;
+  $('#snTag').textContent = `${ELEM[el].name} · ${ORGAN_OF[el]}`;
+  $('#snNote').textContent = b.note;
+  $('#snGift').innerHTML = `<span class="gi">${gift.icon}</span><span><small>${b.name}'s gift</small><b>${gift.name}</b><em>${gift.text}${have ? '' : ' (once you meet)'}</em></span>`;
+  const st = STAGES.findIndex(x => x.name === stageOf().name);
+  $('#snGrow').innerHTML = STAGES.map((x, i) => `<span class="${i <= st ? 'on' : ''}"><i style="width:${22 + i * 7}px;height:${22 + i * 7}px;background-image:url(${buddyArt(el)})"></i>${x.name}<small>${x.at ? `day ${x.at}` : 'day 1'}</small></span>`).join('');
+  const go = $('#snGo');
+  go.classList.toggle('with', have && S.buddy === el);
+  go.textContent = !have ? `Meets you in ${left} practice day${left === 1 ? '' : 's'}` : S.buddy === el ? `${b.name} is with you ✓` : `Take ${b.name} with you`;
+  go.disabled = !have; go.style.opacity = have ? 1 : .75;
+  $('#snPass').hidden = S.earlyPass || TYPES.every(owns);
+  if (!reduce && dir) {
+    hero.animate([{ transform: `translateX(${dir * 60}px) scale(.8)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 420, easing: 'cubic-bezier(.2,.9,.3,1.2)' });
+    $$('#snGift,#snGrow,.snname').forEach((x, i) => x.animate([{ transform: 'translateY(10px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 360, delay: 80 + i * 60, easing: 'ease-out', fill: 'backwards' }));
+  }
+}
+async function openSanct() {
+  SNI = Math.max(0, TYPES.indexOf(S.buddy || 'fire'));
+  renderSanct();
+  const sc = $('#sanct'); sc.hidden = false; void sc.offsetWidth; sc.classList.add('show');
+  playSfx('swoosh', { gain: 0.6 }); elemSound(TYPES[SNI], 0, 2, 5);
+  if (!reduce) $('#snHero').animate([{ transform: 'scale(.6)', opacity: 0 }, { transform: 'scale(1.06)', opacity: 1, offset: .6 }, { transform: 'none' }], { duration: 520, easing: 'cubic-bezier(.3,1.5,.5,1)' });
+}
+const snStep = d => { SNI = (SNI + d + TYPES.length) % TYPES.length; renderSanct(d); tick(); elemSound(TYPES[SNI], 0, 2, 5); };
+$('#snPrev').addEventListener('click', () => snStep(-1));
+$('#snNext').addEventListener('click', () => snStep(1));
+let snx = null;
+$('#sanct').addEventListener('pointerdown', e => { snx = e.clientX; });
+$('#sanct').addEventListener('pointerup', e => { if (snx == null) return; const dx = e.clientX - snx; snx = null; if (Math.abs(dx) > 60 && !e.target.closest('button')) snStep(dx < 0 ? 1 : -1); });
+$('#snBack').addEventListener('click', async () => { tick(); const sc = $('#sanct'); sc.classList.remove('show'); await wait(350); sc.hidden = true; renderBuddy(); });
+$('#snGo').addEventListener('click', () => {
+  const el = TYPES[SNI]; if (!owns(el) || S.buddy === el) return;
+  S.buddy = el; save(); renderSanct(); renderBuddy();
+  chord([523.25, 659.25, 783.99, 1046.5], 0.07); elemSound(el, 0, 4, 8);
+  const sc = $('#sanct'), r = $('#snHero').getBoundingClientRect(), a = sc.getBoundingClientRect();
+  sparkleAt(sc, r.left - a.left + r.width / 2, r.top - a.top + r.height / 2, [ELEM[el].glow, '#FFFFFF', '#FFE9A8'], 26);
+  if (!reduce) $('#snHero img').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-26px) scale(1.06)' }, { transform: 'translateY(0)' }], { duration: 520, easing: 'cubic-bezier(.3,1.5,.5,1)' });
+  toast(`${BUDDY[el].name} is with you. ${GIFTS[el].name}: ${GIFTS[el].text.toLowerCase()}.`);
+});
+$('#snPass').addEventListener('click', async () => {
+  if (!await grownUpGate('all five companions')) return;
+  S.earlyPass = true; S.owned = TYPES.slice(); save();
+  renderSanct(); renderBuddy();
+  showGot('All five companions', TYPES.map(t => [`<span class="sgem" style="--eh:${ELEM[t].hue}"><img src="${buddyArt(t)}" alt=""></span>`, BUDDY[t].name]));
+});
+$('#buddyCard').addEventListener('click', () => { ac(); tick(); openSanct(); });
 $('#buddyClose').addEventListener('click', () => hideOv('buddyov'));
 
 /* ---------- daily element wheel ---------- */
@@ -3141,7 +3271,7 @@ $('#heroOpen').addEventListener('click', () => { ac(); pickHero(); });
 
 /* ---------- story intro: tap through one line at a time, then the loadout ---------- */
 const VOICE = { hero: 520, sorin: 290, luma: 780 };
-const goalNums = () => { const b = LEVELS[LI]; return S.boardSize === 'little' ? { clouds: Math.min(4, b.clouds), moves: b.moves - 2 } : { clouds: b.clouds, moves: b.moves }; };
+const goalNums = () => { const b = LEVELS[LI], nami = S.buddy === 'water' ? 3 : 0; return S.boardSize === 'little' ? { clouds: Math.min(4, b.clouds), moves: b.moves - 2 + nami } : { clouds: b.clouds, moves: b.moves + nami }; };
 let storyRun = 0;
 async function runStory() {
   const run = ++storyRun, st = $('#story'); lastSpeaker = null;
@@ -3517,7 +3647,7 @@ function feedNext(arr) {
   const by = {}; arr.forEach(t => { if (ELEM[t.type]) (by[t.type] = by[t.type] || []).push(t); });
   const lead = Object.keys(by).sort((a, b) => by[b].length - by[a].length)[0]; if (!lead) return;
   const src = by[lead], cx = src.reduce((a, t) => a + t.c, 0) / src.length, cy = src.reduce((a, t) => a + t.r, 0) / src.length;
-  const target = CREATES[lead], k = src.length >= 5 ? 4 : src.length >= 4 ? 3 : 2;
+  const target = CREATES[lead], k = (src.length >= 5 ? 4 : src.length >= 4 ? 3 : 2) + (S.buddy === 'fire' ? 1 : 0);
   const pool = all().filter(o => o.type === target && !o.cloud && !o.knot && !o.fed && !arr.includes(o))
     .sort((a, b) => ((a.r - cy) ** 2 + (a.c - cx) ** 2) - ((b.r - cy) ** 2 + (b.c - cx) ** 2) || a.r - b.r || a.c - b.c)
     .slice(0, k);
@@ -4106,7 +4236,7 @@ function breathPlan(q) {
   const cl = clouds().length, an = all().filter(t => t.type === L.elem && !t.cloud).length;
   const tier = q >= 0.72 ? 'deep' : q >= 0.4 ? 'nice' : 'small';
   const sang = lastVoiced >= 0.45;
-  const cloudsOff = Math.min(cl, (tier === 'deep' ? 4 : tier === 'nice' ? 2 : 1) + (stillDrop ? 2 : 0));
+  const cloudsOff = Math.min(cl, (tier === 'deep' ? 4 + (S.buddy === 'metal' ? 1 : 0) : tier === 'nice' ? 2 : 1) + (stillDrop ? 2 : 0));
   const orbs = 0;
   const coins = ((tier === 'deep' ? 20 : tier === 'nice' ? 10 : 3) + (sang ? 8 : 0)) * coinMult();
   return { tier, cloudsOff: cloudsOff + (sang && cl > cloudsOff ? 1 : 0), orbs, coins, sang };
@@ -4922,7 +5052,7 @@ function startLevel() {
   $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
   $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
-  moves = L.moves; charge = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
+  moves = L.moves + (S.buddy === 'water' && !babyOn() ? 3 : 0); charge = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
   deepBreaths = 0; breathing = false;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   setAim(null); monkeyFirst = null; lastPower = null;
@@ -4987,7 +5117,7 @@ async function arrivalBreath() {
   }
   ov.removeEventListener('pointerdown', on); removeEventListener('pointerup', off); removeEventListener('pointercancel', off);
   ov.classList.remove('good');
-  charge = Math.max(charge, Math.round(5 + q * 10));   // a Root Stone charm can start it higher                       // 8% to 30%: a good arrival starts the Aura Glowing
+  charge = Math.max(charge, Math.round(5 + q * 10), S.buddy === 'earth' ? 15 : 0);   // a Root Stone charm can start it higher                       // 8% to 30%: a good arrival starts the Aura Glowing
   face('happy'); cue.textContent = 'You have arrived.';
   sub.textContent = `Luma's Aura starts ${auraName(charge)}. Match orbs to make it Heavenly.`;
   chord([523.25, 659.25, 783.99], 0.1);
@@ -5541,7 +5671,7 @@ async function winLevel() {
   if (!S.sealsEarned || !S.sealsEarned.first) awardSeal('first');
   const newDay = S.lastDay !== dayKey();
   const note = markDay();
-  if (newDay) { S.practiceDays = (S.practiceDays || 0) + 1; save(); }
+  if (newDay) { S.practiceDays = (S.practiceDays || 0) + 1; if (S.buddy === 'wood') S.lanterns = (S.lanterns || 0) + 1; save(); }
   const freshBuddy = checkBuddyUnlocks();
   if (S.streak >= 9) awardSeal('nine');
   if (S.streak >= 108) awardSeal('keeper');
