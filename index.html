@@ -717,8 +717,8 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 #guide .card{background:#15302A;color:#FBF3E2;text-align:center}
 #guide h2{color:#FBF3E2}
 #guide .bring{margin:18px auto;width:190px;height:190px}
-.toast{position:absolute;left:16px;right:16px;top:14px;z-index:40;padding:11px 14px;border-radius:14px;background:#FFFBF2;color:var(--ink);font-weight:800;font-size:14px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(-120%);transition:transform .3s}
-.toast.show{transform:none}
+.toast{position:absolute;left:16px;right:16px;top:14px;z-index:40;padding:11px 14px;border-radius:14px;background:#FFFBF2;color:var(--ink);font-weight:800;font-size:14px;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.25);transform:translateY(-16px);opacity:0;visibility:hidden;pointer-events:none;transition:transform .3s,opacity .3s,visibility 0s .3s}
+.toast.show{transform:none;opacity:1;visibility:visible;transition:transform .3s,opacity .3s}
 /* welcome */
 #welcome{background:radial-gradient(120% 50% at 50% 0%,#FFF8E8 0,var(--parch) 45%,var(--parch2) 100%);overflow-y:auto;overflow-x:hidden}
 .wwrap{padding:24px 16px 28px;display:flex;flex-direction:column;gap:22px}
@@ -1305,6 +1305,64 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .sanct .btn.big{width:100%;max-width:340px;margin-top:14px}
 .sanct .btn.big.with{background:linear-gradient(#9BE07F,#3E9A48) !important;color:#fff !important}
 .snpass{margin-top:10px;padding:8px 16px;border-radius:99px;font-weight:900;font-size:13px;color:#FFF6DE;background:rgba(0,0,0,.4);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.55)}
+/* ================= safe areas: notch, Dynamic Island, home indicator =================
+   Every bar that touches the top or bottom edge moves inside the phone's safe area. On phones
+   without a notch these are 0. ?safe=1 fakes an iPhone 15 Pro's insets for testing in a browser. */
+:root{--sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px)}
+.maphead{padding-top:calc(18px + var(--sat))}
+.rails{top:calc(188px + var(--sat));bottom:calc(196px + var(--sab))}
+.homefoot{padding-bottom:calc(14px + var(--sab))}
+.gtop{padding-top:calc(12px + var(--sat))}
+.gbot{padding-bottom:calc(14px + var(--sab))}
+.toast{top:calc(14px + var(--sat))}
+.ov{padding-top:calc(16px + var(--sat));padding-bottom:calc(16px + var(--sab))}
+.sttop{top:calc(14px + var(--sat))}
+.stplace{top:calc(52px + var(--sat))}
+.ststage{top:calc(140px + var(--sat));padding-bottom:calc(26px + var(--sab))}
+.story.demoing .ststage{top:calc(56px + var(--sat))}
+.loadout{bottom:calc(12px + var(--sab));max-height:calc(100% - 100px - var(--sat) - var(--sab))}
+.wtop{top:calc(12px + var(--sat))}
+.wfoot{bottom:calc(16px + var(--sab))}
+.passin{padding-top:calc(12px + var(--sat));padding-bottom:calc(16px + var(--sab))}
+.passin .wtop,.snin .wtop{top:0}
+.snin{padding-top:calc(12px + var(--sat));padding-bottom:calc(18px + var(--sab))}
+.hpin{padding-top:calc(20px + var(--sat));padding-bottom:calc(20px + var(--sab))}
+.enin{padding-bottom:calc(28px + var(--sab))}
+.party{padding-top:calc(20px + var(--sat));padding-bottom:calc(20px + var(--sab))}
+.chero{padding-top:calc(40px + var(--sat))}
+.cfoot{padding-bottom:calc(36px + var(--sab))}
+.arin{padding-top:var(--sat);padding-bottom:var(--sab)}
+/* smaller phones (Galaxy S-series width, shorter screens) */
+@media (max-width:380px){
+  .maphead{padding-left:10px;padding-right:10px}
+  .maphead .row{gap:4px}
+  .maphead .iconbtn{width:32px;height:32px;font-size:14px;border-radius:10px}
+  .maphead .chip{padding:5px 8px;font-size:12.5px;gap:4px}
+  .maphead .herobtn{width:36px;height:36px}
+}
+@media (max-height:860px){
+  .snhero{width:176px;height:176px}
+  .snnote{margin-top:6px;font-size:14px}
+  .sngift{margin-top:10px;padding:10px 14px}
+  .sngrow{margin-top:8px}
+  .sanct .btn.big{margin-top:10px}
+  .sndots{margin:10px 0 2px}
+}
+@media (max-height:760px){
+  .snhero{width:150px;height:150px}
+  .sngrow{display:none}
+}
+@media (max-height:820px){
+  .snhero{width:160px;height:160px}
+  .snin .wtop .wtitle b{font-size:22px}
+  .snname b{font-size:26px}
+  .snpass{margin-top:6px}
+}
+/* the power row scales with the phone so the coin counter always fits beside it */
+.pwbar{gap:min(6px,1.2vw)}
+.pwbtn{width:min(48px,10.6vw);height:min(48px,10.6vw)}
+#shopOpen2{padding:6px 10px;font-size:13px;white-space:nowrap}
+@media (max-width:380px){.gbot{padding-left:10px;padding-right:10px}}
 </style>
 
 <div id="app">
@@ -5924,6 +5982,7 @@ $('#wPractice').addEventListener('click', async () => {
 $('#gDone').addEventListener('click', () => { guideRun++; breathSound('out', 0.3); hideOv('guide'); });
 
 /* ---------- boot ---------- */
+if (/[?&]safe=1/.test(location.search)) { document.documentElement.style.setProperty('--sat', '59px'); document.documentElement.style.setProperty('--sab', '34px'); }
 document.documentElement.style.setProperty('--scene', `url(img/home/${HOME_SCENE[homeElement()]}.jpg)`);
 syncHero(); syncPassBtn(); applyLooks(); calmDaily(); syncMusic();
 $$('[data-play]').forEach(b => b.addEventListener('click', () => {
