@@ -2078,6 +2078,116 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .crew b{font-size:14.5px;color:var(--gold-hi)}
 .crew em{font-style:normal;font-size:12.5px;font-weight:700;line-height:1.4;opacity:.9}
 .csec h2.display{margin-top:0}
+
+/* ================= v60 level-start card (Royal-Kingdom-grade) ================= */
+.loadout.lo2{padding:0 14px 16px;overflow-x:hidden;border-radius:28px;background:linear-gradient(180deg,#FFFBF0,#F3E6C8);
+  box-shadow:inset 0 3px 0 #fff,inset 0 -4px 0 rgba(150,110,50,.25),0 0 0 3px #F4D78C,0 0 0 7px #2A5E4C,0 0 0 9px #C99A45,0 11px 0 9px #6B4418,0 30px 60px rgba(0,0,0,.6)}
+.loribbon{position:relative;margin:0 -14px;padding:14px 20px 12px;display:flex;align-items:center;justify-content:center;gap:10px;border-radius:26px 26px 0 0;
+  background:linear-gradient(180deg,#2F7A60,#1C5242);box-shadow:inset 0 2px 0 rgba(255,255,255,.25),inset 0 -3px 0 rgba(0,0,0,.25),0 3px 0 #C99A45}
+.loribbon::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.18) 50%,transparent 58%);background-size:260% 100%;animation:pbsheen 5s ease-in-out infinite;pointer-events:none}
+.loribbon b{font-weight:400;font-size:30px;line-height:1;color:#FFF3CF;text-shadow:0 3px 0 rgba(20,40,30,.8),0 0 16px rgba(255,214,120,.4)}
+.lo2 .loorb{width:40px;height:40px;animation:loorb 3.2s ease-in-out infinite}
+@keyframes loorb{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.08)}}
+.loplace{text-align:center;margin:12px 0 4px}
+.lo2 .loname{font-size:26px;line-height:1.05;color:#1D5044}
+.lo2 .loverb{margin-top:4px;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:#96682A}
+.lostorm{position:relative;margin:10px 0 2px;padding:10px 12px 10px 64px;border-radius:18px;color:#FFF6DE;overflow:hidden;
+  background:linear-gradient(135deg,#3A1D5E,#7A2A6A 60%,#A0304A);box-shadow:inset 0 0 0 1.5px rgba(255,210,255,.45),0 0 18px rgba(160,60,140,.45)}
+.lostorm img{position:absolute;left:6px;top:50%;width:54px;height:54px;margin-top:-27px;object-fit:contain;animation:lostorm 3.4s ease-in-out infinite}
+@keyframes lostorm{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-3px) rotate(3deg)}}
+.lostorm::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 15% 50%,rgba(255,240,200,.55),transparent 60%);opacity:0;animation:loflash 4.2s infinite}
+@keyframes loflash{0%,86%,100%{opacity:0}88%{opacity:1}90%{opacity:.2}92%{opacity:.9}95%{opacity:0}}
+.lostorm b{display:block;font-size:16px}.lostorm span{display:block;font-size:12.5px;font-weight:800;opacity:.92}
+.lostorm em{display:block;margin-top:4px;font-style:normal;font-size:12px;font-weight:700;line-height:1.35;opacity:.95}
+.lo2.stormy{box-shadow:inset 0 3px 0 #fff,inset 0 -4px 0 rgba(150,110,50,.25),0 0 0 3px #E7C3FF,0 0 0 7px #4A2468,0 0 0 9px #C99A45,0 11px 0 9px #2A1238,0 0 40px rgba(170,90,220,.5),0 30px 60px rgba(0,0,0,.6)}
+.lo2.stormy .loribbon{background:linear-gradient(180deg,#6A3A9A,#3A1D5E)}
+.lopanel{margin-top:10px;padding:10px 12px 12px;border-radius:20px;background:linear-gradient(180deg,#24574A,#153A30);box-shadow:inset 0 3px 8px rgba(0,0,0,.35),0 0 0 2px #E3BC6A,0 3px 0 2px #8A5A1C}
+.lotitle{display:flex;justify-content:space-between;align-items:center;margin:0 2px 8px;color:#FFE9A8}
+.lotitle b{font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:19px}
+.lotitle.out{margin:14px 4px 8px;color:#1D5044}
+.lotitle.out span{font-size:12px;font-weight:800;color:#96682A}
+.lomoves{display:flex;align-items:center;gap:6px;padding:4px 12px 4px 6px;border-radius:99px;font-weight:900;font-size:14px;color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 2px 0 #8A5A1C}
+.lomoves i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;color:#fff;background:#1D5044}
+.lotiles{display:flex;justify-content:center;gap:10px}
+.lotile{position:relative;flex:1;max-width:96px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 8px;border-radius:16px;background:radial-gradient(circle at 50% 35%,rgba(255,255,255,.16),rgba(0,0,0,.18));box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.35)}
+.lotile .gimg{position:relative;width:58px;height:58px;display:grid;place-items:center}
+.lotile .gimg img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 5px rgba(0,0,0,.45))}
+.lotile .gimg .orbw{position:relative;width:46px;height:46px}
+.lotile:nth-child(1) .gimg{animation:gbob 3.6s ease-in-out infinite}
+.lotile:nth-child(2) .gimg{animation:gbob 3.6s ease-in-out -1.2s infinite}
+.lotile:nth-child(3) .gimg{animation:gbob 3.6s ease-in-out -2.4s infinite}
+@keyframes gbob{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.06)}}
+.lotile b{font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:24px;line-height:1;color:#FFF6DE;text-shadow:0 2px 0 rgba(0,0,0,.5)}
+.lotile small{font-size:10.5px;font-weight:800;color:#CFE6DA;line-height:1.1;text-align:center}
+.loboard{margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:800;color:#CFE6DA}
+.loboard .mg{width:22px;height:22px;border-radius:5px;background:#0F2E24;box-shadow:inset 0 0 0 1.5px #D9A94A;background-image:radial-gradient(circle,#FFE9A8 36%,transparent 40%)}
+.loboard .new{padding:2px 8px;border-radius:99px;font-size:10.5px;font-weight:900;color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);animation:pcall 1.8s ease-in-out infinite}
+.loextra:empty{display:none}
+.loextra{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.loextra .helpban,.loextra .glowban{flex-basis:auto}
+.lotray{padding:12px 8px 10px;border-radius:20px;background:radial-gradient(120% 90% at 50% 0%,#3E7A64,#1B3F33 70%);box-shadow:inset 0 3px 10px rgba(0,0,0,.45),0 0 0 2px #E3BC6A,0 3px 0 2px #8A5A1C}
+.charms2{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.charm2{position:relative;display:flex;flex-direction:column;align-items:center;gap:5px;padding:0;background:none;color:#FFF6DE;-webkit-tap-highlight-color:transparent}
+.charm2 .slot{position:relative;width:100%;aspect-ratio:1;max-width:62px;border-radius:18px;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 38%,color-mix(in srgb,var(--eh) 55%,#fff) 0%,color-mix(in srgb,var(--eh) 35%,#12302A) 70%);box-shadow:inset 0 2px 0 rgba(255,255,255,.35),inset 0 -4px 8px rgba(0,0,0,.35),0 0 0 2px rgba(244,215,140,.7),0 4px 0 rgba(0,0,0,.35);transition:transform .25s cubic-bezier(.3,1.6,.5,1),box-shadow .25s}
+.charm2 .slot img{width:86%;height:86%;object-fit:contain;transform-origin:50% 10%;animation:pcharm 3s ease-in-out infinite;animation-delay:calc(var(--k) * -.6s);filter:drop-shadow(0 4px 4px rgba(0,0,0,.4))}
+.charm2 .slot::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);background-size:280% 100%;animation:pbsheen 5s ease-in-out infinite;animation-delay:calc(var(--k) * -1s);pointer-events:none}
+.charm2 b{font-size:10.5px;font-weight:900;line-height:1.1;text-align:center;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.charm2 .tag{position:absolute;left:50%;top:calc(min(62px,100%) - 12px);transform:translateX(-50%);z-index:2;display:flex;align-items:center;gap:3px;padding:2px 7px;border-radius:99px;font-style:normal;font-size:11px;font-weight:900;white-space:nowrap}
+.charm2 .tag.have{color:#fff;background:linear-gradient(#6CC286,#2B7A4B);box-shadow:0 0 0 1.5px #FFF3CF}
+.charm2 .tag.buy{color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:0 0 0 1.5px #8A5A1C}
+.charm2 .tag.buy i{width:11px;height:11px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#FFF6C8,#E0A93E 60%,#A06A1A)}
+.charm2 .check{position:absolute;top:-6px;right:-2px;z-index:3;width:22px;height:22px;border-radius:50%;display:none;place-items:center;font-size:12px;font-weight:900;color:#fff;background:linear-gradient(#7FD06A,#2F8A3C);box-shadow:0 0 0 2px #fff}
+.charm2.on .check{display:grid}
+.charm2.on .slot{transform:translateY(-5px) scale(1.08);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 0 0 3px #fff,0 0 0 5px var(--eh),0 0 22px 6px var(--eh),0 8px 0 rgba(0,0,0,.3)}
+.charm2 b{margin-top:6px}
+.lo2 .charmhint{margin-top:10px;border-radius:14px}
+.loplay{width:100%;margin-top:14px;font-size:26px !important;padding:16px 0 !important;color:#fff !important;text-shadow:0 2px 0 rgba(20,70,30,.7);
+  background:linear-gradient(180deg,#9BE07F,#4FB05A 55%,#2F8A3C) !important;box-shadow:inset 0 3px 0 rgba(255,255,255,.55),inset 0 -4px 0 rgba(0,0,0,.2),0 0 0 3px #F4D78C,0 6px 0 3px #1E5A2A,0 12px 18px rgba(0,0,0,.35) !important;animation:loplay 2.4s ease-in-out infinite}
+@keyframes loplay{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+/* in-game info button + How to play */
+.infobtn span{font-family:"Marcellus SC",Georgia,serif;font-size:22px;font-weight:400;font-style:italic;line-height:1;color:#FFF3CF}
+.iconbtn svg{width:22px;height:22px}
+.sndbtn.off{opacity:.55}
+.howcard{text-align:center}
+.howsteps{display:grid;gap:10px;margin:12px 0 4px;text-align:left}
+.howsteps div{display:grid;grid-template-columns:56px 1fr;column-gap:12px;align-items:center;padding:10px 12px;border-radius:18px;background:linear-gradient(#FFFFFF,#F4E8CC);box-shadow:inset 0 2px 0 #fff,0 0 0 1.5px rgba(184,134,47,.45),0 3px 0 rgba(120,88,40,.3)}
+.howsteps .hv{grid-row:1/3;width:56px;height:56px;display:grid;place-items:center;position:relative}
+.howsteps .hv img{width:100%;height:100%;object-fit:contain}
+.howsteps .hv img.rnd{border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #E3BC6A}
+.howsteps .hv .orbrow{display:flex}.howsteps .hv .orbrow span{position:relative;width:18px;height:18px;display:block}
+.howsteps b{font-size:15.5px;color:#1D5044}
+.dots3{display:flex;gap:1px}.dots3 i{width:18px;height:18px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#E6F4FF,#5AA7E6 45%,#1F5E9E);box-shadow:inset 0 -2px 3px rgba(0,0,0,.25),0 2px 3px rgba(0,0,0,.25);animation:dotsb 1.8s ease-in-out infinite}.dots3 i:nth-child(2){animation-delay:.15s}.dots3 i:nth-child(3){animation-delay:.3s}@keyframes dotsb{0%,60%,100%{transform:none}30%{transform:translateY(-5px) scale(1.08)}}
+#howPractice{color:#1D5044;font-weight:900}
+.howsteps em{font-style:normal;font-size:13px;font-weight:700;line-height:1.4;color:#5A5444}
+
+/* v60 fit + polish */
+.story.lo-up .sttop,.story.lo-up .stplace{visibility:hidden}
+.loribbon{padding:11px 20px 10px}
+.loplace{margin:9px 0 2px}
+.lo2 .loname{font-size:24px}
+.lostorm{margin:8px 0 0;padding:8px 12px 8px 60px}
+.lostorm img{width:48px;height:48px;margin-top:-24px}
+.lopanel{margin-top:8px;padding:8px 10px 10px}
+.lotitle{margin:0 2px 6px}
+.lotile{padding:6px 4px}
+.lotile .gimg{width:48px;height:48px}.lotile .gimg .orbw{width:40px;height:40px}
+.lotile b{font-size:22px}
+.loboard{margin-top:8px}
+.loextra{flex-direction:row;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:8px}
+.loextra .pill{display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:99px;font-size:12px;font-weight:900}
+.loextra .pill.help{color:#5A3A08;background:linear-gradient(#FFF3C4,#F6D27A);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7),0 2px 0 rgba(138,90,28,.5)}
+.loextra .pill.glow{color:#fff;background:linear-gradient(135deg,#B8561C,#E0A93E);box-shadow:inset 0 0 0 1.5px rgba(255,236,170,.6),0 2px 0 rgba(120,50,10,.5)}
+.lotitle.out{margin:10px 4px 6px}
+.lotray{padding:12px 8px 8px}
+.charm2 .slot{max-width:58px}
+.charm2 .tag{top:-7px;left:auto;right:-4px;transform:none}
+.charm2 .check{top:auto;bottom:18px;right:-2px}
+.charm2 b{margin-top:2px;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.lotray .charmhint{margin:8px 2px 0;padding:6px 8px;font-size:12px;background:rgba(0,0,0,.22);color:#E8F2EC;box-shadow:none}
+.lotray .charmhint.on{color:#fff;background:var(--eh)}
+.loplay{position:sticky;bottom:0;z-index:5;margin-top:12px}
+.lo2::after{content:"";display:block;height:2px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2107,7 +2217,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
     <div class="cover">
       <header class="chero">
         <div class="chbg"></div>
-        <video class="chvid" src="img/world/s1g-golden.mp4" poster="img/world/s1g-golden.jpg" muted loop playsinline autoplay preload="auto"></video>
+        <video class="chvid" src="img/world/s1g-golden.mp4?v=60" poster="img/world/s1g-golden.jpg" muted loop playsinline autoplay preload="auto"></video>
         <div class="chin">
           <div class="seasontag"><span>Season 1</span><b>Kai's Calm Quest</b></div>
           <div class="cplaque">Mor<span class="qi">Qi</span> Kids</div>
@@ -2234,7 +2344,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
         <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
         <button class="iconbtn" data-music aria-label="Music off">♫</button>
         <button class="iconbtn" id="howOpen" aria-label="How to play">?</button>
-        <button class="iconbtn gupbtn" id="shopOpen1" aria-label="Why MorQi, for grown-ups"><img src="img/ui/heart.png" alt=""></button>
+        <button class="iconbtn infobtn" id="shopOpen1" aria-label="About MorQi, for grown-ups"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v6"/><circle cx="12" cy="7.3" r="1.3" fill="currentColor" stroke="none"/></svg></button>
       </div>
     </div>
     <div class="hometitle">
@@ -2245,15 +2355,15 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
     <div class="homepass"><button class="passban" id="passOpen" aria-label="Season Pass"><span class="pbglow"></span><img class="pbtro" src="img/pass/trophy-lotus.png" alt=""><span class="pbmid"><small>Season 1</small><b>Season Pass</b><span class="pbsegs" id="passSegs"></span><em id="passTease">Tier 1</em></span><span class="pbnext" id="passBanNext"></span><i class="passdot" id="passDot" hidden></i></button></div>
     <div class="rails">
       <div class="rail">
-        <button class="hicon" data-open="streakChip"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-streak.mp4" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Streak</b><i class="hbadge" id="bStreak"></i></button>
-        <button class="hicon" data-open="questCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-quests.mp4" poster="img/icons/icon-quests-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Quests</b><i class="hbadge" id="bQuests"></i></button>
-        <button class="hicon" data-open="wheelCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-wheel.mp4" poster="img/icons/icon-wheel-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Spin</b><i class="hbadge" id="bWheel"></i></button>
+        <button class="hicon" data-open="streakChip"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-streak.mp4?v=60" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Streak</b><i class="hbadge" id="bStreak"></i></button>
+        <button class="hicon" data-open="questCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-quests.mp4?v=60" poster="img/icons/icon-quests-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Quests</b><i class="hbadge" id="bQuests"></i></button>
+        <button class="hicon" data-open="wheelCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-wheel.mp4?v=60" poster="img/icons/icon-wheel-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Spin</b><i class="hbadge" id="bWheel"></i></button>
         <button class="hicon" data-open="balOpen"><span class="hart hring" id="lightsHart"><img id="lightsIcon" src="img/faces/kai-calm.jpg" alt=""></span><b>Harmony</b><i class="hbadge" id="bLights"></i></button>
       </div>
       <div class="rail">
-        <button class="hicon" data-open="sealCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-seal.mp4" poster="img/icons/icon-seal-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
-        <button class="hicon" data-open="babyToggle"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-baby.mp4" poster="img/icons/icon-baby-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Baby</b><i class="hbadge" id="bBaby"></i></button>
-        <button class="hicon" data-open="bedOpen"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-bedtime.mp4" poster="img/icons/icon-bedtime-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Bedtime</b></button>
+        <button class="hicon" data-open="sealCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-seal.mp4?v=60" poster="img/icons/icon-seal-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
+        <button class="hicon" data-open="babyToggle"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-baby.mp4?v=60" poster="img/icons/icon-baby-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Baby</b><i class="hbadge" id="bBaby"></i></button>
+        <button class="hicon" data-open="bedOpen"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-bedtime.mp4?v=60" poster="img/icons/icon-bedtime-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Bedtime</b></button>
       </div>
     </div>
     <div class="homefoot">
@@ -2486,7 +2596,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
   <div class="ov" id="streakov" hidden><div class="card" role="dialog" aria-labelledby="stTitle">
     <div class="eyebrow">One level a day</div>
     <h2 class="display" id="stTitle">Your streak</h2>
-    <div class="sthero"><span class="stflame"><video src="img/icons/anim/icon-streak.mp4" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay></video></span><span class="stnum" id="stBig">0<small>days in a row</small></span></div>
+    <div class="sthero"><span class="stflame"><video src="img/icons/anim/icon-streak.mp4?v=60" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay></video></span><span class="stnum" id="stBig">0<small>days in a row</small></span></div>
     <div class="stweek" id="stWeek"></div>
     <div class="row" style="flex-wrap:wrap;gap:6px;justify-content:center" id="streakStats"></div>
     <p style="margin-top:10px;text-align:center;font-weight:800">Play one level a day to keep the flame. A Streak Shield saves one missed day.</p>
@@ -2585,6 +2695,17 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
     <p class="small" id="adLeft">3</p>
   </div></div>
 
+  <div class="ov" id="howov" hidden style="align-items:center"><div class="card howcard" role="dialog" aria-labelledby="howTitle">
+    <div class="eyebrow">How to play</div>
+    <h2 class="display" id="howTitle">Calm the storm</h2>
+    <div class="howsteps">
+      <div><span class="hv"><span class="dots3"><i></i><i></i><i></i></span></span><b>Match 3 or more</b><em>Swap orbs to make lines. Every match grows Luma's Aura.</em></div>
+      <div><span class="hv"><img src="img/pass/goal-cloud.png" alt=""></span><b>Clear the goals</b><em>Clear the storm clouds, collect orbs and untie knots before you run out of moves.</em></div>
+      <div><span class="hv"><img class="rnd" src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe with Luma</b><em>When Luma glows, take a real slow breath. The slower you breathe, the bigger Luma's Dive.</em></div>
+      <div><span class="hv"><img src="img/ui/pw-bear.png" alt=""></span><b>Call the animals</b><em>Deer, Hawk, Monkey, Tiger and Bear each help in their own way. Tap one to see it work.</em></div>
+    </div>
+    <div class="stack"><button class="btn gold" id="howDone">Let's play</button><button class="linkbtn" id="howPractice">Practise in the Grove</button></div>
+  </div></div>
   <div class="ov" id="guide" hidden><div class="card" role="dialog" aria-labelledby="gTitle">
     <div class="eyebrow" style="color:var(--gold2)" id="gEyebrow">Bear Root</div>
     <h2 class="display" id="gTitle">Breathe with Sorin</h2>
@@ -2607,18 +2728,19 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
       <div class="stbubble" id="stBubble"><p id="stText"></p><span class="stnext" aria-hidden="true"></span></div>
       <div class="sttap" id="stTap">Tap to continue</div>
     </div>
-    <div class="loadout" id="loadout" hidden>
-      <div class="lohead"><span class="loorb" id="loOrb"></span><div><div class="loverb" id="loVerb"></div><div class="loname display" id="loName"></div></div></div>
-      <div class="logoal" id="loGoal"></div>
-      <div class="losect"><b>Board</b></div>
-      <div class="sizepick" id="sizePick" role="radiogroup" aria-label="Board size">
-        <button data-size="little" role="radio"><span class="minigrid g5"></span><b>Little</b><small>5×5 · 3 elements</small></button>
-        <button data-size="full" role="radio"><span class="minigrid g8"></span><b>Full</b><small>8×7 · 5 elements</small></button>
+    <div class="loadout lo2" id="loadout" hidden>
+      <div class="loribbon"><span class="loorb" id="loOrb"></span><b class="display" id="loEp">Episode 1</b></div>
+      <div class="loplace"><div class="loname display" id="loName"></div><div class="loverb" id="loVerb"></div></div>
+      <div class="lostorm" id="loStorm" hidden></div>
+      <div class="lopanel">
+        <div class="lotitle"><b>Goals</b><span class="lomoves" id="loMoves"></span></div>
+        <div class="lotiles" id="loGoal"></div>
+        <div class="loboard" id="loBoard"></div>
       </div>
-      <div class="losect"><b>Bring a charm</b></div>
-      <div class="charmshelf"><div class="charms" id="charmRow"></div></div>
-      <div class="charmhint" id="charmHint">Tap one to bring it along</div>
-      <button class="btn gold big begin" id="iGo">Begin</button>
+      <div class="loextra" id="loExtra"></div>
+      <div class="lotitle out"><b>Bring a charm</b><span>optional</span></div>
+      <div class="lotray"><div class="charms2" id="charmRow"></div><div class="charmhint" id="charmHint">Tap a charm to bring it along</div></div>
+      <button class="btn big loplay" id="iGo">Play</button>
     </div>
   </div>
   <div class="enter" id="enter" hidden>
@@ -2989,7 +3111,7 @@ function save() { try { localStorage.setItem('kcq-v1', JSON.stringify(S)); } cat
 
 /* ---------- audio ---------- */
 let AC = null, muted = false;
-try { muted = localStorage.getItem('kcq-mute') === '1'; } catch (e) {}
+try { muted = localStorage.getItem('kcq-mute2') === '1'; } catch (e) {}   // sound starts ON for everyone
 function ac() {
   if (!AC) { try { AC = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { return null; } }
   if (AC.state === 'suspended') AC.resume();
@@ -3294,17 +3416,18 @@ function breathSound(phase, secs) {
   }
 }
 function syncMusic() {
-  $$('[data-music]').forEach(b => { b.classList.toggle('off', !S.musicOn); b.setAttribute('aria-label', S.musicOn ? 'Music on' : 'Music off'); b.style.opacity = S.musicOn ? 1 : .55; });
+  $$('[data-music]').forEach(b => { b.innerHTML = NOTE_SVG; b.classList.toggle('off', !S.musicOn); b.setAttribute('aria-label', S.musicOn ? 'Music on' : 'Music off'); b.style.opacity = S.musicOn ? 1 : .55; });
 }
 $$('[data-music]').forEach(b => b.addEventListener('click', () => {
   ac(); S.musicOn = !S.musicOn; save(); syncMusic();
   toast(S.musicOn ? 'Music on' : 'Music off');
 }));
+const SPK_ON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>', SPK_OFF = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M17 9l5 6M22 9l-5 6"/></svg>', NOTE_SVG = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5" fill="currentColor"/><circle cx="16.5" cy="16" r="2.5" fill="currentColor"/></svg>';
 function syncMute() {
-  $$('[data-mute]').forEach(b => { b.textContent = muted ? '♪̸' : '♪'; b.setAttribute('aria-label', muted ? 'Sound off' : 'Sound on'); b.style.opacity = muted ? .55 : 1; });
+  $$('[data-mute]').forEach(b => { b.innerHTML = muted ? SPK_OFF : SPK_ON; b.setAttribute('aria-label', muted ? 'Sound off' : 'Sound on'); b.style.opacity = muted ? .55 : 1; });
 }
 $$('[data-mute]').forEach(b => b.addEventListener('click', () => {
-  muted = !muted; try { localStorage.setItem('kcq-mute', muted ? '1' : '0'); } catch (e) {}
+  muted = !muted; try { localStorage.setItem('kcq-mute2', muted ? '1' : '0'); } catch (e) {}
   syncMute(); if (!muted) boop(4);
 }));
 
@@ -4189,10 +4312,25 @@ function showWorld(tod = timeOfDay()) {
   const still = $('#hwStill'); still.src = `img/world/${f}.jpg`;
   if (reduce) return;
   const back = worldFront === 'hwA' ? 'hwB' : 'hwA', v = $('#' + back), old = $('#' + worldFront);
-  v.src = `img/world/${f}.mp4`; v.poster = `img/world/${f}.jpg`;
+  v.src = `img/world/${f}.mp4?v=60`; v.poster = `img/world/${f}.jpg`;
   v.oncanplay = () => { v.oncanplay = null; v.play().catch(() => {}); v.classList.add('on'); old.classList.remove('on'); setTimeout(() => { if (!old.classList.contains('on')) { old.pause(); } }, first ? 0 : 1600); };
   worldFront = back;
 }
+// gapless: just before the clip ends, hand off to the second player already sitting at frame 0,
+// so the browser's own loop restart (which can stutter on phones) is never seen
+setInterval(() => {
+  if (reduce || $('#map').hidden) return;
+  const v = $('#' + worldFront), o = $('#' + (worldFront === 'hwA' ? 'hwB' : 'hwA'));
+  if (!v.duration || v.paused) return;
+  const left = v.duration - v.currentTime;
+  if (left < 1.2 && o.getAttribute('src') !== v.getAttribute('src')) { o.src = v.getAttribute('src'); o.load(); }
+  if (left < 1.2 && o.readyState >= 2 && !o.dataset.armed) { o.currentTime = 0; o.pause(); o.dataset.armed = '1'; }
+  if (left < 0.18 && o.dataset.armed) {
+    delete o.dataset.armed; o.style.transition = v.style.transition = 'none';
+    o.play().catch(() => {}); o.classList.add('on'); v.classList.remove('on'); worldFront = o.id;
+    setTimeout(() => { v.pause(); o.style.transition = v.style.transition = ''; }, 400);
+  }
+}, 60);
 /* ---------- the world never stands still ----------
    Some phones (Low Power Mode, some embedded views) refuse to autoplay video. So a light canvas layer
    always runs on top of the loop: petals and light rays by day, mist at dawn, gold motes at golden hour,
@@ -4491,19 +4629,24 @@ let LI = 0, L = LEVELS[0];
 function openLevel(i) {
   if (S.hearts <= 0) { toast('Out of hearts. Refill them in the shop, or wait for them to come back.'); showOv('shop'); return; }
   LI = i; L = LEVELS[i];
-  if (!S.boardSize) S.boardSize = i === 0 ? 'little' : 'full';
   // first time only: the Practice Grove walkthrough, then episode 1
   if (i === 0 && !S.practiceDone && !babyOn()) { runPractice(() => { LI = 0; L = LEVELS[0]; runStory(); }); return; }
   runStory();
 }
-function renderSize() {
-  const cur = S.boardSize || 'full';
-  $$('#sizePick button').forEach(b => { b.classList.toggle('on', b.dataset.size === cur); b.setAttribute('aria-checked', b.dataset.size === cur); });
+// The board grows with the player: small and simple first, the full shaped board once they're ready.
+// The littlest (ages 2-4) stay on each size twice as long.
+function boardFor(i = LI) {
+  if (babyOn()) return { R: 8, C: 7, n: 5, tier: 3, shaped: false };
+  const ep = i + 1, k = band() === '2-4' ? 2 : 1;
+  if (ep <= 2 * k) return { R: 5, C: 5, n: 3, tier: 1, name: 'Sprout board' };
+  if (ep <= 4 * k) return { R: 6, C: 6, n: 4, tier: 2, name: 'Grove board' };
+  return { R: 8, C: 7, n: 5, tier: 3, name: 'Full board', shaped: true };
 }
-$('#sizePick').addEventListener('click', e => {
-  const b = e.target.closest('[data-size]'); if (!b) return;
-  S.boardSize = b.dataset.size; save(); renderSize(); renderGoal(); tick();
-});
+function boardPool(el, n) {
+  const back = Object.keys(CREATES).find(k => CREATES[k] === el);
+  const p = [el, CREATES[el], back, CREATES[CREATES[el]]];
+  return n >= 5 ? TYPES : p.slice(0, n);
+}
 let charmPick = new Set();
 /* ---------- heroes: the player picks who goes on the quest (no labels, just faces) ---------- */
 const HEROES = ['kai', 'hero-b2', 'hero-b3', 'hero-b4', 'hero-b5', 'hero-b6', 'hero-g1', 'hero-g2', 'hero-g3', 'hero-g4', 'hero-g5', 'hero-g6'];
@@ -4566,13 +4709,14 @@ const DIFF = {
   super: { name: 'Thunderstorm', label: 'Super Hard', moves: 0.8, clouds: 4, knots: 4, gems: 1.2, coin: 3, xp: 2 }
 };
 function levelSpec(i = LI) {
-  const b = LEVELS[i], diff = babyOn() ? 'normal' : epDifficulty(i + 1), d = DIFF[diff], little = S.boardSize === 'little' && !babyOn();
+  const b = LEVELS[i], diff = babyOn() ? 'normal' : epDifficulty(i + 1), d = DIFF[diff], bf = boardFor(i), little = bf.tier === 1;
   const ep = i + 1, soft = diff === 'hard' ? Math.min(1, (stormRank(ep) - 1) / 2) : 1;   // 1st Stormy: no move cut, 2nd: half, 3rd on: full
   let moves = Math.round(b.moves * (1 - (1 - d.moves) * soft)), clouds = b.clouds + Math.round(d.clouds * (diff === 'hard' ? Math.max(.5, soft) : 1)), knots = b.knots ? b.knots + Math.round(d.knots * (diff === 'hard' ? Math.max(.5, soft) : 1)) : 0, gems = b.gems ? Math.round(b.gems * d.gems) : 0;
   if (babyOn()) { knots = 0; gems = 0; }                   // baby boards are gentle: clouds only
   if (little) { clouds = Math.min(4, clouds); moves -= 2; knots = Math.ceil(knots / 2); gems = Math.round(gems * 0.6); }
+  else if (bf.tier === 2) { clouds = Math.min(6, clouds); moves -= 1; knots = Math.ceil(knots * 0.75); gems = Math.round(gems * 0.8); }
   // never overstuff: obstacles stay a small share of the cells, so the board always has room to breathe
-  const cells = little ? 25 : shapeCells(b.shape);
+  const cells = bf.tier < 3 ? bf.R * bf.C : shapeCells(b.shape);
   clouds = Math.min(clouds, Math.round(cells * 0.2)); knots = Math.min(knots, Math.round(cells * 0.12));
   if (S.buddy === 'water' && !babyOn()) moves += 2 + giftTier('water');   // Nami's gift: +3 to +6 as she grows
   // Luma helps after a loss: +3 moves per try on the same episode (up to +9), so nobody gets stuck and quits
@@ -4583,7 +4727,7 @@ function levelSpec(i = LI) {
 const goalNums = () => levelSpec();
 let storyRun = 0;
 async function runStory() {
-  const run = ++storyRun, st = $('#story'); lastSpeaker = null;
+  const run = ++storyRun, st = $('#story'); lastSpeaker = null; st.classList.remove('lo-up');
   stBgFront = 0; $('#stBg').style.opacity = 1; $('#stBg2').style.opacity = 0;
   $('#stBg').style.backgroundImage = `url(${storyBg(0, 'hero')})`;
   const dd = DIFF[epDifficulty(LI + 1)];
@@ -4888,40 +5032,49 @@ function showLoadout() {
   $('#loOrb').innerHTML = orbHTML(L.elem);
   $('#loVerb').textContent = EMO_VERB[L.elem];
   $('#loName').textContent = L.place;
-  renderSize(); renderCharms(); renderGoal();
-  lo.hidden = false; void lo.offsetWidth; lo.classList.add('up');
+  $('#loEp').textContent = `Episode ${LI + 1}`;
+  renderCharms(); renderGoal();
+  lo.hidden = false; void lo.offsetWidth; lo.classList.add('up'); $('#story').classList.add('lo-up');
   chord([392, 523.25, 659.25], 0.06);
 }
 function renderGoal() {
-  const g = goalNums();
-  const d = DIFF[g.diff];
+  const g = goalNums(), d = DIFF[g.diff], bf = boardFor(LI);
   S.seen = S.seen || {};
   const firstStorm = d.name && !S.seen['diff-' + g.diff];
   if (d.name) { S.seen['diff-' + g.diff] = 1; save(); }
-  $('#loGoal').innerHTML = (d.name ? `<div class="diffban ${g.diff}"><b>⚡ ${d.name} episode</b><span>${d.label} · rewards ×${d.coin}</span>${firstStorm ? `<em>A little harder, and it pays ${d.coin === 2 ? 'double' : 'triple'}. Take your time. If it doesn’t work out, Luma gives you extra moves next try.</em>` : ''}</div>` : '')
-    + (g.help ? `<div class="helpban">💛 Luma’s help: +${g.help} moves this try</div>` : '')
-    + `<span class="gchip">☁ ${g.clouds} storm clouds</span>${g.gems ? `<span class="gchip"><i style="background:${ELEM[L.elem].hue}"></i>${g.gems} ${ELEM[L.elem].name} orbs</span>` : ''}${g.knots ? `<span class="gchip">🪢 ${g.knots} knots</span>` : ''}<span class="gchip">${g.moves} moves</span>`
-    + ((S.glow || 0) > 0 && !babyOn() ? `<div class="glowban"><b>🔥 Glow streak ×${Math.min(3, S.glow)}</b><span>${['', 'You start with a lantern', 'You start with a lantern and a Blossom', 'You start with a lantern, a Blossom and a spirit star'][Math.min(3, S.glow)]}</span></div>` : '');
+  $('#loadout').classList.toggle('stormy', !!d.name);
+  const st = $('#loStorm'); st.hidden = !d.name;
+  if (d.name) st.innerHTML = `<img src="img/pass/goal-cloud.png" alt=""><b>⚡ ${d.name} episode</b><span>${d.label} · rewards ×${d.coin}</span>${firstStorm ? `<em>A little harder, and it pays ${d.coin === 2 ? 'double' : 'triple'}. Take your time. If it doesn't work out, Luma lends you extra moves next try.</em>` : ''}`;
+  $('#loMoves').innerHTML = `<i>↻</i>${g.moves} moves`;
+  const tile = (img, n, label) => `<div class="lotile"><span class="gimg">${img}</span><b>${n}</b><small>${label}</small></div>`;
+  $('#loGoal').innerHTML = tile('<img src="img/pass/goal-cloud.png" alt="">', g.clouds, 'storm clouds')
+    + (g.gems ? tile(`<span class="orbw">${orbHTML(L.elem)}</span>`, g.gems, `${ELEM[L.elem].name} orbs`) : '')
+    + (g.knots ? tile('<img src="img/pass/goal-knot.png" alt="">', g.knots, 'knots') : '');
+  const fresh = bf.tier > 1 && (S.boardTier || 1) < bf.tier;
+  $('#loBoard').innerHTML = `<span class="mg"></span>${bf.R}×${bf.C} board · ${bf.n} elements${fresh ? '<span class="new">Bigger board!</span>' : ''}`;
+  if (bf.tier > (S.boardTier || 1)) { S.boardTier = bf.tier; save(); }
+  $('#loExtra').innerHTML = (g.help ? `<span class="pill help">💛 Luma’s help +${g.help} moves</span>` : '')
+    + ((S.glow || 0) > 0 && !babyOn() ? `<span class="pill glow">🔥 Glow ×${Math.min(3, S.glow)}: ${['', 'a lantern', 'lantern + Blossom', 'lantern, Blossom, spirit star'][Math.min(3, S.glow)]}</span>` : '');
 }
 $('#iGo').addEventListener('click', async () => {
   const st = $('#story');
   chord([523.25, 659.25, 783.99, 1046.5], 0.06);
   $('#loadout').classList.remove('up');
-  st.classList.remove('show'); await wait(380); st.hidden = true;
+  st.classList.remove('show'); await wait(380); st.hidden = true; st.classList.remove('lo-up');
   startLevel();
 });
 function charmCount(id) { return ((S.charms || {})[id]) || 0; }
 function renderCharms() {
-  $('#charmRow').innerHTML = CHARMS.map(c => {
+  $('#charmRow').innerHTML = CHARMS.map((c, k) => {
     const n = charmCount(c.id);
-    return `<button class="charm ${charmPick.has(c.id) ? 'on' : ''}" data-charm="${c.id}" style="--eh:${ELEM[c.elem].hue};--k:${CHARMS.indexOf(c)}"><span class="gem"><img src="img/icons/boost-${c.id}.jpg" alt=""></span><i class="${n ? '' : 'buy'}">${n ? `×${n}` : `${c.cost}`}</i><b>${c.name}</b></button>`;
+    return `<button class="charm2 ${charmPick.has(c.id) ? 'on' : ''}" data-charm="${c.id}" style="--eh:${ELEM[c.elem].hue};--k:${k}" aria-label="${c.name}"><span class="slot"><img src="img/pass/charm-${c.id}.png" alt=""></span><i class="tag ${n ? 'have' : 'buy'}">${n ? `×${n}` : `<i></i>${c.cost}`}</i><span class="check">✓</span><b>${c.name}</b></button>`;
   }).join('');
 }
 $('#charmRow').addEventListener('click', e => {
-  const b = e.target.closest('.charm'); if (!b) return;
+  const b = e.target.closest('.charm2'); if (!b) return;
   const c = CHARMS.find(x => x.id === b.dataset.charm);
   const hint = $('#charmHint');
-  if (charmPick.has(c.id)) { charmPick.delete(c.id); hint.textContent = 'Tap one to bring it along'; hint.classList.remove('on'); }
+  if (charmPick.has(c.id)) { charmPick.delete(c.id); hint.textContent = 'Tap a charm to bring it along'; hint.classList.remove('on'); }
   else {
     if (!charmCount(c.id) && S.coins < c.cost) { toast('Not enough coins for that charm.'); return; }
     charmPick.add(c.id); hint.textContent = `${c.name}: ${c.what}`; hint.classList.add('on'); hint.style.setProperty('--eh', ELEM[c.elem].hue);
@@ -4930,7 +5083,7 @@ $('#charmRow').addEventListener('click', e => {
     try { navigator.vibrate && navigator.vibrate([8, 30, 12]); } catch (e) {}
   }
   renderCharms();
-  const nb = $(`#charmRow [data-charm="${c.id}"] .gem`), host = $('#loadout');
+  const nb = $(`#charmRow [data-charm="${c.id}"] .slot`), host = $('#loadout');
   if (nb && charmPick.has(c.id) && !reduce) {
     const r = nb.getBoundingClientRect(), a = host.getBoundingClientRect();
     sparkleAt(host, r.left - a.left + r.width / 2, r.top - a.top + host.scrollTop + r.height / 2, [ELEM[c.elem].hue, ELEM[c.elem].glow, '#FFFFFF'], 18);
@@ -7218,11 +7371,10 @@ function startLevel() {
   if (practice) { practice = null; document.body.classList.remove('practicing'); }
   setGroove('play');
   // Little board: 5x5 with the place's element and its two cycle neighbours, and fewer clouds
-  const little = S.boardSize === 'little' && !babyOn(), base = LEVELS[LI];
-  R = little ? 5 : 8; C = little ? 5 : 7;
-  POOL = little ? [base.elem, CREATES[base.elem], Object.keys(CREATES).find(k => CREATES[k] === base.elem)] : TYPES;
+  const bf = boardFor(LI), base = LEVELS[LI];
+  R = bf.R; C = bf.C; POOL = boardPool(base.elem, bf.n);
   L = Object.assign({}, base, levelSpec(LI));
-  setMask(little || babyOn() ? null : base.shape);
+  setMask(bf.shaped ? base.shape : null);
   $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
   $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
@@ -7933,7 +8085,6 @@ function ageStep() {
     $('#ageGo').onclick = () => {
       if (!agePicked) return;
       S.band = agePicked;
-      if (agePicked === '2-4') S.boardSize = 'little';       // the littlest start on the little board
       save(); chord([523.25, 659.25, 783.99, 1046.5], 0.08);
       st.hidden = true; hp.hidden = false; res(agePicked);
     };
@@ -8387,7 +8538,9 @@ $$('[data-play]').forEach(b => b.addEventListener('click', () => {
 }));
 $('#retut').addEventListener('click', () => { ac(); runPractice(); });
 $('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome(); });
-$('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#welcome').hidden = false; $('#welcome').scrollTop = 0; });
+$('#howOpen').addEventListener('click', () => { ac(); tick(); showOv('howov'); });
+$('#howDone').addEventListener('click', () => hideOv('howov'));
+$('#howPractice').addEventListener('click', async () => { await hideOv('howov'); runPractice(); });
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
 if ($('#elemTable')) $('#elemTable').innerHTML = LEVELS.map(l => `<div class="elemrow"><span class="eo">${orbHTML(l.elem)}</span><b>${ELEM[l.elem].name}</b><em>${l.shift} · ${l.place}</em></div>`).join('');
 $('#cycleRow').innerHTML = ['wood', 'fire', 'earth', 'metal', 'water'].map(e => `<span class="eo">${orbHTML(e)}</span>`).join('<i>→</i>') + '<i>↻</i>';
@@ -8421,7 +8574,9 @@ async function introSplash() {
 }
 introSplash();
 syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); addCardX();
-if (/[?&]fxlab=1/.test(location.search)) setTimeout(fxLab, 700);
+
+if (!S.audio2) { S.musicOn = false; S.audio2 = 1; save(); }   // music starts OFF for everyone
+syncMute(); syncMusic();
 renderQuests(); renderSeals(); if (S.babyMode) { S.babyLog = S.babyLog || { sessions: 0, seconds: 0 }; S.babyLog.sessions++; S.babyLog.since = Date.now(); } setBaby(S.babyMode); renderHome();
 })();
 </script>
