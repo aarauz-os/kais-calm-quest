@@ -2437,6 +2437,14 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
 .chold .hsprite{animation:pkbreath 3.4s ease-in-out infinite}
 .chold .hsprite:nth-child(2){animation:pkcheer .9s ease-in-out infinite}
 .choldrail{display:block;height:16px;margin-top:-2px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#C98F4E,#9A6430 30%,#7A4A22 70%,#5E3616);box-shadow:inset 0 2px 0 rgba(255,220,160,.55),0 0 0 1.5px #E3BC6A,0 4px 0 #3E220A}
+
+/* ================= v71 orb breaks (Royal Kingdom timing) ================= */
+#fxc{position:absolute;left:0;top:0;z-index:7;pointer-events:none}
+#board .tile.pop .orb{animation:implode .1s cubic-bezier(.55,0,.85,.4) var(--pd,0ms) forwards !important;opacity:1 !important;transition:none !important}
+@keyframes implode{0%{transform:scale(1)}35%{transform:scale(1.1)}100%{transform:scale(.14);opacity:.25}}
+#board .tile.pop .spfx,#board .tile.pop .knotx{display:none}
+.tile.land .orb{animation:land .24s cubic-bezier(.3,1.4,.5,1)}
+@keyframes land{0%{transform:scale(1.08,.88) translateY(4%)}55%{transform:scale(.97,1.04)}100%{transform:none}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -5496,6 +5504,7 @@ function sizeBoard() {
   boardEl.style.setProperty('--t', T + 'px');
   all().forEach(t => place(t, t.r, t.c, false));
   if (board.length) drawCells();
+  if (FX.cv) fxFit();
   if (typeof placePeek === 'function' && !$('#peek').hidden) setTimeout(placePeek, 20);
 }
 addEventListener('resize', () => { if (!$('#game').hidden) { sizeBoard(); sizeRain(); } });
@@ -6070,14 +6079,14 @@ async function resolve(clear, groups, moved) {
       setTimeout(() => { if (board[m.t.r] && board[m.t.r][m.t.c] === m.t) spCallout(m.t); }, 500);
     });
     gravity();
-    await wait(reduce ? 60 : 280);
+    await wait(reduce ? 60 : Math.max(120, fallEnd * 0.8));   // the next check starts as the last orbs settle
     await collectClouds();
     const m = findMatches(); clear = m.clear; groups = m.groups; moved = null; combo++;
   }
 }
 
 async function popSet(set) {
-  const arr = [...set];
+  const arr = [...set]; let maxPd = 0;
   arr.forEach(t => {
     if (board[t.r][t.c] === t) board[t.r][t.c] = null;
     ids.delete(String(t.id));
@@ -6085,8 +6094,9 @@ async function popSet(set) {
     const exit = popExit || t.type, pd = t._pd || 0; delete t._pd;
     if (pd) t.el.style.setProperty('--pd', pd + 'ms');
     t.el.classList.add('pop', `pop-${exit}`);
-    if (!reduce && t.type !== 'spirit') { if (pd) setTimeout(() => elementClear(exit, t), pd); else elementClear(exit, t); }
-    setTimeout(() => t.el.remove(), 600 + pd);
+    if (!reduce) setTimeout(() => breakFx(t, t.type === 'spirit' ? 'spirit' : exit), pd + 75);   // the orb squeezes, then bursts
+    setTimeout(() => t.el.remove(), 115 + pd);
+    maxPd = Math.max(maxPd, pd);
   });
   const pw = powerUsed, special = arr.some(t => t.sp || t.type === 'spirit');
   popExit = null; powerUsed = null;
@@ -6096,7 +6106,6 @@ async function popSet(set) {
     grooveHeat(juice);
     if (combo === 0 && !pw) setTimeout(() => feedNext(arr), 120);        // Creation: this match feeds the next element
     sparks(arr, juice);
-    shards(arr, juice);
     scorePop(arr, arr.length * (combo + 1) * 10, juice);
     if (juice >= 5) shake(Math.min(10, 1 + juice / 2));
     // powers with their own signature effect skip the generic rings, so each one feels like itself
@@ -6126,7 +6135,7 @@ async function popSet(set) {
   else if (arr.length >= 5 || combo >= 2) peekReact('cheer', 1200);
   if (combo >= 1 && performance.now() - cheerAt > 2500) { cheerAt = performance.now(); say(rnd(CHEERS)); }
   hud();
-  await wait(reduce ? 40 : 250);
+  await wait(reduce ? 40 : 105 + maxPd);          // the next orbs start falling while the pieces are still flying
 }
 
 // Refills lean away from ready-made lines (about 3 times in 4), so chain reactions stay a treat, not constant.
@@ -6137,19 +6146,34 @@ function calmPick(r, c) {
   const ok = POOL.filter(t => !makes(t));
   return ok.length ? rnd(ok) : rnd(POOL);
 }
+// Falling feels like gravity: longer drops take a little longer and speed up, then land with a soft squash.
+let fallEnd = 0;
+function fallTo(t, dist, delay = 0) {
+  if (reduce || dist <= 0) return;
+  const ms = Math.min(380, 130 + dist * 42);
+  t.el.style.transitionDuration = ms + 'ms';
+  t.el.style.transitionTimingFunction = 'cubic-bezier(.45,.02,.7,1)';
+  fallEnd = Math.max(fallEnd, delay + ms);
+  clearTimeout(t._land);
+  t._land = setTimeout(() => { if (!t.el.isConnected) return; t.el.style.transitionDuration = ''; t.el.style.transitionTimingFunction = '';
+    t.el.classList.remove('land'); void t.el.offsetWidth; t.el.classList.add('land'); setTimeout(() => t.el.classList.remove('land'), 260); }, delay + ms);
+}
 function gravity() {
+  fallEnd = 0;
   for (let c = 0; c < C; c++) {
     const top = colTop(c);
     let w = colBot(c);
     for (let r = colBot(c); r >= top; r--) {
       const t = board[r][c];
-      if (t) { if (r !== w) { board[w][c] = t; board[r][c] = null; place(t, w, c); } w--; }
+      if (t) { if (r !== w) { board[w][c] = t; board[r][c] = null; fallTo(t, w - r, 0); place(t, w, c); } w--; }
     }
     const n = w + 1 - top;
     for (let r = w; r >= top; r--) {
       const t = newTile(calmPick(r, c)); board[r][c] = t;
-      t.el.style.transitionDelay = `${c * 26 + (w - r) * 16}ms`;
+      const dl = c * 14 + (w - r) * 22;
+      t.el.style.transitionDelay = `${dl}ms`;
       setTimeout(() => { t.el.style.transitionDelay = ''; }, 900);
+      fallTo(t, n, dl);
       if (growNext) { t.el.classList.add('grow'); setTimeout(() => t.el.classList.remove('grow'), 1300); }
       drop(t, r - n, r, c);
     }
@@ -7182,6 +7206,93 @@ function bit(cls, x, y, size) {
 }
 const gone = a => { a.onfinish = () => a.effect.target.remove(); };
 let growNext = false, popExit = null, powerUsed = null;
+
+/* ---------- breaking orbs, after Royal Kingdom: squeeze, a soft puff, then real particles ----------
+   One canvas, drawn at 60fps. Each element leaves the board its own way:
+   fire flares and drifts up as embers and smoke, water splashes and evaporates into mist,
+   wood scatters leaves that flutter down, metal glints and shatters into slivers, earth crumbles to dust and pebbles. */
+const FX = { cv: null, g: null, p: [], on: false, dpr: 1 };
+function fxLayer() {
+  if (FX.cv && FX.cv.isConnected) return FX;
+  const cv = document.createElement('canvas'); cv.id = 'fxc'; wrap.appendChild(cv); FX.cv = cv; FX.g = cv.getContext('2d'); fxFit(); return FX;
+}
+function fxFit() {
+  if (!FX.cv) return;
+  const r = wrap.getBoundingClientRect(), d = Math.min(2, devicePixelRatio || 1);
+  FX.dpr = d; FX.cv.width = Math.round(r.width * d); FX.cv.height = Math.round(r.height * d);
+  FX.cv.style.width = r.width + 'px'; FX.cv.style.height = r.height + 'px';
+}
+const FX_COL = { wood: ['#9BE07F', '#4FB05A', '#2E7D3A'], fire: ['#FFD27A', '#FF8A4A', '#E04B42'], earth: ['#FFE08A', '#F0B93A', '#B8862F'], metal: ['#FFFFFF', '#DCE3E9', '#A9B7CC'], water: ['#CFEAFF', '#5AA7E6', '#2A6FB8'], spirit: ['#FFF6D8', '#FFE08A', '#FFFFFF'] };
+function breakFx(t, type) {
+  const L2 = fxLayer(); if (!L2.cv) return;
+  const wr = wrap.getBoundingClientRect(), br = boardEl.getBoundingClientRect();
+  const x = br.left - wr.left + t.c * T + T / 2, y = br.top - wr.top + t.r * T + T / 2;
+  const col = FX_COL[type] || FX_COL.spirit, R = Math.random, P = o => { if (FX.p.length < 420) FX.p.push(Object.assign({ age: 0, rot: R() * 6.28, vr: 0, drag: 0.9, g: 0, a: 1, grow: 0 }, o)); };
+  P({ k: 'ring', x, y, s: T * 0.3, grow: T * 1.6, life: 0.28, a: 0.8 });                                          // the soft puff of light
+  for (let i = 0; i < 6; i++) { const a = R() * 6.28, v = T * (2.4 + R() * 2.6);                               // chunks in the orb's own colour
+    P({ k: 'chunk', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - T * 2.2, g: T * 11, s: T * (0.15 + R() * 0.1), c: col[i % 3], vr: (R() - 0.5) * 14, life: 0.5 + R() * 0.2, drag: 0.985 }); }
+  if (type === 'fire') {
+    P({ k: 'glow', x, y, s: T * 0.35, grow: T * 1.4, life: 0.22, c: '#FFB14A', a: 0.9 });
+    for (let i = 0; i < 7; i++) P({ k: 'ember', x: x + (R() - 0.5) * T * 0.5, y: y + (R() - 0.5) * T * 0.3, vx: (R() - 0.5) * T * 1.2, vy: -T * (1.4 + R() * 1.6), g: -T * 0.6, s: T * (0.035 + R() * 0.04), c: R() < 0.5 ? '#FFD27A' : '#FF8A4A', life: 0.7 + R() * 0.5, drag: 0.97, sway: R() * 6 });
+    for (let i = 0; i < 3; i++) P({ k: 'puff', x: x + (R() - 0.5) * T * 0.4, y, vx: (R() - 0.5) * T * 0.4, vy: -T * (0.7 + R() * 0.5), s: T * 0.22, grow: T * 0.9, c: '#9A8FA8', a: 0.32, life: 0.9 + R() * 0.3, drag: 0.98 });
+  } else if (type === 'water') {
+    for (let i = 0; i < 8; i++) { const a = -Math.PI / 2 + (R() - 0.5) * 2.6, v = T * (2.5 + R() * 2.5);
+      P({ k: 'drop', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: T * 14, s: T * (0.06 + R() * 0.06), c: col[i % 3], life: 0.45 + R() * 0.2, drag: 0.985 }); }
+    for (let i = 0; i < 4; i++) P({ k: 'puff', x: x + (R() - 0.5) * T * 0.6, y: y + T * 0.1, vx: (R() - 0.5) * T * 0.3, vy: -T * (0.5 + R() * 0.4), s: T * 0.2, grow: T * 1.0, c: '#E6F4FF', a: 0.45, life: 1.0 + R() * 0.4, drag: 0.985, delay: 0.12 });
+  } else if (type === 'wood') {
+    for (let i = 0; i < 6; i++) { const a = -Math.PI / 2 + (R() - 0.5) * 2.2, v = T * (1.8 + R() * 1.8);
+      P({ k: 'leaf', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: T * 2.2, s: T * (0.14 + R() * 0.06), c: col[i % 3], vr: (R() - 0.5) * 8, life: 0.95 + R() * 0.4, drag: 0.93, sway: R() * 6 }); }
+  } else if (type === 'metal') {
+    P({ k: 'glint', x, y, s: T * 0.2, grow: T * 1.2, life: 0.24, a: 1 });
+    for (let i = 0; i < 7; i++) { const a = R() * 6.28, v = T * (3.5 + R() * 3);
+      P({ k: 'sliver', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - T, g: T * 10, s: T * (0.14 + R() * 0.1), c: col[i % 3], vr: (R() - 0.5) * 18, life: 0.45 + R() * 0.2, drag: 0.97 }); }
+  } else if (type === 'earth') {
+    for (let i = 0; i < 3; i++) P({ k: 'puff', x: x + (R() - 0.5) * T * 0.5, y: y + T * 0.1, vx: (R() - 0.5) * T * 0.8, vy: -T * 0.25, s: T * 0.22, grow: T * 0.8, c: '#D9B77A', a: 0.4, life: 0.7 + R() * 0.3, drag: 0.95 });
+    for (let i = 0; i < 6; i++) { const a = -Math.PI / 2 + (R() - 0.5) * 2.8, v = T * (2 + R() * 2);
+      P({ k: 'pebble', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: T * 16, s: T * (0.08 + R() * 0.06), c: ['#C9953C', '#8A5A2A', '#E0B060'][i % 3], vr: (R() - 0.5) * 10, life: 0.55 + R() * 0.2, drag: 0.98 }); }
+  } else {
+    for (let i = 0; i < 8; i++) P({ k: 'ember', x, y, vx: (R() - 0.5) * T * 3, vy: (R() - 0.5) * T * 3, s: T * 0.05, c: col[i % 3], life: 0.6, drag: 0.94 });
+  }
+  if (!FX.on) { FX.on = true; FX.last = performance.now(); requestAnimationFrame(fxTick); }
+}
+const FX_SPR = {};
+function fxSprite(kind, c) {
+  const key = kind + c; if (FX_SPR[key]) return FX_SPR[key];
+  const cv = document.createElement('canvas'); cv.width = cv.height = 64; const g = cv.getContext('2d'), gr = g.createRadialGradient(32, 32, kind === 'ring' ? 11 : 0, 32, 32, 32);
+  if (kind === 'ring') { gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(0.72, 'rgba(255,255,255,.8)'); gr.addColorStop(1, 'rgba(255,255,255,0)'); }
+  else { gr.addColorStop(0, c); gr.addColorStop(kind === 'ember' ? 0.35 : 0.5, c.length === 7 ? c + '99' : c); gr.addColorStop(1, 'rgba(255,255,255,0)'); }
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return (FX_SPR[key] = cv);
+}
+function fxTick(now) {
+  const g = FX.g, d = FX.dpr, dt = Math.min(0.05, (now - FX.last) / 1000) * (FX.slow || 1); FX.last = now;
+  g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, FX.cv.width, FX.cv.height); g.setTransform(d, 0, 0, d, 0, 0);
+  FX.p = FX.p.filter(p => {
+    if (p.delay > 0) { p.delay -= dt; return true; }
+    p.age += dt; const u = p.age / p.life; if (u >= 1) return false;
+    if (p.vx !== undefined) { p.vy += (p.g || 0) * dt; p.vx *= Math.pow(p.drag, dt * 60); p.vy *= Math.pow(p.drag, dt * 60); p.x += p.vx * dt; p.y += p.vy * dt; }
+    if (p.sway) p.x += Math.sin(p.age * 7 + p.sway) * T * 0.9 * dt;
+    p.rot += p.vr * dt;
+    const s = p.s + p.grow * u, fade = u < 0.15 ? u / 0.15 : 1 - Math.pow((u - 0.15) / 0.85, 1.6);
+    g.globalAlpha = Math.max(0, p.a * fade);
+    if (p.k === 'ring') g.drawImage(fxSprite('ring', ''), p.x - s, p.y - s, s * 2, s * 2);
+    else if (p.k === 'glow' || p.k === 'puff') g.drawImage(fxSprite('soft', p.c), p.x - s, p.y - s, s * 2, s * 2);
+    else if (p.k === 'ember') { g.globalCompositeOperation = 'lighter'; g.drawImage(fxSprite('ember', p.c), p.x - s * 2.4, p.y - s * 2.4, s * 4.8, s * 4.8); g.globalCompositeOperation = 'source-over'; }
+    else if (p.k === 'glint') { g.globalCompositeOperation = 'lighter'; g.fillStyle = '#FFFFFF'; g.save(); g.translate(p.x, p.y); g.rotate(u * 0.8); g.beginPath(); for (let i = 0; i < 8; i++) { const r2 = i % 2 ? s * 0.14 : s; g.lineTo(Math.cos(i * Math.PI / 4) * r2, Math.sin(i * Math.PI / 4) * r2); } g.closePath(); g.fill(); g.restore(); g.globalCompositeOperation = 'source-over'; }
+    else {
+      g.save(); g.translate(p.x, p.y); g.rotate(p.rot); g.fillStyle = p.c;
+      if (p.k === 'leaf') { g.beginPath(); g.ellipse(0, 0, s, s * 0.45, 0, 0, 6.28); g.fill(); g.strokeStyle = 'rgba(255,255,255,.45)'; g.lineWidth = Math.max(1, s * 0.08); g.beginPath(); g.moveTo(-s * 0.8, 0); g.lineTo(s * 0.8, 0); g.stroke(); }
+      else if (p.k === 'sliver') { g.fillRect(-s * 0.5, -s * 0.09, s, s * 0.18); g.fillStyle = 'rgba(255,255,255,.8)'; g.fillRect(-s * 0.5, -s * 0.09, s, s * 0.06); }
+      else if (p.k === 'drop') { g.beginPath(); g.arc(0, 0, s, 0, 6.28); g.fill(); g.fillStyle = 'rgba(255,255,255,.7)'; g.beginPath(); g.arc(-s * 0.35, -s * 0.35, s * 0.3, 0, 6.28); g.fill(); }
+      else { g.beginPath(); g.moveTo(-s * 0.55, -s * 0.35); g.lineTo(s * 0.45, -s * 0.5); g.lineTo(s * 0.6, s * 0.3); g.lineTo(-s * 0.2, s * 0.55); g.closePath(); g.fill(); g.fillStyle = 'rgba(255,255,255,.4)'; g.beginPath(); g.moveTo(-s * 0.55, -s * 0.35); g.lineTo(s * 0.45, -s * 0.5); g.lineTo(0, 0); g.closePath(); g.fill(); }
+      g.restore();
+    }
+    return true;
+  });
+  g.globalAlpha = 1;
+  if (FX.p.length) requestAnimationFrame(fxTick); else { FX.on = false; g.setTransform(1, 0, 0, 1, 0, 0); g.clearRect(0, 0, FX.cv.width, FX.cv.height); }
+}
+addEventListener('resize', () => setTimeout(fxFit, 80));
+
 function elementClear(type, t) {
   const x = t.c * T + T / 2, y = t.r * T + T / 2, delay = t.c * 24;
   const add = (cls, css) => { const d = document.createElement('div'); d.className = cls; d.style.cssText = css; boardEl.appendChild(d); return d; };
@@ -7371,7 +7482,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -7426,7 +7537,6 @@ function sparks(arr, juice = 3) {
   arr.forEach(t => { if (t.type !== 'spirit') (by[t.type] = by[t.type] || []).push(t); });
   Object.keys(by).forEach((type, k) => {
     const tiles = by[type];
-    fxFor(type, tiles, juice);
     const pan = (tiles.reduce((a, t) => a + t.c, 0) / tiles.length / (C - 1)) * 1.6 - 0.8;
     const step = Math.min(combo * 2 + (tiles.length > 3 ? 1 : 0), LADDER.length - 1);
     const w = tiles.length + extra;
