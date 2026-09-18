@@ -482,10 +482,6 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .t-spirit .orb::before{content:"";position:absolute;inset:18%;border-radius:50%;background:radial-gradient(circle,#fff 0,rgba(255,255,255,.75) 45%,rgba(255,255,255,0) 72%)}
 .t-spirit .orb svg{position:relative;color:#E0A93A}
 @keyframes spin{to{transform:rotate(360deg)}}
-.sp-row .orb,.sp-col .orb{box-shadow:inset 0 0 0 3px #FFE3A0,0 0 10px 2px rgba(255,210,122,.8)}
-.sp-row .orb::after,.sp-col .orb::after{content:"";position:absolute;background:rgba(255,246,214,.9);border-radius:3px}
-.sp-row .orb::after{left:-6%;right:-6%;top:calc(50% - 2px);height:4px}
-.sp-col .orb::after{top:-6%;bottom:-6%;left:calc(50% - 2px);width:4px}
 .tile.sel .orb{transform:scale(1.13);box-shadow:0 0 0 3px #FFF6DE,0 0 16px 5px rgba(255,214,130,.9)}
 .tile.pop .orb{animation:pop .3s cubic-bezier(.3,1.5,.5,1) forwards}
 @keyframes pop{28%{transform:scale(1.4) rotate(-4deg)}55%{transform:scale(1.15)}100%{transform:scale(0) rotate(6deg);opacity:0}}
@@ -1389,11 +1385,6 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .wrow .streakrow{margin:0;padding:0;background:none !important;box-shadow:none !important;font-size:13.5px;line-height:1.35}
 .wincard .practice{text-align:left}
 .wincard .stack .btn.big{width:100%}
-.sp-bomb .orb{box-shadow:inset 0 0 0 3px #FFD7F0,0 0 12px 3px rgba(255,170,220,.85);animation:bombpulse 1.6s ease-in-out infinite}
-.sp-bomb .orb::after{content:"";position:absolute;inset:18%;border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle,#fff 0 18%,transparent 20%),conic-gradient(from 0deg,rgba(255,240,250,.95) 0 10%,transparent 10% 20%,rgba(255,240,250,.95) 20% 30%,transparent 30% 40%,rgba(255,240,250,.95) 40% 50%,transparent 50% 60%,rgba(255,240,250,.95) 60% 70%,transparent 70% 80%,rgba(255,240,250,.95) 80% 90%,transparent 90%);
-  -webkit-mask:radial-gradient(circle,#000 62%,transparent 64%);mask:radial-gradient(circle,#000 62%,transparent 64%)}
-@keyframes bombpulse{50%{box-shadow:inset 0 0 0 3px #fff,0 0 18px 6px rgba(255,170,220,.95)}}
 .goalwrap{min-width:0}
 .goals{display:flex;gap:6px;margin-top:3px;flex-wrap:nowrap}
 .gc{display:inline-flex;align-items:center;gap:5px;padding:3px 8px 3px 4px;border-radius:99px;background:rgba(0,0,0,.25);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
@@ -1416,6 +1407,64 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .gdchips{display:flex;justify-content:center;gap:8px;margin:-2px 0 8px}
 .gdlevel{margin-top:4px;justify-content:center;flex-wrap:wrap;gap:6px}
 .gdlevel .gchip{font-size:12px;padding:4px 9px}
+/* ---------- power pieces: each one looks like what it does ---------- */
+.tile[class*=" sp-"] .orb{color:#fff}
+.tile[class*=" sp-"] .orb svg{width:84% !important;height:84% !important;filter:drop-shadow(0 1px 1.5px rgba(0,0,0,.55)) drop-shadow(0 0 4px rgba(255,255,255,.55));overflow:visible}
+.sp-row .orb,.sp-col .orb{box-shadow:inset 0 0 0 calc(var(--t)*.05) #FFE3A0,0 0 calc(var(--t)*.2) calc(var(--t)*.05) rgba(255,214,122,.85),0 calc(var(--t)*.08) calc(var(--t)*.12) rgba(8,6,3,.62);animation:lanternglow 1.4s ease-in-out infinite}
+@keyframes lanternglow{50%{box-shadow:inset 0 0 0 calc(var(--t)*.05) #FFF6DE,0 0 calc(var(--t)*.34) calc(var(--t)*.08) rgba(255,224,150,.95),0 calc(var(--t)*.08) calc(var(--t)*.12) rgba(8,6,3,.62)}}
+.sp-row .orb svg .ar{animation:arpushx .9s ease-in-out infinite}
+.sp-col .orb svg .ar{animation:arpushx .9s ease-in-out infinite}
+.orb svg .ar.l{--d:-1}.orb svg .ar.r{--d:1}
+@keyframes arpushx{50%{transform:translateX(calc(var(--d) * 1.6px))}}
+.tile .spfx{position:absolute;pointer-events:none;z-index:-1;opacity:.85;border-radius:99px}
+.sp-row .spfx{left:-38%;right:-38%;top:calc(50% - var(--t)*.035);height:calc(var(--t)*.07);background:linear-gradient(90deg,transparent,rgba(255,236,170,.95) 30%,#fff 50%,rgba(255,236,170,.95) 70%,transparent);animation:beamx 1.4s ease-in-out infinite}
+.sp-col .spfx{top:-38%;bottom:-38%;left:calc(50% - var(--t)*.035);width:calc(var(--t)*.07);background:linear-gradient(180deg,transparent,rgba(255,236,170,.95) 30%,#fff 50%,rgba(255,236,170,.95) 70%,transparent);animation:beamx 1.4s ease-in-out infinite}
+@keyframes beamx{50%{opacity:.35;transform:scale(.8)}}
+.sp-bomb .orb{box-shadow:inset 0 0 0 calc(var(--t)*.05) #FFD7F0,0 0 calc(var(--t)*.22) calc(var(--t)*.06) rgba(255,160,215,.9),0 calc(var(--t)*.08) calc(var(--t)*.12) rgba(8,6,3,.62);animation:bombpulse 1.6s ease-in-out infinite}
+.sp-bomb .orb svg{animation:petalspin 7s linear infinite}
+@keyframes petalspin{to{transform:rotate(360deg)}}
+@keyframes bombpulse{50%{transform:scale(1.07);box-shadow:inset 0 0 0 calc(var(--t)*.05) #fff,0 0 calc(var(--t)*.36) calc(var(--t)*.1) rgba(255,170,220,.95),0 calc(var(--t)*.08) calc(var(--t)*.12) rgba(8,6,3,.62)}}
+.sp-bomb .spfx{inset:-14%;border:calc(var(--t)*.04) solid rgba(255,205,235,.9);animation:bloomring 1.6s ease-out infinite}
+@keyframes bloomring{from{transform:scale(.7);opacity:.9}to{transform:scale(1.25);opacity:0}}
+.sp-fly .orb{box-shadow:inset 0 0 0 calc(var(--t)*.05) #FFF3B0,0 0 calc(var(--t)*.24) calc(var(--t)*.06) rgba(255,236,140,.9),0 calc(var(--t)*.08) calc(var(--t)*.12) rgba(8,6,3,.62)}
+.sp-fly .orb svg{animation:flybob 1.2s ease-in-out infinite}
+.sp-fly .orb svg .wing{transform-box:fill-box;transform-origin:50% 100%;animation:flap .18s ease-in-out infinite alternate}
+.sp-fly .orb svg .tail{animation:tailglow .9s ease-in-out infinite alternate}
+@keyframes flybob{50%{transform:translateY(-6%) rotate(-5deg)}}
+@keyframes flap{to{transform:scaleY(.35)}}
+@keyframes tailglow{to{opacity:.55}}
+.sp-fly .spfx{inset:-6%;border-radius:50%;background:radial-gradient(circle,rgba(255,240,150,.55),transparent 65%);animation:beamx 1.1s ease-in-out infinite}
+.t-spirit .spfx{inset:-18%;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 8%,rgba(255,240,190,.75) 10%,transparent 12% 33%,rgba(255,240,190,.75) 35%,transparent 37% 58%,rgba(255,240,190,.75) 60%,transparent 62% 83%,rgba(255,240,190,.75) 85%,transparent 87%);animation:petalspin 5s linear infinite;z-index:-1}
+/* press-and-hold preview of what a piece or power will clear */
+.tile.pv::before{background:rgba(255,226,150,.5);box-shadow:0 0 0 2px #FFE9A8,0 0 14px rgba(255,220,130,.85);animation:pvpulse .6s ease-in-out infinite alternate}
+@keyframes pvpulse{to{background:rgba(255,236,180,.22)}}
+.tile.tutdim{opacity:.32;filter:saturate(.45);transition:opacity .3s,filter .3s}
+/* staggered pops ride behind the blast */
+#board .tile.pop .orb{animation-delay:var(--pd,0ms)}
+#board .tile.pop.pop-metal .orb{transition:opacity .01s linear var(--pd,0ms)}
+/* firing effects */
+.fxp{position:absolute;left:0;top:0;pointer-events:none;z-index:9}
+.fx-comet{width:calc(var(--t)*2.2);height:calc(var(--t)*.46);margin:calc(var(--t)*-.23) 0 0 calc(var(--t)*-2.2);border-radius:99px;transform-origin:100% 50%;
+  background:linear-gradient(90deg,transparent,var(--hue) 45%,#FFF6DE 86%,#fff);box-shadow:0 0 18px 5px var(--hue)}
+.fx-comet::after{content:"";position:absolute;right:-8%;top:-30%;width:calc(var(--t)*.62);height:160%;border-radius:50%;background:radial-gradient(circle,#fff 30%,rgba(255,255,255,0) 70%)}
+.fx-beam{height:var(--t);background:linear-gradient(180deg,transparent,rgba(255,246,214,.75),transparent);z-index:8}
+.fx-beam.v{width:var(--t);height:auto;background:linear-gradient(90deg,transparent,rgba(255,246,214,.75),transparent)}
+.fx-petal{width:calc(var(--t)*.52);height:calc(var(--t)*.95);margin:calc(var(--t)*-.475) 0 0 calc(var(--t)*-.26);border-radius:50% 50% 45% 45%/62% 62% 38% 38%;
+  background:radial-gradient(ellipse at 50% 80%,#fff 0 18%,#FFC4E6 45%,#F07ABF 100%);box-shadow:0 0 12px rgba(255,160,215,.9)}
+.fx-bloomring{border-radius:50%;border:calc(var(--t)*.1) solid #FFE0F2;box-shadow:0 0 24px 8px rgba(255,160,215,.75),inset 0 0 24px rgba(255,200,235,.8)}
+.fx-fly{width:calc(var(--t)*.8);height:calc(var(--t)*.8);margin:calc(var(--t)*-.4) 0 0 calc(var(--t)*-.4);color:#FFF6C8;filter:drop-shadow(0 0 8px #FFE88A) drop-shadow(0 0 18px rgba(255,220,110,.9))}
+.fx-fly svg{width:100%;height:100%;overflow:visible}
+.fx-fly svg .wing{transform-box:fill-box;transform-origin:50% 100%;animation:flap .09s ease-in-out infinite alternate}
+.fx-zap{height:4px;margin-top:-2px;border-radius:99px;transform-origin:0 50%;background:linear-gradient(90deg,#fff,var(--hue));box-shadow:0 0 10px 3px var(--hue)}
+/* first-time callout above a new power piece */
+.spcall{position:absolute;z-index:12;pointer-events:none;transform:translate(-50%,-100%);white-space:nowrap;padding:6px 12px;border-radius:99px;font-weight:900;font-size:13px;color:#3A2408;
+  background:linear-gradient(#FFF3C4,#F2C45A);box-shadow:0 4px 12px rgba(0,0,0,.4),0 0 0 2px #fff}
+.spcall::after{content:"";position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#F2C45A;border-bottom:0}
+/* the practice walkthrough */
+body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
+.pskip{display:block;margin:8px auto 0;padding:4px 10px;border:0;background:none;color:inherit;opacity:.7;font:800 12px/1 inherit;text-decoration:underline;cursor:pointer}
+.gi .pc{position:relative;width:52px;height:52px;display:block;--t:52px}
+.gi .pc .tile{--t:52px}
 </style>
 
 <div id="app">
@@ -1504,7 +1553,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
         <button class="btn gold big" data-play>Play the demo</button>
         <div class="row" style="justify-content:center;gap:14px;margin-top:10px">
           <button class="linkbtn dark" id="toMapFromWelcome">Go to the home screen</button>
-          <button class="linkbtn dark" id="retut">Replay the walkthrough</button>
+          <button class="linkbtn dark" id="retut">Play the Practice Grove</button>
         </div>
       </footer>
     </div>
@@ -1839,7 +1888,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   </div></div>
   <div class="ov" id="gotov" hidden style="align-items:center"><div class="card gotcard" role="dialog" aria-labelledby="gotTitle">
     <span class="gotrays"></span>
-    <div class="eyebrow">Thank you</div>
+    <div class="eyebrow" id="gotEyebrow">Thank you</div>
     <h2 class="display" id="gotTitle"></h2>
     <div class="gotitems" id="gotItems"></div>
     <div class="stack"><button class="btn gold" id="gotGo">Let's play</button></div>
@@ -3409,6 +3458,8 @@ function openLevel(i) {
   if (S.hearts <= 0) { toast('Out of hearts. Refill them in the shop, or wait for them to come back.'); showOv('shop'); return; }
   LI = i; L = LEVELS[i];
   if (!S.boardSize) S.boardSize = i === 0 ? 'little' : 'full';
+  // first time only: the Practice Grove walkthrough, then episode 1
+  if (i === 0 && !S.practiceDone && !babyOn()) { runPractice(() => { LI = 0; L = LEVELS[0]; runStory(); }); return; }
   runStory();
 }
 function renderSize() {
@@ -3862,12 +3913,12 @@ let stillDrop = false;
 let R = 8, C = 7, POOL = TYPES;
 const boardEl = $('#board'), wrap = $('#boardwrap');
 let board = [], ids = new Map(), nid = 1, T = 44;
-let busy = false, sel = null, drag = null, moves = 0, charge = 0, combo = 0, mode = null, cheerAt = 0, running = false;
+let aimT = null, busy = false, sel = null, drag = null, moves = 0, charge = 0, combo = 0, mode = null, cheerAt = 0, running = false;
 let deepBreaths = 0, breathing = false, wasReady = false, movesUsed = 0, cloudsFreed = 0;
 let lastElem = null, flow = 0;
 let turnTypes = new Set();
 let levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
-const progress = () => L ? 1 - clouds().length / L.clouds : 0;
+const progress = () => L && L.clouds ? Math.max(0, Math.min(1, 1 - clouds().length / L.clouds)) : 1;
 
 const rnd = a => a[Math.floor(Math.random() * a.length)];
 function newTile(type, sp = null) {
@@ -3882,8 +3933,10 @@ function paint(t) {
   t.el.className = `tile t-${t.type}${t.sp ? ' sp-' + t.sp : ''}${t.cloud ? ' clouded' : ''}${t.knot ? ' knotted' : ''}${t.fed ? ' fed' : ''}`;
   const kx = t.el.querySelector('.knotx');
   if (t.knot && !kx) { const k = document.createElement('i'); k.className = 'knotx'; t.el.appendChild(k); } else if (!t.knot && kx) kx.remove();
-  t.el.firstChild.innerHTML = GLYPH[t.type];
-  t.el.setAttribute('aria-label', t.type === 'spirit' ? 'spirit star' : t.type + (t.sp ? ' lantern' : '') + (t.cloud ? ' under a storm cloud' : ''));
+  t.el.firstChild.innerHTML = t.sp && SP_GLYPH[t.sp] ? SP_GLYPH[t.sp] : GLYPH[t.type];
+  const fxEl = t.el.querySelector('.spfx'), wants = !!(t.sp || t.type === 'spirit');
+  if (wants && !fxEl) { const f = document.createElement('i'); f.className = 'spfx'; t.el.appendChild(f); } else if (!wants && fxEl) fxEl.remove();
+  t.el.setAttribute('aria-label', t.type === 'spirit' ? 'spirit star' : t.type + (t.sp ? ' ' + SP_NAME[t.sp].toLowerCase() : '') + (t.cloud ? ' under a storm cloud' : ''));
 }
 function place(t, r, c, anim = true) {
   t.r = r; t.c = c;
@@ -4038,6 +4091,12 @@ function findMatches() {
     }
     r = k;
   }
+  // a square of four is a match too (it wakes a Firefly)
+  const squares = [];
+  for (let r = 0; r < R - 1; r++) for (let c = 0; c < C - 1; c++) {
+    const q = [board[r][c], board[r][c + 1], board[r + 1][c], board[r + 1][c + 1]];
+    if (q.every(x => x && x.type !== 'spirit') && same(q[0], q[1]) && same(q[0], q[2]) && same(q[0], q[3])) { q.forEach(x => clear.add(x)); squares.push(q); }
+  }
   // any run of 3 pulls in every same-element orb touching it, so L, T and blob shapes clear together.
   // Walks board positions, not t.r/t.c, because hint checks swap cells without moving the tiles.
   const seen = new Set(), blobs = [];
@@ -4054,8 +4113,8 @@ function findMatches() {
     }
     blob.forEach(x => clear.add(x));
     const runs = groups.filter(g => g.cells.some(x => blob.includes(x)));
-    const longest = runs.reduce((m, g) => (g.cells.length > m.cells.length ? g : m), runs[0]);
-    blobs.push({ cells: blob, dir: longest.dir, run: longest.cells.length, lt: runs.some(g => g.dir === 'row') && runs.some(g => g.dir === 'col') });
+    const longest = runs.length ? runs.reduce((m, g) => (g.cells.length > m.cells.length ? g : m), runs[0]) : null;
+    blobs.push({ cells: blob, dir: longest ? longest.dir : 'row', run: longest ? longest.cells.length : 0, lt: runs.some(g => g.dir === 'row') && runs.some(g => g.dir === 'col'), sq: squares.some(q => q.every(x => blob.includes(x))) });
   }
   return { clear, groups: blobs };
 }
@@ -4110,6 +4169,7 @@ function swapCells(a, b) {
 const adjacent = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
 
 async function trySwap(a, b) {
+  if (practice && !pAllowSwap(a, b)) { pNudge(); bump(a.el); return; }
   if (moves <= 0) { say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
   if (a.knot || b.knot) { say('Worry tied that orb in a knot. Make a match that includes it and the knot comes loose.'); bump((a.knot ? a : b).el); bell(392, 0, 0.05); return; }
   busy = true; swish();
@@ -4121,9 +4181,20 @@ async function trySwap(a, b) {
     const kinds = [a.sp, b.sp].sort().join('+'), r = b.r, c = b.c, set = new Set([a, b]);
     const addRow = rr => (board[rr] || []).forEach(x => x && set.add(x)), addCol = cc => board.forEach(row => row[cc] && set.add(row[cc]));
     let name;
-    if (kinds === 'bomb+bomb') { around(r, c, 2).forEach(x => set.add(x)); name = 'Mega Blossom'; }
-    else if (kinds.includes('bomb')) { [-1, 0, 1].forEach(d => { addRow(r + d); addCol(c + d); }); name = 'Wide Burst'; }
-    else { addRow(r); addCol(c); name = 'Cross Light'; }
+    const E = b.type;
+    if (kinds === 'fly+fly') {
+      flyTargets(3, set).forEach(tg => { set.add(tg); plus(tg).forEach(x => set.add(x)); firing.push({ kind: 'fly', r, c, to: [tg.r, tg.c], elem: E }); });
+      name = 'Firefly Swarm';
+    } else if (kinds.includes('fly')) {
+      const other = a.sp === 'fly' ? b : a, tg = flyTargets(1, set)[0];
+      if (tg) {
+        (other.sp === 'row' ? rowOf(tg.r) : other.sp === 'col' ? colOf(tg.c) : around(tg.r, tg.c, 1)).forEach(x => set.add(x));
+        firing.push({ kind: 'fly', r, c, to: [tg.r, tg.c], elem: E }, { kind: other.sp, r: tg.r, c: tg.c, elem: E, delay: 520 });
+      }
+      name = other.sp === 'bomb' ? 'Blossom Flight' : 'Lantern Flight';
+    } else if (kinds === 'bomb+bomb') { around(r, c, 2).forEach(x => set.add(x)); firing.push({ kind: 'bomb', r, c, elem: E, big: true }); name = 'Mega Blossom'; }
+    else if (kinds.includes('bomb')) { [-1, 0, 1].forEach(d => { addRow(r + d); addCol(c + d); if (board[r + d]) firing.push({ kind: 'row', r: r + d, c, elem: E }); if (c + d >= 0 && c + d < C) firing.push({ kind: 'col', r, c: c + d, elem: E }); }); firing.push({ kind: 'bomb', r, c, elem: E }); name = 'Wide Burst'; }
+    else { addRow(r); addCol(c); firing.push({ kind: 'row', r, c, elem: E }, { kind: 'col', r, c, elem: E }); name = 'Cross Light'; }
     a.sp = b.sp = null;
     [...set].forEach(x => { if (x.cloud) set.delete(x); });
     powerUsed = { name, elem: a.type, sub: 'Special combo' };
@@ -4138,6 +4209,7 @@ async function trySwap(a, b) {
     if (other.sp) all().filter(t => t.type === color && !t.cloud && !t.knot).forEach(t => { t.sp = other.sp; paint(t); t.el.classList.add('born'); });
     const set = new Set([sp, ...all().filter(t => t.type === color)]);
     if (other.type === 'spirit') { other.fired = true; set.add(other); }
+    firing.push({ kind: 'spirit', r: sp.r, c: sp.c, color, targets: [...set].filter(x => x !== sp).map(x => [x.r, x.c]) });
     flash(); chord([523.25, 659.25, 783.99, 1046.5], 0.06);
     await resolve(set, [], null);
   } else {
@@ -4159,16 +4231,180 @@ async function trySwap(a, b) {
   await settle();
 }
 
+/* ---------- power pieces: how they look, where they aim, how they fire ---------- */
+// Each piece shows what it does: the Lantern points both ways along its line, the Blossom opens
+// its petals, the Firefly flaps, the Spirit Star shines. Tap any piece to fire it (one move);
+// press and hold to preview what it will clear. Pieces pass by storm clouds: clouds only sink or
+// get lifted by a breath, so a piece helps by clearing what's under them.
+const SP_GLYPH = {
+  row: '<svg viewBox="0 0 24 24" fill="currentColor"><path class="ar l" d="M.8 12 5.4 8.3v7.4z"/><path class="ar r" d="M23.2 12l-4.6-3.7v7.4z"/><rect x="5" y="11.1" width="3.4" height="1.8" rx=".9"/><rect x="15.6" y="11.1" width="3.4" height="1.8" rx=".9"/><rect x="9.6" y="5.2" width="4.8" height="1.6" rx=".8"/><rect x="8.4" y="6.6" width="7.2" height="10.8" rx="3.2"/><rect x="9.6" y="17.2" width="4.8" height="1.6" rx=".8"/><rect x="10.9" y="8.6" width="2.2" height="6.8" rx="1.1" fill="rgba(255,190,80,.95)"/></svg>',
+  col: '<svg viewBox="0 0 24 24" fill="currentColor"><g transform="rotate(90 12 12)"><path class="ar l" d="M.8 12 5.4 8.3v7.4z"/><path class="ar r" d="M23.2 12l-4.6-3.7v7.4z"/><rect x="5" y="11.1" width="3.4" height="1.8" rx=".9"/><rect x="15.6" y="11.1" width="3.4" height="1.8" rx=".9"/></g><rect x="8.4" y="6.6" width="7.2" height="10.8" rx="3.2"/><rect x="9.6" y="5.2" width="4.8" height="1.6" rx=".8"/><rect x="9.6" y="17.2" width="4.8" height="1.6" rx=".8"/><rect x="10.9" y="8.6" width="2.2" height="6.8" rx="1.1" fill="rgba(255,190,80,.95)"/></svg>',
+  bomb: '<svg viewBox="0 0 24 24">' + [0, 60, 120, 180, 240, 300].map(a => `<ellipse cx="12" cy="6.4" rx="3.3" ry="5.2" fill="#FFE6F4" transform="rotate(${a} 12 12)"/>`).join('') + [30, 90, 150, 210, 270, 330].map(a => `<ellipse cx="12" cy="7.6" rx="2.4" ry="4" fill="#FF9FD2" transform="rotate(${a} 12 12)"/>`).join('') + '<circle cx="12" cy="12" r="3.3" fill="#FFD45A"/><circle cx="11" cy="11" r="1.1" fill="#fff"/></svg>',
+  fly: '<svg viewBox="0 0 24 24"><ellipse class="wing" cx="8.2" cy="8.4" rx="3.4" ry="5.2" fill="rgba(255,255,255,.85)" transform="rotate(-28 8.2 8.4)"/><ellipse class="wing" cx="15.8" cy="8.4" rx="3.4" ry="5.2" fill="rgba(255,255,255,.85)" transform="rotate(28 15.8 8.4)"/><ellipse cx="12" cy="11.2" rx="2.6" ry="4.2" fill="#3A2E4A"/><circle class="tail" cx="12" cy="17.4" r="3.6" fill="#FFE55C"/><circle cx="12" cy="17.4" r="1.6" fill="#fff"/><circle cx="12" cy="7.2" r="2.2" fill="#3A2E4A"/><circle cx="11.2" cy="6.8" r=".6" fill="#fff"/><circle cx="12.8" cy="6.8" r=".6" fill="#fff"/></svg>'
+};
+const SP_NAME = { row: 'Lantern', col: 'Lantern', bomb: 'Blossom', fly: 'Firefly', spirit: 'Spirit Star' };
+const SP_HOW = {
+  row: 'Four in a line makes a Lantern. Tap it, or match it, to light up its whole line.',
+  col: 'Four in a line makes a Lantern. Tap it, or match it, to light up its whole line.',
+  bomb: 'An L or T shape makes a Blossom. Tap it and it bursts everything around it.',
+  fly: 'A square of four wakes a Firefly. Tap it and it flies to what you need most.',
+  spirit: 'Five in a line makes a Spirit Star. Swap it with an orb to clear that whole color.'
+};
+function pieceHTML(sp, type) {
+  const t = sp === 'spirit' ? 'spirit' : type;
+  return `<span class="pc"><div class="tile t-${t}${sp && sp !== 'spirit' ? ' sp-' + sp : ''}" style="transform:none;position:absolute;inset:0;width:100%;height:100%"><div class="orb">${sp && sp !== 'spirit' ? SP_GLYPH[sp] : GLYPH[t]}</div><i class="spfx"></i></div></span>`;
+}
+const plus = t => [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([dr, dc]) => board[t.r + dr] && board[t.r + dr][t.c + dc]).filter(Boolean);
+// where a Firefly goes, in order: a knot, the orb under the lowest cloud, a goal orb, then the middle of the board
+function flyTargets(n, skip = new Set()) {
+  const out = [], ok = x => x && !x.cloud && !skip.has(x) && !out.includes(x) && x.type !== 'spirit';
+  all().filter(t => t.knot).forEach(t => { if (out.length < n && ok(t)) out.push(t); });
+  clouds().sort((a, b) => b.r - a.r || a.c - b.c).forEach(cl => { const u = board[cl.r + 1] && board[cl.r + 1][cl.c]; if (out.length < n && ok(u)) out.push(u); });
+  if (L && L.gems && gemsLeft() > 0) all().filter(t => t.type === L.elem).sort((a, b) => b.r - a.r || a.c - b.c).forEach(t => { if (out.length < n && ok(t)) out.push(t); });
+  const mr = (R - 1) / 2, mc = (C - 1) / 2;
+  all().sort((a, b) => (Math.abs(a.r - mr) + Math.abs(a.c - mc)) - (Math.abs(b.r - mr) + Math.abs(b.c - mc)) || a.r - b.r || a.c - b.c).forEach(t => { if (out.length < n && ok(t)) out.push(t); });
+  return out;
+}
+const rowOf = r => (board[r] || []).filter(Boolean), colOf = c => board.map(row => row[c]).filter(Boolean);
+function spArea(t) {
+  let cells = [t];
+  if (t.sp === 'row') cells = rowOf(t.r);
+  else if (t.sp === 'col') cells = colOf(t.c);
+  else if (t.sp === 'bomb') cells = around(t.r, t.c, 1);
+  else if (t.sp === 'fly') { const tg = flyTargets(1, new Set([t]))[0]; cells = tg ? [t, tg, ...plus(tg)] : [t]; }
+  else if (t.type === 'spirit') cells = [t, ...all().filter(x => x.type === L.elem)];
+  return cells.filter(x => !x.cloud);
+}
+function showPreview(cells) { clearPreview(); cells.forEach(x => x.el.classList.add('pv')); }
+function clearPreview() { $$('#board .tile.pv').forEach(el => el.classList.remove('pv')); }
+function spCallout(t) {
+  S.seenSp = S.seenSp || {};
+  const k = t.type === 'spirit' ? 'spirit' : t.sp === 'col' ? 'row' : t.sp;
+  if (S.seenSp[k] || practice || babyOn()) return;
+  S.seenSp[k] = 1; save();
+  const d = document.createElement('div'); d.className = 'spcall';
+  d.textContent = `${SP_NAME[k]}! ${k === 'spirit' ? 'Swap it with an orb' : 'Tap to fire'}`;
+  d.style.left = `${t.c * T + T / 2}px`; d.style.top = `${t.r * T - 4}px`;
+  boardEl.appendChild(d);
+  showPreview(spArea(t));
+  if (!reduce) d.animate([{ transform: 'translate(-50%,-80%) scale(.4)', opacity: 0 }, { transform: 'translate(-50%,-100%) scale(1.08)', opacity: 1, offset: .6 }, { transform: 'translate(-50%,-100%)', opacity: 1 }], { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+  setTimeout(() => { clearPreview(); d.remove(); }, 2800);
+}
+
+// sound for each piece: nothing random, every note in key
+function sweep(f0, f1, dur, vol = 0.05, type = 'sine', delay = 0, pan = 0) {
+  const a = ac(); if (!a || muted) return;
+  const t = a.currentTime + delay, out = voice(pan, 0.8), g = a.createGain(); g.connect(out);
+  env(g, t, vol, 0.012, dur);
+  const o = osc(a, type, f0, t, dur + 0.05, g); o.frequency.exponentialRampToValueAtTime(f1, t + dur);
+}
+function spSound(kind, n = 1) {
+  if (kind === 'row' || kind === 'col') { playSfx('swoosh', { rate: 1.35, gain: 0.6 }); sweep(220, 1320, 0.32, 0.05, 'triangle'); bell(chordNote(9), 0.06, 0.06); }
+  else if (kind === 'bomb') { playSfx('drum', { rate: 0.75, gain: 0.9 }); sweep(150, 42, 0.5, 0.14); chord([261.63, 329.63, 392, 523.25], 0.05); }
+  else if (kind === 'fly') { for (let k = 0; k < 6; k++) boop(3 + k, 0.03); bell(chordNote(10), 0.5, 0.08); playSfx('wood', { rate: 2, gain: 0.25, when: 0.5 }); }
+  else if (kind === 'spirit') { for (let k = 0; k < Math.min(8, 3 + n); k++) bell(chordNote(4 + k), k * 0.05, 0.05); sweep(400, 1600, 0.5, 0.03); }
+}
+const fxAt = (cls, x, y) => { const d = document.createElement('div'); d.className = 'fxp ' + cls; d.style.transform = `translate(${x}px,${y}px)`; boardEl.appendChild(d); return d; };
+const cx = c => c * T + T / 2, cy = r => r * T + T / 2;
+function fxComets(f) {
+  const hue = ELEM[f.elem] ? ELEM[f.elem].hue : '#FFD45A', x = cx(f.c), y = cy(f.r);
+  const dirs = f.kind === 'row' ? [[0, -x - T], [0, C * T - x + T]] : [[-y - T, 0], [R * T - y + T, 0]].map(([a, b]) => [a, b]);
+  const beam = document.createElement('div'); beam.className = 'fxp fx-beam' + (f.kind === 'col' ? ' v' : '');
+  if (f.kind === 'row') beam.style.cssText = `width:${C * T}px;transform:translateY(${f.r * T}px);transform-origin:${x}px 50%`;
+  else beam.style.cssText = `height:${R * T}px;transform:translateX(${f.c * T}px);transform-origin:50% ${y}px`;
+  boardEl.appendChild(beam);
+  beam.animate([{ opacity: 0, scale: f.kind === 'row' ? '0 1' : '1 0' }, { opacity: 1, scale: '1 1', offset: .4 }, { opacity: 0, scale: '1 1' }], { duration: 480, easing: 'ease-out' }).onfinish = () => beam.remove();
+  (f.kind === 'row' ? [[-1, 180], [1, 0]] : [[-1, -90], [1, 90]]).forEach(([s, ang]) => {
+    const d = document.createElement('div'); d.className = 'fxp fx-comet'; d.style.setProperty('--hue', hue); boardEl.appendChild(d);
+    const dist = f.kind === 'row' ? (s < 0 ? x + T * 1.5 : C * T - x + T * 1.5) : (s < 0 ? y + T * 1.5 : R * T - y + T * 1.5);
+    const tx = f.kind === 'row' ? s * dist : 0, ty = f.kind === 'col' ? s * dist : 0;
+    d.animate([{ transform: `translate(${x}px,${y}px) rotate(${ang}deg) scaleX(.2)`, opacity: 1 }, { transform: `translate(${x + tx}px,${y + ty}px) rotate(${ang}deg) scaleX(1)`, opacity: 1 }],
+      { duration: Math.max(260, dist / T * 34), easing: 'cubic-bezier(.3,.1,.6,1)', delay: f.delay || 0, fill: 'backwards' }).onfinish = () => d.remove();
+  });
+}
+function fxBloom(f) {
+  const x = cx(f.c), y = cy(f.r), k = f.big ? 2.2 : 1.3;
+  const ring = fxAt('fx-bloomring', x, y); ring.style.width = ring.style.height = `${T * 3 * k / 1.3}px`; ring.style.margin = `${-T * 1.5 * k / 1.3}px 0 0 ${-T * 1.5 * k / 1.3}px`;
+  ring.animate([{ transform: `translate(${x}px,${y}px) scale(.15)`, opacity: 1 }, { transform: `translate(${x}px,${y}px) scale(1.05)`, opacity: 0 }], { duration: 560, delay: f.delay || 0, easing: 'cubic-bezier(.2,.8,.3,1)', fill: 'backwards' }).onfinish = () => ring.remove();
+  for (let i = 0; i < 8; i++) {
+    const p = fxAt('fx-petal', x, y), a = i * 45;
+    p.animate([{ transform: `translate(${x}px,${y}px) rotate(${a}deg) translateY(0) scale(.3)`, opacity: 1 }, { transform: `translate(${x}px,${y}px) rotate(${a + 25}deg) translateY(${-T * k}px) scale(1.15)`, opacity: .95, offset: .55 }, { transform: `translate(${x}px,${y}px) rotate(${a + 40}deg) translateY(${-T * k * 1.35}px) scale(.6)`, opacity: 0 }],
+      { duration: 620, delay: (f.delay || 0) + i * 12, easing: 'cubic-bezier(.2,.9,.3,1)', fill: 'backwards' }).onfinish = () => p.remove();
+  }
+  shake(f.big ? 9 : 5);
+}
+function fxFly(f) {
+  const x0 = cx(f.c), y0 = cy(f.r), x1 = cx(f.to[1]), y1 = cy(f.to[0]), lift = T * 1.6;
+  const d = fxAt('fx-fly', x0, y0); d.innerHTML = SP_GLYPH.fly;
+  const kf = []; for (let i = 0; i <= 8; i++) { const s = i / 8, e = s * s * (3 - 2 * s); kf.push({ transform: `translate(${x0 + (x1 - x0) * e}px,${y0 + (y1 - y0) * e - Math.sin(Math.PI * s) * lift}px) rotate(${Math.sin(Math.PI * s * 2) * 14}deg) scale(${1 + Math.sin(Math.PI * s) * .35})` }); }
+  d.animate(kf, { duration: 520, delay: f.delay || 0, easing: 'linear', fill: 'backwards' }).onfinish = () => {
+    d.remove(); sparkleAt(boardEl, x1, y1, ['#FFF6C8', '#FFE55C', '#FFFFFF'], 14);
+  };
+  [0.33, 0.66].forEach(s => setTimeout(() => sparkleAt(boardEl, x0 + (x1 - x0) * s, y0 + (y1 - y0) * s - Math.sin(Math.PI * s) * lift, ['#FFF6C8', '#FFE55C'], 4), (f.delay || 0) + 520 * s));
+}
+function fxZaps(f) {
+  const x0 = cx(f.c), y0 = cy(f.r), hue = ELEM[f.color] ? ELEM[f.color].hue : '#FFD45A';
+  (f.targets || []).slice(0, 24).forEach(([r, c], i) => {
+    const dx = cx(c) - x0, dy = cy(r) - y0, len = Math.hypot(dx, dy), ang = Math.atan2(dy, dx) * 180 / Math.PI;
+    const z = fxAt('fx-zap', x0, y0); z.style.width = `${len}px`; z.style.setProperty('--hue', hue);
+    z.animate([{ transform: `translate(${x0}px,${y0}px) rotate(${ang}deg) scaleX(0)`, opacity: 1 }, { transform: `translate(${x0}px,${y0}px) rotate(${ang}deg) scaleX(1)`, opacity: 1, offset: .5 }, { transform: `translate(${x0}px,${y0}px) rotate(${ang}deg) scaleX(1)`, opacity: 0 }],
+      { duration: 420, delay: i * 22, easing: 'ease-out', fill: 'backwards' }).onfinish = () => z.remove();
+  });
+}
+let firing = [];
+// staggered pops: each orb goes when the blast reaches it
+function staggerPops(clear, fx) {
+  clear.forEach(t => {
+    let d = 99;
+    fx.forEach(f => { const o = f.to || [f.r, f.c]; d = Math.min(d, Math.max(Math.abs(t.r - o[0]), Math.abs(t.c - o[1])) + (f.delay ? f.delay / 32 : 0)); });
+    if (d < 99) t._pd = Math.min(320, Math.round(d * 32));
+  });
+}
+async function playFiring(fx) {
+  const kinds = [...new Set(fx.map(f => f.kind))];
+  kinds.forEach(k => spSound(k, fx.filter(f => f.kind === k).length));
+  if (reduce) return;
+  fx.slice(0, 24).forEach(f => {
+    if (f.kind === 'row' || f.kind === 'col') fxComets(f);
+    else if (f.kind === 'bomb') fxBloom(f);
+    else if (f.kind === 'fly') fxFly(f);
+    else if (f.kind === 'spirit') fxZaps(f);
+  });
+  await wait(kinds.includes('fly') ? 540 : kinds.includes('bomb') ? 170 : 90);
+}
+// tap a piece to fire it: one move
+async function fireTap(t) {
+  if (busy || !t || t.knot || t.cloud) return;
+  if (practice && !pAllowTap(t)) { pNudge(); return; }
+  if (moves <= 0 && !babyOn()) { say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
+  busy = true; clearHints(); clearPreview();
+  useMove(); tick();
+  if (!reduce) t.el.animate([{ transform: `translate(${t.c * T}px,${t.r * T}px) scale(1)` }, { transform: `translate(${t.c * T}px,${t.r * T}px) scale(1.25)` }, { transform: `translate(${t.c * T}px,${t.r * T}px) scale(1)` }], { duration: 160 });
+  await wait(120);
+  turnTypes = new Set();
+  await resolve(new Set([t]), [], null);
+  await settle();
+}
+
 const around = (r, c, k) => { const o = []; for (let dr = -k; dr <= k; dr++) for (let dc = -k; dc <= k; dc++) { const x = board[r + dr] && board[r + dr][c + dc]; if (x) o.push(x); } return o; };
 function expand(clear) {
   const q = [...clear];
   while (q.length) {
     const t = q.pop(); let extra = [];
-    if (t.sp === 'row') extra = board[t.r];
-    else if (t.sp === 'col') extra = board.map(row => row[t.c]);
-    else if (t.sp === 'bomb') extra = around(t.r, t.c, 1);
-    else if (t.type === 'spirit' && !t.fired) { t.fired = true; extra = all().filter(x => x.type === L.elem); }
-    for (const x of extra) if (x && !clear.has(x)) { clear.add(x); q.push(x); }
+    const f = { kind: t.sp, r: t.r, c: t.c, elem: t.type };
+    if (t.sp === 'row') { extra = rowOf(t.r); firing.push(f); }
+    else if (t.sp === 'col') { extra = colOf(t.c); firing.push(f); }
+    else if (t.sp === 'bomb') { extra = around(t.r, t.c, 1); firing.push(f); }
+    else if (t.sp === 'fly') {
+      const tg = flyTargets(1, clear)[0];
+      if (tg) {
+        extra = t.carry === 'row' ? rowOf(tg.r) : t.carry === 'col' ? colOf(tg.c) : t.carry === 'bomb' ? around(tg.r, tg.c, 1) : [tg, ...plus(tg)];
+        f.to = [tg.r, tg.c]; firing.push(f);
+        if (t.carry) firing.push({ kind: t.carry, r: tg.r, c: tg.c, elem: t.type, delay: 520 });
+      }
+    }
+    else if (t.type === 'spirit' && !t.fired) { t.fired = true; extra = all().filter(x => x.type === L.elem); firing.push({ kind: 'spirit', r: t.r, c: t.c, color: L.elem, targets: extra.map(x => [x.r, x.c]) }); }
+    for (const x of extra) if (x && !x.cloud && !clear.has(x)) { clear.add(x); q.push(x); }      // pieces pass by clouds
   }
 }
 
@@ -4180,7 +4416,7 @@ async function resolve(clear, groups, moved) {
       if (g.cells.length < 4) continue;
       const free = g.cells.filter(x => !x.sp && x.type !== 'spirit' && !makes.some(m => m.t === x));
       const anchor = free.find(x => moved && moved.includes(x)) || free[Math.floor(free.length / 2)];
-      if (anchor) makes.push({ t: anchor, kind: (g.run || g.cells.length) >= 5 || g.cells.length >= 7 ? 'spirit' : g.lt ? 'bomb' : g.dir });
+      if (anchor) makes.push({ t: anchor, kind: g.run >= 5 || g.cells.length >= 7 ? 'spirit' : g.lt ? 'bomb' : g.sq && g.run < 4 ? 'fly' : g.dir });
     }
     const hadSpecial = [...clear].some(t => t.sp || t.type === 'spirit');
     expand(clear);
@@ -4188,13 +4424,17 @@ async function resolve(clear, groups, moved) {
     controlBreak(clear);                                                         // Wood next to a knot breaks it: Wood parts Earth
     if (hadSpecial) flash();
     makes.forEach(m => clear.delete(m.t));
+    const fx = firing; firing = [];
+    if (fx.length) { staggerPops(clear, fx); await playFiring(fx); }
     await popSet(clear);
     makes.forEach(m => {
       if (m.kind === 'spirit') { m.t.type = 'spirit'; m.t.sp = null; } else m.t.sp = m.kind;
       paint(m.t); m.t.el.classList.add('born'); setTimeout(() => m.t.el.classList.remove('born'), 460);
-      bell(m.kind === 'spirit' ? 1046.5 : 783.99, 0, 0.09);
+      bell(m.kind === 'spirit' ? 1046.5 : 783.99, 0, 0.09); bell(m.kind === 'spirit' ? 1318.5 : 1046.5, 0.09, 0.07);
+      if (!reduce) sparkleAt(boardEl, m.t.c * T + T / 2, m.t.r * T + T / 2, ['#FFF6DE', '#FFE08A', '#FFFFFF'], 12);
       questBump('special');
-      say(m.kind === 'spirit' ? 'A spirit star! Swap it with any orb to clear that whole color.' : m.kind === 'bomb' ? 'An L or T shape makes a Blossom. Match it and it bursts everything around it.' : 'Four in a row makes a lantern. Match it to light up the whole line.');
+      if (!practice) say(SP_HOW[m.kind]);
+      setTimeout(() => { if (board[m.t.r] && board[m.t.r][m.t.c] === m.t) spCallout(m.t); }, 500);
     });
     gravity();
     await wait(reduce ? 60 : 280);
@@ -4209,10 +4449,11 @@ async function popSet(set) {
     if (board[t.r][t.c] === t) board[t.r][t.c] = null;
     ids.delete(String(t.id));
     t.el.classList.remove('breathing', 'sel');
-    const exit = popExit || t.type;
+    const exit = popExit || t.type, pd = t._pd || 0; delete t._pd;
+    if (pd) t.el.style.setProperty('--pd', pd + 'ms');
     t.el.classList.add('pop', `pop-${exit}`);
-    if (!reduce && t.type !== 'spirit') elementClear(exit, t);
-    setTimeout(() => t.el.remove(), 600);
+    if (!reduce && t.type !== 'spirit') { if (pd) setTimeout(() => elementClear(exit, t), pd); else elementClear(exit, t); }
+    setTimeout(() => t.el.remove(), 600 + pd);
   });
   const pw = powerUsed, special = arr.some(t => t.sp || t.type === 'spirit');
   popExit = null; powerUsed = null;
@@ -4268,6 +4509,7 @@ function gravity() {
 
 async function settle() {
   hud();
+  if (practice) { busy = false; const f = practice.onSettle; practice.onSettle = null; if (f) f(); return; }
   if (goalsDone()) { busy = true; await winLevel(); return; }
   if (moves <= 0 && charge < 100 && !babyOn()) { busy = true; await wait(400); loseLevel(); return; }
   if (!hasMove()) { say('No swaps left, so Luma is stirring the orbs.'); await shuffle(); }
@@ -4303,30 +4545,44 @@ boardEl.addEventListener('pointerdown', e => {
   const el = e.target.closest('.tile'); if (!el || busy) return;
   const t = ids.get(el.dataset.id); if (!t) return;
   ac();
-  if (mode) { usePowerOn(t); return; }
+  if (mode) {
+    if (mode === 'monkey') { usePowerOn(t); return; }
+    aimT = t; showPreview(powerArea(mode, t));                        // the area follows your finger; lift to use it
+    try { boardEl.setPointerCapture(e.pointerId); } catch (err) {}
+    return;
+  }
   drag = { t, x: e.clientX, y: e.clientY, moved: false };
+  if (t.sp || t.type === 'spirit') drag.hold = setTimeout(() => { if (drag && drag.t === t && !drag.moved) { drag.held = true; showPreview(spArea(t)); say(SP_HOW[t.type === 'spirit' ? 'spirit' : t.sp]); } }, 380);
   try { boardEl.setPointerCapture(e.pointerId); } catch (err) {}
 });
 boardEl.addEventListener('pointermove', e => {
+  if (aimT) {
+    const el = document.elementFromPoint(e.clientX, e.clientY), tl = el && el.closest('#board .tile'), t2 = tl && ids.get(tl.dataset.id);
+    if (t2 && t2 !== aimT) { aimT = t2; showPreview(powerArea(mode, t2)); }
+    return;
+  }
   if (!drag || drag.moved || busy) return;
   const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
   if (Math.max(Math.abs(dx), Math.abs(dy)) < T * 0.35) return;
-  drag.moved = true;
+  drag.moved = true; clearTimeout(drag.hold); if (drag.held) clearPreview();
   const [dr, dc] = Math.abs(dx) > Math.abs(dy) ? [0, Math.sign(dx)] : [Math.sign(dy), 0];
   const r2 = drag.t.r + dr, c2 = drag.t.c + dc;
   if (r2 < 0 || r2 >= R || c2 < 0 || c2 >= C) return;
   clearSel(); trySwap(drag.t, board[r2][c2]);
 });
 const endDrag = () => {
+  if (aimT) { const t = aimT; aimT = null; clearPreview(); if (mode) usePowerOn(t); return; }
   if (!drag) return;
-  const d = drag; drag = null;
+  const d = drag; drag = null; clearTimeout(d.hold);
+  if (d.held) { clearPreview(); return; }                            // a long press only previews
   if (d.moved || busy) return;
   if (sel && sel !== d.t && adjacent(sel, d.t)) { const a = sel; clearSel(); trySwap(a, d.t); }
   else if (sel === d.t) clearSel();
+  else if ((d.t.sp || d.t.type === 'spirit') && !d.t.knot && !d.t.cloud) { clearSel(); fireTap(d.t); }
   else { clearSel(); sel = d.t; sel.el.classList.add('sel'); boop(0, 0.06); }
 };
 boardEl.addEventListener('pointerup', endDrag);
-boardEl.addEventListener('pointercancel', () => { drag = null; });
+boardEl.addEventListener('pointercancel', () => { if (drag) clearTimeout(drag.hold); drag = null; aimT = null; clearPreview(); });
 
 /* ---------- breath game ---------- */
 // Inhale: slide Luma up with the rising light (can't rush it).
@@ -4496,6 +4752,7 @@ async function openBreath() {
   ac();
   if (busy) return;
   if (charge < 100) { say(`Luma's Aura is ${auraName(charge)}. Keep matching to make it Heavenly.`); bump(bBtn); return; }
+  if (practice && !(practice.allow && practice.allow.luma)) { pNudge(); return; }
   busy = true;
   coachBreathOpened();
   $('#brChoose').hidden = !!S.breathMode ? true : false;
@@ -4713,7 +4970,11 @@ $('#pwBar').addEventListener('click', async e => {
   const pw = POWERS.find(p => p.id === b.dataset.pw);
   if (mode === pw.id) { setAim(null); monkeyFirst = null; say('Put away.'); return; }
   if (pwCount(pw.id) <= 0 && S.coins < pw.cost) { spend(pw.cost); return; }
-  if (pw.aim) { setAim(pw.id); monkeyFirst = null; say(pw.how); powerCaption(pw); return; }
+  if (pw.aim) {
+    setAim(pw.id); monkeyFirst = null; say(pw.how + (pw.id === 'monkey' ? '' : ' Slide your finger to aim, lift to use it.')); powerCaption(pw);
+    if (pw.id !== 'monkey') { const mid = board[R >> 1] && board[R >> 1][C >> 1]; if (mid) { showPreview(powerArea(pw.id, mid)); setTimeout(() => { if (!aimT) clearPreview(); }, 1100); } }
+    return;
+  }
   // Deer Stream acts at once
   if (!await paidFor(pw)) return;
   busy = true; powerCaption(pw); cycleCheck(pw);
@@ -4722,6 +4983,13 @@ $('#pwBar').addEventListener('click', async e => {
   charge = Math.min(100, charge + 20); hud();
   busy = false;
 });
+function powerArea(id, t) {
+  let cells = [];
+  if (id === 'tiger') cells = rowOf(t.r);
+  else if (id === 'bear') cells = around(t.r, t.c, 1);
+  else if (id === 'crane') cells = [...rowOf(t.r), ...colOf(t.c)];
+  return [...new Set(cells)].filter(x => !x.cloud);
+}
 async function usePowerOn(t) {
   const pw = POWERS.find(p => p.id === mode); if (!pw) return;
   if (pw.id === 'monkey') {
@@ -4870,7 +5138,7 @@ function hud() {
   if (spunToday()) { tc.hidden = false; tc.innerHTML = `<span class="tco">${orbHTML(S.todayElem)}</span>${ELEM[S.todayElem].name} day · Luma fills faster`; }
   else tc.hidden = true;
   $('#gCloudWord').textContent = cl === 1 ? 'cloud left' : 'clouds left';
-  $('#gMoves').textContent = babyOn() ? '∞' : Math.max(0, moves);
+  $('#gMoves').textContent = babyOn() || practice ? '∞' : Math.max(0, moves);
   $('#movesStat').style.boxShadow = moves <= 3 ? 'inset 0 0 0 2px #F2A07B' : '';
   if (moves === 3 && !hud.warned) { hud.warned = true; avatarReact('worry'); }
   if (moves > 3) hud.warned = false;
@@ -5096,7 +5364,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), charge: v => { charge = v; hud(); } };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -5292,7 +5560,7 @@ function rainLoop() {
 /* ---------- coach: guided first level + idle hints ---------- */
 // tut: null | 'swap' | 'luma' | 'breath' | 'loop'
 const appEl = $('#app'), handEl = $('#hand'), tipEl = $('#coachTip');
-let tut = null, handAnim = null, idleAt = performance.now(), hintShown = false;
+let idleTurn = false, tut = null, handAnim = null, idleAt = performance.now(), hintShown = false;
 function findSwap() {
   const sw = (r1, c1, r2, c2) => { const x = board[r1][c1]; board[r1][c1] = board[r2][c2]; board[r2][c2] = x; };
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
@@ -5386,6 +5654,7 @@ function coachBreathOpened() {
   if (tut === 'luma') tut = 'breath';
 }
 async function coachBreathDone() {
+  if (practice && practice.allow && practice.allow.luma) { await wait(600); finishPractice(true); return; }
   if (tut !== 'breath') return;
   tut = 'loop';
   const left = clouds().length;
@@ -5397,10 +5666,12 @@ async function coachBreathDone() {
 }
 // idle hints on every level, so nobody sits there stuck
 setInterval(() => {
-  if ($('#game').hidden || busy || tut || hintShown || $$('.ov').some(o => !o.hidden)) return;
+  if ($('#game').hidden || busy || tut || practice || hintShown || $$('.ov').some(o => !o.hidden)) return;
   if (performance.now() - idleAt < 7000) return;
   hintShown = true;
+  const piece = all().find(t => (t.sp || t.type === 'spirit') && !t.knot && !t.cloud);
   if (charge >= 100) { showLumaHint(); say('Luma is ready. Tap her and breathe with her.'); }
+  else if (piece && (idleTurn = !idleTurn)) { pHandTap(piece); showPreview(spArea(piece)); setTimeout(clearPreview, 1600); say(`Tap the ${SP_NAME[piece.type === 'spirit' ? 'spirit' : piece.sp]} to fire it.`); }
   else if (showSwapHint()) say('Here is a match you can make.');
 }, 500);
 $('#game').addEventListener('pointerdown', () => {
@@ -5409,8 +5680,134 @@ $('#game').addEventListener('pointerdown', () => {
 }, true);
 addEventListener('resize', () => { if (tut === 'swap') showSwapHint(); else if (tut === 'luma') showLumaHint(); });
 
+/* ---------- Practice Grove: the playable walkthrough ----------
+   Eight short lessons on fixed boards, one allowed move each, with the hand showing it. Every
+   board was checked so the shown move does exactly what the lesson says. No moves limit, no
+   stats, no hearts. First time only, it runs before episode 1; it can be replayed any time. */
+let practice = null;
+const PBASE = 'wfema', PT = { w: 'wood', f: 'fire', e: 'earth', m: 'metal', a: 'water' };
+const LESSONS = [
+  { n: 1, title: 'Match 3', text: 'Slide the glowing orb where the hand shows. Three in a line pop.', grid: { mods: { '3,0': 'a' } }, swap: [[2, 2], [3, 2]] },
+  { n: 2, title: 'Lantern', text: 'Line up four in a row to make a Lantern.', grid: { mods: { '4,0': 'e', '4,1': 'e', '4,2': 'f' } }, swap: [[4, 2], [5, 2]] },
+  { n: 2, title: 'Lantern', text: 'Now tap the Lantern. It lights up its whole row.', tapKind: ['row', 'col'], fallback: { sps: { '4,2': 'row' } } },
+  { n: 3, title: 'Blossom', text: 'Make an L or T shape to grow a Blossom.', grid: { mods: { '3,2': 'm', '4,2': 'm', '2,3': 'm' } }, swap: [[1, 2], [2, 2]] },
+  { n: 3, title: 'Blossom', text: 'Tap the Blossom. It bursts everything around it.', tapKind: ['bomb'], fallback: { sps: { '2,2': 'bomb' } } },
+  { n: 4, title: 'Firefly', text: 'Make a square of four to wake a Firefly.', grid: { mods: { '2,2': 'w', '2,3': 'w', '3,2': 'w', '4,3': 'w' }, clouds: ['0,4'] }, swap: [[3, 3], [4, 3]] },
+  { n: 4, title: 'Firefly', text: 'Tap the Firefly. It flies to what you need most, like the orb under a cloud.', tapKind: ['fly'], fallback: { sps: { '3,3': 'fly' }, clouds: ['1,4'] } },
+  { n: 5, title: 'Storm clouds', text: 'Clear the orbs under a cloud and it sinks. At the bottom, it floats away.', grid: { mods: { '5,1': 'e' }, clouds: ['4,2'] }, swap: [[5, 3], [4, 3]] },
+  { n: 6, title: 'Spirit Star', text: 'Line up five in a row to make a Spirit Star.', grid: { mods: { '1,0': 'a', '1,1': 'a', '1,2': 'w', '1,3': 'a', '1,4': 'a' } }, swap: [[1, 2], [2, 2]] },
+  { n: 6, title: 'Spirit Star', text: 'Swap the Spirit Star with any orb next to it. Every orb of that color clears.', swapKind: 'spirit', fallback: { sps: { '2,2': 'spirit' } } },
+  { n: 7, title: 'Combos', text: 'Swap two power pieces together for a giant combo.', grid: { sps: { '2,2': 'row', '2,3': 'bomb' } }, swap: [[2, 2], [2, 3]] },
+  { n: 8, title: 'Breathe', text: 'Luma’s Aura is full. Tap Luma and breathe with her.', luma: true }
+];
+function loadGrid(spec = {}) {
+  boardEl.innerHTML = ''; ids.clear();
+  board = Array.from({ length: R }, () => Array(C).fill(null));
+  L.clouds = (spec.clouds || []).length;
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    const key = `${r},${c}`, ch = (spec.mods || {})[key] || PBASE[(r + c) % 5], sp = (spec.sps || {})[key];
+    const t = sp === 'spirit' ? newTile('spirit') : newTile(PT[ch], sp || null);
+    if ((spec.clouds || []).includes(key)) { t.cloud = true; paint(t); }
+    board[r][c] = t; drop(t, r - R - 1, r, c);
+    t.el.style.transitionDelay = `${c * 22 + (R - r) * 14}ms`; setTimeout(() => { t.el.style.transitionDelay = ''; }, 700);
+  }
+  hud();
+}
+const pAt = ([r, c]) => board[r] && board[r][c];
+function pClearFocus() { $$('#board .tile').forEach(el => el.classList.remove('tutdim', 'hint')); clearHints(); }
+function pFocus(cells) { $$('#board .tile').forEach(el => el.classList.add('tutdim')); cells.forEach(t => { if (t) { t.el.classList.remove('tutdim'); t.el.classList.add('hint'); } }); }
+function pHandSwap(a, b) {
+  const p1 = centerOf(a.el), p2 = centerOf(b.el); handEl.hidden = false;
+  handAnim = handEl.animate([{ transform: handAt(p1.x, p1.y), opacity: 0 }, { transform: handAt(p1.x, p1.y), opacity: 1, offset: 0.2 }, { transform: handAt(p2.x, p2.y), opacity: 1, offset: 0.7 }, { transform: handAt(p2.x, p2.y), opacity: 0 }], { duration: 1700, iterations: Infinity, easing: 'ease-in-out' });
+}
+function pHandTap(t) {
+  const p = centerOf(t.el); handEl.hidden = false;
+  handAnim = handEl.animate([{ transform: handAt(p.x, p.y + 22) }, { transform: handAt(p.x, p.y + 2), offset: 0.45 }, { transform: handAt(p.x, p.y + 22) }], { duration: 900, iterations: Infinity, easing: 'ease-in-out' });
+}
+function pAllowSwap(a, b) {
+  const al = practice && practice.allow; if (!al) return false;
+  if (al.swapKind) return a.type === al.swapKind || b.type === al.swapKind;
+  if (!al.swap) return false;
+  const [p, q] = al.swap, is = (t, [r, c]) => t.r === r && t.c === c;
+  return (is(a, p) && is(b, q)) || (is(a, q) && is(b, p));
+}
+function pAllowTap(t) { const al = practice && practice.allow; return !!(al && al.tapKind && al.tapKind.includes(t.sp)); }
+function pNudge() { bell(392, 0, 0.05); say('Try the glowing one.'); const s = LESSONS[practice.i]; if (s) tip(`Lesson ${s.n} of 8 · ${s.title}`, s.text + '<button class="pskip" data-pskip>Skip practice</button>', 0); }
+async function runPractice(after) {
+  clearHints(); hideTip(); tut = null; setAim(null);
+  practice = { i: 0, after, allow: null, onSettle: null };
+  document.body.classList.add('practicing');
+  setGroove('play');
+  R = 6; C = 6; POOL = TYPES;
+  L = Object.assign({}, LEVELS.find(l => l.elem === 'water'), { place: 'Practice Grove', shift: 'learning the pieces', clouds: 0, knots: 0, gems: 0, moves: 99 });
+  $('#map').hidden = true; $('#welcome').hidden = true; $('#story').hidden = true; $('#game').hidden = false;
+  $('#gPlace').textContent = 'Practice Grove'; $('#gShift').textContent = 'Learn every power piece';
+  $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
+  moves = 99; charge = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
+  deepBreaths = 0; breathing = false; movesUsed = 0; cloudsFreed = 0;
+  levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
+  makeRig($('#kaiFace'), heroId()); applyLooks(); paintBuddyGame();
+  await wait(30);
+  sizeBoard(); sizeRain();
+  if (!running) { running = true; rainLoop(); }
+  say('Welcome to the Practice Grove. Luma will show you every piece.');
+  pStep(0);
+}
+async function pStep(i) {
+  if (!practice) return;
+  practice.i = i; practice.allow = null;
+  const s = LESSONS[i];
+  if (!s) return finishPractice(true);
+  pClearFocus();
+  const findKind = () => all().find(t => s.tapKind ? s.tapKind.includes(t.sp) : t.type === s.swapKind);
+  if (s.grid) { loadGrid(s.grid); await wait(reduce ? 60 : 620); }
+  else if ((s.tapKind || s.swapKind) && !findKind()) { loadGrid(s.fallback); await wait(reduce ? 60 : 620); }
+  if (!practice) return;
+  tip(`Lesson ${s.n} of 8 · ${s.title}`, s.text + '<button class="pskip" data-pskip>Skip practice</button>', 0);
+  if (s.luma) {
+    charge = 100; hud(); practice.allow = { luma: true }; busy = false; showLumaHint(); return;
+  }
+  if (s.swap) {
+    const a = pAt(s.swap[0]), b = pAt(s.swap[1]);
+    practice.allow = { swap: s.swap }; pFocus([a, b]); pHandSwap(a, b);
+  } else if (s.tapKind) {
+    const t = findKind(); practice.allow = { tapKind: s.tapKind }; pFocus([t]); pHandTap(t); showPreview(spArea(t));
+  } else if (s.swapKind) {
+    const t = findKind(), nb = plus(t).find(x => !x.cloud && !x.knot && x.type !== 'spirit');
+    practice.allow = { swapKind: s.swapKind }; pFocus([t, nb]); if (nb) pHandSwap(t, nb);
+  }
+  practice.onSettle = async () => {
+    clearPreview(); pClearFocus(); hideTip();
+    say(i === 7 ? 'The cloud floated away!' : ['Nice match!', 'A Lantern!', 'Whoosh!', 'A Blossom!', 'Boom!', 'A Firefly!', 'Right on target!', '', 'A Spirit Star!', 'The whole color cleared!', 'What a combo!'][i] || 'Nice!');
+    await wait(900);
+    pStep(i + 1);
+  };
+  busy = false;
+}
+async function finishPractice(done) {
+  if (!practice) return;
+  const after = practice.after; practice = null;
+  document.body.classList.remove('practicing'); pClearFocus(); clearPreview(); hideTip();
+  const first = !S.practiceDone;
+  S.practiceDone = true; S.tutDone = true;
+  if (done && first) S.coins += 100;
+  save(); syncWallet();
+  if (done) {
+    await showGot('You know every piece!', [
+      [pieceHTML('row', 'fire'), 'Lantern<br><small>4 in a line</small>'], [pieceHTML('bomb', 'wood'), 'Blossom<br><small>L or T</small>'],
+      [pieceHTML('fly', 'earth'), 'Firefly<br><small>square of 4</small>'], [pieceHTML('spirit'), 'Spirit Star<br><small>5 in a line</small>']], first ? 'Practice complete · +100 coins' : 'Practice complete');
+    await new Promise(res => { const iv = setInterval(() => { if ($('#gotov').hidden) { clearInterval(iv); res(); } }, 150); });
+  }
+  running = false; busy = true;
+  $('#game').hidden = true;
+  if (after) after();
+  else { setGroove('home'); $('#map').hidden = false; renderMap(); renderHome(); }
+}
+document.addEventListener('click', e => { if (e.target.closest('[data-pskip]') && practice) { tick(); finishPractice(false); } });
+
 /* ---------- level flow ---------- */
 function startLevel() {
+  if (practice) { practice = null; document.body.classList.remove('practicing'); }
   setGroove('play');
   // Little board: 5x5 with the place's element and its two cycle neighbours, and fewer clouds
   const little = S.boardSize === 'little' && !babyOn(), base = LEVELS[LI];
@@ -5930,6 +6327,7 @@ async function playGate() {
   g.hidden = true;
 }
 function toMap() {
+  if (practice) { practice = null; document.body.classList.remove('practicing'); pClearFocus(); clearPreview(); }
   setGroove('home');
   running = false; busy = true;
   brRun++; closeMic(); breathing = false; babyRun++;
@@ -6200,7 +6598,8 @@ function giveGoods(g) {
   if (g.aura) { S.auras = [...new Set([...(S.auras || []), g.aura])]; S.aura = g.aura; applyLooks(); }
   save(); syncWallet(); renderStreak(); $('#lRetry').textContent = 'Try again · uses a heart';
 }
-async function showGot(title, items) {
+async function showGot(title, items, eyebrow = 'Thank you') {
+  $('#gotEyebrow').textContent = eyebrow;
   $('#gotTitle').textContent = title;
   $('#gotItems').innerHTML = items.map(([html, label]) => `<span class="gi">${html}<span>${label}</span></span>`).join('');
   $('#gotov').style.zIndex = 30;
@@ -6331,7 +6730,7 @@ $$('[data-play]').forEach(b => b.addEventListener('click', () => {
   $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome();
   (S.hero && S.band ? Promise.resolve() : pickHero()).then(() => S.enteredJourney ? openWorld(0) : enterJourney());
 }));
-$('#retut').addEventListener('click', () => { S.tutDone = false; save(); toast('The guided walkthrough will play on level 1.'); });
+$('#retut').addEventListener('click', () => { ac(); runPractice(); });
 $('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome(); });
 $('#howOpen').addEventListener('click', () => { $('#map').hidden = true; $('#welcome').hidden = false; $('#welcome').scrollTop = 0; });
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
