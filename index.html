@@ -2386,6 +2386,11 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .sptile.locked .picw img{animation:none !important}
 .sptile .picw.m-style img,.ssart .picw.m-style img{height:auto;object-fit:contain}
 .ssart .picw.m-style{width:130px;height:110px}
+
+/* companion sprite sheets (5 frames side by side) */
+.pksprite,.hsprite{display:block;width:100%;background-repeat:no-repeat;background-size:500% 100%;background-position:var(--bx,0%) 0;transform-origin:50% 100%;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.hsprite.shbud{width:118px;margin-bottom:-2px;animation:pkcheer .9s ease-in-out infinite;filter:drop-shadow(0 0 12px color-mix(in srgb,var(--sg) 80%,transparent))}
+.picw.m-style .hsprite{width:84%;margin-bottom:-2px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2628,7 +2633,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
     <div class="flowbar" id="flowBar" hidden><span id="flowText"></span></div>
     <div class="boardwrap" id="boardwrap">
       <div id="board" aria-label="Puzzle board"></div>
-      <div class="peek" id="peek" hidden aria-hidden="true"><span class="pkglow"></span><span class="pkclip"><img id="pkImg" alt=""></span></div>
+      <div class="peek" id="peek" hidden aria-hidden="true"><span class="pkglow"></span><span class="pkclip"><span id="pkImg" class="pksprite"></span></span></div>
       <button class="pkrail" id="pkPerk" hidden></button>
     </div>
     <div class="gbot">
@@ -6807,8 +6812,12 @@ function say(msg) {
 const peekWho = () => buddyWho(S.buddy || 'fire').replace('buddy-', '');   // e.g. fire, wood-young, metal-guardian
 const peekArt = () => true;
 const peek = { pose: 'idle', until: 0, base: 'idle', act: performance.now(), blinkAt: 0 };
-const PEEK_FRAME = { idle: 'hold', cheer: 'cheer', gasp: 'gasp', breathe: 'blink', worried: 'worried', sleepy: 'blink' };
-function peekSrc(p) { return `img/hold/${peekWho()}-${PEEK_FRAME[p] || 'hold'}.png`; }
+// one sprite sheet per companion and stage: hold · cheer · gasp · blink · worried, side by side
+const HOLD_AR = {"earth-grown":0.83,"earth-guardian":0.93,"earth-young":0.813,"earth":0.803,"fire-grown":0.917,"fire-guardian":0.94,"fire-young":0.84,"fire":0.777,"metal-grown":0.88,"metal-guardian":0.827,"metal-young":0.73,"metal":0.707,"water-grown":0.723,"water-guardian":0.823,"water-young":0.847,"water":0.8,"wood-grown":0.97,"wood-guardian":0.953,"wood-young":1.193,"wood":0.923};
+const PEEK_X = { idle: 0, cheer: 25, gasp: 50, breathe: 75, blink: 75, worried: 100, sleepy: 75 };
+function peekSrc() { return `img/holds/${peekWho()}.png?v=65`; }
+function holdSprite(tag, pose, cls = '') { return `<span class="hsprite ${cls}" style="background-image:url(img/holds/${tag}.png?v=65);--bx:${PEEK_X[pose] || 0}%;aspect-ratio:1/${HOLD_AR[tag] || 1}"></span>`; }
+function setPose(pose) { const im = $('#pkImg'); if (im) im.style.setProperty('--bx', (PEEK_X[pose] || 0) + '%'); }
 function placePeek() {
   const row = $('#peekRow'), pk = $('#peek'), rail = $('#pkPerk'); if (!row || $('#game').hidden) return;
   if (babyOn()) { row.hidden = pk.hidden = rail.hidden = true; return; }
@@ -6820,21 +6829,18 @@ function placePeek() {
   rail.style.left = `${br.left - wr.left - 8}px`; rail.style.width = `${br.width + 16}px`; rail.style.top = `${top}px`;
   rail.innerHTML = `<small>${BUDDY[el].name}'s gift</small>${giftName(el)}`;
   const room = br.top - $('.stats').getBoundingClientRect().bottom - RH - 2;   // never reaches the Goals/Moves bar
-  const im = $('#pkImg'), ratio = im.naturalWidth ? im.naturalHeight / im.naturalWidth : 1;
+  const im = $('#pkImg'), ratio = HOLD_AR[peekWho()] || 1;
+  im.style.backgroundImage = `url(${peekSrc()})`; im.style.aspectRatio = `1 / ${ratio}`;
   const W = Math.max(80, Math.min(150, room / ratio)); pk.style.width = `${W}px`;
   pk.style.left = `${br.left - wr.left + br.width / 2 - W / 2}px`;
   pk.style.top = `${top - pk.offsetHeight + 3}px`;
   pk.style.setProperty('--pg', ELEM[el].glow + 'aa');
-  ['idle', 'cheer', 'gasp', 'breathe', 'worried'].forEach(p => { const i = new Image(); i.src = peekSrc(p); });
   peekShow(peek.base, true);
-  $('#pkImg').onerror = e => { const im = e.target, h = peekSrc('idle'); if (!im.src.endsWith(h)) im.src = h; };
-  $('#pkImg').onload = () => { if (!placePeek.busy) { placePeek.busy = true; placePeek(); placePeek.busy = false; } };
 }
 $('#pkPerk').addEventListener('click', () => { const el = S.buddy || 'fire'; tick(); peekReact('cheer', 1200, true); toast(`${BUDDY[el].name}'s gift · ${giftName(el)}: ${giftText(el)}.`); });
 function peekShow(pose, quiet) {
   const pk = $('#peek'), img = $('#pkImg'); if (!pk || pk.hidden) return;
-  if (peekArt() && (peek.pose !== pose || !img.getAttribute('src'))) img.src = peekSrc(pose);
-  peek.pose = pose;
+  setPose(pose); peek.pose = pose;
   pk.className = `peek pose-${pose}`;
   if (!quiet && !reduce) { void pk.offsetWidth; pk.classList.add('pop'); }
 }
@@ -6860,8 +6866,8 @@ setInterval(() => {
   if ((peek.base === 'idle' || peek.base === 'worried') && now > peek.blinkAt) {
     peek.blinkAt = now + 3200 + Math.random() * 3000;
     if (!peekArt()) return;
-    const back = peek.base; $('#pkImg').src = peekSrc('breathe');
-    setTimeout(() => { if (performance.now() >= peek.until && peek.pose === back) $('#pkImg').src = peekSrc(back); }, 140);
+    const back = peek.base; setPose('blink');
+    setTimeout(() => { if (performance.now() >= peek.until && peek.pose === back) setPose(back); }, 140);
   }
 }, 200);
 boardEl.addEventListener('pointerdown', e => { peek.act = performance.now(); peekLook(e.clientX); });
@@ -8011,7 +8017,7 @@ function applyLooks() {
 }
 const PASS_GLOW = { jade: 'rgba(120,220,160,.6)', ember: 'rgba(255,140,110,.6)', river: 'rgba(120,190,255,.6)', lotus: 'rgba(255,214,120,.7)', blossom: 'rgba(255,180,210,.65)', moon: 'rgba(200,180,255,.6)', sunrise: 'rgba(255,190,130,.65)', gold: 'rgba(255,214,120,.75)', sprout: 'rgba(150,230,140,.55)', heart: 'rgba(255,150,130,.55)', drop: 'rgba(140,200,255,.55)' };
 function passArt(r) {
-  if (r.style) return { src: `img/hold/${buddyWho(S.buddy || 'fire').replace('buddy-', '')}-cheer.png`, m: 'style', g: 'rgba(255,214,120,.7)' };
+  if (r.style) return { src: 'img/pass/trophy-lotus.png', m: 'style', g: 'rgba(255,214,120,.7)' };
   if (r.final) return { src: 'img/pass/trophy-lotus.png', m: 'aura', g: PASS_GLOW.gold };
   if (r.ring) return { src: `img/pass/ring-${r.ring}.png`, m: 'ring', g: PASS_GLOW[r.ring], face: true };
   if (r.aura) return { src: `img/pass/aura-${r.aura}.png`, m: 'aura', g: PASS_GLOW[r.aura] };
@@ -8038,7 +8044,7 @@ function passKind(r) {
 }
 function passArtHTML(r) {
   const a = passArt(r);
-  if (r.style) return `<span class="picw m-style bs-${r.style}"><img src="${a.src}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('-cheer.png','-hold.png')}" alt=""><i class="minirail"></i></span>`;
+  if (r.style) return `<span class="picw m-style bs-${r.style}">${holdSprite(peekWho(), 'cheer')}<i class="minirail"></i></span>`;
   return `<span class="picw m-${a.m}" style="--pg:${a.g || 'rgba(255,226,150,.5)'}"><img class="${a.m === 'photo' ? 'photo' : ''}" src="${a.src}" alt="">${a.face ? `<img class="face" src="${faceSrc(heroId(), 'happy')}" alt="">` : ''}</span>`;
 }
 let PGI = 0;
@@ -8052,7 +8058,7 @@ function renderPass(fresh) {
     return `<button class="sppg ${pi === PGI ? 'on' : ''} ${open ? '' : 'locked'}" data-pg="${pi}" style="--eh:${ELEM[pg.el].hue};--eg:${ELEM[pg.el].glow}"><span class="o">${open ? orbHTML(pg.el) : '🔒'}</span><b>Page ${pi + 1}</b><small>${f}/7</small></button>`; }).join('');
   const pg = PAGES[PGI], open = pageOpen(PGI), hk = isClaimed(PGI, 'h'), bs = BSTYLES[pg.style], worn = S.bstyle === pg.style;
   $('#spHero').className = `sphero bs-${pg.style} ${open ? '' : 'locked'} ${hk ? 'done' : ''}`;
-  $('#spHero').innerHTML = `<div class="shstage"><i class="shrays"></i><img class="shbud" src="img/hold/${buddyWho(S.buddy || 'fire').replace('buddy-', '')}-cheer.png" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('-cheer.png','-hold.png')}" alt=""><span class="shrail"><small>${BUDDY[S.buddy || 'fire'].name}'s gift</small>${giftName(S.buddy || 'fire')}</span><span class="shboard"></span></div>
+  $('#spHero').innerHTML = `<div class="shstage"><i class="shrays"></i>${holdSprite(peekWho(), 'cheer', 'shbud')}<span class="shrail"><small>${BUDDY[S.buddy || 'fire'].name}'s gift</small>${giftName(S.buddy || 'fire')}</span><span class="shboard"></span></div>
     <div class="shtx"><small>Page ${PGI + 1} headline · ${ELEM[pg.el].name}</small><b>${bs.name}</b><em>${bs.note}</em>
     <button class="shbtn" data-key="h">${!open ? '🔒 Opens after Page ' + PGI : hk ? (worn ? 'Using it ✓' : 'Use this style') : `Claim · ★ ${pg.head}`}</button></div>`;
   $('#spGrid').innerHTML = pg.items.map((r, k) => tileHTML(PGI, String(k), r, open)).join('');
