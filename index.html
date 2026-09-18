@@ -1512,6 +1512,45 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
   box-shadow:inset 0 calc(var(--t) * -0.08) calc(var(--t) * 0.1) rgba(0,0,0,.38),inset 0 calc(var(--t) * 0.035) calc(var(--t) * 0.06) rgba(255,255,255,.55),0 calc(var(--t) * 0.05) calc(var(--t) * 0.07) rgba(4,10,14,.45)}
 #board .tile .orb svg{width:64%;height:64%}
 #board .tile.sel .orb{box-shadow:0 0 0 3px #FFF6DE,0 0 16px 5px rgba(255,214,130,.9)}
+
+/* ---------- the booster tray: a wooden tray of power tiles that want to be pressed ---------- */
+.gbot{padding-top:4px}
+#pwBar.pwbar{flex:1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:6px;padding:9px 8px 7px;border-radius:22px;
+  background:linear-gradient(180deg,#5A3A1C,#3A2410 60%,#2A1A0B);box-shadow:inset 0 0 0 2px #D9A94A,inset 0 3px 0 rgba(255,236,190,.35),inset 0 -3px 0 rgba(0,0,0,.35),0 10px 20px rgba(0,0,0,.5)}
+.pwtile{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:0;border:0;background:none;cursor:pointer;min-width:0;
+  animation:pwidle 3.4s ease-in-out infinite;animation-delay:calc(var(--i) * -.55s)}
+#pwBar .pwbtn{width:auto;height:auto;border-radius:0;box-shadow:none}
+.pwart{position:relative;display:block;width:100%;max-width:58px;aspect-ratio:1;border-radius:17px;overflow:hidden;background:#1D130A;transition:transform .2s cubic-bezier(.3,1.6,.5,1),box-shadow .25s;
+  box-shadow:0 0 0 2.5px var(--pc),0 4px 0 rgba(0,0,0,.5),inset 0 2px 0 rgba(255,255,255,.45)}
+#pwBar .pwart img{width:100%;height:100%;object-fit:cover;display:block;border-radius:0;transform:scale(1.1)}
+.pwart::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(255,255,255,.28),transparent 42%);pointer-events:none}
+.pwart::after{content:"";position:absolute;inset:-30%;z-index:2;pointer-events:none;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.75) 50%,transparent 58%);
+  transform:translateX(-120%);animation:pwshine 7s ease-in-out infinite;animation-delay:calc(var(--i) * .3s)}
+@keyframes pwshine{0%,72%{transform:translateX(-120%)}86%,100%{transform:translateX(120%)}}
+@keyframes pwidle{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+.pwname{font-size:10.5px;font-weight:900;line-height:1;color:#FFF1CF;letter-spacing:.02em;text-shadow:0 1px 0 rgba(0,0,0,.7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+#pwBar .pwtile > i{position:absolute;right:-3px;top:-7px;bottom:auto;z-index:3;min-width:21px;height:21px;padding:0 5px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:2px;font-style:normal;font-size:11.5px;font-weight:900;color:#fff;
+  background:linear-gradient(#5CD17E,#23864A);box-shadow:0 0 0 2px #FFF1CF,0 2px 4px rgba(0,0,0,.5)}
+#pwBar .pwtile > i.buy{background:linear-gradient(#4A3622,#241708);color:#FFE7A8;font-size:10.5px}
+.pwbtn.has .pwart{animation:pwglow 2.6s ease-in-out infinite;animation-delay:calc(var(--i) * .4s)}
+@keyframes pwglow{50%{box-shadow:0 0 0 2.5px var(--pc),0 4px 0 rgba(0,0,0,.5),0 0 16px 4px var(--pc),inset 0 2px 0 rgba(255,255,255,.45)}}
+.pwbtn.cant .pwart img{filter:saturate(.35) brightness(.65)}
+.pwtile:active .pwart{transform:scale(.9)}
+#pwBar .pwbtn.on{box-shadow:none;animation:none}
+#pwBar .pwbtn.on .pwart{transform:translateY(-4px) scale(1.06);box-shadow:0 0 0 3px #fff,0 0 24px 8px var(--pc),0 10px 14px rgba(0,0,0,.5);animation:none}
+#pwBar .pwbtn.on .pwname{visibility:hidden}
+#pwBar .pwbtn.on::before{content:"Tap board";position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:2px 6px;border-radius:99px;font-size:9.5px;z-index:4;font-weight:900;color:#3A2408;
+  background:linear-gradient(#FFF3C4,#F2C45A);box-shadow:0 3px 8px rgba(0,0,0,.4);animation:tapbob .9s ease-in-out infinite}
+@keyframes tapbob{50%{transform:translateX(-50%) scale(1.08)}}
+.pwring{position:absolute;left:50%;top:0;width:100%;max-width:58px;aspect-ratio:1;margin-left:-29px;border-radius:17px;border:3px solid var(--pc);pointer-events:none}
+.coinart{display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#6B4A1E,#2B1A08)}
+.coinart .coin{width:58%;height:58%;box-shadow:inset 0 0 0 2px rgba(120,80,10,.45),0 0 12px rgba(255,210,110,.7);animation:pwidle 2.4s ease-in-out infinite}
+.coinart em{position:absolute;right:4px;bottom:3px;z-index:3;font-style:normal;font-weight:900;font-size:15px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.8)}
+.pwcoin .pwname{color:#FFE08A}
+#boostChip{position:absolute;right:20px;top:-22px}
+.diffban em{display:block;margin-top:4px;font-style:normal;font-size:12px;font-weight:700;opacity:.95;line-height:1.35}
+.helpban{flex-basis:100%;text-align:center;padding:7px 12px;border-radius:14px;font-weight:900;font-size:13px;color:#5A3A08;background:linear-gradient(#FFF3C4,#F6D27A);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.7)}
+@media (max-width:380px){.pwname{font-size:9.5px}#pwBar.pwbar{gap:4px;padding:8px 6px 6px}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -1622,7 +1661,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 
   <section class="screen" id="map" hidden>
     <div class="homebg" id="homeBg"></div>
-    <button class="homesorin" id="homeSorin" aria-label="Sorin"><img class="sa" alt=""><img class="sb" alt=""><span class="sorincap" id="sorinCap"></span></button>
+    <button class="homesorin" id="homeSorin" aria-label="Sorin"><img class="sa" alt=""><img class="sb" alt=""></button>
     <div class="homesky" id="homeSky"><i class="hsglow"></i><i class="hsorb"></i><i class="hsrays"></i><i class="hsmist"></i></div>
     <canvas class="homefx" id="homeFx"></canvas>
     <div class="homeshade" id="homeShade"></div>
@@ -1739,13 +1778,14 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
     </div>
     <div class="gbot" style="padding-top:0;justify-content:space-between">
       <div class="boosters pwbar" id="pwBar">
-        <button class="pwbtn" data-pw="tiger" aria-label="Tiger Claw"><img src="img/icons/pw-tiger.jpg" alt=""><i id="pwc-tiger"></i></button>
-        <button class="pwbtn" data-pw="monkey" aria-label="Monkey Swap"><img src="img/icons/pw-monkey.jpg" alt=""><i id="pwc-monkey"></i></button>
-        <button class="pwbtn" data-pw="bear" aria-label="Bear Stomp"><img src="img/icons/pw-bear.jpg" alt=""><i id="pwc-bear"></i></button>
-        <button class="pwbtn" data-pw="crane" aria-label="Crane Wings"><img src="img/icons/pw-crane.jpg" alt=""><i id="pwc-crane"></i></button>
-        <button class="pwbtn" data-pw="deer" aria-label="Deer Stream"><img src="img/icons/pw-deer.jpg" alt=""><i id="pwc-deer"></i></button>
+        <button class="pwtile pwbtn" data-pw="tiger" style="--i:0;--pc:#7BD957" aria-label="Tiger Claw"><span class="pwart"><img src="img/icons/pw-tiger.jpg" alt=""></span><b class="pwname">Claw</b><i id="pwc-tiger"></i></button>
+        <button class="pwtile pwbtn" data-pw="monkey" style="--i:1;--pc:#FF7A55" aria-label="Monkey Swap"><span class="pwart"><img src="img/icons/pw-monkey.jpg" alt=""></span><b class="pwname">Swap</b><i id="pwc-monkey"></i></button>
+        <button class="pwtile pwbtn" data-pw="bear" style="--i:2;--pc:#F2B233" aria-label="Bear Stomp"><span class="pwart"><img src="img/icons/pw-bear.jpg" alt=""></span><b class="pwname">Stomp</b><i id="pwc-bear"></i></button>
+        <button class="pwtile pwbtn" data-pw="crane" style="--i:3;--pc:#DCE8F2" aria-label="Crane Wings"><span class="pwart"><img src="img/icons/pw-crane.jpg" alt=""></span><b class="pwname">Wings</b><i id="pwc-crane"></i></button>
+        <button class="pwtile pwbtn" data-pw="deer" style="--i:4;--pc:#5BC0FF" aria-label="Deer Stream"><span class="pwart"><img src="img/icons/pw-deer.jpg" alt=""></span><b class="pwname">Stream</b><i id="pwc-deer"></i></button>
+        <button class="pwtile pwcoin" id="shopOpen2" style="--i:5;--pc:#F2C45A" aria-label="Coins: open the shop"><span class="pwart coinart"><i class="coin"></i><em>+</em></span><b class="pwname" data-coins>0</b></button>
       </div>
-      <div class="row" style="gap:6px"><span class="chip boostchip" id="boostChip" hidden>2× coins <span id="boostLeft"></span></span><button class="chip" id="shopOpen2" style="background:rgba(14,26,24,.5);color:#FBF3E2"><i class="coin"></i><span data-coins>0</span> +</button></div>
+      <span class="chip boostchip" id="boostChip" hidden>2× coins <span id="boostLeft"></span></span>
     </div>
   </section>
 
@@ -2176,25 +2216,25 @@ const LEVELS = [
     sorin: "Worry likes to sit in the belly. Where is that feeling trying to go? Let's hum it loose.",
     steps: ['Stand with soft knees and put both hands on your belly.', 'Breathe in and feel your belly fill like a drum.', 'Hum the breath out low: mmmmmm. Feel your hands buzz.', 'Three times, then notice your middle feeling steady.'],
     line: 'Worry gets stuck in the middle. Humming moves it.', inhale: 4, exhale: 6 },
-  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 58, clouds: 8, knots: 0, gems: 20, shape: 'castle',
+  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 58, clouds: 8, knots: 0, gems: 20,
     problem: "Kai's friend broke his lantern. He is so angry he wants to shout at everybody.",
     you: "A friend broke your lantern. You feel so angry you want to shout at everybody.",
     sorin: "Anger is strong power looking for a way out. Let's give it a way out that helps.",
     steps: ['Stand tall like a tree with your feet rooted.', 'Breathe in and reach your arms up and out like branches.', 'Breathe out with a big haaaa and let your arms drop.', 'Shake your hands out, then stand still.'],
     line: 'Anger is strong. Let it out and it can turn into kindness.', inhale: 4, exhale: 5 },
-  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 55, clouds: 10, knots: 5, gems: 24, shape: 'diamond',
+  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 55, clouds: 10, knots: 5, gems: 24,
     problem: 'Kai is so excited he cannot sit still or listen. His chest is racing and everything echoes.',
     you: "You're so excited you can't sit still or listen. Your chest is racing and everything echoes.",
     sorin: "Your heart is running bright and fast. Let a little out, then let it rest.",
     steps: ['Put both hands on your heart.', 'Breathe in and feel your chest lift.', 'Breathe out with a soft laugh: ha-ha-haaa.', 'Now be still and feel your heart slow down.'],
     line: 'Excitement settles when the heart is held.', inhale: 3, exhale: 5 },
-  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 52, clouds: 12, knots: 7, gems: 25, shape: 'gate',
+  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 52, clouds: 12, knots: 7, gems: 25, shape: 'castle',
     problem: 'Something Kai loved has ended. His chest feels heavy and empty up in the cold wind.',
     you: "Something you loved has ended. Your chest feels heavy and empty, up here in the cold wind.",
     sorin: "Sad feelings live in the lungs. Every long sigh carries a little of it out.",
     steps: ['Stand with your arms open wide like wings.', 'Breathe in through your nose and fill your lungs.', 'Breathe out with a long sigh: sssssss.', 'Let your shoulders drop lower each time.'],
     line: 'Sad feelings leave on the out-breath.', inhale: 4, exhale: 6 },
-  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 50, clouds: 12, knots: 7, gems: 30, shape: 'bowl',
+  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 50, clouds: 12, knots: 7, gems: 30, shape: 'diamond',
     problem: 'It is dark and Kai is scared. His legs feel shaky and his thinking has gone cloudy.',
     you: "It's dark and you feel scared. Your legs are shaky and your thoughts have gone cloudy.",
     sorin: "Fear lives low, near your back. Let's warm it until your clear thinking comes back.",
@@ -3419,7 +3459,7 @@ function renderSorin() {
   const [a, b] = [box.querySelector('.sa'), box.querySelector('.sb')];
   const day = Math.max(0, daysBetween('2026-01-01', dayKey()));
   let k = day % scenes.length, front = a;
-  const show = (img, sc) => { img.src = `img/sorin/s${SORIN_SEASON}-${sc.f}.webp`; sorinNow = sc; $('#sorinCap').textContent = sc.cap; };
+  const show = (img, sc) => { img.src = `img/sorin/s${SORIN_SEASON}-${sc.f}.webp`; sorinNow = sc; };
   show(front, scenes[k]); front.classList.add('on'); b.classList.remove('on');
   if (scenes.length > 1 && !reduce) sorinTimer = setInterval(() => {   // the three scenes of this hour melt into each other
     if ($('#map').hidden) return;
@@ -3586,7 +3626,9 @@ $('#heroOpen').addEventListener('click', () => { ac(); pickHero(); });
 const VOICE = { hero: 520, sorin: 290, luma: 780 };
 /* ---------- difficulty: every 5th episode is Stormy (Hard), every 20th a Thunderstorm (Super Hard).
    Four easy wins, then a challenge that pays more; the rarer Thunderstorms become events. ---------- */
-const epDifficulty = ep => ep % 20 === 0 ? 'super' : ep % 5 === 0 ? 'hard' : 'normal';
+const epDifficulty = ep => ep >= 40 && ep % 20 === 0 ? 'super' : ep % 5 === 0 ? 'hard' : 'normal';
+// how many Stormy episodes came before this one: the first ones are gentle, the squeeze grows slowly
+const stormRank = ep => Math.floor(ep / 5);
 const DIFF = {
   normal: { name: '', label: '', moves: 1, clouds: 0, knots: 0, gems: 1, coin: 1, xp: 1 },
   hard: { name: 'Stormy', label: 'Hard', moves: 0.9, clouds: 2, knots: 2, gems: 1, coin: 2, xp: 1.5 },
@@ -3594,14 +3636,18 @@ const DIFF = {
 };
 function levelSpec(i = LI) {
   const b = LEVELS[i], diff = babyOn() ? 'normal' : epDifficulty(i + 1), d = DIFF[diff], little = S.boardSize === 'little' && !babyOn();
-  let moves = Math.round(b.moves * d.moves), clouds = b.clouds + d.clouds, knots = b.knots ? b.knots + d.knots : 0, gems = b.gems ? Math.round(b.gems * d.gems) : 0;
+  const ep = i + 1, soft = diff === 'hard' ? Math.min(1, (stormRank(ep) - 1) / 2) : 1;   // 1st Stormy: no move cut, 2nd: half, 3rd on: full
+  let moves = Math.round(b.moves * (1 - (1 - d.moves) * soft)), clouds = b.clouds + Math.round(d.clouds * (diff === 'hard' ? Math.max(.5, soft) : 1)), knots = b.knots ? b.knots + Math.round(d.knots * (diff === 'hard' ? Math.max(.5, soft) : 1)) : 0, gems = b.gems ? Math.round(b.gems * d.gems) : 0;
   if (babyOn()) { knots = 0; gems = 0; }                   // baby boards are gentle: clouds only
   if (little) { clouds = Math.min(4, clouds); moves -= 2; knots = Math.ceil(knots / 2); gems = Math.round(gems * 0.6); }
   // never overstuff: obstacles stay a small share of the cells, so the board always has room to breathe
   const cells = little ? 25 : shapeCells(b.shape);
   clouds = Math.min(clouds, Math.round(cells * 0.2)); knots = Math.min(knots, Math.round(cells * 0.12));
   if (S.buddy === 'water' && !babyOn()) moves += 3;        // Nami's gift
-  return { moves, clouds, knots, gems, diff };
+  // Luma helps after a loss: +3 moves per try on the same episode (up to +9), so nobody gets stuck and quits
+  const help = babyOn() ? 0 : Math.min(9, 3 * ((S.fails || {})[ep] || 0));
+  moves += help;
+  return { moves, clouds, knots, gems, diff, help };
 }
 const goalNums = () => levelSpec();
 let storyRun = 0;
@@ -3918,7 +3964,11 @@ function showLoadout() {
 function renderGoal() {
   const g = goalNums();
   const d = DIFF[g.diff];
-  $('#loGoal').innerHTML = (d.name ? `<div class="diffban ${g.diff}"><b>⚡ ${d.name} episode</b><span>${d.label} · rewards ×${d.coin}</span></div>` : '')
+  S.seen = S.seen || {};
+  const firstStorm = d.name && !S.seen['diff-' + g.diff];
+  if (d.name) { S.seen['diff-' + g.diff] = 1; save(); }
+  $('#loGoal').innerHTML = (d.name ? `<div class="diffban ${g.diff}"><b>⚡ ${d.name} episode</b><span>${d.label} · rewards ×${d.coin}</span>${firstStorm ? `<em>A little harder, and it pays ${d.coin === 2 ? 'double' : 'triple'}. Take your time. If it doesn’t work out, Luma gives you extra moves next try.</em>` : ''}</div>` : '')
+    + (g.help ? `<div class="helpban">💛 Luma’s help: +${g.help} moves this try</div>` : '')
     + `<span class="gchip">☁ ${g.clouds} storm clouds</span>${g.gems ? `<span class="gchip"><i style="background:${ELEM[L.elem].hue}"></i>${g.gems} ${ELEM[L.elem].name} orbs</span>` : ''}${g.knots ? `<span class="gchip">🪢 ${g.knots} knots</span>` : ''}<span class="gchip">${g.moves} moves</span>`
     + ((S.glow || 0) > 0 && !babyOn() ? `<div class="glowban"><b>🔥 Glow streak ×${Math.min(3, S.glow)}</b><span>${['', 'You start with a lantern', 'You start with a lantern and a Blossom', 'You start with a lantern, a Blossom and a spirit star'][Math.min(3, S.glow)]}</span></div>` : '');
 }
@@ -5033,7 +5083,7 @@ function pwTake(id) {
 function syncBoosts() {
   POWERS.forEach(pw => {
     const el = document.getElementById(`pwc-${pw.id}`);
-    if (el) { const n = pwCount(pw.id); el.innerHTML = n > 0 ? `${n}` : `<i class="coin"></i>${pw.cost}`; el.classList.toggle('buy', n <= 0); }
+    if (el) { const n = pwCount(pw.id), b = el.parentElement; el.innerHTML = n > 0 ? `${n}` : `<i class="coin"></i>${pw.cost}`; el.classList.toggle('buy', n <= 0); b.classList.toggle('has', n > 0); b.classList.toggle('cant', n <= 0 && S.coins < pw.cost); }
   });
   const left = (S.boostUntil || 0) - Date.now();
   $('#boostChip').hidden = left <= 0;
@@ -5077,6 +5127,8 @@ function cycleCheck(pw) {
 }
 $('#pwBar').addEventListener('click', async e => {
   const b = e.target.closest('.pwbtn'); if (!b || busy) return;
+  if (!reduce) { b.querySelector('.pwart').animate([{ transform: 'scale(1)' }, { transform: 'scale(.86)' }, { transform: 'scale(1.1)' }, { transform: 'scale(1)' }], { duration: 360, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+    const ring = document.createElement('span'); ring.className = 'pwring'; b.appendChild(ring); ring.animate([{ transform: 'scale(.6)', opacity: .9 }, { transform: 'scale(1.7)', opacity: 0 }], { duration: 520, easing: 'ease-out' }).onfinish = () => ring.remove(); }
   const pw = POWERS.find(p => p.id === b.dataset.pw);
   if (mode === pw.id) { setAim(null); monkeyFirst = null; say('Put away.'); return; }
   if (pwCount(pw.id) <= 0 && S.coins < pw.cost) { spend(pw.cost); return; }
@@ -6540,7 +6592,7 @@ async function winLevel() {
   if (flowBonus && !babyOn()) S.coins += flowBonus;
   const dz = DIFF[epDifficulty(LI + 1)];
   const coins = Math.round((30 + Math.min(moves, 20) * 5) * coinMult() * dz.coin);
-  if (!babyOn()) S.glow = (S.glow || 0) + 1;
+  if (!babyOn()) { S.glow = (S.glow || 0) + 1; if (S.fails) delete S.fails[LI + 1]; }
   if (dz.name && !babyOn()) { const ch = CHARMS[LI % CHARMS.length]; S.charms[ch.id] = (S.charms[ch.id] || 0) + 1; if (dz === DIFF.super) S.pw.bear = (S.pw.bear || 0) + 1; }
   S.stars[n] = Math.max(S.stars[n] || 0, stars);
   S.unlocked = Math.max(S.unlocked, Math.min(LEVELS.length, n + 1));
@@ -6611,7 +6663,7 @@ function loseLevel() {
   S.hearts = Math.max(0, S.hearts - 1); save(); syncWallet();
   bell(392, 0, 0.08); bell(329.63, 0.25, 0.07);
   const left = clouds().length;
-  S.glow = 0; save();                                                    // the glow streak rests; no shame in it
+  S.glow = 0; S.fails = S.fails || {}; S.fails[LI + 1] = (S.fails[LI + 1] || 0) + 1; save();   // the glow streak rests; Luma helps next try
   $('#lText').textContent = `So close. ${left ? `${left} ${left === 1 ? 'cloud' : 'clouds'}` : 'a goal'} still to go. You have ${S.hearts} ${S.hearts === 1 ? 'heart' : 'hearts'} left.`;
   $('#lRetry').textContent = S.hearts > 0 ? 'Try again · uses a heart' : 'Refill hearts to try again';
   showOv('lose');
