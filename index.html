@@ -1677,6 +1677,114 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 
 .hicon .hart.h3d{background:linear-gradient(#FFF8EA,#F3E4C2)}
 .hicon .hart .hvid,.hicon .hart.h3d img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.12)}
+/* living-world overlay */
+.worldfx{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
+.worldrays{position:absolute;inset:-10% -20% auto -20%;height:70%;pointer-events:none;z-index:1;opacity:0;transform-origin:15% 0;
+  background:repeating-linear-gradient(105deg,rgba(255,250,220,0) 0 40px,rgba(255,250,220,.16) 40px 70px,rgba(255,250,220,0) 70px 130px);
+  -webkit-mask:linear-gradient(180deg,#000,transparent 85%);mask:linear-gradient(180deg,#000,transparent 85%);animation:raysway 9s ease-in-out infinite}
+.worldrays.ph-day{opacity:.9}.worldrays.ph-dawn{opacity:.7;filter:hue-rotate(-20deg)}.worldrays.ph-golden{opacity:1;filter:sepia(.6) saturate(2)}
+@keyframes raysway{0%,100%{transform:rotate(-3deg);opacity:var(--o,.85)}50%{transform:rotate(3deg)}}
+/* the MorQi plaque: white, glossy, the name embossed into it */
+.hometitle h1{display:inline-block;padding:7px 24px 9px !important;border-radius:26px;margin-top:4px !important;
+  background:linear-gradient(180deg,#FFFFFF 0%,#FBF7EE 55%,#EFE6D2 100%) !important;-webkit-background-clip:border-box !important;background-clip:border-box !important;
+  color:#2A6A55 !important;-webkit-text-fill-color:#2A6A55 !important;filter:none !important;
+  text-shadow:0 1.5px 0 rgba(255,255,255,1),0 -1px 0 rgba(0,40,30,.45),0 0 1px rgba(0,40,30,.3) !important;
+  box-shadow:inset 0 3px 0 #fff,inset 0 -5px 0 rgba(170,145,100,.35),inset 0 0 0 1px rgba(255,255,255,.8),0 0 0 3px #E3BC6A,0 0 0 5.5px rgba(110,72,18,.55),0 10px 22px rgba(0,0,0,.4);
+  animation:plaqueGlint 7s ease-in-out infinite}
+.hometitle h1 .qi{color:#C58A1E;-webkit-text-fill-color:#C58A1E}
+@keyframes plaqueGlint{0%,86%,100%{box-shadow:inset 0 3px 0 #fff,inset 0 -5px 0 rgba(170,145,100,.35),inset 0 0 0 1px rgba(255,255,255,.8),0 0 0 3px #E3BC6A,0 0 0 5.5px rgba(110,72,18,.55),0 10px 22px rgba(0,0,0,.4)}
+  92%{box-shadow:inset 0 3px 0 #fff,inset 0 -5px 0 rgba(170,145,100,.35),inset 0 0 0 1px rgba(255,255,255,.8),0 0 0 3px #FFE9A8,0 0 0 5.5px rgba(110,72,18,.55),0 10px 22px rgba(0,0,0,.4),0 0 26px 6px rgba(255,236,170,.75)}}
+#map.dark-sky .hometitle h1{color:#2A6A55 !important;-webkit-text-fill-color:#2A6A55 !important}
+/* home foot: richer tiles and a Play button that means business */
+.journeybtn{position:relative;overflow:hidden;border-radius:20px !important;background:linear-gradient(180deg,#2F6B57,#173E33) !important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.25),inset 0 -4px 0 rgba(0,0,0,.3),0 0 0 2.5px #E3BC6A,0 6px 14px rgba(0,0,0,.4) !important}
+.journeybtn::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 45%,rgba(255,255,255,.28) 50%,transparent 55%);transform:translateX(-120%);animation:pwshine 8s ease-in-out infinite;pointer-events:none}
+.passbtn::after{animation-delay:2.5s}
+#playNext{position:relative;overflow:hidden;min-height:64px;font-size:22px !important;letter-spacing:.01em;border-radius:24px !important;
+  background:linear-gradient(180deg,#8FE06A 0%,#4DB34A 45%,#2E8A3A 100%) !important;color:#fff !important;text-shadow:0 2px 0 rgba(20,70,20,.8) !important;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.55),inset 0 -6px 0 rgba(20,80,30,.55),0 0 0 3px #E3BC6A,0 0 0 5.5px rgba(80,50,10,.5),0 10px 22px rgba(0,0,0,.45) !important;animation:playPulse 2.6s ease-in-out infinite}
+#playNext::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 45%,rgba(255,255,255,.45) 50%,transparent 55%);transform:translateX(-120%);animation:pwshine 4.5s ease-in-out infinite;pointer-events:none}
+#playNext{flex-direction:column !important;gap:0 !important;line-height:1.05}
+#playNext small{display:block;font-size:12px;font-weight:900;opacity:.95;letter-spacing:.04em;margin-top:1px}
+#playNext.stormy{background:linear-gradient(180deg,#B98CFF 0%,#7A4ED8 45%,#4E2A9A 100%) !important;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(40,10,90,.55),0 0 0 3px #FFD45A,0 0 0 5.5px rgba(60,20,90,.5),0 10px 22px rgba(0,0,0,.45),0 0 24px rgba(180,120,255,.6) !important}
+@keyframes playPulse{50%{transform:scale(1.025)}}
+/* ---------- MorQi UI kit v2: every panel feels like a treasure, not a form ---------- */
+.ov .card{position:relative;overflow-x:hidden;overflow-y:auto;border-radius:30px;padding-top:22px;
+  background:radial-gradient(120% 60% at 50% 0%,#FFFDF6 0%,#FBF1DC 55%,#F2E2C0 100%);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.9),inset 0 -6px 0 rgba(160,120,60,.22),0 0 0 3.5px #E3BC6A,0 0 0 8px #1F4A3D,0 0 0 10.5px #C99A3E,0 20px 40px rgba(0,0,0,.5) !important;
+  transform:translateY(40px) scale(.94);transition:transform .5s cubic-bezier(.2,1.35,.4,1)}
+.ov.show .card{transform:none}
+.ov .card>.eyebrow:first-child{display:table;margin:0 auto 6px;padding:4px 12px;border-radius:99px;background:#1F4A3D;color:#FFE7A8 !important;font-size:10.5px;box-shadow:0 0 0 2px #E3BC6A}
+.ov .card>h2.display{position:relative;display:table;margin:0 auto 10px;padding:9px 34px 11px;color:#FFF7DE !important;font-size:25px !important;line-height:1.05;text-align:center;
+  background:linear-gradient(180deg,#F6CF6A,#D9A13A 55%,#B77E22);border-radius:12px;text-shadow:0 2px 0 rgba(110,60,0,.85),0 0 12px rgba(255,220,130,.4);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.6),inset 0 -4px 0 rgba(120,70,0,.4),0 6px 0 rgba(120,70,0,.35),0 10px 16px rgba(0,0,0,.25)}
+.ov .card>h2.display::before,.ov .card>h2.display::after{content:"";position:absolute;top:10px;width:22px;height:100%;background:linear-gradient(180deg,#D9A13A,#9A6414);z-index:-1}
+.ov .card>h2.display::before{left:-14px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,40% 50%)}
+.ov .card>h2.display::after{right:-14px;clip-path:polygon(0 0,100% 0,60% 50%,100% 100%,0 100%)}
+.ov .card>.eyebrow + h2.display + .elemdots,.ov .card .elemdots{display:none}
+.cardx{position:absolute;right:10px;top:10px;z-index:5;width:44px;height:44px;border-radius:50%;border:0;display:grid;place-items:center;font-size:20px;font-weight:900;color:#fff;cursor:pointer;
+  background:radial-gradient(circle at 40% 30%,#FF8A7A,#E0433A 60%,#A82420);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 0 rgba(90,10,10,.4),0 0 0 3px #FFF6DE,0 0 0 5px #C99A3E,0 6px 10px rgba(0,0,0,.4)}
+.cardx:active{transform:scale(.9)}
+.btn.hidclose{display:none !important}
+/* tiles with real depth */
+.rung,.quest,.streakrow,.buddyrow,.sealslot,.pack{border-radius:18px !important;background:linear-gradient(180deg,#FFFFFF,#FBF3E2) !important;
+  box-shadow:inset 0 2px 0 #fff,0 0 0 2px rgba(201,154,62,.45),0 4px 0 rgba(160,120,60,.35),0 6px 10px rgba(0,0,0,.1) !important}
+.rwi{display:inline-flex;align-items:center;gap:3px;padding:2px 8px 2px 2px;border-radius:99px;background:rgba(255,236,190,.65);font-weight:900;font-size:12.5px;color:#5A3A08;margin:2px 3px 2px 0}
+.rwi img{width:28px;height:28px;object-fit:contain;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+/* streak */
+.sthero{display:flex;align-items:center;justify-content:center;gap:12px;margin:4px 0 10px}
+.sthero .stflame{position:relative;width:86px;height:86px}
+.sthero .stflame video,.sthero .stflame img{width:100%;height:100%;object-fit:cover;border-radius:24px;box-shadow:0 0 0 3px #E3BC6A,0 0 18px rgba(255,160,60,.5)}
+.sthero .stnum{font:400 46px/1 "Marcellus SC",Georgia,serif;color:#C0561C;text-shadow:0 3px 0 rgba(120,50,0,.25)}
+.sthero .stnum small{display:block;font-family:inherit;font-size:12px;line-height:1.2;font-weight:900;color:#5A3A08;letter-spacing:.05em;font-family:'Nunito',system-ui,sans-serif;text-transform:none}
+.stweek{display:flex;justify-content:center;gap:6px;margin:0 0 10px}
+.stweek i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:15px;background:#EFE3C8;box-shadow:inset 0 2px 3px rgba(0,0,0,.12)}
+.stweek i.on{background:radial-gradient(circle at 40% 30%,#FFD27A,#F08A2E);box-shadow:0 0 10px rgba(255,160,60,.7);animation:flick .9s ease-in-out infinite alternate}
+.rung{display:grid !important;grid-template-columns:58px 1fr auto;align-items:center;gap:6px;padding:8px 10px !important;margin-bottom:8px}
+.rung b{font-size:13px}
+.rung.next{box-shadow:inset 0 2px 0 #fff,0 0 0 3px #F2C45A,0 4px 0 rgba(160,120,60,.35),0 0 18px rgba(255,200,90,.6) !important;animation:rungGlow 2.4s ease-in-out infinite}
+@keyframes rungGlow{50%{filter:brightness(1.06) drop-shadow(0 0 8px rgba(255,200,90,.8))}}
+.rung.done{opacity:.75}
+.rung.done i{font-style:normal;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#4DB34A;color:#fff;font-weight:900;box-shadow:0 0 0 2px #fff}
+/* quests */
+.quest{display:grid !important;grid-template-columns:48px 1fr auto;align-items:center;gap:10px;padding:10px 12px !important;margin-bottom:10px}
+.quest .qic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(#FFF6DF,#F1DDB0);box-shadow:inset 0 -3px 0 rgba(160,120,60,.3);position:relative;overflow:hidden}
+.quest .qic img{width:42px;height:42px;object-fit:contain}
+.quest .qic .tile{--t:36px}
+.quest .qbar{height:12px !important;border-radius:99px !important;box-shadow:inset 0 2px 3px rgba(0,0,0,.15)}
+.quest .qbar i{background:linear-gradient(90deg,#8FE06A,#3FA83A) !important;border-radius:99px}
+.quest.done{background:linear-gradient(180deg,#F1FFE8,#DFF5D0) !important}
+.quest .qr{font-weight:900}
+.quest.done .qr{display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#4DB34A;color:#fff;box-shadow:0 0 0 3px #fff,0 3px 6px rgba(0,0,0,.2)}
+.quest .qw{grid-column:2/4}
+.quest.chest .qic img{width:46px;height:46px}
+/* letters and friend cards: a real letter */
+.lettercard{background:linear-gradient(180deg,#FFFDF5,#F7EBD0) !important;padding-top:48px !important;overflow:visible !important;margin-top:40px}
+.lettercard::before{content:"";position:absolute;left:50%;top:-34px;width:68px;height:68px;margin-left:-34px;border-radius:50%;background:#FFF6E4 url(img/ui/letter.png) center/78% no-repeat;box-shadow:0 0 0 3px #E3BC6A,0 6px 12px rgba(0,0,0,.3)}
+.lettercard p{font-style:italic;font-size:16.5px !important;line-height:1.55 !important;background:repeating-linear-gradient(transparent 0 25px,rgba(160,120,60,.14) 25px 26px);padding:4px 6px}
+/* win: what your breathing did */
+.wcalm{display:grid;grid-template-columns:1fr;justify-items:center;text-align:center;gap:8px;align-items:center;margin:4px 0 12px;padding:12px;border-radius:20px;background:linear-gradient(135deg,#E6F6FF,#F4EDFF);box-shadow:inset 0 2px 0 #fff,0 0 0 2px rgba(120,180,230,.5),0 4px 0 rgba(100,140,190,.3)}
+.wcalm .wfaces{position:relative;display:flex;align-items:center;gap:4px}
+.wcalm .wfaces img{width:48px;height:48px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #fff}
+.wcalm .wfaces img.before{filter:saturate(.6) brightness(.95)}
+.wcalm .wfaces b{font-size:18px;color:#3C86C9}
+.wcalm small{display:block;font-weight:900;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#3C86C9}
+.wcalm p{margin:2px 0 0 !important;font-weight:800;font-size:14px;line-height:1.4;color:#1F3A4D}
+.wcalm .wstat{display:inline-block;margin-top:5px;padding:2px 8px;border-radius:99px;background:#fff;font-size:11.5px;font-weight:900;color:#2A6A55}
+.ov{padding-top:calc(var(--sat) + 30px) !important;padding-bottom:calc(var(--sab) + 22px) !important}
+.ov .card{max-height:calc(100% - 8px)}
+.qknot{display:block;width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,#8A5A24 0 20%,#C99550 22% 32%,transparent 34%),linear-gradient(45deg,transparent 42%,#D6A660 42% 58%,transparent 58%),linear-gradient(-45deg,transparent 42%,#D6A660 42% 58%,transparent 58%),#F5E9CF;box-shadow:0 0 0 2px #C99550}
+.ov .card.rewardcard,.ov .card.bcard,.ov .card.bedcardov,#guide .card{background:radial-gradient(120% 60% at 50% 0%,#2F6B57 0%,#1D4238 55%,#102B24 100%) !important;color:#FBF3E2}
+.ov .card.rewardcard p,.ov .card.bcard p,.ov .card.bedcardov p,#guide .card p{color:#EAF2EE}
+.lhero{position:relative;height:120px;margin:4px -8px 12px;border-radius:18px;background:#DDE8D8 center 40%/cover no-repeat;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6),0 4px 0 rgba(160,120,60,.3)}
+.lhero img{position:absolute;left:50%;bottom:-22px;width:64px;height:64px;margin-left:-32px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #FFF6DE,0 0 0 5.5px #E3BC6A,0 6px 10px rgba(0,0,0,.3)}
+.lettercard h2.display{margin-top:28px !important}
+.passhow{background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96)) !important;border-radius:20px !important;box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.4) !important;padding:12px !important}
+.xpchips{display:flex !important;flex-wrap:wrap;justify-content:center;gap:6px;margin:8px 0 6px}
+.xpchips i{display:inline-flex;align-items:center;gap:4px;padding:3px 9px 3px 3px;border-radius:99px;font-style:normal;font-size:12px;font-weight:800;color:#FFF1CF;background:rgba(255,255,255,.1);box-shadow:inset 0 0 0 1px rgba(255,233,168,.35)}
+.xpchips i b{color:#FFE08A}
+.xpchips img{width:26px;height:26px;object-fit:contain}
+.xpchips img.rnd{border-radius:50%;object-fit:cover}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -1787,7 +1895,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 
   <section class="screen" id="map" hidden>
     <div class="homebg" id="homeBg"></div>
-    <div class="homeworld" id="homeWorld"><img id="hwStill" alt=""><video id="hwA" muted loop playsinline preload="auto"></video><video id="hwB" muted loop playsinline preload="auto"></video></div>
+    <div class="worldrays" id="worldRays"></div><canvas class="worldfx" id="worldFx"></canvas><div class="homeworld" id="homeWorld"><img id="hwStill" alt=""><video id="hwA" muted loop playsinline preload="auto"></video><video id="hwB" muted loop playsinline preload="auto"></video></div>
     <button class="homesorin" id="homeSorin" aria-label="Sorin"><img class="sa" alt=""><img class="sb" alt=""></button>
     <div class="homesky" id="homeSky"><i class="hsglow"></i><i class="hsorb"></i><i class="hsrays"></i><i class="hsmist"></i></div>
     <canvas class="homefx" id="homeFx"></canvas>
@@ -1807,7 +1915,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
     </div>
     <div class="hometitle">
       <div class="eyebrow" id="homeEyebrow">Season 1 · Kai's Calm Quest</div>
-      <h1 class="display">MorQi Kids</h1>
+      <h1 class="display">Mor<span class="qi">Qi</span> Kids</h1>
       <div class="seasonline" id="seasonLine"></div>
     </div>
     <div class="ribbon" id="homeRibbon"></div>
@@ -1945,6 +2053,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
   <div class="ov" id="win" hidden><div class="card wincard" role="dialog" aria-labelledby="wTitle">
     <div class="eyebrow" id="wEyebrow">The Root Grounds</div>
     <h2 class="display" id="wTitle">The storm has passed.</h2>
+    <div class="wcalm" id="wCalm" hidden></div>
     <div class="wsum">
       <div class="wtile"><div class="bigstars" id="wStars"></div><small>Stars</small></div>
       <div class="wtile"><b><i class="coin"></i>+<span id="wCoins">0</span></b><small>Coins</small></div>
@@ -1953,8 +2062,8 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
     <div class="whint" id="wLeft"></div>
     <button class="btn gold" id="wClaim" hidden style="width:100%;margin-top:10px">Claim streak reward</button>
     <div class="wprog">
-      <div class="wrow"><img src="img/icons/icon-streak.jpg" alt=""><div class="streakrow" id="wStreak"></div></div>
-      <div class="wrow"><img src="img/icons/icon-lights.jpg" alt=""><div class="streakrow" id="wBalance"></div></div>
+      <div class="wrow"><img src="img/icons/icon-streak-3d.jpg" alt=""><div class="streakrow" id="wStreak"></div></div>
+      <div class="wrow"><img id="wHarmImg" src="img/faces/kai-happy.jpg" alt="" style="border-radius:50%"><div class="streakrow" id="wBalance"></div></div>
       <div class="wrow"><img id="wBuddyImg" alt=""><div class="streakrow" id="wBuddy" hidden></div></div>
     </div>
     <div class="practice">
@@ -2054,8 +2163,10 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
   <div class="ov" id="streakov" hidden><div class="card" role="dialog" aria-labelledby="stTitle">
     <div class="eyebrow">One level a day</div>
     <h2 class="display" id="stTitle">Your streak</h2>
-    <div class="row" style="flex-wrap:wrap;gap:6px" id="streakStats"></div>
-    <p style="margin-top:10px">Miss a day and the streak drops to zero. A Streak Shield covers one missed day.</p>
+    <div class="sthero"><span class="stflame"><video src="img/icons/anim/icon-streak.mp4" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay></video></span><span class="stnum" id="stBig">0<small>days in a row</small></span></div>
+    <div class="stweek" id="stWeek"></div>
+    <div class="row" style="flex-wrap:wrap;gap:6px;justify-content:center" id="streakStats"></div>
+    <p style="margin-top:10px;text-align:center;font-weight:800">Play one level a day to keep the flame. A Streak Shield saves one missed day.</p>
     <div class="ladder" id="ladder"></div>
     <div class="stack">
       <button class="btn ghost" id="demoDay">Demo: skip to tomorrow</button>
@@ -2248,13 +2359,14 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
       <div class="passtrack" id="passTrack"></div>
       <div class="passhow">
         <b>Earn Season XP by playing</b>
-        <span>Finish an episode +100 · each star +25 · a deep breath +20 · a quest +40 · a seal +50</span>
+        <span class="xpchips"><i><img src="img/ui/flame.png" alt="">Episode <b>+100</b></i><i><img src="img/ui/star.png" alt="">Each star <b>+25</b></i><i><img src="img/faces/luma-happy.jpg" alt="" class="rnd">Deep breath <b>+20</b></i><i><img src="img/ui/letter.png" alt="">Quest <b>+40</b></i><i><img src="img/ui/crown.png" alt="">Seal <b>+50</b></i></span>
         <em>Rewards never expire. No timers. Play at your own pace.</em>
       </div>
     </div>
   </div>
   <div class="ov" id="letterov" hidden style="align-items:center"><div class="card lettercard" role="dialog" aria-labelledby="letterTitle">
     <div class="eyebrow">A letter from Sorin</div>
+    <div class="lhero" id="letterHero"><img id="letterFace" alt=""></div>
     <h2 class="display" id="letterTitle"></h2>
     <p id="letterText"></p>
     <div class="stack"><button class="btn gold" id="letterGo">Keep it in my journal</button></div>
@@ -3154,7 +3266,8 @@ function newQuests() {
   return { day: dayKey(), items };
 }
 function ensureQuests() {
-  if (!S.quests || S.quests.day !== dayKey()) { S.quests = newQuests(); save(); }
+  const known = new Set(['elem', ...QUEST_KINDS.map(k => k.id)]);
+  if (!S.quests || S.quests.day !== dayKey() || S.quests.items.some(i => !known.has(i.id))) { S.quests = newQuests(); save(); }
   return S.quests;
 }
 function questBump(id, amount = 1, elem) {
@@ -3190,11 +3303,11 @@ function renderQuests() {
   $('#questTease').textContent = done === 3 ? 'All three done. Chest collected.' : `${done} of 3 done today.`;
   $('#questList').innerHTML = q.items.map(it => {
     const pct = Math.min(100, Math.round((it.n / it.goal) * 100));
-    return `<div class="quest ${it.done ? 'done' : ''}">
+    return `<div class="quest ${it.done ? 'done' : ''}"><span class="qic">${questIcon(it)}</span>
       <span class="qt"><b>${it.text}</b><span class="qbar"><i style="width:${pct}%"></i></span></span>
       <span class="qr">${it.done ? '✓' : `${Math.min(it.n, it.goal)}/${it.goal}`}</span>
-      <span class="qw">${rewardText(it.reward)}</span></div>`;
-  }).join('') + `<div class="quest chest ${S.questChest === dayKey() ? 'done' : ''}"><span class="qt"><b>All three: a chest</b></span><span class="qr">${S.questChest === dayKey() ? '✓' : `${done}/3`}</span><span class="qw">150 coins · a Spirit Seal</span></div>`;
+      <span class="qw">${rewardIcons(it.reward)}</span></div>`;
+  }).join('') + `<div class="quest chest ${S.questChest === dayKey() ? 'done' : ''}"><span class="qic"><img src="img/ui/chest.png" alt=""></span><span class="qt"><b>All three: the treasure chest</b><span class="qbar"><i style="width:${Math.round(done / 3 * 100)}%"></i></span></span><span class="qr">${S.questChest === dayKey() ? '✓' : `${done}/3`}</span><span class="qw">${rewardIcons({ coins: 150, seals: 1 })}</span></div>`;
 }
 $('#questCard').addEventListener('click', () => { renderQuests(); showOv('questov'); });
 $('#questClose').addEventListener('click', () => hideOv('questov'));
@@ -3564,8 +3677,9 @@ function renderStreak() {
   }
   $('#ladder').innerHTML = MILES.map(x => {
     const done = S.claimed.includes(x.d) || S.streak >= x.d, next = x.d === m.d && !done;
-    return `<div class="rung ${done ? 'done' : ''} ${next ? 'next' : ''}"><b>Day ${x.d}</b><span>${rewardText(x)}</span><i>${done ? '✓' : next ? `${left} to go` : ''}</i></div>`;
+    return `<div class="rung ${done ? 'done' : ''} ${next ? 'next' : ''}"><b>Day ${x.d}</b><span>${rewardIcons(x)}</span><i>${done ? '✓' : next ? `${left} to go` : ''}</i></div>`;
   }).join('');
+  if ($('#stBig')) { const on = S.streak ? (S.streak % 7 || 7) : 0; $('#stBig').innerHTML = `${S.streak}<small>day${S.streak === 1 ? '' : 's'} in a row</small>`; $('#stWeek').innerHTML = [...Array(7)].map((_, i) => `<i class="${i < on ? 'on' : ''}">${i < on ? '🔥' : ''}</i>`).join(''); }
   $('#streakStats').innerHTML = `<span class="chip">🔥 ${S.streak} day${S.streak === 1 ? '' : 's'}</span><span class="chip">best ${S.best || 0}</span><span class="chip">🛡 ${S.shields}</span><span class="chip">◈ ${sealCount()}/${SEALS.length} seals</span>`;
 }
 function showComeback(days) {
@@ -3669,13 +3783,123 @@ let worldNow = null, worldFront = 'hwA';
 function showWorld(tod = timeOfDay()) {
   const ph = WORLD_OF[tod] || 'day', f = WORLD[1][ph];
   if (worldNow === f) { const v = $('#' + worldFront); if (v.paused && !reduce && !$('#map').hidden) v.play().catch(() => {}); return; }
-  const first = !worldNow; worldNow = f;
+  const first = !worldNow; worldNow = f; startWorldFx();
   const still = $('#hwStill'); still.src = `img/world/${f}.jpg`;
   if (reduce) return;
   const back = worldFront === 'hwA' ? 'hwB' : 'hwA', v = $('#' + back), old = $('#' + worldFront);
   v.src = `img/world/${f}.mp4`; v.poster = `img/world/${f}.jpg`;
   v.oncanplay = () => { v.oncanplay = null; v.play().catch(() => {}); v.classList.add('on'); old.classList.remove('on'); setTimeout(() => { if (!old.classList.contains('on')) { old.pause(); } }, first ? 0 : 1600); };
   worldFront = back;
+}
+/* ---------- the world never stands still ----------
+   Some phones (Low Power Mode, some embedded views) refuse to autoplay video. So a light canvas layer
+   always runs on top of the loop: petals and light rays by day, mist at dawn, gold motes at golden hour,
+   fireflies and twinkling stars at night. And the first touch anywhere restarts any video that was held. */
+let aliveRun = 0;
+function startWorldFx() {
+  const cv = $('#worldFx'); if (!cv) return;
+  const run = ++aliveRun, g = cv.getContext('2d'), dpr = Math.min(2, devicePixelRatio || 1);
+  const fit = () => { cv.width = cv.clientWidth * dpr; cv.height = cv.clientHeight * dpr; };
+  fit();
+  const ph = WORLD_OF[timeOfDay()] || 'day', W = () => cv.width, H = () => cv.height;
+  $('#worldRays').className = `worldrays ph-${ph}`;
+  const N = reduce ? 0 : ph === 'night' ? 26 : ph === 'dawn' ? 18 : 22;
+  const P = Array.from({ length: N }, (_, i) => ({ x: Math.random(), y: Math.random(), s: 0.5 + Math.random(), p: Math.random() * 6.28, v: 0.3 + Math.random() * 0.7, k: i % 3 }));
+  let last = performance.now();
+  const tick = now => {
+    if (run !== aliveRun) return;
+    const dt = Math.min(50, now - last) / 1000; last = now;
+    if ($('#map').hidden) { requestAnimationFrame(tick); return; }
+    if (cv.width !== cv.clientWidth * dpr) fit();
+    g.clearRect(0, 0, W(), H());
+    P.forEach(q => {
+      q.p += dt * (ph === 'night' ? 1.6 : 1.1);
+      if (ph === 'night') {                                   // fireflies wander and blink; a few stars twinkle up high
+        if (q.k === 0) { const a = 0.35 + 0.65 * Math.abs(Math.sin(q.p * 0.7)); g.fillStyle = `rgba(255,255,230,${a * 0.9})`; g.beginPath(); g.arc(q.x * W(), q.y * 0.28 * H(), 1.2 * dpr * q.s, 0, 6.28); g.fill(); return; }
+        q.x += Math.sin(q.p * 0.8) * 0.0009 * q.v; q.y += Math.cos(q.p * 0.6) * 0.0007 * q.v;
+        if (q.y < 0.3) q.y = 0.3 + Math.random() * 0.5;
+        const a = Math.max(0, Math.sin(q.p * 1.3)), x = q.x * W(), y = q.y * H(), r = 7 * dpr * q.s;
+        const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, `rgba(255,248,170,${a})`); gr.addColorStop(1, 'rgba(255,230,120,0)');
+        g.fillStyle = gr; g.beginPath(); g.arc(x, y, r, 0, 6.28); g.fill(); return;
+      }
+      if (ph === 'dawn' && q.k === 0) {                      // soft mist drifting across the pond
+        q.x += dt * 0.012 * q.v; if (q.x > 1.3) q.x = -0.3;
+        const x = q.x * W(), y = (0.48 + q.y * 0.18) * H(), r = 90 * dpr * q.s;
+        const gr = g.createRadialGradient(x, y, 0, x, y, r); gr.addColorStop(0, 'rgba(255,245,250,.22)'); gr.addColorStop(1, 'rgba(255,245,250,0)');
+        g.fillStyle = gr; g.beginPath(); g.ellipse(x, y, r * 1.8, r * 0.6, 0, 0, 6.28); g.fill(); return;
+      }
+      if (ph === 'golden' && q.k === 0) {                    // warm dust motes floating in the low sun
+        q.y -= dt * 0.01 * q.v; q.x += Math.sin(q.p) * 0.0006; if (q.y < 0) { q.y = 1; q.x = Math.random(); }
+        g.fillStyle = `rgba(255,214,140,${0.35 + 0.35 * Math.sin(q.p)})`; g.beginPath(); g.arc(q.x * W(), q.y * H(), 1.6 * dpr * q.s, 0, 6.28); g.fill(); return;
+      }
+      // petals: blossom petals tumbling down on the breeze
+      q.y += dt * 0.035 * q.v; q.x += dt * 0.02 * q.v + Math.sin(q.p) * 0.0012;
+      if (q.y > 1.05 || q.x > 1.05) { q.y = -0.05; q.x = Math.random() * 0.9; }
+      const x = q.x * W(), y = q.y * H(), sz = 4.5 * dpr * q.s;
+      g.save(); g.translate(x, y); g.rotate(q.p); g.scale(1, 0.55 + 0.45 * Math.sin(q.p * 1.7));
+      g.fillStyle = ph === 'golden' ? 'rgba(255,190,170,.85)' : 'rgba(255,196,220,.9)';
+      g.beginPath(); g.ellipse(0, 0, sz, sz * 0.62, 0, 0, 6.28); g.fill(); g.restore();
+    });
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+document.addEventListener('pointerdown', () => {
+  if ($('#map').hidden || reduce) return;
+  const v = $('#' + worldFront); if (v && v.paused && v.src) v.play().then(() => v.classList.add('on')).catch(() => {});
+  $$('.hvid').forEach(x => { if (x.paused) x.play().catch(() => {}); });
+}, { passive: true });
+
+/* ---------- UI kit v2 helpers ---------- */
+const RW_ICON = { coins: 'img/ui/coins.png', swirls: 'img/ui/pw-deer.png', lanterns: 'img/ui/pw-tiger.png', shields: 'img/ui/shield.png', boost: 'img/ui/double.png', title: 'img/ui/crown.png', seals: 'img/ui/star.png', hearts: 'img/ui/heart.png' };
+function rewardIcons(m) {
+  const out = [];
+  if (m.coins) out.push(['coins', m.coins.toLocaleString()]);
+  if (m.swirls) out.push(['swirls', `×${m.swirls}`]);
+  if (m.lanterns) out.push(['lanterns', `×${m.lanterns}`]);
+  if (m.shields) out.push(['shields', `×${m.shields}`]);
+  if (m.boost) out.push(['boost', `${m.boost}m`]);
+  if (m.seals) out.push(['seals', 'Seal']);
+  if (m.title) out.push(['title', m.title]);
+  return out.map(([k, t]) => `<span class="rwi"><img src="${RW_ICON[k]}" alt="">${t}</span>`).join('');
+}
+function questIcon(it) {
+  if (it.id === 'elem' && it.elem) return `<span style="position:relative;width:36px;height:36px;display:block">${orbHTML(it.elem)}</span>`;
+  if (it.id === 'clouds') return '<i class="mini cloudicon" style="width:38px;height:38px;display:block"></i>';
+  if (it.id === 'knots') return '<span class="qknot"></span>';
+  const m = { deep: 'img/faces/luma-happy.jpg', sound: 'img/faces/luma-joy.jpg', win: 'img/ui/star.png', knots: 'img/ui/pw-monkey.png', special: 'img/ui/gift.png' };
+  return `<img src="${m[it.id] || 'img/ui/star.png'}" alt=""${it.id === 'deep' || it.id === 'sound' ? ' style="border-radius:50%;mix-blend-mode:normal"' : ''}>`;
+}
+// every pop-up gets a round ✕ in its corner instead of a flat Close bar
+function addCardX() {
+  $$('.ov .card').forEach(card => {
+    if (card.querySelector('.cardx')) return;
+    const close = [...card.querySelectorAll('button')].find(b => b.textContent.trim() === 'Close');
+    if (!close) return;
+    close.classList.add('hidclose');
+    const x = document.createElement('button'); x.className = 'cardx'; x.setAttribute('aria-label', 'Close'); x.textContent = '✕';
+    x.addEventListener('click', e => { e.stopPropagation(); tick(); close.click(); });
+    card.appendChild(x);
+  });
+}
+// What your breathing did: this episode's before and after, told for the child's age.
+// Pre-written like every story line; to be reviewed by Demaris and a counselor before launch.
+const OUTCOME = {
+  earth: { '2-4': 'Your tummy got soft and warm, and you fell asleep easy, like a cozy bear.', '5-7': 'You breathed slow before bed. In the morning your head felt clear, and the words you practiced were right there.', '8-11': 'The "what if" loop went quiet. You slept, and at the test your mind stayed clear enough to work through every question.', '12-15': 'Instead of writing ten stories, you waited. Later your friend replied: they were just busy. Your calm saved you a whole night of worry.' },
+  wood: { '2-4': 'The mad got small. You used your words: "That\'s mine, please." And you got your toy back.', '5-7': 'You didn\'t yell. You told a grown-up what happened, your friend said sorry, and you fixed the lantern together.', '8-11': 'Your face cooled down before your hands moved. You said "That wasn\'t okay" calmly, and he actually listened.', '12-15': 'You didn\'t fire back. You answered once, calmly, with the truth, and people noticed who stayed steady.' },
+  fire: { '2-4': 'Your bounce turned into a happy wiggle, and now you could hear the whole story.', '5-7': 'Your happy stayed, but it got quieter inside. You slept, and the festival felt even better because you weren\'t worn out.', '8-11': 'Your thoughts slowed to one at a time. You finished what you needed, then enjoyed your birthday with a clear head.', '12-15': 'You took one thing at a time. Your heart slowed, and the good stuff felt good instead of overwhelming.' },
+  metal: { '2-4': 'The sad came out with the sigh. Then you got a big hug, and your chest felt lighter.', '5-7': 'You let the sad feeling be there, and it got lighter. You drew a picture of what you loved and smiled at it.', '8-11': 'Missing your friend still hurts, but you breathed through it and wrote them a letter. You\'re already planning a video call.', '12-15': 'You let yourself feel the loss instead of pushing it away. It got lighter, and you reached out to someone who\'s still here.' },
+  water: { '2-4': 'Your breath went whooo, and the dark felt quiet instead of scary. You were brave in a quiet way.', '5-7': 'Your legs stopped wobbling. You held Kai\'s hand, walked to the river, and saw the lanterns glowing on the water.', '8-11': 'Your mind came back from blank. You read out loud, and your voice was steadier than you expected.', '12-15': 'The fear was still there, but it wasn\'t in charge. You tried out, and whatever happens, you showed up.' }
+};
+let levelBreaths = 1;
+function renderOutcome() {
+  const box = $('#wCalm'); if (!box) return;
+  if (babyOn()) { box.hidden = true; return; }
+  const t = (STORY[L.elem] || {})[band()] || (STORY[L.elem] || {})['5-7'], who = heroId(), feel = t && t.you ? t.you[1] : 'worried';
+  const line = (OUTCOME[L.elem] || {})[band()] || '';
+  box.innerHTML = `<span class="wfaces"><img class="before" src="img/faces/${who}-${feel}.jpg" alt=""><b>➜</b><img src="img/faces/${who}-relief.jpg" alt=""></span>
+    <span><small>What your breathing did</small><p>${line}</p><span class="wstat">🌬 ${levelBreaths} calm breath${levelBreaths === 1 ? '' : 's'} · ${Math.max(0, moves)} moves to spare</span></span>`;
+  box.hidden = false;
 }
 function renderHome() {
   const el = homeElement(), tod = timeOfDay();
@@ -3710,7 +3934,9 @@ function renderHome() {
   // places
   const next = Math.min(S.unlocked, LEVELS.length) - 1;
   $('#places').innerHTML = LEVELS.map((l, i) => `<button class="lvmed ${i + 1 > S.unlocked ? 'locked' : ''} ${i === next ? 'next' : ''}" data-lv="${i}" aria-label="${l.place}">${orbHTML(l.elem)}<span class="st">${'★'.repeat(S.stars[i + 1] || 0)}</span></button>`).join('');
-  $('#playNext').textContent = `Play · ${LEVELS[next].place}`;
+  const dz = DIFF[epDifficulty(next + 1)];
+  $('#playNext').innerHTML = `Play<small>Episode ${next + 1} · ${LEVELS[next].place}${dz.name ? ` · ⚡ ${dz.name}` : ''}</small>`;
+  $('#playNext').classList.toggle('stormy', !!dz.name);
   startHomeFx(el, tod);
   renderSorin();
 }
@@ -5401,6 +5627,7 @@ $('#brBack').addEventListener('click', async () => {
 });
 
 async function applyBreath(q) {
+  levelBreaths++;
   const p = breathPlan(q);
   glowGoal(false);
   stillDrop = false;
@@ -6106,7 +6333,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -6487,7 +6714,7 @@ async function runPractice(after) {
   $('#gPlace').textContent = 'Practice Grove'; $('#gShift').textContent = 'Learn every power piece';
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
   moves = 99; charge = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
-  deepBreaths = 0; breathing = false; movesUsed = 0; cloudsFreed = 0;
+  deepBreaths = 0; breathing = false; movesUsed = 0; cloudsFreed = 0; levelBreaths = 1;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   makeRig($('#kaiFace'), heroId()); applyLooks(); paintBuddyGame();
   await wait(30);
@@ -6599,7 +6826,7 @@ function startLevel() {
   $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
   moves = L.moves; charge = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
-  deepBreaths = 0; breathing = false; movesUsed = 0; cloudsFreed = 0;
+  deepBreaths = 0; breathing = false; movesUsed = 0; cloudsFreed = 0; levelBreaths = 1;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   setAim(null); monkeyFirst = null; lastPower = null;
   makeRig($('#kaiFace'), heroId()); applyLooks();
@@ -6911,7 +7138,7 @@ function renderPass() {
 }
 async function openPass() {
   const ov = $('#passov');
-  $('#passBg').style.backgroundImage = `url(img/journey/map-first.jpg)`;
+  $('#passBg').style.backgroundImage = `url(img/world/s1g-${WORLD_OF[timeOfDay()] || 'day'}.jpg)`;
   renderPass();
   ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
   playSfx('swoosh', { gain: 0.6 });
@@ -6957,12 +7184,12 @@ function showFriend(id) {
   const f = FRIENDS[id];
   $('#letterov .eyebrow').textContent = `A friend from Kai's village · ${f.feel}`;
   $('#letterTitle').textContent = f.name; $('#letterText').textContent = f.text[band()] || f.text['5-7'];
-  $('#letterov .card').style.backgroundImage = `linear-gradient(rgba(255,249,234,.9),rgba(241,223,184,.95)),url(${f.bg})`;
-  $('#letterov .card').style.backgroundSize = 'cover';
+  $('#letterHero').style.backgroundImage = `url(${f.bg})`; $('#letterFace').src = 'img/faces/kai-happy.jpg'; $('#letterFace').alt = 'Kai';
   $('#letterov').style.zIndex = 30; showOv('letterov');
 }
 function showLetter(id) {
-  $('#letterov .eyebrow').textContent = 'A letter from Sorin'; $('#letterov .card').style.backgroundImage = '';
+  $('#letterov .eyebrow').textContent = 'A letter from Sorin';
+  $('#letterHero').style.backgroundImage = `url(img/world/s1g-${WORLD_OF[timeOfDay()] || 'day'}.jpg)`; $('#letterFace').src = 'img/faces/sorin-calm.jpg'; $('#letterFace').alt = 'Sorin';
   const l = LETTERS[id];
   $('#letterTitle').textContent = l.title; $('#letterText').textContent = l.text;
   $('#letterov').style.zIndex = 30;
@@ -7262,12 +7489,13 @@ async function winLevel() {
   } else if (S.buddy) {
     const bd = bondOf(S.buddy), nx = STAGES[careStage(S.buddy) + 1];
     br.className = 'streakrow'; br.hidden = false;
-    br.innerHTML = (caredToday(S.buddy) ? '' : `<b>Breathe with ${BUDDY[S.buddy].name} today 💛</b> `) + (nx ? `${nx.at - bd.care} more Bond until ${BUDDY[S.buddy].name} grows ${nx.key === 'guardian' ? 'into a Spirit Guardian' : nx.name.toLowerCase()}.`
+    br.innerHTML = (caredToday(S.buddy) ? '' : `<b>Breathe with ${BUDDY[S.buddy].name} today 💛</b> `) + (nx ? `${nx.at - bd.care} more Bond until ${BUDDY[S.buddy].name} becomes ${nx.key === 'guardian' ? 'a Spirit Guardian' : `a ${nx.name} ${BUDDY[S.buddy].animal}`}.`
       : `${BUDDY[S.buddy].name} is a Spirit Guardian.`);
   } else br.hidden = true;
   renderStreak(); renderBal(); teaseBal(); renderBuddy();
   $('#wNext').hidden = n >= LEVELS.length;
   $('#wTitle').textContent = n >= LEVELS.length ? 'Every lantern is home.' : 'The storm has passed.';
+  renderOutcome(); if ($('#wHarmImg')) $('#wHarmImg').src = `img/faces/${heroId()}-happy.jpg`;
   const xpFrom = passState().xp, xpGain = Math.round((100 + stars * 25) * dz.xp);
   addXP(xpGain);
   await party(stars, coins, xpFrom, xpGain);
@@ -7546,7 +7774,8 @@ async function introSplash() {
   done();
 }
 introSplash();
-syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); if (/[?&]fxlab=1/.test(location.search)) setTimeout(fxLab, 700);
+syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); addCardX();
+if (/[?&]fxlab=1/.test(location.search)) setTimeout(fxLab, 700);
 renderQuests(); renderSeals(); if (S.babyMode) { S.babyLog = S.babyLog || { sessions: 0, seconds: 0 }; S.babyLog.sessions++; S.babyLog.since = Date.now(); } setBaby(S.babyMode); renderHome();
 })();
 </script>
