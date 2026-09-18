@@ -3571,7 +3571,7 @@ const SFX_FILES = ['fire', 'fire-big', 'wood', 'metal', 'water', 'earth', 'stamp
 let sfxLoading = false;
 function loadSfx() {
   if (sfxLoading || !AC) return; sfxLoading = true;
-  SFX_FILES.forEach(n => fetch(`snd/${n}.mp3`).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => AC.decodeAudioData(b, ok, no))).then(buf => { SFX[n] = buf; }).catch(() => {}));
+  SFX_FILES.forEach(n => fetch(`snd/${n}.mp3?v=69`).then(r => r.arrayBuffer()).then(b => new Promise((ok, no) => AC.decodeAudioData(b, ok, no))).then(buf => { SFX[n] = buf; }).catch(() => {}));
 }
 // the scale index each element sits on: water C5, wood D5, fire E5, earth G5, metal A5
 const ELEM_DEG = { water: 2, wood: 3, fire: 4, earth: 5, metal: 6 };
