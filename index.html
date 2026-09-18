@@ -2691,7 +2691,7 @@ function brAuto(from, to, secs) {
 }
 // turning baby mode OFF needs a grown-up's answer; a wrong answer just closes the question
 async function leaveBaby() {
-  if (!await grownUpGate('', 'A grown-up needs to answer to turn off baby mode.')) { toast('Baby mode stays on.'); return false; }
+  if (!await grownUpGate('', 'Answer to turn off baby mode.', true)) { toast('Baby mode stays on.'); return false; }
   setBaby(false); return true;
 }
 $('#babyToggle').addEventListener('click', async () => {
@@ -4080,7 +4080,7 @@ function hasMove() {
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
     for (const [dr, dc] of [[0, 1], [1, 0]]) {
       const r2 = r + dr, c2 = c + dc; if (r2 >= R || c2 >= C) continue;
-      if (board[r][c].cloud || board[r2][c2].cloud || board[r][c].knot || board[r2][c2].knot) continue;
+      if (board[r][c].knot || board[r2][c2].knot) continue;
       sw(r, c, r2, c2); const ok = findMatches().clear.size > 0; sw(r, c, r2, c2);
       if (ok) return true;
     }
@@ -4111,7 +4111,6 @@ const adjacent = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
 
 async function trySwap(a, b) {
   if (moves <= 0) { say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
-  if (a.cloud || b.cloud) { say("Clouds can't be swapped. Clear the orbs under it so it sinks, or breathe with Luma to lift it."); bump((a.cloud ? a : b).el); return; }
   if (a.knot || b.knot) { say('Worry tied that orb in a knot. Make a match that includes it and the knot comes loose.'); bump((a.knot ? a : b).el); bell(392, 0, 0.05); return; }
   busy = true; swish();
   swapCells(a, b);
@@ -4324,7 +4323,6 @@ const endDrag = () => {
   if (d.moved || busy) return;
   if (sel && sel !== d.t && adjacent(sel, d.t)) { const a = sel; clearSel(); trySwap(a, d.t); }
   else if (sel === d.t) clearSel();
-  else if (d.t.cloud) { clearSel(); say("Clouds can't be swapped. Clear the orbs under it so it sinks, or breathe with Luma to lift it."); bump(d.t.el); }
   else { clearSel(); sel = d.t; sel.el.classList.add('sel'); boop(0, 0.06); }
 };
 boardEl.addEventListener('pointerup', endDrag);
@@ -4730,7 +4728,6 @@ async function usePowerOn(t) {
     if (!monkeyFirst) { monkeyFirst = t; t.el.classList.add('sel'); say('Now tap the orb to swap it with.'); return; }
     if (monkeyFirst === t) { t.el.classList.remove('sel'); monkeyFirst = null; return; }
     const a = monkeyFirst; monkeyFirst = null; a.el.classList.remove('sel');
-    if (a.cloud || t.cloud) { say('Clouds only leave when you breathe.'); return; }
     if (!await paidFor(pw)) return;
     setAim(null); busy = true; cycleCheck(pw);
     elemSound('fire', 0, 3);
@@ -5301,7 +5298,7 @@ function findSwap() {
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
     for (const [dr, dc] of [[0, 1], [1, 0]]) {
       const r2 = r + dr, c2 = c + dc; if (r2 >= R || c2 >= C) continue;
-      if (!board[r][c] || !board[r2][c2] || board[r][c].cloud || board[r2][c2].cloud || board[r][c].knot || board[r2][c2].knot) continue;
+      if (!board[r][c] || !board[r2][c2] || board[r][c].knot || board[r2][c2].knot) continue;
       sw(r, c, r2, c2); const ok = findMatches().clear.size > 0; sw(r, c, r2, c2);
       if (ok) return [board[r][c], board[r2][c2]];
     }
@@ -6172,11 +6169,19 @@ function renderShop() {
   $('#shopFloat').innerHTML = Array.from({ length: 8 }, (_, i) => `<i class="coin" style="left:${8 + i * 12}%;animation-delay:${i * 0.62}s"></i>`).join('');
 }
 // a grown-up check before any purchase: a question young children can't answer
-function grownUpGate(label, why) {
+function grownUpGate(label, why, easy) {
   return new Promise(res => {
-    const pairs = [[7, 8], [6, 9], [8, 4], [9, 7], [6, 7], [8, 9]], k = (new Date().getMinutes() + (S.bought || []).length) % pairs.length;
-    const [x, y] = pairs[k], ans = x * y, opts = [ans, ans + x, ans - y, ans + 10].sort((p, q) => (p * 7) % 13 - (q * 7) % 13);
-    $('#gateQ').textContent = `What is ${x} × ${y}?`;
+    // purchases ask a times-table question; leaving baby mode asks simple addition, so an older sibling can do it
+    const k = (new Date().getMinutes() + (S.bought || []).length);
+    let x, y, ans, opts;
+    if (easy) {
+      [x, y] = [[3, 4], [5, 2], [4, 4], [6, 3], [2, 7], [5, 5]][k % 6]; ans = x + y;
+      opts = [ans, ans + 1, ans - 1, ans + 2].sort((p, q) => (p * 7) % 11 - (q * 7) % 11);
+    } else {
+      [x, y] = [[7, 8], [6, 9], [8, 4], [9, 7], [6, 7], [8, 9]][k % 6]; ans = x * y;
+      opts = [ans, ans + x, ans - y, ans + 10].sort((p, q) => (p * 7) % 13 - (q * 7) % 13);
+    }
+    $('#gateQ').textContent = `What is ${x} ${easy ? '+' : '×'} ${y}?`;
     $('#gateFor').textContent = why || `A grown-up needs to answer to get ${label}.`;
     $('#gateGrid').innerHTML = opts.map(o => `<button data-g="${o}">${o}</button>`).join('');
     $('#gateGrid').onclick = e => { const b = e.target.closest('[data-g]'); if (!b) return; hideOv('gateov'); res(+b.dataset.g === ans); };
