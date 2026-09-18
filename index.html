@@ -1363,8 +1363,8 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <div class="maphead">
       <div class="row">
         <button class="herobtn" id="heroOpen" aria-label="Choose your hero"><img id="heroBtnImg" src="img/faces/kai-calm.jpg" alt=""></button>
-        <span class="chip"><i class="coin"></i><span data-coins>0</span></span>
-        <span class="chip"><span class="heart">♥</span><span data-hearts>5</span></span>
+        <button class="chip" data-shopfor="coins" aria-label="Coins: open the shop"><i class="coin"></i><span data-coins>0</span></button>
+        <button class="chip" data-shopfor="hearts" aria-label="Hearts: open the shop"><span class="heart">♥</span><span data-hearts>5</span></button>
       </div>
       <div class="row">
         <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
@@ -5704,6 +5704,17 @@ function calmDaily(force) {
   S.charms[c.id] = (S.charms[c.id] || 0) + 1; save(); syncWallet();
   if (!force) toast(`Nine Days of Calm: hearts refilled and a ${c.name} charm for today.`);
 }
+// tapping your coins or hearts opens the shop at the matching item
+$$('[data-shopfor]').forEach(b => b.addEventListener('click', async () => {
+  ac(); tick();
+  await showOv('shop');
+  const it = $(`#singles [data-buyid="${b.dataset.shopfor === 'hearts' ? 's-hearts' : 's-coins'}"]`);
+  if (!it) return;
+  setTimeout(() => {
+    it.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    if (!reduce) setTimeout(() => it.animate([{ boxShadow: '0 0 0 0 rgba(255,220,130,0)' }, { boxShadow: '0 0 0 4px #fff, 0 0 26px 8px rgba(255,220,130,.9)' }, { boxShadow: '0 0 0 0 rgba(255,220,130,0)' }], { duration: 1400, easing: 'ease-in-out' }), 350);
+  }, 150);
+}));
 $('#shop').addEventListener('click', async e => {
   const bid = e.target.closest('[data-buyid]');
   if (bid && !bid.disabled) { tick(); await buyThing(bid.dataset.buyid); return; }
