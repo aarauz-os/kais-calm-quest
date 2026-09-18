@@ -260,14 +260,6 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .charmhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-top:14px;font-size:14px}
 .charmhead span{font-size:12.5px;font-weight:700;color:var(--muted);text-align:right}
 .charms{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px}
-.charm{position:relative;display:grid;justify-items:center;gap:3px;padding:6px 2px 7px;border-radius:14px;
-  background:linear-gradient(#FFFDF6,#F0E2C2);box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 0 0 2px rgba(180,140,70,.5),0 2px 0 rgba(120,88,40,.4)}
-.charm img{width:44px;height:44px;border-radius:10px}
-.charm b{font-size:10.5px;font-weight:900;line-height:1.05;text-align:center}
-.charm i{font-style:normal;font-size:10.5px;font-weight:900;color:#2C5B2A}
-.charm i.buy{color:var(--gold)}
-.charm.on{background:linear-gradient(#FFF4D6,#F4D58C);box-shadow:inset 0 2px 0 rgba(255,255,255,.9),0 0 0 3px var(--gold-hi),0 0 14px rgba(255,200,110,.8),0 2px 0 rgba(120,88,40,.4)}
-.charm.on::after{content:"✓";position:absolute;top:-6px;right:-4px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:900;color:#fff;background:linear-gradient(#5CB27A,#2B7A4B);box-shadow:0 0 0 2px #FFE9C0}
 .gate{position:absolute;inset:0;z-index:30;display:grid;place-items:center;pointer-events:none}
 .gatein{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:10px;background:radial-gradient(80% 60% at 50% 45%,var(--gc,#2E6B54),#0B1A16 75%)}
 .gateorb{position:relative;width:110px;height:110px}
@@ -758,6 +750,126 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   .t-spirit .orb,.breathbtn.ready,.tile.breathing .orb,.tile.clouded.breathing::after{animation:none}
   #dand .seed{transition:none}
 }
+
+/* ---------- story intro, loadout, hero picker, celebration: one 3D storybook kit ---------- */
+.story *,.heroov *,.party *{box-sizing:border-box}
+.hpprev.empty{opacity:.45;filter:grayscale(.6)}
+.story,.heroov,.party{position:absolute;inset:0;z-index:24;overflow:hidden;color:#FFF6DE;opacity:0;transition:opacity .35s}
+.story.show,.heroov.show,.party.show{opacity:1}
+.stbg{position:absolute;inset:-4%;background-size:cover;background-position:center;filter:saturate(1.1);animation:kenburns 18s ease-in-out infinite alternate}
+.stbg::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 50% 35%,rgba(8,16,14,.15),rgba(8,16,14,.78) 70%),linear-gradient(transparent 40%,rgba(8,14,12,.85))}
+@keyframes kenburns{to{transform:scale(1.08) translate(-1.5%,-1%)}}
+.sttop{position:absolute;top:14px;left:16px;right:16px;display:flex;justify-content:space-between;align-items:center;z-index:3}
+.stpips{display:flex;gap:6px}
+.stpips i{width:22px;height:6px;border-radius:99px;background:rgba(255,255,255,.25);transition:background .3s,width .3s}
+.stpips i.on{background:var(--gold-hi);width:34px;box-shadow:0 0 10px rgba(255,220,140,.8)}
+.stskip{padding:7px 14px;border-radius:99px;font-weight:900;font-size:13px;color:#FFF6DE;background:rgba(0,0,0,.35);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.3)}
+.stplace{position:absolute;top:52px;left:0;right:0;text-align:center;z-index:2;padding:0 16px}
+.stverb{font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-hi);text-shadow:0 1px 0 rgba(0,0,0,.5)}
+.stname{font-size:clamp(28px,8vw,36px);line-height:1.1;text-shadow:0 3px 0 rgba(40,24,6,.8),0 0 20px rgba(255,210,140,.5)}
+.ststage{position:absolute;left:0;right:0;bottom:0;top:140px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:10px;padding:0 16px 26px;z-index:2}
+.stpor{position:relative;width:168px;height:168px;flex:none}
+.stglow{position:absolute;inset:-26%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--sg,#BFE8F5) 80%,transparent) 0%,transparent 65%);animation:glowpulse 2.6s ease-in-out infinite}
+@keyframes glowpulse{50%{transform:scale(1.08);opacity:.75}}
+.string{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:#F5EBD8;
+  box-shadow:0 0 0 4px var(--gold-hi),0 0 0 7px var(--gold-mid),0 0 0 11px var(--wood),0 9px 0 11px var(--wood-d),0 18px 30px 8px rgba(0,0,0,.5)}
+.string img{width:100%;height:100%;object-fit:cover;display:block}
+.stplate{position:absolute;left:50%;bottom:-16px;transform:translateX(-50%);padding:5px 18px 6px;border-radius:10px;white-space:nowrap;
+  font-family:"Marcellus SC",Georgia,serif;font-size:17px;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 0 0 2px var(--wood),0 4px 0 2px var(--wood-d)}
+.stbubble{position:relative;width:100%;max-width:380px;margin-top:18px;padding:18px 20px 22px;border-radius:22px;color:var(--ink);
+  background:linear-gradient(var(--paper),var(--paper-d));box-shadow:inset 0 3px 0 rgba(255,255,255,.95),inset 0 -4px 0 rgba(150,110,50,.25),0 0 0 3px var(--gold-mid),0 0 0 6px var(--wood),0 8px 0 6px var(--wood-d),0 20px 40px rgba(0,0,0,.5)}
+.stbubble::before{content:"";position:absolute;left:50%;top:-11px;width:20px;height:20px;margin-left:-10px;transform:rotate(45deg);background:var(--paper);box-shadow:-3px -3px 0 0 var(--gold-mid)}
+.stbubble p{margin:0;min-height:3.3em;font-size:19px;line-height:1.45;font-weight:800;color:#2E2A1E}
+.stnext{position:absolute;right:16px;bottom:8px;width:0;height:0;border:8px solid transparent;border-top:10px solid var(--gold);opacity:0;transition:opacity .2s}
+.stbubble.done .stnext{opacity:1;animation:nudge 1s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(4px)}}
+.sttap{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;opacity:.65}
+.stgoal{display:flex;flex-direction:column;align-items:center;gap:8px;margin-bottom:6px}
+.cloudpile{position:relative;width:150px;height:84px}
+.cloudpile i{position:absolute;border-radius:50%;background:radial-gradient(circle at 35% 30%,#9AA6B2,#4B5563 70%);box-shadow:inset 0 -6px 10px rgba(0,0,0,.35),0 6px 14px rgba(0,0,0,.4)}
+.cloudpile b{position:absolute;right:-8px;top:-6px;min-width:44px;height:44px;padding:0 8px;border-radius:99px;display:grid;place-items:center;font-size:24px;font-weight:900;color:#3A2408;
+  background:linear-gradient(#FFE9A8,#E0A93E);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 0 0 3px var(--wood),0 4px 0 3px var(--wood-d)}
+.goalchips{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.gchip{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:99px;font-weight:900;font-size:14px;color:#FFF6DE;background:rgba(0,0,0,.45);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.5)}
+.gchip i{width:12px;height:12px;border-radius:50%}
+/* loadout */
+.loadout{position:absolute;left:12px;right:12px;bottom:12px;z-index:4;max-height:calc(100% - 100px);overflow-y:auto;padding:18px 16px 16px;border-radius:26px;color:var(--ink);
+  background:linear-gradient(var(--paper),var(--paper-d));box-shadow:inset 0 3px 0 rgba(255,255,255,.95),inset 0 -4px 0 rgba(150,110,50,.28),0 0 0 4px var(--gold-mid),0 0 0 8px var(--wood),0 10px 0 8px var(--wood-d),0 26px 60px rgba(0,0,0,.6);
+  transform:translateY(110%);transition:transform .5s cubic-bezier(.2,1.2,.3,1)}
+.loadout.up{transform:none}
+.lohead{display:flex;align-items:center;gap:12px}
+.loorb{position:relative;width:48px;height:48px;flex:none}
+.loverb{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#8A6A2E}
+.loname{font-size:26px;line-height:1.05;color:#1D5044}
+.logoal{display:flex;gap:8px;margin:12px 0 4px;flex-wrap:wrap}
+.logoal .gchip{color:#1D5044;background:linear-gradient(#FFFFFF,#F1E4C6);box-shadow:inset 0 0 0 1.5px rgba(150,110,50,.3),0 2px 0 rgba(120,88,40,.3)}
+.losect{display:flex;justify-content:space-between;align-items:baseline;margin:14px 2px 8px;font-size:14px;color:#1D5044}
+.losect span{font-size:12.5px;font-weight:800;color:#8A6A2E;text-align:right}
+.sizepick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0}
+.sizepick button{display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center;text-align:left;padding:10px 12px;border-radius:16px;color:#1D5044;
+  background:linear-gradient(#FFFFFF,#EFE2C4);box-shadow:inset 0 2px 0 #fff,0 0 0 2px rgba(150,110,50,.3),0 4px 0 rgba(120,88,40,.45);transition:transform .15s}
+.sizepick button b{font-size:15px}.sizepick button small{grid-column:2;font-size:10.5px;font-weight:800;color:#6A6252;white-space:nowrap}
+.charmhint{margin-top:10px;padding:8px 12px;border-radius:12px;text-align:center;font-size:13px;font-weight:800;color:#5A4A2A;background:rgba(255,255,255,.55);box-shadow:inset 0 0 0 1.5px rgba(150,110,50,.2);transition:background .3s,color .3s}
+.charmhint.on{color:#fff;background:var(--eh);box-shadow:inset 0 2px 0 rgba(255,255,255,.35),0 3px 0 rgba(0,0,0,.2);text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.sizepick .minigrid{grid-row:span 2;width:34px;height:34px;border-radius:7px;background-color:#1F4A3D;box-shadow:inset 0 0 0 2px #D9A94A}
+.minigrid.g5{background-image:radial-gradient(circle,#FFE9A8 38%,transparent 42%);background-size:6.8px 6.8px;background-position:.4px .4px}
+.minigrid.g8{background-image:radial-gradient(circle,#BFE8F5 36%,transparent 40%);background-size:4.25px 4.25px;background-position:.2px .2px}
+.sizepick button.on{background:linear-gradient(#FFF6D2,#F4D27E);box-shadow:inset 0 2px 0 #fff,0 0 0 3px var(--gold-mid),0 0 16px rgba(255,200,110,.7),0 4px 0 var(--wood-d);transform:translateY(-2px)}
+/* charms: glossy element gems on a wooden shelf */
+.charmshelf{padding:12px 8px 14px;border-radius:18px;background:linear-gradient(#5B4024,#3A2814);box-shadow:inset 0 3px 8px rgba(0,0,0,.55),inset 0 -2px 0 rgba(255,220,160,.15),0 2px 0 rgba(255,255,255,.6)}
+.charms{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin:0}
+.charm{position:relative;display:grid;justify-items:center;gap:6px;padding:0;background:none;box-shadow:none;border-radius:0;color:#FFF3D6}
+.charm .gem{position:relative;width:58px;height:58px;border-radius:50%;overflow:hidden;animation:gemfloat 3s ease-in-out infinite;animation-delay:calc(var(--k) * -.6s);
+  background:radial-gradient(circle at 50% 40%,#FFFFFF 0%,color-mix(in srgb,var(--eh) 45%,#fff) 45%,var(--eh) 100%);
+  box-shadow:inset 0 -6px 10px rgba(0,0,0,.28),inset 0 3px 4px rgba(255,255,255,.8),0 0 0 3px var(--gold-hi),0 0 0 5px var(--gold-lo),0 5px 0 5px rgba(0,0,0,.35);transition:transform .2s cubic-bezier(.3,1.6,.5,1),box-shadow .2s}
+.charm .gem img{position:absolute;inset:6%;width:88%;height:88%;border-radius:50%;object-fit:cover;mix-blend-mode:multiply}
+.charm .gem::after{content:"";position:absolute;left:14%;top:8%;width:46%;height:28%;border-radius:50%;background:linear-gradient(rgba(255,255,255,.9),rgba(255,255,255,0));transform:rotate(-18deg)}
+@keyframes gemfloat{50%{transform:translateY(-3px)}}
+.charm b{font-size:10.5px;font-weight:900;line-height:1.05;text-align:center;text-shadow:0 1px 0 rgba(0,0,0,.6)}
+.charm i{position:absolute;top:-6px;right:-2px;min-width:22px;height:22px;padding:0 6px;border-radius:99px;display:grid;place-items:center;font-style:normal;font-size:11.5px;font-weight:900;color:#fff;
+  background:linear-gradient(#5CB27A,#2B7A4B);box-shadow:0 0 0 2px #FFE9C0,0 2px 0 2px rgba(0,0,0,.3);z-index:2}
+.charm i.buy{color:#3A2408;background:linear-gradient(#FFE9A8,#E0A93E)}
+.charm.on .gem{transform:translateY(-6px) scale(1.1);animation:none;box-shadow:inset 0 -6px 10px rgba(0,0,0,.22),inset 0 3px 4px rgba(255,255,255,.9),0 0 0 3px #fff,0 0 0 6px var(--eh),0 0 22px 6px var(--eh),0 8px 0 5px rgba(0,0,0,.3)}
+.charm.on::after{content:"✓";position:absolute;top:-8px;left:-2px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:900;color:#fff;background:linear-gradient(#FFB347,#E0762B);box-shadow:0 0 0 2px #FFE9C0;z-index:2}
+.charmspark{position:absolute;width:7px;height:7px;border-radius:50%;pointer-events:none;z-index:5}
+.btn.begin{width:100%;margin-top:14px;position:relative;overflow:hidden}
+.btn.begin::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-50%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);animation:shine 2.6s ease-in-out infinite}
+@keyframes shine{60%,100%{left:120%}}
+/* hero picker */
+.hpin{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:20px 16px}
+.hptitle{font-size:clamp(26px,7.5vw,32px);text-align:center;text-shadow:0 3px 0 rgba(40,24,6,.8),0 0 20px rgba(255,210,140,.5)}
+.hpprev{position:relative;width:128px;height:128px;margin:6px 0 10px}
+.hpgrid{display:grid;grid-template-columns:repeat(3,76px);gap:12px 18px}
+.hpgrid .hsep{grid-column:1/-1;height:2px;margin:2px 10px;border-radius:2px;background:linear-gradient(90deg,transparent,rgba(255,233,168,.6),transparent)}
+.hpick{position:relative;width:76px;height:76px;border-radius:50%;padding:0;overflow:hidden;background:#F5EBD8;
+  box-shadow:0 0 0 3px var(--gold-mid),0 0 0 6px var(--wood),0 5px 0 6px var(--wood-d);transition:transform .2s cubic-bezier(.3,1.6,.5,1),box-shadow .2s}
+.hpick img{width:100%;height:100%;object-fit:cover}
+.hpick.on{transform:scale(1.12);box-shadow:0 0 0 3px #fff,0 0 0 7px var(--gold-hi),0 0 24px 8px rgba(255,220,140,.8),0 5px 0 7px var(--wood-d)}
+.herobtn{width:44px;height:44px;border-radius:50%;padding:0;overflow:hidden;background:#F5EBD8;box-shadow:0 0 0 2.5px var(--gold-mid),0 0 0 5px var(--wood),0 4px 0 5px var(--wood-d)}
+.herobtn img{width:100%;height:100%;object-fit:cover}
+/* celebration */
+.party{z-index:27;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:20px 16px;
+  background:radial-gradient(90% 60% at 50% 40%,color-mix(in srgb,var(--pc,#F0B93A) 55%,#1a120a),#0B1512 78%)}
+.prays{position:absolute;left:50%;top:40%;width:170vmax;height:170vmax;margin:-85vmax 0 0 -85vmax;pointer-events:none;opacity:.5;
+  background:repeating-conic-gradient(rgba(255,236,170,.35) 0 7deg,transparent 7deg 20deg);-webkit-mask-image:radial-gradient(circle,#000 10%,transparent 55%);mask-image:radial-gradient(circle,#000 10%,transparent 55%);animation:rays 14s linear infinite}
+@keyframes rays{to{transform:rotate(360deg)}}
+.pbanner{position:relative;padding:10px 34px 12px;font-size:clamp(26px,7.5vw,34px);color:#3A2408;border-radius:14px;
+  background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 3px 0 rgba(255,255,255,.8),inset 0 -4px 0 rgba(150,100,20,.4),0 0 0 3px var(--wood),0 6px 0 3px var(--wood-d),0 16px 30px rgba(0,0,0,.5)}
+.pbanner::before,.pbanner::after{content:"";position:absolute;top:14px;width:26px;height:36px;background:#B8862F;z-index:-1;box-shadow:0 0 0 3px var(--wood)}
+.pbanner::before{left:-18px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,30% 50%)}
+.pbanner::after{right:-18px;clip-path:polygon(0 0,100% 0,70% 50%,100% 100%,0 100%)}
+.pduo{position:relative;display:flex;gap:26px;margin:14px 0 4px}
+.pav{position:relative;width:124px;height:124px}
+.pword{font-size:clamp(34px,10vw,48px);line-height:1;color:#FFF8E6;-webkit-text-stroke:1px rgba(60,30,5,.6);filter:drop-shadow(0 3px 0 rgba(60,30,5,.95)) drop-shadow(0 0 16px rgba(255,214,130,.9))}
+.pstars{display:flex;gap:10px;align-items:flex-end}
+.pstars i{position:relative;width:54px;height:54px;background:rgba(0,0,0,.35);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.pstars i:nth-child(2){width:68px;height:68px}
+.pstars i.lit{background:linear-gradient(#FFF6C8,#FFD45A 45%,#E09A1E)}
+.pfeel{padding:8px 16px;border-radius:99px;font-weight:900;font-size:15px;background:rgba(0,0,0,.4);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.55);text-align:center}
+.pfeel b{color:var(--gold-hi)}
+.pcoins{display:flex;align-items:center;gap:8px;font-size:26px;font-weight:900;text-shadow:0 2px 0 rgba(0,0,0,.5)}
+.party .btn.big{width:100%;max-width:300px;margin-top:6px}
+.party > *:not(.prays){position:relative;z-index:1}
 </style>
 
 <div id="app">
@@ -861,6 +973,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <div class="homeshade" id="homeShade"></div>
     <div class="maphead">
       <div class="row">
+        <button class="herobtn" id="heroOpen" aria-label="Choose your hero"><img id="heroBtnImg" src="img/faces/kai-calm.jpg" alt=""></button>
         <span class="chip"><i class="coin"></i><span data-coins>0</span></span>
         <span class="chip"><span class="heart">♥</span><span data-hearts>5</span></span>
       </div>
@@ -977,21 +1090,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   </section>
 
   <!-- OVERLAYS -->
-  <div class="ov" id="intro" hidden><div class="card" role="dialog" aria-labelledby="iTitle">
-    <div class="eyebrow" id="iEyebrow">Place 1 of 5</div>
-    <h2 class="display" id="iTitle">The Root Grounds</h2>
-    <div class="who"><img id="iKai" src="img/kai-3d.jpg" alt="Kai looking worried"><div><b>Kai</b><p id="iProblem"></p></div></div>
-    <div class="who"><img src="img/sorin-3d.jpg" alt="Sorin smiling calmly"><div><b>Sorin</b><p id="iSorin"></p></div></div>
-    <div class="goalline"><div class="mini cloudicon"></div><div id="iGoal"></div></div>
-    <div class="goalline" style="background:rgba(140,198,228,.18)"><img src="img/luma-3d.jpg" alt="" style="width:36px;height:36px;border-radius:50%;object-fit:cover"><div id="iPower"></div></div>
-    <div class="sizepick" id="sizePick" role="radiogroup" aria-label="Board size">
-      <button data-size="little" role="radio"><b>Little board</b><small>5×5 · 3 elements</small></button>
-      <button data-size="full" role="radio"><b>Full board</b><small>8×7 · 5 elements</small></button>
-    </div>
-    <div class="charmhead"><b>Take a charm</b><span id="charmHint">Tap to bring one in with you</span></div>
-    <div class="charms" id="charmRow"></div>
-    <div class="stack"><button class="btn gold" id="iGo">Begin</button></div>
-  </div></div>
+
 
   <div class="ov" id="breathe" hidden><div class="card bcard" role="dialog" aria-labelledby="brTitle">
     <div class="row" style="justify-content:space-between;gap:8px"><div class="eyebrow" id="brEyebrow">Luma's breath</div><button class="linkbtn" id="brCancel">Not now</button></div>
@@ -1188,6 +1287,53 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   </div></div>
 
   <div id="coach" aria-live="polite"><div id="hand" hidden aria-hidden="true">👆</div><div class="coachtip" id="coachTip" hidden></div></div>
+
+  <div class="story" id="story" hidden>
+    <div class="stbg" id="stBg"></div>
+    <div class="sttop"><div class="stpips" id="stPips"></div><button class="stskip" id="stSkip">Skip</button></div>
+    <div class="stplace"><div class="stverb" id="stVerb"></div><div class="stname display" id="stName"></div></div>
+    <div class="ststage" id="stStage">
+      <div class="stgoal" id="stGoal" hidden></div>
+      <div class="stpor" id="stPor"><span class="stglow"></span><span class="string"><img id="stFace" alt=""></span><span class="stplate" id="stPlate"></span></div>
+      <div class="stbubble" id="stBubble"><p id="stText"></p><span class="stnext" aria-hidden="true"></span></div>
+      <div class="sttap" id="stTap">Tap to continue</div>
+    </div>
+    <div class="loadout" id="loadout" hidden>
+      <div class="lohead"><span class="loorb" id="loOrb"></span><div><div class="loverb" id="loVerb"></div><div class="loname display" id="loName"></div></div></div>
+      <div class="logoal" id="loGoal"></div>
+      <div class="losect"><b>Board</b></div>
+      <div class="sizepick" id="sizePick" role="radiogroup" aria-label="Board size">
+        <button data-size="little" role="radio"><span class="minigrid g5"></span><b>Little</b><small>5×5 · 3 elements</small></button>
+        <button data-size="full" role="radio"><span class="minigrid g8"></span><b>Full</b><small>8×7 · 5 elements</small></button>
+      </div>
+      <div class="losect"><b>Bring a charm</b></div>
+      <div class="charmshelf"><div class="charms" id="charmRow"></div></div>
+      <div class="charmhint" id="charmHint">Tap one to bring it along</div>
+      <button class="btn gold big begin" id="iGo">Begin</button>
+    </div>
+  </div>
+  <div class="heroov" id="heroov" hidden>
+    <div class="stbg" id="hpBg"></div>
+    <div class="hpin">
+      <div class="hptitle display">Who's going on the quest?</div>
+      <div class="hpprev"><span class="stglow"></span><span class="string"><img id="hpFace" alt="Your hero"></span></div>
+      <div class="hpgrid" id="hpGrid"></div>
+      <button class="btn gold big" id="hpGo">This is me!</button>
+    </div>
+  </div>
+  <div class="party" id="party" hidden>
+    <div class="prays" id="pRays"></div>
+    <div class="pbanner display" id="pBanner"><span>Storm cleared!</span></div>
+    <div class="pduo">
+      <div class="pav" id="pHeroW"><span class="stglow"></span><span class="string"><img id="pHero" alt=""></span></div>
+      <div class="pav" id="pLumaW"><span class="stglow"></span><span class="string"><img id="pLuma" alt="Luma"></span></div>
+    </div>
+    <div class="pword display" id="pWord"></div>
+    <div class="pstars" id="pStars"><i></i><i></i><i></i></div>
+    <div class="pfeel" id="pFeel"></div>
+    <div class="pcoins"><i class="coin"></i><b id="pCoins">0</b></div>
+    <button class="btn gold big" id="pGo">Continue</button>
+  </div>
   <div class="arrive" id="arrive" hidden>
     <div class="arin">
       <div class="areyebrow" id="arPlace"></div>
@@ -1247,26 +1393,31 @@ const SOUND = {
 const LEVELS = [
   { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 16, clouds: 6,
     problem: "Kai keeps thinking about tomorrow. His belly feels tight and he can't stop worrying.",
+    you: "You keep thinking about tomorrow. Your belly feels tight and the worry won't stop.",
     sorin: "Worry likes to sit in the belly. Where is that feeling trying to go? Let's hum it loose.",
     steps: ['Stand with soft knees and put both hands on your belly.', 'Breathe in and feel your belly fill like a drum.', 'Hum the breath out low: mmmmmm. Feel your hands buzz.', 'Three times, then notice your middle feeling steady.'],
     line: 'Worry gets stuck in the middle. Humming moves it.', inhale: 4, exhale: 6 },
   { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 16, clouds: 8,
     problem: "Kai's friend broke his lantern. He is so angry he wants to shout at everybody.",
+    you: "A friend broke your lantern. You feel so angry you want to shout at everybody.",
     sorin: "Anger is strong power looking for a way out. Let's give it a way out that helps.",
     steps: ['Stand tall like a tree with your feet rooted.', 'Breathe in and reach your arms up and out like branches.', 'Breathe out with a big haaaa and let your arms drop.', 'Shake your hands out, then stand still.'],
     line: 'Anger is strong. Let it out and it can turn into kindness.', inhale: 4, exhale: 5 },
   { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 18, clouds: 10,
     problem: 'Kai is so excited he cannot sit still or listen. His chest is racing and everything echoes.',
+    you: "You're so excited you can't sit still or listen. Your chest is racing and everything echoes.",
     sorin: "Your heart is running bright and fast. Let a little out, then let it rest.",
     steps: ['Put both hands on your heart.', 'Breathe in and feel your chest lift.', 'Breathe out with a soft laugh: ha-ha-haaa.', 'Now be still and feel your heart slow down.'],
     line: 'Excitement settles when the heart is held.', inhale: 3, exhale: 5 },
   { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 20, clouds: 12,
     problem: 'Something Kai loved has ended. His chest feels heavy and empty up in the cold wind.',
+    you: "Something you loved has ended. Your chest feels heavy and empty, up here in the cold wind.",
     sorin: "Sad feelings live in the lungs. Every long sigh carries a little of it out.",
     steps: ['Stand with your arms open wide like wings.', 'Breathe in through your nose and fill your lungs.', 'Breathe out with a long sigh: sssssss.', 'Let your shoulders drop lower each time.'],
     line: 'Sad feelings leave on the out-breath.', inhale: 4, exhale: 6 },
   { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 22, clouds: 14,
     problem: 'It is dark and Kai is scared. His legs feel shaky and his thinking has gone cloudy.',
+    you: "It's dark and you feel scared. Your legs are shaky and your thoughts have gone cloudy.",
     sorin: "Fear lives low, near your back. Let's warm it until your clear thinking comes back.",
     steps: ['Put your hands on your lower back, above your hips.', 'Breathe in slowly and feel your back widen.', 'Breathe out with a low hum: whoooooo.', 'Feel your feet heavy and your back warm.'],
     line: 'When fear melts, clear thinking comes back.', inhale: 4, exhale: 6 }
@@ -1319,7 +1470,7 @@ const POWERS = [
 const CHARMS = [
   { id: 'sprout', name: 'Sprout', elem: 'wood', cost: 80, what: 'Wood grows: two lanterns sprout on the board.' },
   { id: 'heart', name: 'Ember Heart', elem: 'fire', cost: 80, what: 'Fire sparks: a spirit star waits on the board.' },
-  { id: 'root', name: 'Root Stone', elem: 'earth', cost: 80, what: 'Earth grounds you: Luma starts half full.' },
+  { id: 'root', name: 'Root Stone', elem: 'earth', cost: 80, what: 'Earth grounds you: Luma’s Aura starts halfway to Heavenly.' },
   { id: 'bell', name: 'Breeze Bell', elem: 'metal', cost: 80, what: 'Metal opens the lungs: three extra moves.' },
   { id: 'drop', name: 'Still Drop', elem: 'water', cost: 80, what: 'Still water runs deep: your first breath clears two more clouds.' }
 ];
@@ -2054,13 +2205,13 @@ async function celebrate(m) {
 $('#rwGo').addEventListener('click', () => hideOv('reward'));
 function confetti(sel) {
   if (reduce) return;
-  const box = $(sel || '#reward .card');
+  const box = $(sel || '#reward .card'), tall = box.clientHeight > 500;
   for (let i = 0; i < 26; i++) {
     const d = document.createElement('div');
     d.className = 'conf';
     d.style.cssText = `left:${10 + Math.random() * 80}%;top:-6%;background:${['#E7C27A', '#6FBF4A', '#E04B42', '#3C86C9', '#F0B93A'][i % 5]}`;
     box.appendChild(d);
-    d.animate([{ transform: 'translateY(0) rotate(0deg)', opacity: 1 }, { transform: `translateY(${240 + Math.random() * 180}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }],
+    d.animate([{ transform: 'translateY(0) rotate(0deg)', opacity: 1 }, { transform: `translateY(${(tall ? 600 : 240) + Math.random() * 180}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }],
       { duration: 1400 + Math.random() * 700, easing: 'cubic-bezier(.3,.7,.4,1)' }).onfinish = () => d.remove();
   }
 }
@@ -2205,16 +2356,7 @@ function openLevel(i) {
   if (S.hearts <= 0) { toast('Out of hearts. Refill them in the shop, or wait for them to come back.'); showOv('shop'); return; }
   LI = i; L = LEVELS[i];
   if (!S.boardSize) S.boardSize = i === 0 ? 'little' : 'full';
-  $('#iEyebrow').textContent = `Place ${i + 1} · ${EMO_VERB[L.elem]}`;
-  $('#iTitle').textContent = L.place;
-  $('#iProblem').textContent = L.problem;
-  $('#iSorin').textContent = L.sorin;
-  $('#iGoal').innerHTML = `<b>Blow away ${L.clouds} storm clouds.</b> You have ${L.moves} moves. This place is <b>${ELEM[L.elem].name}</b>: ${L.shift}.`;
-  renderCharms();
-  $('#iPower').innerHTML = `<b>1.</b> Arrive with one breath.<br><b>2.</b> Match orbs to grow Luma's Aura from dim to heavenly.<br><b>3.</b> When she's heavenly, tap her and breathe. Clouds blow away and her Aura Burst clears the board.`;
-  renderSize();
-  showOv('intro');
-  bell(523.25);
+  runStory();
 }
 function renderSize() {
   const cur = S.boardSize || 'full';
@@ -2222,26 +2364,177 @@ function renderSize() {
 }
 $('#sizePick').addEventListener('click', e => {
   const b = e.target.closest('[data-size]'); if (!b) return;
-  S.boardSize = b.dataset.size; save(); renderSize(); tick();
+  S.boardSize = b.dataset.size; save(); renderSize(); renderGoal(); tick();
 });
 let charmPick = new Set();
+/* ---------- heroes: the player picks who goes on the quest (no labels, just faces) ---------- */
+const HEROES = ['kai', 'hero-b2', 'hero-b3', 'hero-b4', 'hero-b5', 'hero-b6', 'hero-g1', 'hero-g2', 'hero-g3', 'hero-g4', 'hero-g5', 'hero-g6'];
+const heroId = () => S.hero || 'kai';
+function syncHero() { const b = $('#heroBtnImg'); if (b) b.src = faceSrc(heroId(), 'calm'); }
+function pickHero() {
+  return new Promise(res => {
+    const ov = $('#heroov');
+    $('#hpBg').style.backgroundImage = `url(img/home/${HOME_SCENE[homeElement()] || 'home-wood-spring'}.jpg)`;
+    let cur = S.hero || null;
+    const face = $('#hpFace');
+    const draw = () => {
+      $('#hpGrid').innerHTML = HEROES.map((h, i) => `${i === 6 ? '<span class="hsep"></span>' : ''}<button class="hpick ${h === cur ? 'on' : ''}" data-hero="${h}" aria-label="Hero ${i + 1}"><img src="${faceSrc(h, h === cur ? 'joy' : 'calm')}" alt=""></button>`).join('');
+      face.src = faceSrc(cur || 'luma', cur ? 'cheer' : 'calm'); $('.hpprev').classList.toggle('empty', !cur);
+      $('#hpGo').disabled = !cur; $('#hpGo').style.opacity = cur ? 1 : .5;
+    };
+    draw();
+    $('#hpGrid').onclick = e => {
+      const b = e.target.closest('[data-hero]'); if (!b) return;
+      cur = b.dataset.hero; draw(); ac();
+      chord([659.25, 830.61, 987.77], 0.05);
+      const r = b.getBoundingClientRect(), a = ov.getBoundingClientRect();
+      sparkleAt(ov, r.left - a.left + r.width / 2, r.top - a.top + r.height / 2, ['#FFE9A8', '#FFFFFF', '#BFE8F5']);
+      $('.hpprev').animate([{ transform: 'scale(.85)' }, { transform: 'scale(1.08)' }, { transform: 'scale(1)' }], { duration: 380, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+      setTimeout(() => { if (cur === b.dataset.hero) face.src = faceSrc(cur, 'joy'); }, 700);
+    };
+    $('#hpGo').onclick = async () => {
+      if (!cur) return;
+      S.hero = cur; save(); syncHero();
+      chord([523.25, 659.25, 783.99, 1046.5], 0.08);
+      ov.classList.remove('show'); await wait(350); ov.hidden = true; res(cur);
+    };
+    ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
+  });
+}
+function sparkleAt(host, x, y, colors, n = 14) {
+  if (reduce) return;
+  for (let i = 0; i < n; i++) {
+    const d = document.createElement('div'); d.className = 'charmspark';
+    d.style.cssText = `left:${x}px;top:${y}px;background:${colors[i % colors.length]};box-shadow:0 0 8px ${colors[i % colors.length]}`;
+    host.appendChild(d);
+    const a = Math.random() * Math.PI * 2, dist = 30 + Math.random() * 50;
+    d.animate([{ transform: 'translate(-50%,-50%) scale(1.2)', opacity: 1 }, { transform: `translate(calc(-50% + ${Math.cos(a) * dist}px), calc(-50% + ${Math.sin(a) * dist}px)) scale(.2)`, opacity: 0 }],
+      { duration: 520 + Math.random() * 300, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => d.remove();
+  }
+}
+$('#heroOpen').addEventListener('click', () => { ac(); pickHero(); });
+
+/* ---------- story intro: tap through one line at a time, then the loadout ---------- */
+const VOICE = { hero: 520, sorin: 290, luma: 780 };
+const goalNums = () => { const b = LEVELS[LI]; return S.boardSize === 'little' ? { clouds: Math.min(4, b.clouds), moves: b.moves - 2 } : { clouds: b.clouds, moves: b.moves }; };
+let storyRun = 0;
+async function runStory() {
+  const run = ++storyRun, st = $('#story');
+  $('#stBg').style.backgroundImage = `url(img/home/${HOME_SCENE[L.elem]}.jpg)`;
+  $('#stVerb').textContent = `Place ${LI + 1} · ${EMO_VERB[L.elem]}`;
+  $('#stName').textContent = L.place;
+  st.style.setProperty('--sg', ELEM[L.elem].glow);
+  const g = goalNums();
+  const beats = [
+    { who: heroId(), voice: 'hero', name: 'You', text: L.you },
+    { who: 'sorin', voice: 'sorin', name: 'Sorin', text: L.sorin },
+    { who: 'luma', voice: 'luma', name: 'Luma', goal: true, text: `Help me blow away ${g.clouds} storm clouds. You have ${g.moves} moves.` }
+  ];
+  if (LI === 0 || !S.tutDone) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: "Match orbs to grow my Aura. When I'm Heavenly, tap me and we'll breathe together." });
+  $('#stPips').innerHTML = beats.map(() => '<i></i>').join('') + '<i></i>';
+  $('#loadout').hidden = true; $('#loadout').classList.remove('up');
+  $('#stStage').hidden = false;
+  st.hidden = false; void st.offsetWidth; st.classList.add('show');
+  let skip = false;
+  $('#stSkip').onclick = e => { e.stopPropagation(); skip = true; tapped && tapped(); };
+  let tapped = null;
+  st.onclick = e => { if (!e.target.closest('.loadout')) tapped && tapped(); };
+  const nextTap = () => new Promise(r => { tapped = r; });
+  for (let i = 0; i < beats.length && !skip; i++) {
+    const b = beats[i];
+    $$('#stPips i').forEach((p, k) => p.classList.toggle('on', k <= i));
+    await showBeat(b, run, () => skip, nextTap);
+    if (run !== storyRun) return;
+  }
+  // loadout
+  $$('#stPips i').forEach(p => p.classList.add('on'));
+  $('#stStage').hidden = true; tapped = null;
+  showLoadout();
+}
+async function showBeat(b, run, skipped, nextTap) {
+  const face = $('#stFace'), txt = $('#stText'), bub = $('#stBubble'), por = $('#stPor');
+  $('#stPlate').textContent = b.name;
+  face.src = faceSrc(b.who, 'calm');
+  const goal = $('#stGoal');
+  goal.hidden = !b.goal;
+  if (b.goal) {
+    const g = goalNums();
+    goal.innerHTML = `<div class="cloudpile"><i style="left:6px;top:30px;width:58px;height:50px"></i><i style="left:40px;top:6px;width:70px;height:66px"></i><i style="left:88px;top:28px;width:56px;height:50px"></i><b>${g.clouds}</b></div>
+      <div class="goalchips"><span class="gchip">${g.moves} moves</span><span class="gchip"><i style="background:${ELEM[L.elem].hue}"></i>${ELEM[L.elem].name} · ${L.shift}</span></div>`;
+    if (!reduce) goal.animate([{ transform: 'scale(.3)', opacity: 0 }, { transform: 'scale(1.1)', opacity: 1, offset: .6 }, { transform: 'scale(1)' }], { duration: 520, easing: 'cubic-bezier(.3,1.5,.5,1)' });
+    swish();
+  }
+  if (!reduce) {
+    por.animate([{ transform: 'translateY(30px) scale(.7)', opacity: 0 }, { transform: 'translateY(-6px) scale(1.05)', opacity: 1, offset: .6 }, { transform: 'none', opacity: 1 }], { duration: 480, easing: 'cubic-bezier(.3,1.4,.5,1)' });
+    bub.animate([{ transform: 'translateY(16px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 320, delay: 120, easing: 'ease-out', fill: 'backwards' });
+  }
+  bub.classList.remove('done'); txt.textContent = '';
+  // typewriter with a soft voice blip; the face opens and closes its mouth while it talks
+  let full = false, i = 0;
+  const done = nextTap().then(() => { full = true; });
+  const words = b.text;
+  const a = ac(), f0 = VOICE[b.voice];
+  while (i < words.length && !full && !skipped()) {
+    i++; txt.textContent = words.slice(0, i);
+    if (i % 2 === 0) face.src = faceSrc(b.who, (i / 2) % 2 ? 'happy' : 'calm');
+    if (a && !muted && i % 3 === 0 && /\w/.test(words[i - 1])) {
+      const t = a.currentTime, gn = a.createGain(); gn.connect(voice(0, 0.2)); env(gn, t, 0.03, 0.004, 0.05);
+      osc(a, 'sine', f0 * (0.92 + Math.random() * 0.18), t, 0.07, gn);
+    }
+    await wait(reduce ? 0 : 26);
+  }
+  txt.textContent = words; face.src = faceSrc(b.who, b.voice === 'hero' ? 'calm' : 'happy');
+  bub.classList.add('done');
+  if (skipped()) return;
+  if (!full) await nextTap(); else await nextTap();
+  tick();
+}
+function showLoadout() {
+  const lo = $('#loadout');
+  $('#loOrb').innerHTML = orbHTML(L.elem);
+  $('#loVerb').textContent = EMO_VERB[L.elem];
+  $('#loName').textContent = L.place;
+  renderSize(); renderCharms(); renderGoal();
+  lo.hidden = false; void lo.offsetWidth; lo.classList.add('up');
+  chord([392, 523.25, 659.25], 0.06);
+}
+function renderGoal() {
+  const g = goalNums();
+  $('#loGoal').innerHTML = `<span class="gchip">☁ ${g.clouds} storm clouds</span><span class="gchip">${g.moves} moves</span><span class="gchip"><i style="background:${ELEM[L.elem].hue}"></i>${ELEM[L.elem].name}</span>`;
+}
+$('#iGo').addEventListener('click', async () => {
+  const st = $('#story');
+  chord([523.25, 659.25, 783.99, 1046.5], 0.06);
+  $('#loadout').classList.remove('up');
+  st.classList.remove('show'); await wait(380); st.hidden = true;
+  startLevel();
+});
 function charmCount(id) { return ((S.charms || {})[id]) || 0; }
 function renderCharms() {
   $('#charmRow').innerHTML = CHARMS.map(c => {
     const n = charmCount(c.id);
-    return `<button class="charm ${charmPick.has(c.id) ? 'on' : ''}" data-charm="${c.id}"><img src="img/icons/boost-${c.id}.jpg" alt=""><b>${c.name}</b><i class="${n ? '' : 'buy'}">${n ? `×${n}` : `${c.cost}c`}</i></button>`;
+    return `<button class="charm ${charmPick.has(c.id) ? 'on' : ''}" data-charm="${c.id}" style="--eh:${ELEM[c.elem].hue};--k:${CHARMS.indexOf(c)}"><span class="gem"><img src="img/icons/boost-${c.id}.jpg" alt=""></span><i class="${n ? '' : 'buy'}">${n ? `×${n}` : `${c.cost}`}</i><b>${c.name}</b></button>`;
   }).join('');
 }
 $('#charmRow').addEventListener('click', e => {
   const b = e.target.closest('.charm'); if (!b) return;
   const c = CHARMS.find(x => x.id === b.dataset.charm);
-  if (charmPick.has(c.id)) { charmPick.delete(c.id); $('#charmHint').textContent = 'Tap to bring one in with you'; }
+  const hint = $('#charmHint');
+  if (charmPick.has(c.id)) { charmPick.delete(c.id); hint.textContent = 'Tap one to bring it along'; hint.classList.remove('on'); }
   else {
     if (!charmCount(c.id) && S.coins < c.cost) { toast('Not enough coins for that charm.'); return; }
-    charmPick.add(c.id); $('#charmHint').textContent = c.what;
-    elemSound(c.elem, 0, 2);
+    charmPick.add(c.id); hint.textContent = `${c.name}: ${c.what}`; hint.classList.add('on'); hint.style.setProperty('--eh', ELEM[c.elem].hue);
+    elemSound(c.elem, 0, 3, 6);
+    setTimeout(() => bell(ELEM[c.elem].tone * 1.5, 0, 0.06), 90);
+    try { navigator.vibrate && navigator.vibrate([8, 30, 12]); } catch (e) {}
   }
   renderCharms();
+  const nb = $(`#charmRow [data-charm="${c.id}"] .gem`), host = $('#loadout');
+  if (nb && charmPick.has(c.id) && !reduce) {
+    const r = nb.getBoundingClientRect(), a = host.getBoundingClientRect();
+    sparkleAt(host, r.left - a.left + r.width / 2, r.top - a.top + host.scrollTop + r.height / 2, [ELEM[c.elem].hue, ELEM[c.elem].glow, '#FFFFFF'], 18);
+    nb.animate([{ transform: 'translateY(-6px) scale(.8)' }, { transform: 'translateY(-10px) scale(1.25)' }, { transform: 'translateY(-6px) scale(1.1)' }], { duration: 380, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+  }
 });
 // charms take effect as the board fills
 function applyCharms() {
@@ -2260,7 +2553,7 @@ function applyCharms() {
   hud();
 }
 let stillDrop = false;
-$('#iGo').addEventListener('click', async () => { await hideOv('intro'); startLevel(); });
+
 
 /* ---------- board ---------- */
 let R = 8, C = 7, POOL = TYPES;
@@ -3349,7 +3642,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, tiles: () => all(), charge: v => { charge = v; hud(); } };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, tiles: () => all(), charge: v => { charge = v; hud(); } };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -3695,7 +3988,7 @@ function startLevel() {
   deepBreaths = 0; breathing = false;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   setAim(null); monkeyFirst = null; lastPower = null;
-  makeRig($('#kaiFace'), 'kai');
+  makeRig($('#kaiFace'), heroId());
   paintBuddyGame();
   syncBoosts();
   playGate();
@@ -3801,10 +4094,62 @@ function toMap() {
 }
 $('#toMap').addEventListener('click', toMap);
 
+// The win moment: banner, the hero and Luma cheering, stars slamming in one by one with rising
+// chimes, the feeling earned, and coins counting up. Every beat has a sound and a sparkle.
+async function party(stars, coins) {
+  const pt = $('#party'), [from, to] = L.shift.split(' → ');
+  pt.style.setProperty('--pc', ELEM[L.elem].hue);
+  const heroImg = $('#pHero'), lumaImg = $('#pLuma');
+  heroImg.src = faceSrc(heroId(), 'cheer'); lumaImg.src = faceSrc('luma', 'cheer');
+  $('#pWord').textContent = stars === 3 ? 'Radiant!' : stars === 2 ? 'Wonderful!' : 'You did it!';
+  $('#pFeel').innerHTML = `${from[0].toUpperCase() + from.slice(1)} → <b>${to[0].toUpperCase() + to.slice(1)}</b> · you earned ${to[0].toUpperCase() + to.slice(1)}`;
+  $$('#pStars i').forEach(s => s.classList.remove('lit'));
+  $('#pCoins').textContent = '0';
+  [$('#pWord'), $('#pFeel'), $('.pcoins'), $('#pGo')].forEach(e => e.style.opacity = 0);
+  $$('#pHeroW,#pLumaW').forEach(e => e.style.opacity = 0);
+  pt.hidden = false; void pt.offsetWidth; pt.classList.add('show');
+  const A = (el, kf, o) => reduce ? null : el.animate(kf, o);
+  const pop = [{ transform: 'scale(.2)', opacity: 0 }, { transform: 'scale(1.15)', opacity: 1, offset: .6 }, { transform: 'scale(1)', opacity: 1 }];
+  A($('#pBanner'), [{ transform: 'translateY(-120px) scale(.6)', opacity: 0 }, { transform: 'translateY(8px) scale(1.08)', opacity: 1, offset: .6 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.3,1.5,.5,1)' });
+  chord([523.25, 659.25, 783.99, 1046.5], 0.07); confetti('#party');
+  await wait(450);
+  ['#pHeroW', '#pLumaW'].forEach((id, i) => setTimeout(() => {
+    $(id).style.opacity = 1; A($(id), pop, { duration: 520, easing: 'cubic-bezier(.3,1.5,.5,1)' });
+    boop(4 + i * 2, 0.1); const r = $(id).getBoundingClientRect(), a = pt.getBoundingClientRect();
+    sparkleAt(pt, r.left - a.left + r.width / 2, r.top - a.top + r.height / 2, ['#FFE9A8', '#FFFFFF', ELEM[L.elem].glow], 16);
+  }, i * 180));
+  await wait(650);
+  // faces keep celebrating: cheer and joy trade places
+  let flip = 0; const faceT = setInterval(() => { flip++; heroImg.src = faceSrc(heroId(), flip % 2 ? 'joy' : 'cheer'); lumaImg.src = faceSrc('luma', flip % 2 ? 'cheer' : 'joy'); }, 650);
+  const notes = [783.99, 987.77, 1174.66];
+  for (let k = 0; k < 3; k++) {
+    const s = $$('#pStars i')[k];
+    if (k < stars) {
+      s.classList.add('lit');
+      A(s, [{ transform: 'scale(3) rotate(-40deg)', opacity: 0 }, { transform: 'scale(.9) rotate(6deg)', opacity: 1, offset: .7 }, { transform: 'scale(1) rotate(0)', opacity: 1 }], { duration: 420, easing: 'cubic-bezier(.2,.9,.3,1.2)' });
+      setTimeout(() => { bell(notes[k], 0, 0.11); try { navigator.vibrate && navigator.vibrate(14); } catch (e) {}
+        const r = s.getBoundingClientRect(), a = pt.getBoundingClientRect(); sparkleAt(pt, r.left - a.left + r.width / 2, r.top - a.top + r.height / 2, ['#FFE9A8', '#FFD45A', '#FFFFFF'], 18); }, 300);
+    }
+    await wait(k < stars ? 460 : 150);
+  }
+  $('#pWord').style.opacity = 1; A($('#pWord'), pop, { duration: 520, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+  chord([659.25, 830.61, 987.77, 1318.5], 0.05); confetti('#party');
+  await wait(380);
+  $('#pFeel').style.opacity = 1; A($('#pFeel'), [{ transform: 'translateY(14px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 360, easing: 'ease-out' });
+  elemSound(L.elem, 0, 4, 8);
+  await wait(300);
+  $('.pcoins').style.opacity = 1;
+  const steps = Math.min(20, coins);
+  for (let k = 1; k <= steps; k++) { $('#pCoins').textContent = Math.round(coins * k / steps); if (k % 2) boop(Math.min(9, 2 + Math.floor(k / 3)), 0.05); await wait(reduce ? 0 : 40); }
+  $('#pGo').style.opacity = 1; A($('#pGo'), pop, { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+  await new Promise(r => { $('#pGo').onclick = r; });
+  clearInterval(faceT); tick();
+  pt.classList.remove('show'); await wait(350); pt.hidden = true;
+}
 async function winLevel() {
   glowGoal(false); clearHints(); hideTip();
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.13);
-  say('The storm passed. Kai can breathe again.');
+  say('The storm passed. You can breathe again.');
   await wait(1400);
   const n = LI + 1;
   const stars = 1 + (moves >= 4 ? 1 : 0) + (deepBreaths > 0 ? 1 : 0);
@@ -3862,6 +4207,7 @@ async function winLevel() {
   renderStreak(); renderBal(); teaseBal(); renderBuddy();
   $('#wNext').hidden = n >= LEVELS.length;
   $('#wTitle').textContent = n >= LEVELS.length ? 'Every lantern is home.' : 'The storm has passed.';
+  await party(stars, coins);
   showOv('win');
 }
 $('#wNext').addEventListener('click', async () => { await hideOv('win'); toMap(); openLevel(LI + 1); });
@@ -3871,7 +4217,7 @@ function loseLevel() {
   S.hearts = Math.max(0, S.hearts - 1); save(); syncWallet();
   bell(392, 0, 0.08); bell(329.63, 0.25, 0.07);
   const left = clouds().length;
-  $('#lText').textContent = `Kai blew away ${L.clouds - left} of ${L.clouds} clouds. ${left} left. You have ${S.hearts} ${S.hearts === 1 ? 'heart' : 'hearts'} left.`;
+  $('#lText').textContent = `You blew away ${L.clouds - left} of ${L.clouds} clouds. ${left} left. You have ${S.hearts} ${S.hearts === 1 ? 'heart' : 'hearts'} left.`;
   $('#lRetry').textContent = S.hearts > 0 ? 'Try again · uses a heart' : 'Refill hearts to try again';
   showOv('lose');
 }
@@ -3965,10 +4311,11 @@ $('#wPractice').addEventListener('click', async () => {
 $('#gDone').addEventListener('click', () => { guideRun++; breathSound('out', 0.3); hideOv('guide'); });
 
 /* ---------- boot ---------- */
+syncHero();
 $$('[data-play]').forEach(b => b.addEventListener('click', () => {
   ac();
   $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome();
-  openLevel(0);
+  (S.hero ? Promise.resolve() : pickHero()).then(() => openLevel(0));
 }));
 $('#retut').addEventListener('click', () => { S.tutDone = false; save(); toast('The guided walkthrough will play on level 1.'); });
 $('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome(); });
