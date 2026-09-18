@@ -542,10 +542,19 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
 .bloom{filter:blur(1px)}
 .spark{position:absolute;width:8px;height:8px;border-radius:50%;background:#FFF1C2;pointer-events:none;box-shadow:0 0 8px #FFD37A;z-index:5}
 
-.tile.clouded .orb{filter:saturate(.25) brightness(.72)}
+.tile.clouded .orb{filter:saturate(.45) brightness(.8)}
+.tile.clouded.c2 .orb{filter:saturate(.3) brightness(.62)}
 .tile.clouded::after{content:"";position:absolute;inset:-4% -6%;pointer-events:none;
   background:radial-gradient(circle at 30% 58%,#6C7C8C 0 22%,transparent 23%),radial-gradient(circle at 55% 42%,#8494A4 0 27%,transparent 28%),radial-gradient(circle at 75% 60%,#5D6C7C 0 20%,transparent 21%),radial-gradient(ellipse at 50% 68%,#4E5C6B 0 36%,transparent 37%);
   filter:drop-shadow(0 2px 3px rgba(0,0,0,.55));opacity:.97}
+/* v67 layered clouds: a storm cloud (2 layers) thins to a light cloud (1 layer), then bursts into sunshine */
+.tile.clouded.c2::after{inset:-16% -14%;background:url(img/pass/goal-cloud.png) center 42%/100% no-repeat;opacity:.94;filter:drop-shadow(0 3px 4px rgba(0,0,0,.45))}
+.tile.clouded.c1::after{inset:-2% -4%;opacity:.8;filter:drop-shadow(0 2px 3px rgba(0,0,0,.25));
+  background:radial-gradient(circle at 30% 58%,#EEF3F8 0 22%,transparent 23%),radial-gradient(circle at 55% 42%,#FFFFFF 0 27%,transparent 28%),radial-gradient(circle at 75% 60%,#E2E9F0 0 20%,transparent 21%),radial-gradient(ellipse at 50% 68%,#D5DEE7 0 36%,transparent 37%)}
+.tile.peel::after{animation:peel .5s ease-out}
+@keyframes peel{0%{transform:scale(1.25);opacity:1}40%{transform:scale(.85) translateY(-6%)}100%{transform:none}}
+.puff{position:absolute;z-index:7;width:var(--t);height:var(--t);pointer-events:none;background:url(img/pass/goal-cloud.png) center/88% no-repeat}
+.sunburst{position:absolute;z-index:7;width:var(--t);height:var(--t);pointer-events:none;border-radius:50%;background:radial-gradient(circle,#FFF8D6 0 20%,rgba(255,226,140,.8) 35%,transparent 70%)}
 .tile.clouded.breathing .orb{animation:none}
 .tile.clouded.breathing::after{animation:drift 2.2s ease-in-out infinite}
 @keyframes drift{50%{transform:translateX(6%) scale(1.05);opacity:.7}}
@@ -5065,7 +5074,7 @@ async function feedDemo(host) {
   }
 }
 
-// the goal, shown on a mini board: dig under a cloud, it sinks, matching the level's element fills that goal, the cloud floats away at the bottom
+// the goal, shown on a mini board: match beside a cloud to thin it, match the level's element for that goal, one more match and the cloud clears
 async function goalDemo(host, g) {
   const run = demoRun, E = L.elem, f = ['wood', 'fire', 'earth', 'metal', 'water'].filter(x => x !== E), [a, b, c, d] = f;
   const grid = [[b, c, d, a], [c, b, E, d], [E, E, a, c], [a, a, b, a]];
@@ -5120,10 +5129,11 @@ async function goalDemo(host, g) {
     chip('cloud').querySelector('b').textContent = '1'; chip('gem').querySelector('b').textContent = '3';
     chip('cloud').classList.remove('done'); chip('gem').classList.remove('done');
     // 1 · dig under the cloud
-    step(0, 'Match the orbs under a storm cloud. The cloud sinks down.');
+    step(0, 'Match right beside a storm cloud. It thins to a light cloud.');
     await wait(900); if (!alive()) return;
     await swap(3, 2, 3, 3); if (!alive()) return;
     await pop([find(3, 0), find(3, 1), find(3, 2)]); if (!alive()) return;
+    { const c0 = cells.find(x => x.cloud); if (c0) { const o = c0.el.firstElementChild; o.classList.add('c1'); o.classList.add('peel'); } }
     await fall(); await wait(700); if (!alive()) return;
     // 2 · match the goal element
     step(1, `Match ${ELEM[E].name} orbs to fill the ${ELEM[E].name} goal.`);
@@ -5132,8 +5142,8 @@ async function goalDemo(host, g) {
     await pop([find(3, 0), find(3, 1), find(3, 2)], chip('gem')); if (!alive()) return;
     tickChip('gem', 0); bell(chordNote(5), 0, 0.05);
     await fall(); if (!alive()) return;
-    // 3 · at the bottom, the cloud floats away
-    step(2, 'At the bottom, the cloud floats away. Finish every goal to win.');
+    // 3 · one more match beside it: sunshine
+    step(2, 'One more match beside it and the cloud bursts into sunshine. Finish every goal to win.');
     const cl = cells.find(x => x.cloud);
     await wait(500); if (!alive()) return;
     if (cl) await pop([cl], chip('cloud'));
@@ -5344,13 +5354,13 @@ function newTile(type, sp = null) {
   return t;
 }
 function paint(t) {
-  t.el.className = `tile t-${t.type}${t.sp ? ' sp-' + t.sp : ''}${t.cloud ? ' clouded' : ''}${t.knot ? ' knotted' : ''}${t.fed ? ' fed' : ''}`;
+  t.el.className = `tile t-${t.type}${t.sp ? ' sp-' + t.sp : ''}${t.cloud ? ' clouded c' + (t.cloud === 2 ? 2 : 1) : ''}${t.knot ? ' knotted' : ''}${t.fed ? ' fed' : ''}`;
   const kx = t.el.querySelector('.knotx');
   if (t.knot && !kx) { const k = document.createElement('i'); k.className = 'knotx'; t.el.appendChild(k); } else if (!t.knot && kx) kx.remove();
   t.el.firstChild.innerHTML = t.type === 'spirit' ? SP_GLYPH.spirit : t.sp && SP_GLYPH[t.sp] ? SP_GLYPH[t.sp] : GLYPH[t.type];
   const fxEl = t.el.querySelector('.spfx'), wants = !!(t.sp || t.type === 'spirit');
   if (wants && !fxEl) { const f = document.createElement('i'); f.className = 'spfx'; t.el.appendChild(f); } else if (!wants && fxEl) fxEl.remove();
-  t.el.setAttribute('aria-label', t.type === 'spirit' ? 'spirit star' : t.type + (t.sp ? ' ' + SP_NAME[t.sp].toLowerCase() : '') + (t.cloud ? ' under a storm cloud' : ''));
+  t.el.setAttribute('aria-label', t.type === 'spirit' ? 'spirit star' : t.type + (t.sp ? ' ' + SP_NAME[t.sp].toLowerCase() : '') + (t.cloud ? (t.cloud === 2 ? ' under a storm cloud' : ' under a light cloud') : ''));
 }
 function place(t, r, c, anim = true) {
   t.r = r; t.c = c;
@@ -5445,19 +5455,38 @@ function controlBreak(clear) {
 }
 // a cloud that reaches the bottom row floats up into the storm counter and is freed
 function freeCloud(t, i = 0) {
+  // the whole cloud lifts off (a breath, Luma's Dive or the last layer); the orb underneath stays and can be matched
   if (i < 4) playSfx('sfx-cloud', { gain: 0.45, when: i * 0.12, rate: 1 + i * 0.05 });
-  if (board[t.r] && board[t.r][t.c] === t) board[t.r][t.c] = null;
-  ids.delete(String(t.id));
-  const tgt = $('#cloudStat').getBoundingClientRect(), br = boardEl.getBoundingClientRect();
-  const dx = tgt.left + tgt.width * 0.2 - br.left, dy = tgt.top + tgt.height / 2 - br.top;
-  if (!reduce) t.el.animate([{ transform: `translate(${t.c * T}px,${t.r * T}px) scale(1)`, opacity: 1 },
-    { transform: `translate(${t.c * T}px,${t.r * T - T * 0.8}px) scale(1.15)`, opacity: 1, offset: .3 },
-    { transform: `translate(${dx - T / 2}px,${dy - T / 2}px) scale(.3)`, opacity: 0 }], { duration: 900, delay: i * 120, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
-  setTimeout(() => { t.el.remove(); hud(); bump($('#cloudStat')); }, reduce ? 0 : 900 + i * 120);
+  t.cloud = false; paint(t);
+  if (!reduce) {
+    const tgt = $('#cloudStat').getBoundingClientRect(), br = boardEl.getBoundingClientRect();
+    const p = document.createElement('i'); p.className = 'puff'; boardEl.appendChild(p);
+    const dx = tgt.left + tgt.width * 0.2 - br.left, dy = tgt.top + tgt.height / 2 - br.top;
+    p.animate([{ transform: `translate(${t.c * T}px,${t.r * T}px) scale(1)`, opacity: .95 },
+      { transform: `translate(${t.c * T}px,${t.r * T - T * 0.8}px) scale(1.15)`, opacity: 1, offset: .3 },
+      { transform: `translate(${dx - T / 2}px,${dy - T / 2}px) scale(.3)`, opacity: 0 }], { duration: 900, delay: i * 120, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+    const sb = document.createElement('i'); sb.className = 'sunburst'; boardEl.appendChild(sb);
+    sb.animate([{ transform: `translate(${t.c * T}px,${t.r * T}px) scale(.3)`, opacity: 1 }, { transform: `translate(${t.c * T}px,${t.r * T}px) scale(1.7)`, opacity: 0 }], { duration: 650, delay: i * 120, easing: 'ease-out', fill: 'forwards' });
+    setTimeout(() => { p.remove(); sb.remove(); }, 1000 + i * 120);
+  }
+  setTimeout(() => { hud(); bump($('#cloudStat')); }, reduce ? 0 : 900 + i * 120);
   setTimeout(() => { playSfx('swoosh', { rate: 1.25, gain: 0.45 }); bell(chordNote(6 + Math.min(i, 3)), 0, 0.05); }, i * 120);
   cloudsFreed++; questBump('clouds');
 }
+// a match beside a cloud, or a piece / booster that reaches it, peels one layer
+let peelHits = new Set();
+function peelClouds() {
+  let k = 0;
+  peelHits.forEach(t => {
+    if (!t.cloud || !board[t.r] || board[t.r][t.c] !== t) return;
+    if (t.cloud === 2) { t.cloud = 1; paint(t); t.el.classList.add('peel'); setTimeout(() => t.el.classList.remove('peel'), 520); playSfx('sfx-cloud', { gain: 0.35, rate: 1.2 }); boop(3, 0.05);
+      if (!S.seen?.peel) { S.seen = Object.assign(S.seen || {}, { peel: 1 }); save(); say('The storm cloud thinned! One more match beside it and it clears.'); } }
+    else freeCloud(t, k++);
+  });
+  peelHits = new Set();
+}
 async function collectClouds() {
+  return;                                        // v67: clouds no longer need to reach the bottom
   for (let guard = 0; guard < 8; guard++) {
     const low = all().filter(t => t.cloud && t.r === colBot(t.c));
     if (!low.length) return;
@@ -5484,11 +5513,12 @@ function applyGlow() {
   setTimeout(() => say(`Glow streak ×${n}. Luma left you ${n === 1 ? 'a gift' : n + ' gifts'} on the board.`), 900);
 }
 function addClouds(n, quiet) {
-  // clouds start in the top half; the player brings them down by clearing what's under them
-  const top = Math.max(2, Math.floor(R / 2));
+  // clouds settle anywhere in the upper two-thirds; matches beside them peel them away
+  const top = Math.max(2, Math.ceil(R * 0.66));
   const pool = all().filter(t => !t.cloud && t.type !== 'spirit' && t.r < top).sort(() => Math.random() - 0.5);
+  const ep = (LI || 0) + 1, stormShare = babyOn() ? 0 : Math.min(0.6, Math.max(0, (ep - 4) * 0.1)) + (L && L.diff === 'hard' ? 0.1 : 0);
   pool.slice(0, n).forEach((t, i) => {
-    t.cloud = true;
+    t.cloud = i < Math.round(n * stormShare) ? 2 : 1;
     if (quiet) { paint(t); return; }
     setTimeout(() => { paint(t); t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460); }, i * 120);
   });
@@ -5648,7 +5678,7 @@ async function trySwap(a, b) {
     else if (kinds.includes('bomb')) { [-1, 0, 1].forEach(d => { addRow(r + d); addCol(c + d); if (board[r + d]) firing.push({ kind: 'row', r: r + d, c, elem: E }); if (c + d >= 0 && c + d < C) firing.push({ kind: 'col', r, c: c + d, elem: E }); }); firing.push({ kind: 'bomb', r, c, elem: E }); name = 'Wide Burst'; }
     else { addRow(r); addCol(c); firing.push({ kind: 'row', r, c, elem: E }, { kind: 'col', r, c, elem: E }); name = 'Cross Light'; }
     a.sp = b.sp = null;
-    [...set].forEach(x => { if (x.cloud) set.delete(x); });
+    [...set].forEach(x => { if (x.cloud) { set.delete(x); peelHits.add(x); } });
     powerUsed = { name, elem: a.type, sub: 'Special combo' };
     flash(); playSfx('sfx-combo', { gain: 0.95 }); chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.03);
     await resolve(set, [], null);
@@ -5693,7 +5723,7 @@ async function trySwap(a, b) {
 /* ---------- power pieces: how they look, where they aim, how they fire ---------- */
 // Each piece shows what it does: the Lantern points both ways along its line, the Blossom opens
 // its petals, the Firefly flaps, the Spirit Star shines. Tap any piece to fire it (one move);
-// press and hold to preview what it will clear. Pieces pass by storm clouds: clouds only sink or
+// press and hold to preview what it will clear. Pieces peel a layer off the clouds they reach;
 // get lifted by a breath, so a piece helps by clearing what's under them.
 const SP_GLYPH = {
  "row": "<svg viewBox=\"0 0 48 48\" class=\"pc-lantern\"><g transform=\"rotate(0 24 24)\"><path class=\"ar l\" d=\"M-1 24 9 13.5v6h5v9H9v6z\" fill=\"url(#kgFlame)\" stroke=\"#fff\" stroke-width=\"1.2\" stroke-linejoin=\"round\"/><path class=\"ar r\" d=\"M49 24 39 13.5v6h-5v9h5v6z\" fill=\"url(#kgFlame)\" stroke=\"#fff\" stroke-width=\"1.2\" stroke-linejoin=\"round\"/></g><circle class=\"glow\" cx=\"24\" cy=\"24\" r=\"17\" fill=\"url(#kgGlow)\"/><path d=\"M24 2v5\" stroke=\"#8A5A1A\" stroke-width=\"1.6\" stroke-linecap=\"round\"/><rect x=\"17\" y=\"6.5\" width=\"14\" height=\"4.5\" rx=\"2.2\" fill=\"url(#kgGold)\" stroke=\"#7A4E12\" stroke-width=\".8\"/><ellipse cx=\"24\" cy=\"24.5\" rx=\"12\" ry=\"14\" fill=\"url(#kgLantern)\" stroke=\"#8E1F16\" stroke-width=\"1\"/><g fill=\"none\" stroke=\"rgba(130,25,12,.45)\" stroke-width=\"1\"><ellipse cx=\"24\" cy=\"24.5\" rx=\"6.5\" ry=\"14\"/><path d=\"M24 10.5v28\"/></g><ellipse class=\"flick\" cx=\"24\" cy=\"25\" rx=\"5\" ry=\"7\" fill=\"#FFF6C8\" opacity=\".8\"/><rect x=\"17\" y=\"38\" width=\"14\" height=\"4.5\" rx=\"2.2\" fill=\"url(#kgGold)\" stroke=\"#7A4E12\" stroke-width=\".8\"/><path d=\"M24 42.5v4.5\" stroke=\"#E8483C\" stroke-width=\"2.4\" stroke-linecap=\"round\"/></svg>",
@@ -5715,11 +5745,11 @@ function pieceHTML(sp, type) {
   return `<span class="pc"><div class="tile t-${t}${sp && sp !== 'spirit' ? ' sp-' + sp : ''}" style="transform:none;position:absolute;inset:0;width:100%;height:100%"><div class="orb">${SP_GLYPH[sp] || GLYPH[t]}</div><i class="spfx"></i></div></span>`;
 }
 const plus = t => [[1, 0], [-1, 0], [0, 1], [0, -1]].map(([dr, dc]) => board[t.r + dr] && board[t.r + dr][t.c + dc]).filter(Boolean);
-// where a Firefly goes, in order: a knot, the orb under the lowest cloud, a goal orb, then the middle of the board
+// where a Firefly goes, in order: a cloud (storm clouds first), a knot, a goal orb, then the middle of the board
 function flyTargets(n, skip = new Set()) {
   const out = [], ok = x => x && !x.cloud && !skip.has(x) && !out.includes(x) && x.type !== 'spirit';
+  clouds().filter(c => !skip.has(c) && !out.includes(c)).sort((a, b) => b.cloud - a.cloud || b.r - a.r || a.c - b.c).forEach(cl => { if (out.length < n) out.push(cl); });
   all().filter(t => t.knot).forEach(t => { if (out.length < n && ok(t)) out.push(t); });
-  clouds().sort((a, b) => b.r - a.r || a.c - b.c).forEach(cl => { const u = board[cl.r + 1] && board[cl.r + 1][cl.c]; if (out.length < n && ok(u)) out.push(u); });
   if (L && L.gems && gemsLeft() > 0) all().filter(t => t.type === L.elem).sort((a, b) => b.r - a.r || a.c - b.c).forEach(t => { if (out.length < n && ok(t)) out.push(t); });
   const mr = (R - 1) / 2, mc = (C - 1) / 2;
   all().sort((a, b) => (Math.abs(a.r - mr) + Math.abs(a.c - mc)) - (Math.abs(b.r - mr) + Math.abs(b.c - mc)) || a.r - b.r || a.c - b.c).forEach(t => { if (out.length < n && ok(t)) out.push(t); });
@@ -5876,12 +5906,13 @@ function expand(clear) {
       }
     }
     else if (t.type === 'spirit' && !t.fired) { t.fired = true; extra = all().filter(x => x.type === L.elem); firing.push({ kind: 'spirit', r: t.r, c: t.c, color: L.elem, targets: extra.map(x => [x.r, x.c]) }); }
-    for (const x of extra) if (x && !x.cloud && !clear.has(x)) { clear.add(x); q.push(x); }      // pieces pass by clouds
+    for (const x of extra) { if (x && x.cloud) peelHits.add(x); else if (x && !clear.has(x)) { clear.add(x); q.push(x); } }   // pieces peel the clouds they reach
   }
 }
 
 async function resolve(clear, groups, moved) {
   combo = 0;
+  if (!clear.size && peelHits.size) { peelClouds(); await wait(reduce ? 60 : 420); }
   while (clear.size) {
     const makes = [];
     for (const g of groups || []) {
@@ -5895,12 +5926,15 @@ async function resolve(clear, groups, moved) {
     }
     const hadSpecial = [...clear].some(t => t.sp || t.type === 'spirit');
     expand(clear);
+    [...clear].forEach(t => { if (t.cloud) { clear.delete(t); peelHits.add(t); } });
+    [...clear].forEach(t => plus(t).forEach(n => { if (n.cloud) peelHits.add(n); }));   // matches beside a cloud peel it
     [...clear].forEach(t => { if (t.knot) { untie(t); clear.delete(t); } });   // a match unties the knot; the orb stays
     controlBreak(clear);                                                         // Wood next to a knot breaks it: Wood parts Earth
     if (hadSpecial) flash();
     makes.forEach(m => clear.delete(m.t));
     const fx = firing; firing = [];
     if (fx.length) { staggerPops(clear, fx); await playFiring(fx); }
+    peelClouds();
     await popSet(clear);
     makes.forEach(m => {
       if (m.kind === 'spirit') { m.t.type = 'spirit'; m.t.sp = null; } else m.t.sp = m.kind;
@@ -6431,7 +6465,7 @@ async function applyBreath(q) {
   charge = 0; hud();
   flash();
   // Luma's Dive: the breath decides how big her help is, the player decides where it lands.
-  // Everything inside her area goes, storm clouds included (the only way besides sinking them).
+  // Everything inside her area goes, storm clouds included: her dive blows whole clouds away.
   const dive = { k: p.tier === 'deep' ? 2 : 1, cross: p.tier === 'nice' || (S.buddy === 'metal' && giftTier('metal') === 4), tier: p.tier };
   const spot = babyOn() ? bestDiveSpot(dive) : await lumaAim(dive);
   await lumaDive(spot, dive);
@@ -6538,7 +6572,7 @@ function powerArea(id, t) {
   if (id === 'tiger') cells = rowOf(t.r);
   else if (id === 'bear') cells = around(t.r, t.c, 1);
   else if (id === 'crane') cells = [...rowOf(t.r), ...colOf(t.c)];
-  return [...new Set(cells)].filter(x => !x.cloud);
+  return [...new Set(cells)];
 }
 
 // first time a booster is pressed: watch it work on a little board, then use it (or not)
@@ -6616,8 +6650,9 @@ async function usePowerOn(t) {
   if (pw.id === 'tiger') cells = board[t.r].filter(Boolean);
   else if (pw.id === 'bear') { for (let dr = -1; dr <= 1; dr++) for (let dc = -1; dc <= 1; dc++) { const r = t.r + dr, c = t.c + dc; if (board[r] && board[r][c]) cells.push(board[r][c]); } }
   else if (pw.id === 'crane') cells = [...board[t.r].filter(Boolean), ...board.map(row => row[t.c]).filter(Boolean)];
-  cells = [...new Set(cells)].filter(x => !x.cloud);                 // clouds belong to the breath
-  if (!cells.length) return;
+  cells = [...new Set(cells)];
+  cells.filter(x => x.cloud).forEach(x => peelHits.add(x)); cells = cells.filter(x => !x.cloud);   // boosters peel clouds; the breath blows them away
+  if (!cells.length && !peelHits.size) return;
   if (!await paidFor(pw)) return;
   setAim(null); busy = true; cycleCheck(pw);
   popExit = pw.id === 'tiger' ? 'claw' : pw.id === 'bear' ? 'water' : 'fire'; powerUsed = pw;
@@ -7198,7 +7233,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { peek: (p, g) => peekReact(p, 4000, g), breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -7528,7 +7563,7 @@ const LESSONS = [
   { n: 3, title: 'Blossom', text: 'Tap the Blossom. It bursts everything around it.', tapKind: ['bomb'], fallback: { sps: { '2,2': 'bomb' } } },
   { n: 4, title: 'Firefly', text: 'Make a square of four to wake a Firefly.', grid: { mods: { '2,2': 'w', '2,3': 'w', '3,2': 'w', '4,3': 'w' }, clouds: ['0,4'] }, swap: [[3, 3], [4, 3]] },
   { n: 4, title: 'Firefly', text: 'Tap the Firefly. It flies to what you need most, like the orb under a cloud.', tapKind: ['fly'], fallback: { sps: { '3,3': 'fly' }, clouds: ['1,4'] } },
-  { n: 5, title: 'Storm clouds', text: 'Clear the orbs under a cloud and it sinks. At the bottom, it floats away.', grid: { mods: { '5,1': 'e' }, clouds: ['4,2'] }, swap: [[5, 3], [4, 3]] },
+  { n: 5, title: 'Storm clouds', text: 'Match right beside a cloud to clear it. Dark storm clouds take two matches.', grid: { mods: { '5,1': 'e' }, clouds: ['4,2'] }, swap: [[5, 3], [4, 3]] },
   { n: 6, title: 'Spirit Star', text: 'Line up five in a row to make a Spirit Star.', grid: { mods: { '1,0': 'a', '1,1': 'a', '1,2': 'w', '1,3': 'a', '1,4': 'a' } }, swap: [[1, 2], [2, 2]] },
   { n: 6, title: 'Spirit Star', text: 'Swap the Spirit Star with any orb next to it. Every orb of that color clears.', swapKind: 'spirit', fallback: { sps: { '2,2': 'spirit' } } },
   { n: 7, title: 'Combos', text: 'Swap two power pieces together for a giant combo.', grid: { sps: { '2,2': 'row', '2,3': 'bomb' } }, swap: [[2, 2], [2, 3]] },
@@ -7542,7 +7577,7 @@ function loadGrid(spec = {}) {
   for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
     const key = `${r},${c}`, ch = (spec.mods || {})[key] || PBASE[(r + c) % 5], sp = (spec.sps || {})[key];
     const t = sp === 'spirit' ? newTile('spirit') : newTile(PT[ch], sp || null);
-    if ((spec.clouds || []).includes(key)) { t.cloud = true; paint(t); }
+    if ((spec.clouds || []).includes(key)) { t.cloud = 1; paint(t); }
     board[r][c] = t; drop(t, r - R - 1, r, c);
     t.el.style.transitionDelay = `${c * 22 + (R - r) * 14}ms`; setTimeout(() => { t.el.style.transitionDelay = ''; }, 700);
   }
@@ -7613,7 +7648,7 @@ async function pStep(i) {
   }
   practice.onSettle = async () => {
     clearPreview(); pClearFocus(); hideTip();
-    say(i === 7 ? 'The cloud floated away!' : ['Nice match!', 'A Lantern!', 'Whoosh!', 'A Blossom!', 'Boom!', 'A Firefly!', 'Right on target!', '', 'A Spirit Star!', 'The whole color cleared!', 'What a combo!'][i] || 'Nice!');
+    say(i === 7 ? 'Sunshine! The cloud cleared.' : ['Nice match!', 'A Lantern!', 'Whoosh!', 'A Blossom!', 'Boom!', 'A Firefly!', 'Right on target!', '', 'A Spirit Star!', 'The whole color cleared!', 'What a combo!'][i] || 'Nice!');
     await wait(900);
     pStep(i + 1);
   };
@@ -8423,10 +8458,10 @@ const HOWTO = {
 function GOAL_LINE(c, m) {
   const g = levelSpec(), gem = g.gems ? ` Collect ${g.gems} ${ELEM[L.elem].name} orbs${g.knots ? ',' : ' too.'}` : '', kn = g.knots ? ` ${g.gems ? 'and ' : ''}untie ${g.knots} knots.` : '';
   return ({
-    '2-4': `Pop the orbs under the clouds so they float away!${g.gems ? ` Get ${g.gems} ${ELEM[L.elem].name} orbs too.` : ''} We have ${m} moves.`,
-    '5-7': `Help me free ${c} storm clouds. Clear the orbs under them and they sink.${gem}${kn} We've got ${m} moves.`,
+    '2-4': `Pop the orbs next to the clouds to make the sun come out!${g.gems ? ` Get ${g.gems} ${ELEM[L.elem].name} orbs too.` : ''} We have ${m} moves.`,
+    '5-7': `Help me clear ${c} storm clouds. Match right beside them to melt them away.${gem}${kn} We've got ${m} moves.`,
     '8-11': `${c} storm clouds to free.${gem}${kn} ${m} moves, no rush.`,
-    '12-15': `${c} storm clouds, ${m} moves.${gem}${kn} Dig under the clouds and use my breath on the stubborn ones.`
+    '12-15': `${c} storm clouds, ${m} moves.${gem}${kn} Match beside the clouds and use my breath on the stubborn ones.`
   })[band()];
 }
 // every chapter climbs the same eight layers, so the understanding deepens episode by episode
