@@ -2196,6 +2196,17 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 @keyframes tharmr{to{transform:rotate(-360deg)}}
 .ov.pagemode#balov .card{display:flex;flex-direction:column;justify-content:center}
 .ov.pagemode#balov #balClose{display:none}
+
+/* v62: Harmony tab = a living energy circle (five element lights around a breathing core) */
+.tenergy{position:relative;width:44px;height:44px;display:block}
+.tenergy .ering{position:absolute;inset:2px;border-radius:50%;background:var(--ring,conic-gradient(#6FBF4A 0 72deg,#E04B42 0 144deg,#F0B93A 0 216deg,#DCE3E9 0 288deg,#3C86C9 0));
+  -webkit-mask:radial-gradient(circle,transparent 50%,#000 53%,#000 70%,transparent 73%);mask:radial-gradient(circle,transparent 50%,#000 53%,#000 70%,transparent 73%);animation:tharm 10s linear infinite;filter:drop-shadow(0 0 3px rgba(255,240,200,.8))}
+.tenergy .ecore{position:absolute;inset:12px;border-radius:50%;background:radial-gradient(circle at 45% 40%,#FFFFFF,#FFF1C4 45%,rgba(255,214,120,.0) 75%);box-shadow:0 0 12px 4px rgba(255,226,150,.75);animation:ecore 4s ease-in-out infinite}
+@keyframes ecore{0%,100%{transform:scale(.8);opacity:.8}45%{transform:scale(1.12);opacity:1}}
+.tenergy .eorbit{position:absolute;inset:0;animation:tharm 7s linear infinite}
+.tenergy .eorbit b{position:absolute;left:50%;top:50%;width:11px;height:11px;margin:-5.5px;border-radius:50%;opacity:var(--o);
+  background:radial-gradient(circle at 35% 30%,#fff,var(--g) 40%,var(--c));box-shadow:0 0 8px 2px var(--g),0 0 0 1px rgba(255,255,255,.6);transform:rotate(var(--a)) translateX(19px) scale(var(--z))}
+.tab.on .tenergy .ecore{box-shadow:0 0 16px 6px rgba(255,226,150,.9)}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2854,7 +2865,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
   </div>
   <nav class="tabbar off" id="tabbar" aria-label="Main">
     <button class="tab" data-tab="shop"><span class="tdisc"></span><span class="ti"><img src="img/ui/tab-shop.png" alt=""></span><b>Shop</b><i class="tdot"></i></button>
-    <button class="tab" data-tab="harmony"><span class="tdisc"></span><span class="ti"><span class="tharm" id="tabHarm"><img id="tabHero" src="img/faces/kai-calm.jpg" alt=""></span></span><b>Harmony</b><i class="tdot"></i></button>
+    <button class="tab" data-tab="harmony"><span class="tdisc"></span><span class="ti"><span class="tenergy" id="tabHarm"><i class="ering"></i><i class="ecore"></i><i class="eorbit" id="tabOrbit"></i></span></span><b>Harmony</b><i class="tdot"></i></button>
     <button class="tab on" data-tab="home"><span class="tdisc"></span><span class="ti"><img src="img/ui/tab-home.png" alt=""></span><b>Home</b><i class="tdot"></i></button>
     <button class="tab" data-tab="journey"><span class="tdisc"></span><span class="ti"><img src="img/ui/tab-map.png" alt=""></span><b>Journey</b><i class="tdot"></i></button>
     <button class="tab" data-tab="collection"><span class="tdisc"></span><span class="ti"><img src="img/ui/journal.png" alt=""></span><b>Collection</b><i class="tdot"></i></button>
@@ -7888,8 +7899,9 @@ function syncTabbar() {
   bar.classList.toggle('off', !on);
   const t = currentTab();
   if (t !== tabLast) { $$('#tabbar .tab').forEach(b => b.classList.toggle('on', b.dataset.tab === t)); tabLast = t; }
-  const th = $('#tabHero'); if (th && (!rigs.get(th) || rigs.get(th).who !== heroId())) makeRig(th, heroId());
   const lr = $('#lightsHart'); if (lr) $('#tabHarm').style.setProperty('--ring', lr.style.getPropertyValue('--ring'));
+  const ob = $('#tabOrbit'), sig = HARM_ORDER.map(t => Math.round(Math.min(1, (S.bal[t] || 0) / BAL_FULL) * 10)).join();
+  if (ob && ob.dataset.sig !== sig) { ob.dataset.sig = sig; ob.innerHTML = HARM_ORDER.map((t, i) => { const p = Math.min(1, (S.bal[t] || 0) / BAL_FULL); return `<b style="--a:${i * 72 - 90}deg;--c:${ELEM[t].hue};--g:${ELEM[t].glow};--o:${(0.35 + p * 0.65).toFixed(2)};--z:${(0.75 + p * 0.45).toFixed(2)}"></b>`; }).join(''); }
   const readyMile = COL_MILES.some((m, i) => colFound() >= Math.ceil(colTotal() * m.at) && !(S.colMiles || []).includes(i));
   $('#tabbar [data-tab="collection"]').classList.toggle('dot', readyMile);
   $('#tabbar [data-tab="harmony"]').classList.toggle('dot', S.balBonusDay !== dayKey() && balState().even);
