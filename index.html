@@ -1,13 +1,5 @@
-<!doctype html>
-<html lang="en">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<style>
-:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}
-body{margin:0;font-size:14px}
-img{max-width:100%}
-</style>
-<meta name="description" content="Kai's Calm Quest, a MorQi Kids puzzle game where kids clear a storm by actually breathing. Playable prototype.">
 <title>Kai's Calm Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -448,8 +440,18 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .shard{position:absolute;pointer-events:none;z-index:6;border-radius:2px}
 .scorepop{position:absolute;pointer-events:none;z-index:7;font-weight:900;font-size:calc(var(--t) * 0.42);color:#FFF3CF;text-shadow:0 2px 0 rgba(90,60,10,.85),0 0 12px rgba(255,214,130,.9);transform:translate(-50%,-50%)}
 .comboword{position:absolute;left:50%;top:42%;z-index:8;pointer-events:none;transform:translate(-50%,-50%);
-  font-family:"Marcellus SC",Georgia,serif;font-size:clamp(26px,8vw,40px);color:#FFF6DE;
+  font-family:"Marcellus SC",Georgia,serif;font-size:clamp(26px,8vw,40px);color:#FFF6DE;white-space:nowrap;text-align:center;line-height:1;
   text-shadow:0 3px 0 rgba(120,70,10,.9),0 0 22px rgba(255,205,110,.95)}
+.comboword::before{content:"";position:absolute;inset:-18% -10%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,rgba(20,12,4,.62),transparent)}
+.comboword .ch{display:inline-block;font-weight:900;color:#FFF8E6;text-shadow:none;-webkit-text-stroke:1px rgba(60,30,5,.6);
+  background:linear-gradient(180deg,#FFFFFF 0%,#FFF8E0 50%,color-mix(in srgb,var(--c,#FFC857) 75%,#fff) 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 3px 0 rgba(60,30,5,.95)) drop-shadow(0 0 2px rgba(60,30,5,.9)) drop-shadow(0 0 14px var(--g,rgba(255,205,110,.9)))}
+.comboword .sub{display:block;margin-top:6px;font-family:Nunito,system-ui,sans-serif;font-weight:900;font-size:max(12px,.3em);letter-spacing:.16em;
+  text-transform:uppercase;color:#FFF8E6;text-shadow:0 2px 0 rgba(80,45,10,.8),0 0 10px var(--g,#fff)}
+.wordburst{position:absolute;left:50%;top:42%;z-index:7;pointer-events:none;border-radius:50%;
+  background:radial-gradient(circle,var(--g,#fff) 0%,transparent 38%),repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--g,#fff) 70%,transparent) 0 7deg,transparent 7deg 20deg);
+  -webkit-mask-image:radial-gradient(circle,#000 25%,transparent 70%);mask-image:radial-gradient(circle,#000 25%,transparent 70%);mix-blend-mode:screen}
+.fx.shock{border-radius:50%;background:none;box-shadow:0 0 0 3px var(--g,#fff),0 0 18px 4px var(--c,#fff),inset 0 0 14px var(--g,#fff)}
 .tile.born .orb{animation:born .45s ease-out}
 @keyframes born{0%{transform:scale(.4)}60%{transform:scale(1.25)}100%{transform:scale(1)}}
 .tile.breathing .orb{animation:breathe 2.2s ease-in-out infinite}
@@ -2228,7 +2230,26 @@ function findMatches() {
     }
     r = k;
   }
-  return { clear, groups };
+  // any run of 3 pulls in every same-element orb touching it, so L, T and blob shapes clear together.
+  // Walks board positions, not t.r/t.c, because hint checks swap cells without moving the tiles.
+  const seen = new Set(), blobs = [];
+  for (let r = 0; r < R; r++) for (let c = 0; c < C; c++) {
+    const s0 = board[r][c];
+    if (!s0 || !clear.has(s0) || seen.has(s0)) continue;
+    const blob = [], q = [[r, c]]; seen.add(s0);
+    while (q.length) {
+      const [qr, qc] = q.pop(), t = board[qr][qc]; blob.push(t);
+      for (const [dr, dc] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const nr = qr + dr, nc = qc + dc, n = board[nr] && board[nr][nc];
+        if (n && !seen.has(n) && same(n, t)) { seen.add(n); q.push([nr, nc]); }
+      }
+    }
+    blob.forEach(x => clear.add(x));
+    const runs = groups.filter(g => g.cells.some(x => blob.includes(x)));
+    const longest = runs.reduce((m, g) => (g.cells.length > m.cells.length ? g : m), runs[0]);
+    blobs.push({ cells: blob, dir: longest.dir, run: longest.cells.length });
+  }
+  return { clear, groups: blobs };
 }
 function fill() {
   boardEl.innerHTML = ''; ids.clear();
@@ -2331,7 +2352,7 @@ async function resolve(clear, groups, moved) {
       if (g.cells.length < 4) continue;
       const free = g.cells.filter(x => !x.sp && x.type !== 'spirit' && !makes.some(m => m.t === x));
       const anchor = free.find(x => moved && moved.includes(x)) || free[Math.floor(free.length / 2)];
-      if (anchor) makes.push({ t: anchor, kind: g.cells.length >= 5 ? 'spirit' : g.dir });
+      if (anchor) makes.push({ t: anchor, kind: (g.run || g.cells.length) >= 5 || g.cells.length >= 7 ? 'spirit' : g.dir });
     }
     const hadSpecial = [...clear].some(t => t.sp || t.type === 'spirit');
     expand(clear);
@@ -2361,13 +2382,19 @@ async function popSet(set) {
     if (!reduce && t.type !== 'spirit') elementClear(exit, t);
     setTimeout(() => t.el.remove(), 600);
   });
-  popExit = null;
+  const pw = powerUsed, special = arr.some(t => t.sp || t.type === 'spirit');
+  popExit = null; powerUsed = null;
   if (arr.length) {
-    sparks(arr);
-    shards(arr);
-    scorePop(arr, arr.length * (combo + 1) * 10);
-    if (arr.length >= 6) shake(Math.min(5, 2 + Math.floor(arr.length / 4)));
-    if (combo >= 2) comboWord(combo);
+    // how big this moment is: more orbs, a power, a special or a cascade all turn it up
+    const juice = arr.length + (pw ? 6 : special ? 4 : 0) + combo * 2;
+    sparks(arr, juice);
+    shards(arr, juice);
+    scorePop(arr, arr.length * (combo + 1) * 10, juice);
+    if (juice >= 5) shake(Math.min(10, 1 + juice / 2));
+    if (juice >= 11 && !special && !pw) flash();
+    if (juice >= 8) shockwave(arr, juice);
+    if (pw || special) impact(juice);
+    bigWord(arr, juice, pw);
   }
   arr.forEach(t => { if (t.type !== 'spirit') { turnTypes.add(t.type); levelTally[t.type]++; questBump('elem', 1, t.type); } });
   if (!breathing) {
@@ -2876,7 +2903,7 @@ async function usePowerOn(t) {
   if (!cells.length) return;
   if (!await paidFor(pw)) return;
   setAim(null); busy = true; cycleCheck(pw);
-  popExit = pw.id === 'tiger' ? 'metal' : pw.id === 'bear' ? 'earth' : 'water';
+  popExit = pw.id === 'tiger' ? 'metal' : pw.id === 'bear' ? 'earth' : 'water'; powerUsed = pw;
   if (pw.id === 'tiger') clawMarks(t.r);
   flash();
   await resolve(new Set(cells), [], null);
@@ -3014,7 +3041,7 @@ function bit(cls, x, y, size) {
   return d;
 }
 const gone = a => { a.onfinish = () => a.effect.target.remove(); };
-let growNext = false, popExit = null;
+let growNext = false, popExit = null, powerUsed = null;
 function elementClear(type, t) {
   const x = t.c * T + T / 2, y = t.r * T + T / 2, delay = t.c * 24;
   const add = (cls, css) => { const d = document.createElement('div'); d.className = cls; d.style.cssText = css; boardEl.appendChild(d); return d; };
@@ -3063,28 +3090,29 @@ function elementClear(type, t) {
     });
   }
 }
-function fxFor(type, tiles) {
+function fxFor(type, tiles, juice = 3) {
   if (reduce) return;
-  tiles.slice(0, 8).forEach(t => {
+  const m = 1 + Math.min(juice, 20) / 10, N = k => Math.round(k * m);
+  tiles.slice(0, juice >= 9 ? 16 : 10).forEach(t => {
     const x = t.c * T + T / 2, y = t.r * T + T / 2;
     if (type === 'fire') {
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < N(4); i++) {
         const p = bit('f-fire', x, y, T * (0.3 + Math.random() * 0.3));
         gone(p.animate([{ transform: 'translate(-50%,-50%) scale(.6)', opacity: .95 },
-          { transform: `translate(calc(-50% + ${(Math.random() - .5) * T}px), calc(-50% - ${T * (0.7 + Math.random())}px)) scale(.15)`, opacity: 0 }],
+          { transform: `translate(calc(-50% + ${(Math.random() - .5) * T}px), calc(-50% - ${T * (0.7 + Math.random()) * m}px)) scale(.15)`, opacity: 0 }],
           { duration: 620 + Math.random() * 220, easing: 'cubic-bezier(.25,.8,.4,1)' }));
       }
     } else if (type === 'water') {
       const r = bit('f-ring', x, y, T * 0.8);
-      gone(r.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: .9 }, { transform: 'translate(-50%,-50%) scale(2.2)', opacity: 0 }], { duration: 700, easing: 'ease-out' }));
-      for (let i = 0; i < 3; i++) {
+      gone(r.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: .9 }, { transform: `translate(-50%,-50%) scale(${2.2 * m})`, opacity: 0 }], { duration: 700, easing: 'ease-out' }));
+      for (let i = 0; i < N(3); i++) {
         const p = bit('f-drop', x, y, T * 0.16);
         gone(p.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: .9 },
           { transform: `translate(calc(-50% + ${(Math.random() - .5) * T * 1.2}px), calc(-50% + ${T * (0.5 + Math.random() * 0.6)}px)) scale(.4)`, opacity: 0 }],
           { duration: 560, easing: 'cubic-bezier(.4,0,.7,1)' }));
       }
     } else if (type === 'wood') {
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < N(4); i++) {
         const p = bit('f-leaf', x, y, T * 0.26);
         const a = -Math.PI / 2 + (Math.random() - .5) * 2.2, d = T * (0.6 + Math.random() * 0.5);
         gone(p.animate([{ transform: 'translate(-50%,-50%) rotate(0deg) scale(.5)', opacity: .95 },
@@ -3092,7 +3120,7 @@ function fxFor(type, tiles) {
           { duration: 700, easing: 'cubic-bezier(.2,.7,.3,1)' }));
       }
     } else if (type === 'earth') {
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i < N(5); i++) {
         const p = bit('f-dust', x, y, T * 0.14);
         gone(p.animate([{ transform: 'translate(-50%,-50%) scale(1)', opacity: .95 },
           { transform: `translate(calc(-50% + ${(Math.random() - .5) * T * 1.1}px), calc(-50% + ${T * (0.4 + Math.random() * 0.5)}px)) scale(.3)`, opacity: 0 }],
@@ -3101,18 +3129,19 @@ function fxFor(type, tiles) {
       boardEl.animate([{ transform: 'translateY(0)' }, { transform: 'translateY(2px)' }, { transform: 'translateY(0)' }], { duration: 160 });
     } else if (type === 'metal') {
       const g = bit('f-gleam', x, y, T * 1.5);
-      gone(g.animate([{ transform: 'translate(-50%,-50%) rotate(0deg) scale(.2)', opacity: 1 }, { transform: 'translate(-50%,-50%) rotate(90deg) scale(1)', opacity: 0 }], { duration: 520, easing: 'ease-out' }));
+      gone(g.animate([{ transform: 'translate(-50%,-50%) rotate(0deg) scale(.2)', opacity: 1 }, { transform: `translate(-50%,-50%) rotate(90deg) scale(${m})`, opacity: 0 }], { duration: 520, easing: 'ease-out' }));
       const r = bit('f-ring metalring', x, y, T * 0.7);
       gone(r.animate([{ transform: 'translate(-50%,-50%) scale(.4)', opacity: .8 }, { transform: 'translate(-50%,-50%) scale(1.8)', opacity: 0 }], { duration: 520, easing: 'ease-out' }));
     }
   });
 }
 // Royal Kingdom-style payoff: shards fly, a number floats up, a word lands on a big cascade.
-function shards(tiles) {
+function shards(tiles, juice = 3) {
   if (reduce) return;
-  tiles.slice(0, 8).forEach(t => {
+  const m = 1 + Math.min(juice, 20) / 20;                              // capped so a phone keeps 60fps
+  tiles.slice(0, 12).forEach(t => {
     const x = t.c * T + T / 2, y = t.r * T + T / 2;
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < Math.round(5 * m); i++) {
       const d = document.createElement('div');
       const sz = T * (0.09 + Math.random() * 0.11);
       d.className = 'shard';
@@ -3121,7 +3150,7 @@ function shards(tiles) {
       const tile = t.el.className.match(/t-(\w+)/);
       if (tile && ELEM[tile[1]]) { d.style.background = ELEM[tile[1]].hue; d.style.boxShadow = `0 0 6px ${ELEM[tile[1]].glow}`; }
       boardEl.appendChild(d);
-      const a = Math.random() * Math.PI * 2, dist = T * (0.5 + Math.random());
+      const a = Math.random() * Math.PI * 2, dist = T * (0.5 + Math.random()) * m;
       d.animate([
         { transform: 'translate(-50%,-50%) rotate(0deg)', opacity: 1 },
         { transform: `translate(calc(-50% + ${Math.cos(a) * dist}px), calc(-50% + ${Math.sin(a) * dist + T * 0.5}px)) rotate(${Math.random() * 540 - 270}deg)`, opacity: 0 }
@@ -3129,19 +3158,78 @@ function shards(tiles) {
     }
   });
 }
-function scorePop(tiles, n) {
+function scorePop(tiles, n, juice = 3) {
   if (reduce || !tiles.length) return;
   const cx = tiles.reduce((a, t) => a + t.c, 0) / tiles.length * T + T / 2;
   const cy = tiles.reduce((a, t) => a + t.r, 0) / tiles.length * T + T / 2;
   const d = document.createElement('div');
   d.className = 'scorepop'; d.textContent = `+${n}`;
-  d.style.cssText += `left:${cx}px;top:${cy}px`;
+  d.style.cssText += `left:${cx}px;top:${cy}px;font-size:calc(var(--t) * ${Math.min(0.9, 0.4 + juice * 0.03).toFixed(2)})`;
   boardEl.appendChild(d);
   d.animate([{ transform: 'translate(-50%,-50%) scale(.6)', opacity: 0 },
     { transform: 'translate(-50%,-95%) scale(1.1)', opacity: 1, offset: .3 },
     { transform: 'translate(-50%,-190%) scale(1)', opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => d.remove();
 }
 const COMBO_WORDS = ['Nice', 'Lovely', 'Beautiful', 'Wonderful', 'Unreal'];
+// element words for a big single-element clear; power words carry the animal, element and organ
+const ELEM_WORDS = { water: 'Flowing!', fire: 'Blazing!', earth: 'Rooted!', wood: 'Growing!', metal: 'Shining!' };
+function bigWord(arr, juice, pw) {
+  if (reduce) return;
+  const by = {}; arr.forEach(t => { if (ELEM[t.type]) by[t.type] = (by[t.type] || 0) + 1; });
+  const top = Object.keys(by).sort((a, b) => by[b] - by[a])[0] || 'earth';
+  let word = null, sub = '', el = top;
+  if (pw) { word = pw.name + '!'; el = pw.elem; sub = `${ELEM[pw.elem].name} · ${pw.organ}`; }
+  else if (juice >= 18) { word = 'Legendary!'; sub = `${arr.length} orbs`; }
+  else if (juice >= 14) { word = 'Magnificent!'; sub = `${arr.length} orbs`; }
+  else if (by[top] >= 5) { word = ELEM_WORDS[top]; sub = `${by[top]} ${ELEM[top].name.toLowerCase()} orbs`; }
+  else if (combo >= 2) word = COMBO_WORDS[Math.min(combo - 2, COMBO_WORDS.length - 1)];
+  else if (juice >= 5) word = juice >= 8 ? 'Amazing!' : 'Great!';
+  if (!word) return;
+  boardEl.querySelectorAll('.comboword,.wordburst').forEach(x => x.remove());
+  const tier = Math.min(4, Math.floor(juice / 4));                                  // 1 small .. 4 huge
+  const e = ELEM[el];
+  const burst = document.createElement('div');
+  burst.className = 'wordburst'; burst.style.setProperty('--g', e.glow);
+  const bw = boardEl.clientWidth * (0.5 + tier * 0.14);
+  burst.style.width = burst.style.height = `${bw}px`;
+  boardEl.appendChild(burst);
+  burst.animate([{ transform: 'translate(-50%,-50%) scale(.2) rotate(0deg)', opacity: 0 },
+    { transform: 'translate(-50%,-50%) scale(1) rotate(25deg)', opacity: .9, offset: .3 },
+    { transform: 'translate(-50%,-50%) scale(1.25) rotate(60deg)', opacity: 0 }], { duration: 1100 + tier * 150, easing: 'ease-out' }).onfinish = () => burst.remove();
+  const d = document.createElement('div');
+  d.className = 'comboword display';
+  d.style.setProperty('--c', e.hue); d.style.setProperty('--g', e.glow);
+  d.style.fontSize = `calc(clamp(26px,8vw,40px) * ${1 + tier * 0.16})`;
+  [...word].forEach((ch, i) => {
+    const sp = document.createElement('span'); sp.className = 'ch'; sp.textContent = ch === ' ' ? ' ' : ch; d.appendChild(sp);
+    sp.animate([{ transform: 'translateY(-60%) scale(2)', opacity: 0 }, { transform: 'translateY(8%) scale(.92)', opacity: 1, offset: .6 }, { transform: 'none', opacity: 1 }],
+      { duration: 380, delay: i * 32, easing: 'cubic-bezier(.3,1.4,.5,1)', fill: 'backwards' });
+  });
+  if (sub) { const s2 = document.createElement('span'); s2.className = 'sub'; s2.textContent = sub; d.appendChild(s2); }
+  boardEl.appendChild(d);
+  const maxW = boardEl.clientWidth * 0.94;                                           // never wider than the board
+  if (d.offsetWidth > maxW) d.style.fontSize = `${parseFloat(getComputedStyle(d).fontSize) * maxW / d.offsetWidth}px`;
+  const life = 1200 + tier * 200;
+  d.animate([{ transform: 'translate(-50%,-50%) scale(.7)', opacity: 1 },
+    { transform: 'translate(-50%,-50%) scale(1.06)', opacity: 1, offset: .2 },
+    { transform: 'translate(-50%,-58%) scale(1)', opacity: 1, offset: .75 },
+    { transform: 'translate(-50%,-95%) scale(.94)', opacity: 0 }], { duration: life, easing: 'ease-out' }).onfinish = () => d.remove();
+  if (tier >= 3) boardEl.animate([{ filter: 'brightness(1)' }, { filter: 'brightness(1.25) saturate(1.2)' }, { filter: 'brightness(1)' }], { duration: 420 });
+}
+// a ring of the element's light rolling out from the middle of the clear
+function shockwave(arr, juice) {
+  if (reduce) return;
+  const cx = arr.reduce((a, t) => a + t.c, 0) / arr.length * T + T / 2, cy = arr.reduce((a, t) => a + t.r, 0) / arr.length * T + T / 2;
+  const type = (arr.find(t => ELEM[t.type]) || {}).type || 'earth', e = ELEM[type];
+  const rings = juice >= 14 ? 3 : juice >= 10 ? 2 : 1;
+  for (let i = 0; i < rings; i++) {
+    const r = bit('shock', cx, cy, T); r.style.setProperty('--g', e.glow); r.style.setProperty('--c', e.hue);
+    gone(r.animate([{ transform: 'translate(-50%,-50%) scale(.3)', opacity: 1 }, { transform: `translate(-50%,-50%) scale(${3 + juice * 0.35})`, opacity: 0 }],
+      { duration: 700 + juice * 20, delay: i * 120, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'backwards' }));
+  }
+}
+// ?fx=1 exposes the effects so a demo can fire them on cue
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { bigWord, shockwave, impact, elemSound, sparks, shards, shake, tiles: () => all() };
 function comboWord(level) {
   if (reduce) return;
   const d = document.createElement('div');
@@ -3159,39 +3247,81 @@ function shake(power) {
     { transform: `translate(${-power}px,${power * .6}px)` }, { transform: 'translate(0,0)' }],
     { duration: 220, easing: 'ease-out' });
 }
-function sparks(arr) {
-  const by = {};
+function sparks(arr, juice = 3) {
+  const by = {}, extra = juice - arr.length;
   arr.forEach(t => { if (t.type !== 'spirit') (by[t.type] = by[t.type] || []).push(t); });
   Object.keys(by).forEach((type, k) => {
     const tiles = by[type];
-    fxFor(type, tiles);
+    fxFor(type, tiles, juice);
     const pan = (tiles.reduce((a, t) => a + t.c, 0) / tiles.length / (C - 1)) * 1.6 - 0.8;
     const step = Math.min(combo * 2 + (tiles.length > 3 ? 1 : 0), LADDER.length - 1);
-    setTimeout(() => elemSound(type, pan, step), k * 45);
+    const w = tiles.length + extra;
+    setTimeout(() => elemSound(type, pan, step, w), k * 45);
+    // bigger clusters climb the scale: 5 orbs add a second note, 7 a third
+    if (tiles.length >= 5) setTimeout(() => elemSound(type, pan, Math.min(step + 2, LADDER.length - 1), 0), k * 45 + 110);
+    if (tiles.length >= 7) setTimeout(() => elemSound(type, pan, Math.min(step + 4, LADDER.length - 1), 0), k * 45 + 220);
   });
 }
-// texture layer that matches what the eye sees on each clear
-function clearTexture(type, pan) {
+// texture layer that matches what the eye sees on each clear; w = how big the clear is
+function clearTexture(type, pan, w = 3) {
   const a = ac(); if (!a || muted) return;
-  const t = a.currentTime, out = voice(pan, 0.5);
+  const t = a.currentTime, out = voice(pan, 0.55), big = Math.min(1, Math.max(0, (w - 3) / 9)), lv = 1 + big * 1.1;
   const burst = (tt, f0, f1, q, peak, dur, kind = 'bandpass') => {
     const n = noise(), flt = a.createBiquadFilter(), g = a.createGain();
     flt.type = kind; flt.Q.value = q;
     flt.frequency.setValueAtTime(f0, tt); flt.frequency.exponentialRampToValueAtTime(f1, tt + dur);
     n.connect(flt).connect(g).connect(out); env(g, tt, peak, dur * 0.3, dur * 0.7); n.start(tt); n.stop(tt + dur + 0.05);
   };
-  if (type === 'water') burst(t, 500, 2600, 0.8, 0.07, 0.42);                 // the wave rolling over
-  else if (type === 'earth') {                                                  // a soft gulp as the ground closes
-    const g = a.createGain(); g.connect(out); env(g, t + 0.12, 0.12, 0.01, 0.28);
-    const o = osc(a, 'sine', 180, t + 0.12, 0.32, g); o.frequency.exponentialRampToValueAtTime(70, t + 0.38);
-  } else if (type === 'wood') {                                                 // two planks meeting
-    [0, 0.09].forEach((d, i) => { const g = a.createGain(); g.connect(out); env(g, t + 0.2 + d, 0.08, 0.001, 0.05); osc(a, 'triangle', 420 + i * 90, t + 0.2 + d, 0.08, g); });
-  } else if (type === 'fire') burst(t, 300, 1500, 0.7, 0.08, 0.36, 'lowpass');  // a warm whoomp
-  else if (type === 'metal') burst(t, 5200, 7800, 6, 0.05, 0.22);               // the shing of a clean cut
+  const tone = (tt, kind, f0, f1, peak, dur) => {
+    const g = a.createGain(); g.connect(out); env(g, tt, peak, 0.004, dur);
+    const o = osc(a, kind, f0, tt, dur + 0.05, g); if (f1) o.frequency.exponentialRampToValueAtTime(f1, tt + dur); return o;
+  };
+  if (type === 'water') {
+    burst(t, 380, 2800, 0.8, 0.075 * lv, 0.42 + big * 0.45);                        // the wave curling over
+    burst(t + 0.08, 6000, 1400, 0.5, 0.03 * lv, 0.5 + big * 0.5, 'highpass');       // foam hissing back
+    for (let i = 0, n = 2 + Math.round(big * 7); i < n; i++) {                      // bubbles rising after
+      const f = 420 + Math.random() * 700; tone(t + 0.12 + Math.random() * (0.25 + big * 0.4), 'sine', f, f * 2.3, 0.045, 0.07);
+    }
+  } else if (type === 'earth') {
+    tone(t + 0.1, 'sine', 170, 50, 0.15 * lv, 0.4 + big * 0.35);                    // the ground closing, a deep gulp
+    burst(t + 0.1, 500, 90, 0.7, 0.06 * lv, 0.35 + big * 0.5, 'lowpass');           // soil pouring in
+    if (big > 0.15) burst(t + 0.14, 140, 60, 0.6, 0.11 * big, 0.9 + big * 0.4, 'lowpass'); // a rumble underfoot
+    for (let i = 0, n = 2 + Math.round(big * 4); i < n; i++) tone(t + 0.15 + Math.random() * 0.3, 'triangle', 260 + Math.random() * 260, 0, 0.03, 0.04); // pebbles
+  } else if (type === 'wood') {
+    for (let i = 0, n = 2 + Math.round(big * 4); i < n; i++) {                      // planks knocking into place
+      const tt = t + 0.18 + i * 0.075;
+      tone(tt, 'triangle', 380 + (i % 3) * 95, 0, 0.085 * lv, 0.08);
+      burst(tt, 2400, 1800, 3, 0.03, 0.02);
+    }
+    if (big > 0.25) {                                                               // and a timber creak
+      const g = a.createGain(), bp = a.createBiquadFilter(); bp.type = 'bandpass'; bp.frequency.value = 650; bp.Q.value = 5;
+      g.connect(out); bp.connect(g); env(g, t + 0.1, 0.05 * big, 0.12, 0.45);
+      const o = osc(a, 'sawtooth', 105, t + 0.1, 0.65, bp), v = a.createOscillator(), vg = a.createGain();
+      v.frequency.value = 23; vg.gain.value = 14; v.connect(vg).connect(o.frequency); v.start(t + 0.1); v.stop(t + 0.75);
+    }
+  } else if (type === 'fire') {
+    burst(t, 240, 1900, 0.7, 0.09 * lv, 0.4 + big * 0.4, 'lowpass');                // a whoomp as it catches
+    for (let i = 0, n = 4 + Math.round(big * 12); i < n; i++)                        // crackle and pop
+      burst(t + 0.04 + Math.random() * (0.45 + big * 0.5), 1600 + Math.random() * 3000, 1400, 3, 0.04, 0.014);
+    if (big > 0.15) burst(t + 0.05, 160, 420, 0.5, 0.09 * big, 1 + big * 0.3, 'lowpass'); // the roar of a big blaze
+  } else if (type === 'metal') {
+    burst(t, 3600, 8800, 5, 0.06 * lv, 0.22);                                       // the shing of a clean cut
+    const f = 1480 * detune();                                                      // then the blade ring, two tones beating
+    [[1, 0.03], [1.003, 0.025], [2.76, 0.012], [5.4, 0.006]].forEach(([m, v]) => tone(t + 0.05, 'sine', f * m, 0, v * lv, 0.9 + big * 1.1));
+  }
 }
-function elemSound(type, pan = 0, step = 0) {
+// the thump under a power or a special going off
+function impact(juice) {
   const a = ac(); if (!a || muted) return;
-  clearTexture(type, pan);
+  const t = a.currentTime, out = voice(0, 0.8), v = Math.min(0.24, 0.12 + juice * 0.006);
+  const g = a.createGain(); g.connect(out); env(g, t, v, 0.005, 0.7);
+  const o = osc(a, 'sine', 110, t, 0.8, g); o.frequency.exponentialRampToValueAtTime(38, t + 0.6);
+  const n = noise(), lp = a.createBiquadFilter(), ng = a.createGain(); lp.type = 'lowpass'; lp.frequency.value = 900;
+  n.connect(lp).connect(ng).connect(out); env(ng, t, v * 0.5, 0.004, 0.25); n.start(t); n.stop(t + 0.35);
+}
+function elemSound(type, pan = 0, step = 0, w = 3) {
+  const a = ac(); if (!a || muted) return;
+  if (w) clearTexture(type, pan, w);
   const root = (ELEM[type] || {}).tone || 660;
   const f = root * LADDER[Math.min(step, LADDER.length - 1)] * detune();
   const t = a.currentTime;
@@ -3677,5 +3807,3 @@ introSplash();
 syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals(); setBaby(S.babyMode); renderHome();
 })();
 </script>
-
-</html>
