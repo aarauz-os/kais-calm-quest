@@ -1650,6 +1650,33 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 #map .homebg,#map .homesky,#map .homefx,#map .homesorin{display:none !important}
 .homeshade.world{background:linear-gradient(180deg,rgba(0,0,0,.28) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 62%,rgba(0,0,0,.35) 100%) !important}
 #map.dark-sky .hometitle h1{color:#FFF1CF !important;-webkit-text-fill-color:#FFF1CF !important;background:none !important;text-shadow:0 3px 0 rgba(20,14,40,.9),0 0 18px rgba(255,220,150,.55) !important}
+
+/* ---------- Harmony ---------- */
+.harmony{position:relative;width:300px;height:300px;margin:6px auto 0}
+.hcycle{position:absolute;inset:0;width:100%;height:100%}
+.hcycle line{stroke:rgba(58,36,8,.15);stroke-width:3;stroke-dasharray:4 6;stroke-linecap:round}
+.hcycle line.on{stroke:var(--h);stroke-dasharray:none;opacity:.7;filter:drop-shadow(0 0 4px var(--h))}
+.haura{position:absolute;left:50%;top:50%;width:0;height:0}
+.haura i{position:absolute;left:-78px;top:-78px;width:156px;height:156px;border-radius:50%;background:radial-gradient(circle,var(--h) 0,var(--h) 22%,transparent 66%);filter:blur(6px);
+  opacity:calc(var(--o) * .85);transform:translate(var(--x),var(--y)) scale(var(--s));animation:auraBreath 5s ease-in-out infinite;animation-delay:var(--d)}
+@keyframes auraBreath{50%{transform:translate(calc(var(--x) * 1.25),calc(var(--y) * 1.25)) scale(calc(var(--s) * 1.12))}}
+.hhero{position:absolute;left:50%;top:50%;width:112px;height:112px;margin:-56px 0 0 -56px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px #FFF6DE,0 0 0 7px rgba(242,196,90,.8),0 8px 18px rgba(0,0,0,.3);transition:transform .7s ease}
+.hnode{position:absolute;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:1px;width:84px;text-align:center}
+.hnode .ho{position:relative;display:block;width:34px;height:34px;border-radius:50%;box-shadow:0 0 0 2px #FFF6DE}
+.hnode b{font-size:12px;line-height:1.1}
+.hnode small{font-size:10.5px;font-weight:800;opacity:.85;line-height:1.1}
+.hnode.bright .ho{box-shadow:0 0 0 2px #FFF6DE,0 0 14px 5px var(--c);animation:nodeGlow 2.4s ease-in-out infinite}
+.hnode.care .ho{filter:saturate(.55) brightness(.9);animation:careFlicker 3.2s ease-in-out infinite}
+.hnode.care small{color:#B5561C}
+@keyframes nodeGlow{50%{box-shadow:0 0 0 2px #FFF6DE,0 0 20px 8px var(--c)}}
+@keyframes careFlicker{50%{filter:saturate(.8) brightness(1.05)}}
+.hicon .hart.hring{background:none;overflow:visible;border-radius:50%;box-shadow:0 4px 10px rgba(0,0,0,.35) !important}
+.hart.hring::before{content:"";position:absolute;inset:-4px;border-radius:50%;background:var(--ring,conic-gradient(#6FBF4A,#E04B42,#F0B93A,#DCE3E9,#3C86C9,#6FBF4A));filter:blur(.3px) drop-shadow(0 0 6px rgba(255,236,170,.7));animation:petalspin 14s linear infinite}
+.hart.hring img{position:absolute;inset:6px;width:calc(100% - 12px);height:calc(100% - 12px);border-radius:50%;box-shadow:0 0 0 2px #FFF6DE}
+@media (max-width:380px){.harmony{width:270px;height:270px;transform:scale(.92)}}
+
+.hicon .hart.h3d{background:linear-gradient(#FFF8EA,#F3E4C2)}
+.hicon .hart .hvid,.hicon .hart.h3d img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.12)}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -1786,16 +1813,16 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
     <div class="ribbon" id="homeRibbon"></div>
     <div class="rails">
       <div class="rail">
-        <button class="hicon" data-open="streakChip"><span class="hart"><img src="img/icons/icon-streak.jpg" alt=""></span><b>Streak</b><i class="hbadge" id="bStreak"></i></button>
-        <button class="hicon" data-open="questCard"><span class="hart"><img src="img/icons/icon-quests.jpg" alt=""></span><b>Quests</b><i class="hbadge" id="bQuests"></i></button>
-        <button class="hicon" data-open="wheelCard"><span class="hart"><img src="img/icons/icon-wheel.jpg" alt=""></span><b>Spin</b><i class="hbadge" id="bWheel"></i></button>
-        <button class="hicon" data-open="balOpen"><span class="hart"><img src="img/icons/icon-lights.jpg" alt=""></span><b>Lights</b><i class="hbadge" id="bLights"></i></button>
+        <button class="hicon" data-open="streakChip"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-streak.mp4" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Streak</b><i class="hbadge" id="bStreak"></i></button>
+        <button class="hicon" data-open="questCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-quests.mp4" poster="img/icons/icon-quests-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Quests</b><i class="hbadge" id="bQuests"></i></button>
+        <button class="hicon" data-open="wheelCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-wheel.mp4" poster="img/icons/icon-wheel-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Spin</b><i class="hbadge" id="bWheel"></i></button>
+        <button class="hicon" data-open="balOpen"><span class="hart hring" id="lightsHart"><img id="lightsIcon" src="img/faces/kai-calm.jpg" alt=""></span><b>Harmony</b><i class="hbadge" id="bLights"></i></button>
       </div>
       <div class="rail">
-        <button class="hicon" data-open="sealCard"><span class="hart"><img src="img/icons/icon-seal.jpg" alt=""></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
-        <button class="hicon" data-open="buddyCard"><span class="hart"><img id="buddyIcon" src="img/icons/icon-buddy.jpg" alt=""></span><b>Buddy</b><i class="hbadge" id="bBuddy"></i></button>
-        <button class="hicon" data-open="babyToggle"><span class="hart"><img src="img/icons/icon-baby.jpg" alt=""></span><b>Baby</b><i class="hbadge" id="bBaby"></i></button>
-        <button class="hicon" data-open="bedOpen"><span class="hart"><img src="img/icons/icon-bedtime.jpg" alt=""></span><b>Bedtime</b></button>
+        <button class="hicon" data-open="sealCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-seal.mp4" poster="img/icons/icon-seal-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
+        <button class="hicon" data-open="buddyCard"><span class="hart h3d"><video id="buddyCoin" class="hvid" src="img/icons/anim/icon-buddy.mp4" poster="img/icons/icon-buddy-3d.jpg" muted loop playsinline autoplay preload="auto"></video><img id="buddyIcon" alt="" hidden></span><b>Buddy</b><i class="hbadge" id="bBuddy"></i></button>
+        <button class="hicon" data-open="babyToggle"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-baby.mp4" poster="img/icons/icon-baby-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Baby</b><i class="hbadge" id="bBaby"></i></button>
+        <button class="hicon" data-open="bedOpen"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-bedtime.mp4" poster="img/icons/icon-bedtime-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Bedtime</b></button>
       </div>
     </div>
     <div class="homefoot">
@@ -1827,7 +1854,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
     <button class="buddycard empty" id="buddyCard"></button>
     <button class="wheelcard" id="wheelCard"></button>
     <button class="balcard" id="balOpen" aria-label="Your five lights">
-      <span class="balhead"><b>Your five lights</b><span class="balchip" id="balChip"></span></span>
+      <span class="balhead"><b>Your harmony</b><span class="balchip" id="balChip"></span></span>
       <span class="balsub" id="balTease"></span>
     </button>
     <div class="path" id="path"></div>
@@ -2014,14 +2041,14 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 
   <div class="ov" id="balov" hidden><div class="card" role="dialog" aria-labelledby="balTitle">
     <div class="eyebrow">Balance, not more</div>
-    <h2 class="display" id="balTitle">Your five lights</h2>
-    <div class="lights" id="lights"></div>
+    <h2 class="display" id="balTitle">Your harmony</h2>
+    <div class="harmony" id="harmony"><svg class="hcycle" id="hCycle" viewBox="-150 -150 300 300"></svg><div class="haura" id="hAura"></div><img class="hhero" id="hHero" alt=""><div id="hNodes"></div></div>
     <p id="balNote" style="margin-top:12px"></p>
     <div class="stack">
       <button class="btn gold" id="balGo" hidden></button>
       <button class="btn" id="balClose">Close</button>
     </div>
-    <div class="note">Play one element and its light grows. Leave it alone and it fades. Light all five in the same week for a balance bonus.</div>
+    <div class="note">Every place you play makes one light glow brighter, and lights rest when you're away. Keep all five glowing in the same week for a harmony bonus.</div>
   </div></div>
 
   <div class="ov" id="streakov" hidden><div class="card" role="dialog" aria-labelledby="stTitle">
@@ -2831,22 +2858,51 @@ function balState() {
   return { vals, top: vals[0], low: vals[vals.length - 1], lit, even: lit === 5 && vals[0].v - vals[4].v <= 2.5 };
 }
 const levelOf = el => LEVELS.findIndex(l => l.elem === el);
-function renderBal() {
+
+// Harmony: the five lights as an aura around your hero. Kind words only: shining bright, steady,
+// could use some care, resting. The cycle runs Wood → Fire → Earth → Metal → Water around the circle.
+const HARM_ORDER = ['wood', 'fire', 'earth', 'metal', 'water'];
+const harmWord = v => { const p = v / BAL_FULL; return p >= 0.66 ? 'Shining bright' : p >= 0.33 ? 'Steady' : p > 0.05 ? 'Could use some care' : 'Resting'; };
+const harmAng = i => -90 + i * 72;
+function renderHarmony() {
+  const hero = $('#hHero'); if (!hero) return;
+  if (!rigs.get(hero) || rigs.get(hero).who !== heroId()) makeRig(hero, heroId());
   const st = balState();
-  $('#lights').innerHTML = TYPES.map(t => {
-    const v = S.bal[t] || 0, pct = Math.round((v / BAL_FULL) * 100);
-    return `<div class="light ${v < 1 ? 'dim' : ''}"><span class="lo">${orbHTML(t)}</span><span class="lbar"><i style="height:${Math.max(6, pct)}%;--h:${ELEM[t].hue};background:${ELEM[t].hue}"></i></span><span class="ln">${ELEM[t].name}</span></div>`;
+  $('#hAura').innerHTML = HARM_ORDER.map((t, i) => {
+    const v = S.bal[t] || 0, p = Math.max(0.12, v / BAL_FULL), a = harmAng(i) * Math.PI / 180;
+    return `<i style="--c:${ELEM[t].glow};--h:${ELEM[t].hue};--s:${(0.55 + p * 0.75).toFixed(2)};--o:${(0.25 + p * 0.75).toFixed(2)};--x:${Math.cos(a) * 26}px;--y:${Math.sin(a) * 26}px;--d:${i * 0.6}s"></i>`;
   }).join('');
+  const R2 = 118, pts = HARM_ORDER.map((t, i) => [Math.cos(harmAng(i) * Math.PI / 180) * R2, Math.sin(harmAng(i) * Math.PI / 180) * R2]);
+  $('#hCycle').innerHTML = pts.map((pt, i) => { const q = pts[(i + 1) % 5], t = HARM_ORDER[i], on = (S.bal[t] || 0) >= 1 && (S.bal[HARM_ORDER[(i + 1) % 5]] || 0) >= 1;
+    return `<line x1="${pt[0]}" y1="${pt[1]}" x2="${q[0]}" y2="${q[1]}" class="${on ? 'on' : ''}" style="--h:${ELEM[t].hue}"/>`; }).join('');
+  $('#hNodes').innerHTML = HARM_ORDER.map((t, i) => {
+    const v = S.bal[t] || 0, w = harmWord(v), [x, y] = pts[i];
+    return `<div class="hnode ${w === 'Shining bright' ? 'bright' : w === 'Could use some care' || w === 'Resting' ? 'care' : ''}" style="left:calc(50% + ${x}px);top:calc(50% + ${y}px);--h:${ELEM[t].hue};--c:${ELEM[t].glow}">
+      <span class="ho">${orbHTML(t)}</span><b>${ELEM[t].name}</b><small>${w}</small></div>`;
+  }).join('');
+  if (st.even) faceLevel(rigs.get(hero), 2, 60000); else if (st.lit >= 3) faceLevel(rigs.get(hero), 1, 60000);
+}
+function renderHarmonyIcon() {
+  const img = $('#lightsIcon'); if (!img) return;
+  if (!rigs.get(img) || rigs.get(img).who !== heroId()) makeRig(img, heroId());
+  const seg = HARM_ORDER.map((t, i) => { const p = (S.bal[t] || 0) / BAL_FULL, a = Math.round((0.18 + p * 0.82) * 255).toString(16).padStart(2, '0');
+    return `${ELEM[t].hue}${a} ${i * 72}deg ${(i + 1) * 72}deg`; }).join(',');
+  $('#lightsHart').style.setProperty('--ring', `conic-gradient(from -36deg, ${seg})`);
+}
+function renderBal() {
+  renderHarmony(); renderHarmonyIcon();
+  const st = balState();
+
   const low = st.low, lvl = levelOf(low.t), locked = lvl + 1 > S.unlocked;
   const note = $('#balNote'), go = $('#balGo');
   if (st.lit === 0) {
-    note.innerHTML = '<b>Your five lights start dark.</b> Each place you play brightens one of them.';
+    note.innerHTML = '<b>Your five lights are resting.</b> Every place you play helps one of them glow.';
     go.hidden = true;
   } else if (st.even) {
-    note.innerHTML = `<b>All five are lit.</b> ${S.balBonusDay === dayKey() ? 'Balance bonus collected today.' : 'Balanced chi is the goal, not more chi.'}`;
+    note.innerHTML = `<b>You're in harmony.</b> All five lights are glowing together. ${S.balBonusDay === dayKey() ? 'Harmony bonus collected today.' : 'Balance is the goal, not more.'}`;
     go.hidden = true;
   } else {
-    note.innerHTML = `<b>Your ${ELEM[low.t].name} has gone quiet.</b> That is your ${ELEM[low.t].body}. Low ${ELEM[low.t].name} feels ${ELEM[low.t].quiet}; bring it back and it feels ${ELEM[low.t].bright}.`;
+    note.innerHTML = `<b>Your ${ELEM[st.top.t].name} light is ${harmWord(st.top.v).toLowerCase()}.</b> ${ELEM[low.t].name} could use some care. When it glows, your ${ELEM[low.t].body} can feel ${ELEM[low.t].bright}.`;
     go.hidden = false;
     go.textContent = locked ? `${ELEM[low.t].name} opens at ${LEVELS[lvl].place}` : `Play ${LEVELS[lvl].place} for ${ELEM[low.t].name}`;
     go.disabled = locked;
@@ -2858,9 +2914,9 @@ function renderBal() {
 }
 function teaseBal() {
   const st = balState();
-  $('#balTease').textContent = st.lit === 0 ? 'Every place you play lights one element. Light all five.'
-    : st.even ? 'All five lit. This is balance.'
-      : `${ELEM[st.low.t].name} has gone quiet — that is your ${ELEM[st.low.t].body}.`;
+  $('#balTease').textContent = st.lit === 0 ? 'Every place you play helps one light glow. Light all five.'
+    : st.even ? 'All five glowing together. You are in harmony.'
+      : `${ELEM[st.low.t].name} could use some care.`;
 }
 function balanceBonus() {
   const st = balState();
@@ -3606,7 +3662,7 @@ const phaseName = id => (PHASES.find(p => p[1] === id) || [])[2] || id;
 /* ---------- one living world per season ----------
    Season 1 is Kai's village on Lantern River. The same scene, relit (not tinted) for four times of
    day, each a seamless loop that starts and ends on its still. Changing time crossfades between them. */
-const WORLD = { 1: { dawn: 's1-dawn', day: 's1-day', golden: 's1-golden', night: 's1-night' } };
+const WORLD = { 1: { dawn: 's1g-dawn', day: 's1g-day', golden: 's1g-golden', night: 's1g-night' } };
 const WORLD_OF = { crack: 'dawn', morning: 'dawn', midday: 'day', golden: 'golden', night: 'night', midnight: 'night' };
 const WORLD_NAME = { dawn: 'dawn', day: 'daytime', golden: 'golden hour', night: 'moonlit night' };
 let worldNow = null, worldFront = 'hwA';
@@ -3623,7 +3679,8 @@ function showWorld(tod = timeOfDay()) {
 }
 function renderHome() {
   const el = homeElement(), tod = timeOfDay();
-  showWorld(tod);
+  showWorld(tod); renderHarmonyIcon();
+  $$('.hvid').forEach(v => { if (reduce) v.pause(); else if (v.paused && !$('#map').hidden) v.play().catch(() => {}); });
   $('#homeShade').className = `homeshade world`;
   $('#map').classList.toggle('dark-sky', ['night', 'dawn'].includes(WORLD_OF[tod]));
   $('#seasonLine').textContent = `Kai's village · ${WORLD_NAME[WORLD_OF[tod] || 'day']}`;
@@ -3641,7 +3698,9 @@ function renderHome() {
   $('#bBaby').textContent = babyOn() ? 'on' : '';
   $('#bBaby').className = 'hbadge ok';
   $('#bBuddy').textContent = !S.buddy ? '!' : caredToday(S.buddy) ? '' : '💛';
-  $('#buddyIcon').src = S.buddy ? `img/faces/${buddyWho(S.buddy)}-calm.jpg` : 'img/icons/icon-buddy.jpg';
+  // your buddy's own face, blinking and glancing; before you have one, the glowing paw coin
+  const bi = $('#buddyIcon'); bi.hidden = !S.buddy; $('#buddyCoin').hidden = !!S.buddy;
+  if (S.buddy && (!rigs.get(bi) || rigs.get(bi).who !== buddyWho(S.buddy))) makeRig(bi, buddyWho(S.buddy));
   // one line that tells you what matters right now
   const rib = $('#homeRibbon'), m = nextMile(), played = S.lastDay === dayKey();
   rib.className = 'ribbon' + (!played && S.streak ? ' warn' : '');
@@ -6527,7 +6586,7 @@ async function fxLab() {
 }
 /* ---------- level flow ---------- */
 function startLevel() {
-  $$('#homeWorld video').forEach(v => v.pause());          // the home world rests while you play
+  $$('#homeWorld video, .hvid').forEach(v => v.pause());   // the home world and its icons rest while you play
   if (practice) { practice = null; document.body.classList.remove('practicing'); }
   setGroove('play');
   // Little board: 5x5 with the place's element and its two cycle neighbours, and fewer clouds
