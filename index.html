@@ -1567,11 +1567,11 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .fx-art{position:absolute;left:0;top:0;pointer-events:none;z-index:11}
 .fx-art svg{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45))}
 .fx-clawmark{position:absolute;height:calc(var(--t)*.16);border-radius:99px;transform-origin:0 50%;z-index:10;pointer-events:none;
-  background:linear-gradient(180deg,rgba(255,170,60,0),#FFE7B0 35%,#fff 50%,#FFE7B0 65%,rgba(255,170,60,0));box-shadow:0 0 14px 4px rgba(255,150,40,.85)}
+  background:linear-gradient(180deg,rgba(190,215,235,0),#DDEBF6 35%,#fff 50%,#DDEBF6 65%,rgba(190,215,235,0));box-shadow:0 0 14px 4px rgba(170,205,235,.9)}
 .fx-shadow{border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.7),transparent 70%);z-index:8}
 .fx-cracks{z-index:9}
 .fx-cracks path{fill:none;stroke:#2A1A0C;stroke-width:calc(var(--t)*.09);stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 1px 0 rgba(255,220,160,.5))}
-.fx-dust{border-radius:50%;background:radial-gradient(circle,rgba(205,178,140,.95),rgba(150,120,85,.5) 55%,transparent 72%);z-index:10}
+.fx-dust{border-radius:50%;background:radial-gradient(circle,rgba(220,242,255,.95),rgba(120,195,245,.55) 55%,transparent 72%);z-index:10}
 .fx-crane svg{filter:drop-shadow(0 0 10px rgba(255,255,255,.9)) drop-shadow(0 6px 8px rgba(0,0,0,.45))}
 .fx-crane .wing{transform-box:fill-box;animation:craneflap .22s ease-in-out infinite alternate}
 .fx-crane .wt{transform-origin:100% 100%}.fx-crane .wb{transform-origin:100% 0}
@@ -1607,6 +1607,40 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 #board .tile.pop.pop-light .orb{animation-name:dissolvelight;animation-duration:.55s;animation-fill-mode:forwards}
 #fxlab{position:absolute;left:0;right:0;bottom:0;z-index:50;display:flex;flex-wrap:wrap;gap:5px;justify-content:center;padding:10px 8px calc(10px + var(--sab));background:linear-gradient(180deg,rgba(20,14,8,.0),rgba(20,14,8,.92) 18%)}
 #fxlab button{padding:6px 9px;border-radius:99px;border:0;font:900 11.5px/1 inherit;color:#3A2408;background:linear-gradient(#FFF3C4,#F2C45A);box-shadow:0 2px 0 #8A5A1A,0 3px 8px rgba(0,0,0,.4);cursor:pointer}
+
+.fx-stream.spring{background:linear-gradient(90deg,transparent,rgba(90,200,90,.35) 18%,rgba(170,235,140,.55) 60%,rgba(235,255,210,.8) 84%,transparent) !important;box-shadow:inset -18px 0 24px rgba(240,255,220,.6) !important}
+.fx-leaf{width:calc(var(--t)*.34);height:calc(var(--t)*.22);margin:calc(var(--t)*-.11) 0 0 calc(var(--t)*-.17);border-radius:0 100% 0 100%;background:linear-gradient(135deg,#B8F07A,#3FA83A);box-shadow:0 1px 2px rgba(0,0,0,.3);z-index:12}
+.fx-feather.hawkf{background:linear-gradient(90deg,#A8481C,#F2C48A)}
+.fx-ember.big{width:12px;height:12px;margin:-6px 0 0 -6px}
+.fx-hawk svg{filter:drop-shadow(0 0 10px rgba(255,150,50,.85)) drop-shadow(0 6px 8px rgba(0,0,0,.45)) !important}
+
+/* ---------- care, Bond, evolution ---------- */
+.carecard{text-align:center;background:linear-gradient(180deg,#FFF8E8,#F6E6C4)}
+.carering{position:relative;width:170px;height:170px;margin:14px auto 8px;border-radius:50%;box-shadow:0 0 0 6px #F2C45A,0 0 0 10px rgba(242,196,90,.3),0 0 40px 10px rgba(255,220,130,.6);transform:scale(.9)}
+.carering img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block}
+.careheart{position:absolute;left:50%;top:40%;font-size:22px;pointer-events:none}
+.caretext{font-weight:800;font-size:16px;min-height:1.5em;margin:6px 0}
+.bondbar{height:12px;border-radius:99px;background:rgba(58,36,8,.15);overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.2)}
+.bondbar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#FFB3C8,#F25C8A);transition:width .8s cubic-bezier(.3,1.3,.5,1)}
+.carebond small,.snbond small{display:block;margin-top:5px;font-weight:800;font-size:12.5px;opacity:.85}
+#careov{z-index:30}
+.snbond{grid-column:1/-1;width:100%;margin-top:10px;text-align:center}
+.snbond small{color:#FFF1CF}
+.sngrow span.mystery i{filter:blur(2.5px) brightness(.55) saturate(.6);box-shadow:0 0 0 2px rgba(255,255,255,.25),0 0 14px rgba(255,255,255,.2)}
+.sngrow span i{width:44px !important;height:44px !important;border-radius:50%;background-size:cover;background-position:center;box-shadow:0 0 0 2px rgba(255,233,168,.6)}
+.sngrow span.on i{box-shadow:0 0 0 2px #FFE9A8,0 0 12px var(--sg)}
+.sngift em.nexttier{display:block;margin-top:3px;opacity:.75;font-size:11.5px}
+.carepip{position:absolute;right:8px;top:-10px;padding:3px 8px;border-radius:99px;font-size:11px;font-weight:900;color:#5A3A08;background:linear-gradient(#FFF3C4,#F6D27A);box-shadow:0 2px 6px rgba(0,0,0,.35);animation:tapbob 1.2s ease-in-out infinite}
+.evolveov{position:absolute;inset:0;z-index:70;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at 50% 40%,rgba(40,30,60,.97),rgba(8,6,14,.99));opacity:0;transition:opacity .35s}
+.evolveov.show{opacity:1}
+.evcard{width:100%;max-width:360px;text-align:center;color:#FFF6DE}
+.evcard .eyebrow{color:var(--eg,#FFE9A8)}
+.evstage{position:relative;width:230px;height:230px;margin:18px auto}
+.evstage img{position:absolute;inset:0;width:100%;height:100%;border-radius:50%;object-fit:cover;box-shadow:0 0 0 5px #FFE9A8,0 0 40px 12px var(--eg,#FFE9A8)}
+.evrays{position:absolute;inset:-60px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 6%,var(--eg) 8%,transparent 10% 22%,var(--eg) 24%,transparent 26% 38%,var(--eg) 40%,transparent 42% 55%,var(--eg) 57%,transparent 59% 72%,var(--eg) 74%,transparent 76% 88%,var(--eg) 90%,transparent 92%);opacity:.35;animation:petalspin 9s linear infinite}
+.evburst{position:absolute;left:50%;top:50%;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,#fff,var(--eg) 40%,transparent 70%);opacity:0;pointer-events:none}
+.evcard h2{font-size:26px;margin:4px 0 10px}
+.evgift{background:rgba(255,255,255,.08);border-radius:16px;padding:10px 12px;margin:0 auto 14px;text-align:left}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -1834,11 +1868,11 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
     </div>
     <div class="gbot" style="padding-top:0;justify-content:space-between">
       <div class="boosters pwbar" id="pwBar">
-        <button class="pwtile pwbtn" data-pw="tiger" style="--i:0;--pc:#7BD957" aria-label="Tiger Claw"><span class="pwart"><img src="img/icons/pw-tiger.jpg" alt=""></span><b class="pwname">Claw</b><i id="pwc-tiger"></i></button>
-        <button class="pwtile pwbtn" data-pw="monkey" style="--i:1;--pc:#FF7A55" aria-label="Monkey Swap"><span class="pwart"><img src="img/icons/pw-monkey.jpg" alt=""></span><b class="pwname">Swap</b><i id="pwc-monkey"></i></button>
-        <button class="pwtile pwbtn" data-pw="bear" style="--i:2;--pc:#F2B233" aria-label="Bear Stomp"><span class="pwart"><img src="img/icons/pw-bear.jpg" alt=""></span><b class="pwname">Stomp</b><i id="pwc-bear"></i></button>
-        <button class="pwtile pwbtn" data-pw="crane" style="--i:3;--pc:#DCE8F2" aria-label="Crane Wings"><span class="pwart"><img src="img/icons/pw-crane.jpg" alt=""></span><b class="pwname">Wings</b><i id="pwc-crane"></i></button>
-        <button class="pwtile pwbtn" data-pw="deer" style="--i:4;--pc:#5BC0FF" aria-label="Deer Stream"><span class="pwart"><img src="img/icons/pw-deer.jpg" alt=""></span><b class="pwname">Stream</b><i id="pwc-deer"></i></button>
+        <button class="pwtile pwbtn" data-pw="deer" style="--i:0;--pc:#7BD957" aria-label="Deer Leap"><span class="pwart"><img src="img/icons/pw-deer.jpg" alt=""></span><b class="pwname">Leap</b><i id="pwc-deer"></i></button>
+        <button class="pwtile pwbtn" data-pw="crane" style="--i:1;--pc:#FF7A55" aria-label="Hawk Dive"><span class="pwart"><img src="img/icons/pw-hawk.jpg" alt=""></span><b class="pwname">Dive</b><i id="pwc-crane"></i></button>
+        <button class="pwtile pwbtn" data-pw="monkey" style="--i:2;--pc:#F2B233" aria-label="Monkey Swap"><span class="pwart"><img src="img/icons/pw-monkey.jpg" alt=""></span><b class="pwname">Swap</b><i id="pwc-monkey"></i></button>
+        <button class="pwtile pwbtn" data-pw="tiger" style="--i:3;--pc:#DCE8F2" aria-label="Tiger Claw"><span class="pwart"><img src="img/icons/pw-tiger.jpg" alt=""></span><b class="pwname">Claw</b><i id="pwc-tiger"></i></button>
+        <button class="pwtile pwbtn" data-pw="bear" style="--i:4;--pc:#5BC0FF" aria-label="Bear Stomp"><span class="pwart"><img src="img/icons/pw-bear.jpg" alt=""></span><b class="pwname">Stomp</b><i id="pwc-bear"></i></button>
         <button class="pwtile pwcoin" id="shopOpen2" style="--i:5;--pc:#F2C45A" aria-label="Coins: open the shop"><span class="pwart coinart"><i class="coin"></i><em>+</em></span><b class="pwname" data-coins>0</b></button>
       </div>
       <span class="chip boostchip" id="boostChip" hidden>2× coins <span id="boostLeft"></span></span>
@@ -1958,7 +1992,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
       <button class="btn gold" id="earlyPass" hidden>Early pass: all five now · $4.99</button>
       <button class="btn" id="buddyClose">Close</button>
     </div>
-    <div class="note">Preview: nothing is charged. Tiger opens at 30 practice days and Crane at 60, free. The pass only gets you there sooner.</div>
+    <div class="note">Preview: nothing is charged. Deer opens at 30 practice days and Tiger at 60, free. The pass only gets you there sooner.</div>
   </div></div>
 
   <div class="ov" id="wheelov" hidden style="align-items:center"><div class="card" role="dialog" aria-labelledby="wheelLabel" style="text-align:center">
@@ -2029,7 +2063,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
     <h3 class="shoph">Or watch a short video, only if you want to</h3>
     <div class="singles freebies">
       <button class="sitem ad" data-ad="heart"><span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span><b>+1 heart</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
-      <button class="sitem ad" data-ad="lantern"><span class="sgem" style="--eh:#6FBF4A"><img src="img/icons/pw-tiger.jpg" alt=""></span><b>+1 Tiger Claw</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
+      <button class="sitem ad" data-ad="lantern"><span class="sgem" style="--eh:#9AA9B8"><img src="img/icons/pw-tiger.jpg" alt=""></span><b>+1 Tiger Claw</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
       <button class="sitem ad" data-ad="boost"><span class="sgem" style="--eh:#F0B93A"><i class="coin"></i></span><b>2× coins, 10 min</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
       <button class="sitem" data-refill><span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span><b>Refill hearts</b><small>with coins you earned</small><span class="sprice coinprice"><i class="coin"></i> 90</span></button>
     </div>
@@ -2042,6 +2076,21 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
     <p id="gateFor"></p>
     <div class="gategrid" id="gateGrid"></div>
     <div class="stack"><button class="btn ghostbtn" id="gateNo">Not now</button></div>
+  </div></div>
+  <div class="ov" id="careov" hidden style="align-items:center"><div class="card carecard" role="dialog" aria-labelledby="careTitle">
+    <div class="eyebrow" id="careEyebrow">Care time</div>
+    <h2 class="display" id="careTitle"></h2>
+    <div class="carering" id="careRing"><img id="careImg" alt=""></div>
+    <p class="caretext" id="careText"></p>
+    <div class="carebond" id="careBond"></div>
+    <div class="stack"><button class="btn gold" id="careGo">Begin</button><button class="linkbtn dark" id="careNo">Not now</button></div>
+  </div></div>
+  <div class="evolveov" id="evolveov" hidden><div class="evcard">
+    <div class="eyebrow" id="evEyebrow"></div>
+    <div class="evstage"><span class="evrays"></span><img id="evOld" alt=""><img id="evNew" alt=""><span class="evburst" id="evBurst"></span></div>
+    <h2 class="display" id="evTitle"></h2>
+    <div class="sngift evgift" id="evGift"></div>
+    <button class="btn gold big" id="evGo" hidden>Wonderful!</button>
   </div></div>
   <div class="ov" id="pwdemo" hidden style="align-items:center"><div class="card pwdcard" role="dialog" aria-labelledby="pwdTitle">
     <div class="eyebrow" id="pwdEyebrow">New booster</div>
@@ -2340,13 +2389,14 @@ const DEF = { unlocked: 1, stars: {}, coins: 150, hearts: 5, swirls: 1, lanterns
   sealsEarned: {}, tally: { harmony: 0, flow3: 0, voiced: 0 }, babyMode: false,
   pw: { monkey: 1, bear: 1, crane: 1 }, charms: { sprout: 1, heart: 1, root: 1, bell: 1, drop: 1 } };
 // In-game powers are the Five Animal Frolics. Each one plays like its animal moves and
-// quietly names its element and organ when used. Swirls and Lanterns became Deer and Tiger.
+// quietly names its element and organ when used. Animals follow Demaris's Qigong set (2026-09-18).
+// The saved ids stay the same ('crane' is now the Hawk) so nobody loses boosters they own.
 const POWERS = [
-  { id: 'tiger', name: 'Tiger Claw', elem: 'wood', organ: 'liver', cost: 80, aim: true, how: 'Tap a row. The claw clears it.' },
-  { id: 'monkey', name: 'Monkey Swap', elem: 'fire', organ: 'heart', cost: 60, aim: true, how: 'Tap any two orbs to swap them.' },
-  { id: 'bear', name: 'Bear Stomp', elem: 'earth', organ: 'spleen', cost: 90, aim: true, how: 'Tap an orb. The ground takes everything around it.' },
-  { id: 'crane', name: 'Crane Wings', elem: 'metal', organ: 'lungs', cost: 100, aim: true, how: 'Tap an orb. The wings clear its row and column.' },
-  { id: 'deer', name: 'Deer Stream', elem: 'water', organ: 'kidneys', cost: 40, aim: false, how: 'The river re-flows the board and fills Luma a little.' }
+  { id: 'deer', name: 'Deer Leap', elem: 'wood', organ: 'liver', cost: 40, aim: false, how: 'The deer leaps across, the board grows fresh, and Luma fills a little.' },
+  { id: 'crane', name: 'Hawk Dive', elem: 'fire', organ: 'heart', cost: 100, aim: true, how: 'Tap an orb. The hawk dives along its row and column.' },
+  { id: 'monkey', name: 'Monkey Swap', elem: 'earth', organ: 'spleen', cost: 60, aim: true, how: 'Tap any two orbs to swap them.' },
+  { id: 'tiger', name: 'Tiger Claw', elem: 'metal', organ: 'lungs', cost: 80, aim: true, how: 'Tap a row. The claw clears it.' },
+  { id: 'bear', name: 'Bear Stomp', elem: 'water', organ: 'kidneys', cost: 90, aim: true, how: 'Tap an orb. The bear stomps and everything around it splashes away.' }
 ];
 // Charms are chosen before a level, one per element, each doing what its element does.
 const CHARMS = [
@@ -2373,16 +2423,16 @@ const SEALS = [
   { id: 'keeper', name: 'Keeper of Flow', hint: 'Keep a 108-day streak' }
 ];
 // The Five Animal Frolics (Wu Qin Xi) pair each animal with an organ, so the animals and the
-// elements stay one system: Tiger-liver-Wood, Monkey-heart-Fire, Bear-spleen-Earth,
-// Crane-lung-Metal, Deer-kidney-Water.
+// elements stay one system (Demaris's Qigong set): Deer-liver-Wood, Hawk-heart-Fire,
+// Monkey-spleen-Earth, Tiger-lung-Metal, Bear-kidney-Water.
 const BUDDY = {
-  wood:  { animal: 'Tiger',  name: 'Rin',  unlock: 30, note: 'Wood cub. Turns anger into kindness.' },
-  fire:  { animal: 'Monkey', name: 'Pip',  unlock: 0,  note: 'Fire baby. Turns too-much into peace.' },
-  earth: { animal: 'Bear',   name: 'Momo', unlock: 0,  note: 'Earth cub. Turns worry into trust.' },
-  metal: { animal: 'Crane',  name: 'Sen',  unlock: 60, note: 'Metal chick. Turns sadness into strength.' },
-  water: { animal: 'Deer',   name: 'Nami', unlock: 0,  note: 'Water fawn. Turns fear into wisdom.' }
+  wood:  { animal: 'Deer',   name: 'Rin',  unlock: 30, note: 'Wood fawn. Turns anger into kindness.' },
+  fire:  { animal: 'Hawk',   name: 'Pip',  unlock: 0,  note: 'Fire chick. Turns too-much into peace.' },
+  earth: { animal: 'Monkey', name: 'Momo', unlock: 0,  note: 'Earth baby. Turns worry into trust.' },
+  metal: { animal: 'Tiger',  name: 'Sen',  unlock: 60, note: 'Metal cub. Turns sadness into strength.' },
+  water: { animal: 'Bear',   name: 'Nami', unlock: 0,  note: 'Water cub. Turns fear into wisdom.' }
 };
-const STAGES = [{ at: 0, name: 'baby' }, { at: 10, name: 'child' }, { at: 30, name: 'grown' }, { at: 90, name: 'keeper' }];
+const STAGES = [{ at: 0, name: 'Baby', key: '' }, { at: 3, name: 'Young', key: 'young' }, { at: 10, name: 'Grown', key: 'grown' }, { at: 30, name: 'Spirit Guardian', key: 'guardian' }];
 // The ladder: every rung is a multiple of 3, with the two days A named (40, 43) kept in.
 const MILES = [
   { d: 3, coins: 150, swirls: 1 },
@@ -3086,7 +3136,7 @@ $('#questClose').addEventListener('click', () => hideOv('questov'));
 /* ---------- companion ---------- */
 // Your companion wears your balance: the aura is your five lights, and it grows on practice
 // days. It never sickens on missed ones — sleepy is as sad as it gets.
-const stageOf = () => STAGES.slice().reverse().find(x => (S.practiceDays || 0) >= x.at);
+const stageOf = () => STAGES[S.buddy ? careStage(S.buddy) : 0];
 const owns = el => (S.owned || []).includes(el) || S.earlyPass;
 function checkBuddyUnlocks() {
   let got = null;
@@ -3097,7 +3147,111 @@ function checkBuddyUnlocks() {
   if (got) save();
   return got;
 }
-const buddyArt = el => `img/buddy-${el}.jpg`;
+
+/* ---------- care, Bond and evolution ----------
+   One breath a day with your buddy is a care day. Care days are Bond, and Bond makes it grow:
+   Young at 3, Grown at 10, Spirit Guardian at 30. A day that continues a streak of 3+ counts double.
+   Missed days never take anything away; your buddy just naps and is happy to see you again. */
+const bondOf = el => ((S.bond || {})[el] || { care: 0, last: '', streak: 0 });
+const careStage = el => { const c = bondOf(el).care; let i = 0; STAGES.forEach((x, k) => { if (c >= x.at) i = k; }); return i; };
+const giftTier = el => careStage(el) + 1;
+const stageKey = (el, st = careStage(el)) => STAGES[st].key;
+const buddyWho = (el, st = careStage(el)) => `buddy-${el}${stageKey(el, st) ? '-' + stageKey(el, st) : ''}`;
+const caredToday = el => bondOf(el).last === dayKey();
+const ROMAN = ['I', 'II', 'III', 'IV'];
+const GIFT_TIERS = {
+  water: ['+3 moves in every episode', '+4 moves in every episode', '+5 moves in every episode', '+6 moves and a free Bear Stomp in every episode'],
+  wood: ['A free Deer Leap every day you practise', 'A free Deer Leap every day, and a Lantern waiting on the board', 'Two free Deer Leaps every day, and a Lantern on the board', 'Two free Deer Leaps every day, and a Lantern and a Blossom on the board'],
+  fire: ['Every match lights 1 extra orb for the Creation Cycle', 'Every match lights 2 extra orbs', 'Every match lights 3 extra orbs', '3 extra lit orbs, and a free Hawk Dive in every episode'],
+  earth: ["Luma's Aura never starts below 15%", "Luma's Aura never starts below 25%", "Luma's Aura never starts below 35%", 'Luma starts at 50%, and a free Monkey Swap in every episode'],
+  metal: ['Every breath lifts 1 extra cloud', 'Every breath lifts 2 extra clouds', 'Every breath lifts 3 extra clouds', "3 extra clouds, and Luma's Dive always adds a cross"]
+};
+const giftText = (el, t = giftTier(el)) => GIFT_TIERS[el][t - 1];
+const giftName = (el, t = giftTier(el)) => `${GIFTS[el].name} ${ROMAN[t - 1]}`;
+let levelFree = {};
+function buddyLevelGifts() {
+  levelFree = {};
+  if (!S.buddy || babyOn()) return;
+  const el = S.buddy, t = giftTier(el);
+  if (t === 4) levelFree[{ water: 'bear', fire: 'crane', earth: 'monkey' }[el]] = 1;
+  if (el === 'wood' && t >= 2) setTimeout(() => placeGifts(t === 4 ? ['row', 'bomb'] : ['row']), 700);
+}
+async function careBreath() {
+  const el = S.buddy; if (!el) return;
+  const b = BUDDY[el], img = $('#careImg'), txt = $('#careText'), ring = $('#careRing'), who = buddyWho(el);
+  $('#careTitle').textContent = `Breathe with ${b.name}`;
+  $('#careEyebrow').textContent = caredToday(el) ? 'Already cared for today' : 'Care time · +1 Bond';
+  img.src = `img/faces/${who}-calm.jpg`;
+  txt.textContent = `${b.name} breathes with you. Two slow breaths.`;
+  renderCareBond(el);
+  $('#careGo').hidden = false; $('#careGo').textContent = 'Begin'; $('#careNo').textContent = 'Not now';
+  await showOv('careov');
+  const go = await new Promise(res => { $('#careGo').onclick = () => res(true); $('#careNo').onclick = () => res(false); });
+  if (!go) { hideOv('careov'); return; }
+  $('#careGo').hidden = true; $('#careNo').textContent = '';
+  for (let i = 0; i < 2; i++) {
+    txt.textContent = `Breathe in with ${b.name}…`; img.src = `img/faces/${who}-calm.jpg`;
+    ring.style.transition = 'transform 4s cubic-bezier(.35,0,.3,1)'; ring.style.transform = 'scale(1.12)';
+    breathSound('in', 4); bell(523.25, 0, 0.05); await wait(reduce ? 400 : 4000);
+    txt.textContent = 'And slowly out…'; img.src = `img/faces/${who}-breath.jpg`;
+    ring.style.transition = 'transform 6s cubic-bezier(.4,0,.3,1)'; ring.style.transform = 'scale(.9)';
+    breathSound('out', 6); await wait(reduce ? 400 : 6000);
+  }
+  img.src = `img/faces/${who}-joy.jpg`; ring.style.transform = 'scale(1)';
+  const from = careStage(el);
+  let msg = `${b.name} loves breathing with you.`;
+  if (!caredToday(el)) {
+    S.bond = S.bond || {};
+    const bd = Object.assign({ care: 0, last: '', streak: 0 }, S.bond[el]);
+    bd.streak = bd.last === dayKey(-1) ? bd.streak + 1 : 1;
+    const add = bd.streak >= 3 ? 2 : 1;
+    bd.care += add; bd.last = dayKey(); S.bond[el] = bd; save();
+    msg = add > 1 ? `+2 Bond · ${bd.streak} days in a row!` : '+1 Bond';
+    for (let i = 0; i < 8; i++) { const h = document.createElement('span'); h.className = 'careheart'; h.textContent = '💛'; ring.appendChild(h);
+      h.animate([{ transform: 'translate(-50%,0) scale(.4)', opacity: 0 }, { transform: `translate(calc(-50% + ${(i - 3.5) * 22}px),-${90 + (i % 3) * 20}px) scale(1.1)`, opacity: 1, offset: .5 }, { transform: `translate(calc(-50% + ${(i - 3.5) * 30}px),-160px) scale(.8)`, opacity: 0 }], { duration: 1400, delay: i * 70 }).onfinish = () => h.remove(); }
+    chord([523.25, 659.25, 783.99, 1046.5], 0.08);
+  }
+  txt.textContent = msg; renderCareBond(el, true);
+  $('#careGo').hidden = false; $('#careGo').textContent = 'Lovely';
+  await new Promise(res => { $('#careGo').onclick = () => res(); $('#careNo').onclick = () => res(); });
+  await hideOv('careov');
+  const to = careStage(el);
+  if (to > from) await evolveBuddy(el, from, to);
+  renderBuddy(); renderHome(); if (!$('#sanct').hidden) renderSanct();
+}
+function renderCareBond(el, anim) {
+  const bd = bondOf(el), st = careStage(el), nx = STAGES[st + 1];
+  const p = nx ? Math.min(1, (bd.care - STAGES[st].at) / (nx.at - STAGES[st].at)) : 1;
+  $('#careBond').innerHTML = `<div class="bondbar"><i style="width:${Math.round(p * 100)}%"></i></div><small>${nx ? `${bd.care} Bond · ${nx.at - bd.care} more to ${nx.name}` : `${bd.care} Bond · Spirit Guardian`}${bd.streak >= 2 ? ` · 🔥 ${bd.streak} days in a row` : ''}</small>`;
+  if (anim && !reduce) $('#careBond .bondbar i').animate([{ filter: 'brightness(1)' }, { filter: 'brightness(1.8)' }, { filter: 'brightness(1)' }], { duration: 900 });
+}
+// the evolution ceremony: glow, spin into light, burst, and the new form arrives with its stronger gift
+async function evolveBuddy(el, from, to) {
+  const b = BUDDY[el], ov = $('#evolveov'), old = $('#evOld'), nu = $('#evNew');
+  old.src = `img/${buddyWho(el, from)}.jpg`; nu.src = `img/${buddyWho(el, to)}.jpg`;
+  ov.style.setProperty('--eg', ELEM[el].glow); ov.style.setProperty('--eh', ELEM[el].hue);
+  $('#evTitle').textContent = ''; $('#evGift').innerHTML = ''; $('#evGo').hidden = true;
+  nu.style.opacity = 0; old.style.opacity = 1; old.style.filter = '';
+  ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
+  $('#evEyebrow').textContent = `${b.name} is growing…`;
+  if (!reduce) {
+    for (let i = 0; i < 3; i++) { chord([392 * (1 + i * .25), 523.25 * (1 + i * .25)], 0.06);
+      await old.animate([{ transform: 'scale(1)', filter: 'brightness(1)' }, { transform: `scale(${1.06 + i * .04})`, filter: `brightness(${1.6 + i * .6}) drop-shadow(0 0 ${20 + i * 14}px var(--eg))` }, { transform: 'scale(1)', filter: 'brightness(1)' }], { duration: 700 - i * 150 }).finished; }
+    await old.animate([{ transform: 'scale(1) rotate(0)', filter: 'brightness(1)' }, { transform: 'scale(1.25) rotate(360deg)', filter: 'brightness(8) saturate(0)' }], { duration: 900, easing: 'cubic-bezier(.5,0,.8,.4)', fill: 'forwards' }).finished;
+    const burst = $('#evBurst'); burst.animate([{ transform: 'translate(-50%,-50%) scale(.1)', opacity: 1 }, { transform: 'translate(-50%,-50%) scale(3)', opacity: 0 }], { duration: 900, easing: 'ease-out' });
+    shake(10); playSfx('stamp', { gain: 0.8 });
+  }
+  old.style.opacity = 0; nu.style.opacity = 1;
+  if (!reduce) { nu.animate([{ transform: 'scale(.3)', filter: 'brightness(4)' }, { transform: 'scale(1.12)', filter: 'brightness(1.3)', offset: .6 }, { transform: 'scale(1)', filter: 'brightness(1)' }], { duration: 800, easing: 'cubic-bezier(.3,1.5,.5,1)' }); confetti('#evolveov .evcard'); }
+  chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.1);
+  $('#evEyebrow').textContent = to === 3 ? 'A Spirit Guardian!' : 'Evolution!';
+  $('#evTitle').textContent = to === 3 ? `${b.name} became a Spirit Guardian` : `${b.name} grew into a ${STAGES[to].name} ${b.animal}`;
+  $('#evGift').innerHTML = `<span class="gi">${GIFTS[el].icon}</span><span><small>Gift upgraded</small><b>${giftName(el, to + 1)}</b><em>${giftText(el, to + 1)}</em></span>`;
+  $('#evGo').hidden = false;
+  await new Promise(res => { $('#evGo').onclick = () => res(); });
+  tick(); ov.classList.remove('show'); await wait(300); ov.hidden = true;
+}
+const buddyArt = (el, st) => `img/${buddyWho(el, st)}.jpg`;
 function renderBuddy() {
   const el = S.buddy, card = $('#buddyCard');
   if (!el) {
@@ -3115,7 +3269,7 @@ function renderBuddy() {
   card.innerHTML = `<span class="bring" style="background:${aura}"></span>
     <img src="${buddyArt(el)}" alt="${BUDDY[el].name} the ${BUDDY[el].animal}">
     <span class="bt"><b>${BUDDY[el].name} the ${BUDDY[el].animal}</b><em>${ELEM[el].name} · ${stage.name}${sleepy ? ` · ${ELEM[st.low.t].name} is sleepy` : ' · all lights awake'}</em></span>
-    <span class="bdays">${S.practiceDays || 0}<i>days</i></span>`;
+    <span class="bdays">${bondOf(el).care}<i>Bond</i></span>${caredToday(el) ? '' : '<span class="carepip">Breathe together 💛</span>'}`;
 }
 function renderBuddyPicker() {
   const stage = stageOf();
@@ -3151,7 +3305,7 @@ const GIFTS = {
   earth: { icon: '⛰', name: 'Steady Ground', text: "Luma's Aura never starts below 15%" },
   fire: { icon: '✦', name: 'Warm Heart', text: 'Every match lights one extra orb for the Creation Cycle' },
   metal: { icon: '🌬', name: 'Clear Lungs', text: 'A deep breath clears one extra cloud' },
-  wood: { icon: '🐾', name: 'Brave Start', text: 'A free Tiger Claw every day you practise' }
+  wood: { icon: '🍃', name: 'Fresh Start', text: 'A free Deer Leap every day you practise' }
 };
 const ORGAN_OF = { wood: 'liver', fire: 'heart', earth: 'spleen', metal: 'lungs', water: 'kidneys' };
 let SNI = 0;
@@ -3160,7 +3314,7 @@ function renderSanct(dir = 0) {
   const sc = $('#sanct'), hero = $('#snHero'), gift = GIFTS[el];
   sc.style.setProperty('--sg', ELEM[el].glow); sc.style.setProperty('--sh', ELEM[el].hue);
   $('#snBg').style.backgroundImage = `url(img/home/${HOME_SCENE[el]}.jpg)`;
-  $('#snDays').textContent = `${days} practice day${days === 1 ? '' : 's'} · stage: ${stageOf().name}`;
+  $('#snDays').textContent = have ? `${bondOf(el).care} Bond · ${STAGES[careStage(el)].name}` : `${days} practice day${days === 1 ? '' : 's'}`;
   $('#snImg').src = buddyArt(el);
   hero.classList.toggle('locked', !have);
   $('#snLock').innerHTML = have ? '' : `<b style="--p:${Math.round(Math.min(1, days / Math.max(1, b.unlock)) * 100)}"></b><em>${left} day${left === 1 ? '' : 's'}</em>`;
@@ -3168,12 +3322,13 @@ function renderSanct(dir = 0) {
   $('#snName').textContent = `${b.name} the ${b.animal}`;
   $('#snTag').textContent = `${ELEM[el].name} · ${ORGAN_OF[el]}`;
   $('#snNote').textContent = b.note;
-  $('#snGift').innerHTML = `<span class="gi">${gift.icon}</span><span><small>${b.name}'s gift</small><b>${gift.name}</b><em>${gift.text}${have ? '' : ' (once you meet)'}</em></span>`;
-  const st = STAGES.findIndex(x => x.name === stageOf().name);
-  $('#snGrow').innerHTML = STAGES.map((x, i) => `<span class="${i <= st ? 'on' : ''}"><i style="width:${22 + i * 7}px;height:${22 + i * 7}px;background-image:url(${buddyArt(el)})"></i>${x.name}<small>${x.at ? `day ${x.at}` : 'day 1'}</small></span>`).join('');
+  const st = careStage(el), bd = bondOf(el), nxt = STAGES[st + 1];
+  $('#snGift').innerHTML = `<span class="gi">${gift.icon}</span><span><small>${b.name}'s gift</small><b>${giftName(el)}</b><em>${giftText(el)}${have ? '' : ' (once you meet)'}</em>${nxt ? `<em class="nexttier">At ${nxt.name}: ${giftText(el, st + 2)}</em>` : ''}</span>`;
+  $('#snGrow').innerHTML = STAGES.map((x, i) => `<span class="${i <= st ? 'on' : 'mystery'}"><i style="background-image:url(${buddyArt(el, i)})"></i>${i <= st ? x.name : '???'}<small>${x.at ? `${x.at} Bond` : 'start'}</small></span>`).join('')
+    + (have ? `<div class="snbond"><div class="bondbar"><i style="width:${nxt ? Math.round(Math.min(1, (bd.care - STAGES[st].at) / (nxt.at - STAGES[st].at)) * 100) : 100}%"></i></div><small>${nxt ? `${nxt.at - bd.care} more Bond to grow` : 'Fully grown · Spirit Guardian'}${bd.streak >= 2 ? ` · 🔥 ${bd.streak} days in a row` : ''}</small></div>` : '');
   const go = $('#snGo');
   go.classList.toggle('with', have && S.buddy === el);
-  go.textContent = !have ? `Meets you in ${left} practice day${left === 1 ? '' : 's'}` : S.buddy === el ? `${b.name} is with you ✓` : `Take ${b.name} with you`;
+  go.textContent = !have ? `Meets you in ${left} practice day${left === 1 ? '' : 's'}` : S.buddy === el ? (caredToday(el) ? `Cared for today 💛` : `Breathe with ${b.name} · +1 Bond`) : `Take ${b.name} with you`;
   go.disabled = !have; go.style.opacity = have ? 1 : .75;
   $('#snPass').hidden = S.earlyPass || TYPES.every(owns);
   if (!reduce && dir) {
@@ -3183,6 +3338,7 @@ function renderSanct(dir = 0) {
 }
 async function openSanct() {
   SNI = Math.max(0, TYPES.indexOf(S.buddy || 'fire'));
+  if (S.buddy && bondOf(S.buddy).last && bondOf(S.buddy).last < dayKey(-1)) setTimeout(() => toast(`${BUDDY[S.buddy].name} napped while you were away and is so happy you're back 💛`), 600);
   renderSanct();
   const sc = $('#sanct'); sc.hidden = false; void sc.offsetWidth; sc.classList.add('show');
   playSfx('swoosh', { gain: 0.6 }); elemSound(TYPES[SNI], 0, 2, 5);
@@ -3196,13 +3352,14 @@ $('#sanct').addEventListener('pointerdown', e => { snx = e.clientX; });
 $('#sanct').addEventListener('pointerup', e => { if (snx == null) return; const dx = e.clientX - snx; snx = null; if (Math.abs(dx) > 60 && !e.target.closest('button')) snStep(dx < 0 ? 1 : -1); });
 $('#snBack').addEventListener('click', async () => { tick(); const sc = $('#sanct'); sc.classList.remove('show'); await wait(350); sc.hidden = true; renderBuddy(); });
 $('#snGo').addEventListener('click', () => {
-  const el = TYPES[SNI]; if (!owns(el) || S.buddy === el) return;
+  const el = TYPES[SNI]; if (!owns(el)) return;
+  if (S.buddy === el) { if (caredToday(el)) { toast(`${BUDDY[el].name} is happy. Come back tomorrow to breathe together again.`); return; } careBreath(); return; }
   S.buddy = el; save(); renderSanct(); renderBuddy();
   chord([523.25, 659.25, 783.99, 1046.5], 0.07); elemSound(el, 0, 4, 8);
   const sc = $('#sanct'), r = $('#snHero').getBoundingClientRect(), a = sc.getBoundingClientRect();
   sparkleAt(sc, r.left - a.left + r.width / 2, r.top - a.top + r.height / 2, [ELEM[el].glow, '#FFFFFF', '#FFE9A8'], 26);
   if (!reduce) $('#snHero img').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(-26px) scale(1.06)' }, { transform: 'translateY(0)' }], { duration: 520, easing: 'cubic-bezier(.3,1.5,.5,1)' });
-  toast(`${BUDDY[el].name} is with you. ${GIFTS[el].name}: ${GIFTS[el].text.toLowerCase()}.`);
+  toast(`${BUDDY[el].name} is with you. ${giftName(el)}: ${giftText(el).toLowerCase()}.`);
 });
 $('#snPass').addEventListener('click', async () => {
   if (!await grownUpGate('all five companions')) return;
@@ -3276,7 +3433,7 @@ const nextMile = () => MILES.find(m => m.d > S.streak) || MILES[MILES.length - 1
 function rewardText(m) {
   const bits = [];
   if (m.coins) bits.push(`${m.coins.toLocaleString()} coins`);
-  if (m.swirls) bits.push(`${m.swirls} Deer Stream${m.swirls > 1 ? 's' : ''}`);
+  if (m.swirls) bits.push(`${m.swirls} Deer Leap${m.swirls > 1 ? 's' : ''}`);
   if (m.lanterns) bits.push(`${m.lanterns} Tiger Claw${m.lanterns > 1 ? 's' : ''}`);
   if (m.shields) bits.push(`${m.shields} Streak Shield${m.shields > 1 ? 's' : ''}`);
   if (m.seals) bits.push('a Spirit Seal');
@@ -3455,8 +3612,8 @@ function renderHome() {
   $('#bSeals').className = 'hbadge ok';
   $('#bBaby').textContent = babyOn() ? 'on' : '';
   $('#bBaby').className = 'hbadge ok';
-  $('#bBuddy').textContent = S.buddy ? '' : '!';
-  $('#buddyIcon').src = S.buddy ? `img/faces/buddy-${S.buddy}-calm.jpg` : 'img/icons/icon-buddy.jpg';
+  $('#bBuddy').textContent = !S.buddy ? '!' : caredToday(S.buddy) ? '' : '💛';
+  $('#buddyIcon').src = S.buddy ? `img/faces/${buddyWho(S.buddy)}-calm.jpg` : 'img/icons/icon-buddy.jpg';
   // one line that tells you what matters right now
   const rib = $('#homeRibbon'), m = nextMile(), played = S.lastDay === dayKey();
   rib.className = 'ribbon' + (!played && S.streak ? ' warn' : '');
@@ -3706,7 +3863,7 @@ function levelSpec(i = LI) {
   // never overstuff: obstacles stay a small share of the cells, so the board always has room to breathe
   const cells = little ? 25 : shapeCells(b.shape);
   clouds = Math.min(clouds, Math.round(cells * 0.2)); knots = Math.min(knots, Math.round(cells * 0.12));
-  if (S.buddy === 'water' && !babyOn()) moves += 3;        // Nami's gift
+  if (S.buddy === 'water' && !babyOn()) moves += 2 + giftTier('water');   // Nami's gift: +3 to +6 as she grows
   // Luma helps after a loss: +3 moves per try on the same episode (up to +9), so nobody gets stuck and quits
   const help = babyOn() ? 0 : Math.min(9, 3 * ((S.fails || {})[ep] || 0));
   moves += help;
@@ -4176,7 +4333,7 @@ function feedNext(arr) {
   const by = {}; arr.forEach(t => { if (ELEM[t.type]) (by[t.type] = by[t.type] || []).push(t); });
   const lead = Object.keys(by).sort((a, b) => by[b].length - by[a].length)[0]; if (!lead) return;
   const src = by[lead], cx = src.reduce((a, t) => a + t.c, 0) / src.length, cy = src.reduce((a, t) => a + t.r, 0) / src.length;
-  const target = CREATES[lead], k = (src.length >= 5 ? 4 : src.length >= 4 ? 3 : 2) + (S.buddy === 'fire' ? 1 : 0);
+  const target = CREATES[lead], k = (src.length >= 5 ? 4 : src.length >= 4 ? 3 : 2) + (S.buddy === 'fire' ? Math.min(3, giftTier('fire')) : 0);
   const pool = all().filter(o => o.type === target && !o.cloud && !o.knot && !o.fed && !arr.includes(o))
     .sort((a, b) => ((a.r - cy) ** 2 + (a.c - cx) ** 2) - ((b.r - cy) ** 2 + (b.c - cx) ** 2) || a.r - b.r || a.c - b.c)
     .slice(0, k);
@@ -5168,11 +5325,11 @@ async function applyBreath(q) {
   flash();
   // Luma's Dive: the breath decides how big her help is, the player decides where it lands.
   // Everything inside her area goes, storm clouds included (the only way besides sinking them).
-  const dive = { k: p.tier === 'deep' ? 2 : 1, cross: p.tier === 'nice', tier: p.tier };
+  const dive = { k: p.tier === 'deep' ? 2 : 1, cross: p.tier === 'nice' || (S.buddy === 'metal' && giftTier('metal') === 4), tier: p.tier };
   const spot = babyOn() ? bestDiveSpot(dive) : await lumaAim(dive);
   await lumaDive(spot, dive);
   // charms and buddies that help the breath still lift a few more of the lowest clouds
-  const extra = (stillDrop ? 2 : 0) + (p.tier === 'deep' && S.buddy === 'metal' ? 1 : 0);
+  const extra = (stillDrop ? 2 : 0) + (S.buddy === 'metal' && !babyOn() ? Math.min(3, giftTier('metal')) : 0);
   if (extra) { clouds().sort((a, b) => b.r - a.r || a.c - b.c).slice(0, extra).forEach((t, i) => freeCloud(t, i)); await wait(reduce ? 60 : 900); gravity(); await wait(reduce ? 60 : 300); await collectClouds(); }
   const left = clouds().length;
   say(left ? `${left} ${left === 1 ? 'cloud' : 'clouds'} left. Keep matching to fill Luma again.` : 'The last cloud floated away.');
@@ -5201,7 +5358,7 @@ function pwTake(id) {
 function syncBoosts() {
   POWERS.forEach(pw => {
     const el = document.getElementById(`pwc-${pw.id}`);
-    if (el) { const n = pwCount(pw.id), b = el.parentElement; el.innerHTML = n > 0 ? `${n}` : `<i class="coin"></i>${pw.cost}`; el.classList.toggle('buy', n <= 0); b.classList.toggle('has', n > 0); b.classList.toggle('cant', n <= 0 && S.coins < pw.cost); }
+    if (el) { const n = pwCount(pw.id) + (levelFree[pw.id] || 0), b = el.parentElement; el.innerHTML = n > 0 ? `${n}` : `<i class="coin"></i>${pw.cost}`; el.classList.toggle('buy', n <= 0); b.classList.toggle('has', n > 0); b.classList.toggle('cant', n <= 0 && S.coins < pw.cost); }
   });
   const left = (S.boostUntil || 0) - Date.now();
   $('#boostChip').hidden = left <= 0;
@@ -5230,6 +5387,7 @@ function setAim(id) {
 }
 async function paidFor(pw) {
   if (lab) return true;
+  if (levelFree[pw.id]) { levelFree[pw.id]--; syncBoosts(); toast(`${BUDDY[S.buddy].name}'s gift: a free ${pw.name}.`); return true; }
   if (pwCount(pw.id) > 0) { pwTake(pw.id); syncBoosts(); return true; }
   return spend(pw.cost);
 }
@@ -5262,7 +5420,7 @@ $('#pwBar').addEventListener('click', async e => {
   // Deer Stream acts at once
   if (!await paidFor(pw)) return;
   busy = true; powerCaption(pw); cycleCheck(pw);
-  elemSound('water', 0, 4);
+  elemSound('wood', 0, 4);
   await fxDeerStream();
   await shuffle();
   charge = Math.min(100, charge + 20); hud();
@@ -5278,11 +5436,11 @@ function powerArea(id, t) {
 
 // first time a booster is pressed: watch it work on a little board, then use it (or not)
 const PW_SHOW = {
-  tiger: 'Clears a whole row. Great for a line of clouds’ orbs.',
+  tiger: 'The tiger’s claws rake a whole row clean.',
   monkey: 'Swaps any two orbs, even if they don’t make a match.',
-  bear: 'Clears everything around the orb you tap.',
-  crane: 'Clears the row and the column of the orb you tap.',
-  deer: 'Stirs the whole board into a fresh mix and fills Luma a little.'
+  bear: 'The bear stomps and everything around the orb you tap splashes away.',
+  crane: 'The hawk dives along the row and the column of the orb you tap.',
+  deer: 'The deer leaps across and the whole board grows into a fresh mix. Luma fills a little.'
 };
 function pwDemo(pw) {
   return new Promise(async res => {
@@ -5354,25 +5512,27 @@ async function usePowerOn(t) {
   if (!cells.length) return;
   if (!await paidFor(pw)) return;
   setAim(null); busy = true; cycleCheck(pw);
-  popExit = pw.id === 'tiger' ? 'claw' : pw.id === 'bear' ? 'earth' : 'wind'; powerUsed = pw;
+  popExit = pw.id === 'tiger' ? 'claw' : pw.id === 'bear' ? 'water' : 'fire'; powerUsed = pw;
   if (pw.id === 'tiger') { fxTigerClaw(t.r); cells.forEach(x => { x._pd = 90 + x.c * 45; }); await wait(reduce ? 0 : 120); }
   else if (pw.id === 'bear') { fxBearStomp(t); cells.forEach(x => { x._pd = Math.max(Math.abs(x.r - t.r), Math.abs(x.c - t.c)) * 60; }); await wait(reduce ? 0 : 420); }
-  else { fxCraneWings(t); cells.forEach(x => { x._pd = x.r === t.r ? 80 + x.c * 55 : 340 + x.r * 55; }); await wait(reduce ? 0 : 150); }
+  else { fxHawkDive(t); cells.forEach(x => { x._pd = x.r === t.r ? 80 + x.c * 55 : 340 + x.r * 55; }); await wait(reduce ? 0 : 150); }
   await resolve(new Set(cells), [], null);
   await settle();
 }
 /* ---------- signature effects: every power looks like its name ----------
-   Tiger Claw: a striped paw rakes three claw marks through the row and the orbs are cut apart.
-   Bear Stomp: a giant paw slams down, the ground cracks, dust puffs out, the orbs sink into the earth.
-   Crane Wings: a white crane glides the row and another swoops down the column; wind blows the orbs off, feathers drift.
-   Monkey Swap: the two orbs leap over each other in a big arc, a curly tail swishes between them.
-   Deer Stream: a stream of water rushes across the board, a deer leaps over it, every orb bobs and remixes.
+   (Animals and elements are Demaris's Qigong set.)
+   Deer Leap (Wood): a deer bounds across on a spring breeze, leaves sprout from every column, the board grows fresh.
+   Hawk Dive (Fire): a fiery hawk glides the row then dives down the column, trailing embers; the orbs burn away.
+   Monkey Swap (Earth): the two orbs somersault over each other, a curly tail swishes between them.
+   Tiger Claw (Metal): a striped paw rakes three steel-bright claw marks through the row, silver sparks fly, orbs cut apart.
+   Bear Stomp (Water): a giant paw slams down, the ground cracks, a crown of water splashes up, ripples roll out.
    Luma's Dive: Luma rises, dives with a comet tail, splashes down in a crown of light, ripples fill her area,
    and the clouds she touches spin up into sparkles. */
 const ART = {
   bearPaw: '<svg viewBox="0 0 100 100"><g fill="#3B2414"><path d="M50 40c17 0 31 14 31 31 0 12-11 21-31 21S19 83 19 71c0-17 14-31 31-31z"/><ellipse cx="17" cy="40" rx="9.5" ry="12.5" transform="rotate(-28 17 40)"/><ellipse cx="36" cy="22" rx="9.5" ry="12.5" transform="rotate(-10 36 22)"/><ellipse cx="64" cy="22" rx="9.5" ry="12.5" transform="rotate(10 64 22)"/><ellipse cx="83" cy="40" rx="9.5" ry="12.5" transform="rotate(28 83 40)"/></g><path d="M50 52c10 0 20 9 20 18 0 7-8 12-20 12s-20-5-20-12c0-9 10-18 20-18z" fill="#6B4526"/><g fill="#F3E3C4"><path d="M12 27l-3-9 7 6z"/><path d="M33 9l-1-9 5 8z"/><path d="M67 9l1-9-5 8z"/><path d="M88 27l3-9-7 6z"/></g></svg>',
   tigerPaw: '<svg viewBox="0 0 100 100"><path d="M24 58c0-18 14-30 30-30s30 12 30 30-12 30-30 30-30-12-30-30z" fill="#F29A2E" stroke="#8A4A0E" stroke-width="3"/><g stroke="#2A1606" stroke-width="5" stroke-linecap="round"><path d="M40 36l6 10M58 32l-2 12M74 44l-8 8M34 70l10-4"/></g><g fill="#FFF6E6" stroke="#8A4A0E" stroke-width="2"><path d="M30 34C22 24 20 12 26 4c2 10 8 18 12 24z"/><path d="M50 28C46 16 48 5 56 0c-1 10 1 19 4 27z"/><path d="M70 32C72 20 80 12 90 10c-6 8-10 16-12 25z"/></g><ellipse cx="54" cy="64" rx="13" ry="11" fill="#FFD9A8"/></svg>',
   crane: '<svg viewBox="0 0 120 70"><path d="M8 40c20-4 34-4 50-2" stroke="#1E1E1E" stroke-width="2.5" fill="none" stroke-linecap="round"/><path class="wing wt" d="M52 34C40 14 26 4 8 2c10 10 22 22 34 34z" fill="#FFFFFF" stroke="#C8D0D8" stroke-width="1.5"/><path class="wing wt" d="M16 8c-4-3-6-5-8-6 4 1 7 2 10 4z" fill="#1E1E1E"/><ellipse cx="60" cy="38" rx="20" ry="9" fill="#FFFFFF" stroke="#C8D0D8" stroke-width="1.5"/><path d="M76 34c10-8 18-14 26-14" stroke="#FFFFFF" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M76 34c10-8 18-14 26-14" stroke="#1E1E1E" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="0 14 30"/><circle cx="104" cy="20" r="5" fill="#FFFFFF"/><circle cx="104.5" cy="17" r="2.6" fill="#E0392E"/><path d="M108 21l12 2-12 1z" fill="#6A6A6A"/><path class="wing wb" d="M54 42C44 60 30 68 12 70c10-8 24-18 34-28z" fill="#EEF2F6" stroke="#C8D0D8" stroke-width="1.5"/><path d="M40 40l-12 4" stroke="#1E1E1E" stroke-width="4" stroke-linecap="round"/></svg>',
+  hawk: '<svg viewBox="0 0 120 70"><path class="wing wt" d="M50 32C40 12 24 2 4 0c6 6 10 10 12 14-4 0-8 1-11 3 8 3 16 8 22 14-4 1-7 3-9 5 10 1 20 3 30 6z" fill="#8A3A16" stroke="#4A1C08" stroke-width="1.5"/><path class="wing wt" d="M4 0c6 6 10 10 12 14-4 0-8 1-11 3" fill="none" stroke="#FFB23A" stroke-width="3" stroke-linecap="round"/><path d="M8 40l20-2-18 8z" fill="#6A2A10"/><ellipse cx="58" cy="38" rx="22" ry="10" fill="#A8481C" stroke="#4A1C08" stroke-width="1.5"/><ellipse cx="60" cy="42" rx="14" ry="5" fill="#F2C48A"/><path d="M76 32c8-6 14-8 20-7 6 1 8 6 5 10-3 4-10 4-16 2z" fill="#A8481C" stroke="#4A1C08" stroke-width="1.5"/><path d="M100 30l10 4-9 4c-1-3-1-5-1-8z" fill="#FFC23A" stroke="#8A5A10" stroke-width="1"/><circle cx="95" cy="30" r="2.4" fill="#FFE8A0"/><circle cx="95.4" cy="30" r="1.2" fill="#1A0E06"/><path d="M89 27l9-2" stroke="#4A1C08" stroke-width="1.6"/><path class="wing wb" d="M52 44C44 58 30 66 12 70c8-6 14-12 18-18-4 0-7-1-10-3 10-1 20-3 32-5z" fill="#7A3212" stroke="#4A1C08" stroke-width="1.5"/><path d="M12 70c8-6 14-12 18-18" fill="none" stroke="#FF8A2E" stroke-width="3" stroke-linecap="round"/></svg>',
   deer: '<svg viewBox="0 0 120 90"><g fill="#B7773E" stroke="#6B4222" stroke-width="2" stroke-linejoin="round"><path d="M28 44c6-10 30-14 52-10 8 2 12 8 12 14s-6 10-16 10H40c-8 0-14-4-12-14z"/><path d="M84 38c4-8 10-14 16-16l6 6c-4 4-8 10-12 14z"/><path d="M98 24c4-2 10 0 12 4-2 4-8 6-12 4z"/></g><g stroke="#6B4222" stroke-width="4" stroke-linecap="round"><path d="M40 56L22 74M52 58l-6 22M72 58l20 14M80 56l20 4"/></g><g stroke="#8A5A2E" stroke-width="3" stroke-linecap="round" fill="none"><path d="M100 22c-2-8 0-14 4-18M102 12l6-4M100 22c-6-6-8-12-8-18M94 10l-6-2"/></g><circle cx="106" cy="27" r="1.6" fill="#2A1606"/><path d="M30 42c-4-2-8 0-8 4" stroke="#FFF1DC" stroke-width="4" stroke-linecap="round" fill="none"/></svg>'
 };
 const bx = (c) => c * T + T / 2, by = (r) => r * T + T / 2;
@@ -5394,6 +5554,7 @@ function fxTigerClaw(row) {
     { transform: `translate(${w - T * 0.8}px,${y - T * 0.5}px) rotate(15deg)`, opacity: 1, offset: .8 }, { transform: `translate(${w + T}px,${y - T * 0.2}px) rotate(25deg)`, opacity: 0 }], { duration: 560, easing: 'cubic-bezier(.5,0,.3,1)' }));
   [-0.26, 0, 0.26].forEach((o, i) => {
     const d = fxEl('fx-clawmark'); d.style.cssText += `;width:${w + T}px;top:${y + o * T}px;left:${-T / 2}px`;
+    setTimeout(() => sparkBurst(w * 0.5, y + o * T, ['#FFFFFF', '#DDEBF6', '#9FB6CC'], 6, T * .7, 500), 200 + i * 55);
     gone(d.animate([{ transform: 'rotate(-7deg) scaleX(0)', opacity: 1 }, { transform: 'rotate(-7deg) scaleX(1)', opacity: 1, offset: .4 }, { transform: 'rotate(-7deg) scaleX(1)', opacity: 0 }], { duration: 760, delay: 80 + i * 55, easing: 'ease-out' }));
   });
   shake(7);
@@ -5416,21 +5577,24 @@ function fxBearStomp(t) {
     cr.style.margin = `${-L2}px 0 0 ${-L2}px`; cr.style.transform = `translate(${x}px,${y}px)`;
     cr.querySelectorAll('path').forEach(pth => pth.animate([{ strokeDashoffset: 1 }, { strokeDashoffset: 0 }], { duration: 280, fill: 'forwards', easing: 'ease-out' }));
     gone(cr.animate([{ opacity: 1 }, { opacity: 1, offset: .7 }, { opacity: 0 }], { duration: 1200 }));
-    // dust puffs roll out
+    // a sheet of spray rolls out
     for (let i = 0; i < 12; i++) {
       const a = i / 12 * Math.PI * 2, p = fxEl('fx-dust'), s = T * (0.55 + (i % 3) * 0.15);
       p.style.width = p.style.height = `${s}px`; p.style.margin = `${-s / 2}px 0 0 ${-s / 2}px`;
       gone(p.animate([{ transform: `translate(${x}px,${y}px) scale(.3)`, opacity: .9 }, { transform: `translate(${x + Math.cos(a) * T * 1.9}px,${y + Math.sin(a) * T * 1.4}px) scale(1.3)`, opacity: 0 }], { duration: 900, easing: 'cubic-bezier(.2,.8,.3,1)' }));
     }
-    sparkBurst(x, y, ['#8A6A4A', '#B89A70', '#5A4028'], 14, T * 1.6, 700);
+    for (let i = 0; i < 16; i++) { const a = -Math.PI / 2 + (i - 7.5) / 16 * Math.PI * 1.8, dr = fxEl('fx-drop'), dist = T * (1.2 + (i % 3) * .4);
+      gone(dr.animate([{ transform: `translate(${x}px,${y}px)`, opacity: 1 }, { transform: `translate(${x + Math.cos(a) * dist}px,${y + Math.sin(a) * dist}px)`, opacity: 1, offset: .55 }, { transform: `translate(${x + Math.cos(a) * dist * 1.2}px,${y + T * 1.2}px) scale(.4)`, opacity: 0 }], { duration: 800, easing: 'cubic-bezier(.2,.7,.4,1)' })); }
+    [0, 1, 2].forEach(i => { const rp = fxEl('fx-ripple'), s2 = T * 3.2 * (1 + i * .15); rp.style.width = rp.style.height = `${s2}px`; rp.style.margin = `${-s2 / 2}px 0 0 ${-s2 / 2}px`;
+      gone(rp.animate([{ transform: `translate(${x}px,${y}px) scale(.1)`, opacity: .95 }, { transform: `translate(${x}px,${y}px) scale(1)`, opacity: 0 }], { duration: 750, delay: i * 130, fill: 'backwards' })); });
   }, 380);
 }
-// ---- Crane Wings
-function fxCraneWings(t) {
+// ---- Hawk Dive
+function fxHawkDive(t) {
   if (reduce) return;
   const w = C * T, h = R * T, sz = T * 3.4;
   const fly = (from, to, rot, delay) => {
-    const c = fxEl('fx-art fx-crane', ART.crane); c.style.width = `${sz}px`; c.style.height = `${sz * 0.58}px`; c.style.margin = `${-sz * 0.29}px 0 0 ${-sz / 2}px`;
+    const c = fxEl('fx-art fx-crane fx-hawk', ART.hawk); c.style.width = `${sz}px`; c.style.height = `${sz * 0.58}px`; c.style.margin = `${-sz * 0.29}px 0 0 ${-sz / 2}px`;
     gone(c.animate([{ transform: `translate(${from[0]}px,${from[1]}px) rotate(${rot}deg)`, opacity: 0 }, { transform: `translate(${(from[0] + to[0]) / 2}px,${(from[1] + to[1]) / 2}px) rotate(${rot}deg)`, opacity: 1, offset: .5 },
       { transform: `translate(${to[0]}px,${to[1]}px) rotate(${rot}deg)`, opacity: 0 }], { duration: 780, delay, easing: 'cubic-bezier(.4,.1,.5,1)', fill: 'backwards' }));
     // a gust of wind follows it
@@ -5438,12 +5602,13 @@ function fxCraneWings(t) {
     if (horiz) g.style.cssText += `;width:${w}px;height:${T * 0.8}px;left:0;top:${from[1] - T * 0.4}px`; else g.style.cssText += `;width:${T * 0.8}px;height:${h}px;top:0;left:${from[0] - T * 0.4}px`;
     gone(g.animate([{ opacity: 0, transform: horiz ? 'scaleX(0)' : 'scaleY(0)' }, { opacity: .9, transform: 'scale(1)', offset: .5 }, { opacity: 0, transform: 'scale(1)' }], { duration: 700, delay: delay + 120, fill: 'backwards' }));
     for (let i = 0; i < 6; i++) {
-      const f = fxEl('fx-feather'), s2 = i / 6, fx0 = from[0] + (to[0] - from[0]) * s2, fy0 = from[1] + (to[1] - from[1]) * s2;
+      const f = fxEl(i % 2 ? 'fx-feather hawkf' : 'fx-ember big'), s2 = i / 6, fx0 = from[0] + (to[0] - from[0]) * s2, fy0 = from[1] + (to[1] - from[1]) * s2;
       gone(f.animate([{ transform: `translate(${fx0}px,${fy0}px) rotate(0deg)`, opacity: 0 }, { transform: `translate(${fx0 + 6}px,${fy0 + T * 0.3}px) rotate(40deg)`, opacity: 1, offset: .2 }, { transform: `translate(${fx0 - 10}px,${fy0 + T * 1.3}px) rotate(-30deg)`, opacity: 0 }], { duration: 1500, delay: delay + s2 * 600, fill: 'backwards' }));
     }
   };
   fly([-sz, by(t.r)], [w + sz, by(t.r)], 0, 0);
   fly([bx(t.c), -sz], [bx(t.c), h + sz], 90, 260);
+  shake(6);
 }
 // ---- Monkey Swap: the two orbs leap over each other
 async function fxMonkeySwap(a, b) {
@@ -5463,13 +5628,14 @@ async function fxMonkeySwap(a, b) {
 async function fxDeerStream() {
   if (reduce) return;
   const w = C * T, h = R * T;
-  const water = fxEl('fx-stream'); water.style.cssText += `;width:${w * 0.6}px;height:${h}px;left:0;top:0`;
+  const water = fxEl('fx-stream spring'); water.style.cssText += `;width:${w * 0.6}px;height:${h}px;left:0;top:0`;
   gone(water.animate([{ transform: `translateX(${-w * 0.7}px)`, opacity: .95 }, { transform: `translateX(${w * 1.1}px)`, opacity: .95 }], { duration: 1100, easing: 'cubic-bezier(.45,0,.55,1)' }));
   const deer = fxEl('fx-art fx-deer', ART.deer); const sz = T * 2.6; deer.style.width = `${sz}px`; deer.style.height = `${sz * 0.75}px`;
   const kf = []; for (let i = 0; i <= 8; i++) { const s2 = i / 8; kf.push({ transform: `translate(${-sz + (w + sz * 2) * s2}px,${h * 0.35 - Math.sin(Math.PI * s2) * h * 0.4}px) rotate(${(s2 - 0.5) * 30}deg)`, opacity: i === 0 || i === 8 ? 0 : 1 }); }
   gone(deer.animate(kf, { duration: 1100, easing: 'linear' }));
   all().forEach(t => t.el.animate([{ transform: `translate(${t.c * T}px,${t.r * T}px)` }, { transform: `translate(${t.c * T}px,${t.r * T - T * 0.25}px) rotate(${t.c % 2 ? 8 : -8}deg)` }, { transform: `translate(${t.c * T}px,${t.r * T}px)` }], { duration: 500, delay: 150 + (t.c / C) * 700, easing: 'ease-in-out' }));
-  for (let c = 0; c < C; c++) setTimeout(() => sparkBurst(bx(c), h - T * 0.3, ['#BFE9FF', '#FFFFFF', '#5BC0FF'], 5, T * 0.8, 600), 150 + c / C * 700);
+  for (let c = 0; c < C; c++) setTimeout(() => { for (let r = 0; r < R; r += 2) { const lf = fxEl('fx-leaf'); const x = bx(c) + (r % 4 ? 8 : -8), y = by(r);
+      gone(lf.animate([{ transform: `translate(${x}px,${y + T * .3}px) scale(0) rotate(-40deg)`, opacity: 0 }, { transform: `translate(${x}px,${y}px) scale(1) rotate(${c % 2 ? 25 : -25}deg)`, opacity: 1, offset: .35 }, { transform: `translate(${x + 14}px,${y - T * .5}px) scale(.7) rotate(${c % 2 ? 60 : -60}deg)`, opacity: 0 }], { duration: 900, easing: 'ease-out' })); } }, 150 + c / C * 700);
   await wait(700);
 }
 // ---- Luma's Dive
@@ -5536,7 +5702,7 @@ function paintBuddyGame() {
   wrap.hidden = false;
   wrap.style.setProperty('--bhue', ELEM[el].hue);
   img.alt = `${BUDDY[el].name} the ${BUDDY[el].animal}`;
-  makeRig(img, `buddy-${el}`);
+  makeRig(img, buddyWho(el));
 }
 function buddyHop() {
   const img = $('#buddyGame');
@@ -6311,7 +6477,7 @@ async function fxLab() {
   if (!running) { running = true; rainLoop(); }
   hud();
   const panel = document.createElement('div'); panel.id = 'fxlab';
-  const B = [['Tiger Claw', 'tiger'], ['Bear Stomp', 'bear'], ['Crane Wings', 'crane'], ['Monkey Swap', 'monkey'], ['Deer Stream', 'deer'], ['Lantern', 'p-row'], ['Blossom', 'p-bomb'], ['Firefly', 'p-fly'], ['Spirit Star', 'p-spirit'],
+  const B = [['Deer Leap', 'deer'], ['Hawk Dive', 'crane'], ['Monkey Swap', 'monkey'], ['Tiger Claw', 'tiger'], ['Bear Stomp', 'bear'], ['Lantern', 'p-row'], ['Blossom', 'p-bomb'], ['Firefly', 'p-fly'], ['Spirit Star', 'p-spirit'],
     ['Luma’s Dive · gentle', 'dive-small'], ['Luma’s Dive · good', 'dive-nice'], ['Luma’s Dive · deep', 'dive-deep'], ['+ Clouds', 'clouds']];
   panel.innerHTML = B.map(([n, k]) => `<button data-lab="${k}">${n}</button>`).join('');
   $('#game').appendChild(panel);
@@ -6322,7 +6488,7 @@ async function fxLab() {
     if (k === 'clouds') { addClouds(5); hud(); return; }
     if (['tiger', 'bear', 'crane'].includes(k)) { mode = k; await usePowerOn(mid()); mode = null; return; }
     if (k === 'monkey') { const a = mid(), b2 = [board[a.r][a.c + 1], board[a.r][a.c - 1], board[a.r + 1] && board[a.r + 1][a.c]].find(x => x && !x.cloud); mode = 'monkey'; monkeyFirst = a; await usePowerOn(b2); mode = null; return; }
-    if (k === 'deer') { busy = true; elemSound('water', 0, 4); await fxDeerStream(); await shuffle(); busy = false; return; }
+    if (k === 'deer') { busy = true; elemSound('wood', 0, 4); await fxDeerStream(); await shuffle(); busy = false; return; }
     if (k.startsWith('p-')) { const t = mid(), sp = k.slice(2); if (sp === 'spirit') { t.type = 'spirit'; t.sp = null; } else t.sp = sp; paint(t); await wait(500); fireTap(t); return; }
     if (k.startsWith('dive-')) {
       if (clouds().length < 3) { addClouds(5); await wait(400); }
@@ -6353,7 +6519,7 @@ function startLevel() {
   syncBoosts();
   playGate();
   setTimeout(() => {
-    sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); hud();
+    sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); hud();
     say(S.buddy === L.elem
       ? `${BUDDY[S.buddy].name} is at home here. Match 3 of the same element to grow Luma's Aura.`
       : 'Swipe to match 3 of the same element. Each match grows Luma’s Aura.');
@@ -6409,7 +6575,7 @@ async function arrivalBreath() {
   }
   ov.removeEventListener('pointerdown', on); removeEventListener('pointerup', off); removeEventListener('pointercancel', off);
   ov.classList.remove('good');
-  charge = Math.max(charge, Math.round(5 + q * 10), S.buddy === 'earth' ? 15 : 0);   // a Root Stone charm can start it higher                       // 8% to 30%: a good arrival starts the Aura Glowing
+  charge = Math.max(charge, Math.round(5 + q * 10), S.buddy === 'earth' ? [15, 25, 35, 50][giftTier('earth') - 1] : 0);   // a Root Stone charm can start it higher                       // 8% to 30%: a good arrival starts the Aura Glowing
   face('happy'); cue.textContent = 'You have arrived.';
   sub.textContent = `Luma's Aura starts ${auraName(charge)}. Match orbs to make it Heavenly.`;
   chord([523.25, 659.25, 783.99], 0.1);
@@ -6986,7 +7152,7 @@ async function winLevel() {
   if (!S.sealsEarned || !S.sealsEarned.first) awardSeal('first');
   const newDay = S.lastDay !== dayKey();
   const note = markDay();
-  if (newDay) { S.practiceDays = (S.practiceDays || 0) + 1; if (S.buddy === 'wood') S.lanterns = (S.lanterns || 0) + 1; save(); }
+  if (newDay) { S.practiceDays = (S.practiceDays || 0) + 1; if (S.buddy === 'wood') S.swirls = (S.swirls || 0) + (giftTier('wood') >= 3 ? 2 : 1); save(); }
   const freshBuddy = checkBuddyUnlocks();
   if (S.streak >= 9) awardSeal('nine');
   if (S.streak >= 108) awardSeal('keeper');
@@ -7006,10 +7172,10 @@ async function winLevel() {
     br.innerHTML = `<b>${BUDDY[freshBuddy].name} the ${BUDDY[freshBuddy].animal} is yours.</b> ${S.practiceDays} practice days earned it.`;
     chord([659.25, 880, 1174.66], 0.09);
   } else if (S.buddy) {
-    const nx = STAGES.find(x => x.at > (S.practiceDays || 0));
+    const bd = bondOf(S.buddy), nx = STAGES[careStage(S.buddy) + 1];
     br.className = 'streakrow'; br.hidden = false;
-    br.innerHTML = nx ? `<b>${BUDDY[S.buddy].name} is ${stageOf().name}.</b> ${nx.at - S.practiceDays} more practice days to ${nx.name}.`
-      : `<b>${BUDDY[S.buddy].name} is a keeper.</b> ${S.practiceDays} practice days together.`;
+    br.innerHTML = (caredToday(S.buddy) ? '' : `<b>Breathe with ${BUDDY[S.buddy].name} today 💛</b> `) + (nx ? `${nx.at - bd.care} more Bond until ${BUDDY[S.buddy].name} grows ${nx.key === 'guardian' ? 'into a Spirit Guardian' : nx.name.toLowerCase()}.`
+      : `${BUDDY[S.buddy].name} is a Spirit Guardian.`);
   } else br.hidden = true;
   renderStreak(); renderBal(); teaseBal(); renderBuddy();
   $('#wNext').hidden = n >= LEVELS.length;
@@ -7049,8 +7215,8 @@ $('#lMap').addEventListener('click', async () => { await hideOv('lose'); toMap()
 const UNIT = { lanterns: 0.99 / 3, swirls: 0.99 / 5, shields: 0.99 / 2, coins: 0.99 / 500, hearts: 0.99 };
 const CALM_DAYS = 9;
 const SINGLES = [
-  { id: 's-claw', give: { lanterns: 3 }, price: 0.99, name: 'Tiger Claws', note: 'clears a whole row', icon: 'pw-tiger', eh: '#6FBF4A', qty: '×3' },
-  { id: 's-deer', give: { swirls: 5 }, price: 0.99, name: 'Deer Streams', note: 're-flows the board', icon: 'pw-deer', eh: '#3C86C9', qty: '×5' },
+  { id: 's-claw', give: { lanterns: 3 }, price: 0.99, name: 'Tiger Claws', note: 'clears a whole row', icon: 'pw-tiger', eh: '#9AA9B8', qty: '×3' },
+  { id: 's-deer', give: { swirls: 5 }, price: 0.99, name: 'Deer Leaps', note: 'grows the board fresh', icon: 'pw-deer', eh: '#6FBF4A', qty: '×5' },
   { id: 's-hearts', give: { hearts: 1 }, price: 0.99, name: 'Full hearts', note: 'back to 5 tries', glyph: '<b class="heartg">♥</b>', eh: '#E0697F' },
   { id: 's-shield', give: { shields: 2 }, price: 0.99, name: 'Streak Shields', note: 'covers a missed day', glyph: '<b class="shieldg">🛡</b>', eh: '#C9D2DA', qty: '×2' },
   { id: 's-coins', give: { coins: 500 }, price: 0.99, name: '500 coins', note: 'for charms and refills', glyph: '<i class="coin"></i>', eh: '#F0B93A' },
@@ -7177,7 +7343,7 @@ $('#shop').addEventListener('click', async e => {
   if (buy) {
     const k = buy.dataset.buy;
     if (k === 'lanterns') { S.lanterns += 3; toast('Preview: 3 Tiger Claws added. No charge.'); }
-    if (k === 'swirls') { S.swirls += 5; toast('Preview: 5 Deer Streams added. No charge.'); }
+    if (k === 'swirls') { S.swirls += 5; toast('Preview: 5 Deer Leaps added. No charge.'); }
     if (k === 'hearts') { S.hearts = 5; toast('Preview: hearts are full. No charge.'); $('#lRetry').textContent = 'Try again · uses a heart'; }
     if (k === 'boost') { S.boostUntil = Math.max(Date.now(), S.boostUntil || 0) + 30 * 60000; toast('Preview: double coins for 30 minutes. No charge.'); }
     if (k === 'shields') { S.shields += 2; toast('Preview: 2 Streak Shields added. No charge.'); renderStreak(); }
