@@ -2240,6 +2240,41 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .braim{flex-basis:100%;margin:4px 0 0 !important;min-height:0 !important;text-align:center;font-size:13.5px !important;font-weight:900;color:#FFE9A8 !important}
 .brgo{width:100%;margin-top:14px;font-size:21px !important;color:#fff !important;text-shadow:0 2px 0 rgba(20,70,30,.7);
   background:linear-gradient(180deg,#9BE07F,#4FB05A 55%,#2F8A3C) !important;box-shadow:inset 0 3px 0 rgba(255,255,255,.55),inset 0 -4px 0 rgba(0,0,0,.2),0 0 0 3px #F4D78C,0 6px 0 3px #1E5A2A,0 12px 18px rgba(0,0,0,.35) !important;animation:loplay 2.4s ease-in-out infinite}
+
+/* v64: the Spirit Companion perched behind the board, watching and reacting */
+#boardwrap{position:relative}
+.peek{position:absolute;z-index:6;width:124px;pointer-events:none}
+.peek .pkclip{display:block;position:relative;height:74px;overflow:hidden;transform-origin:50% 100%;animation:pkbreath 3.2s ease-in-out infinite}
+.peek img{position:absolute;left:0;bottom:0;width:100%;transform-origin:50% 100%;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+@keyframes pkbreath{0%,100%{transform:scale(1,1)}50%{transform:scale(1.015,1.04)}}
+.peek .pkperch{position:absolute;left:24px;right:24px;bottom:-5px;height:10px;border-radius:6px;background:linear-gradient(#F6DC96,#C99A45 55%,#7A4F1E);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.7),0 3px 0 #4A2C0C,0 5px 8px rgba(0,0,0,.35)}
+.peek .pkperch::before,.peek .pkperch::after{content:"";position:absolute;top:-4px;width:7px;height:7px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#9BE07F,#3E8E4A);box-shadow:0 1px 0 rgba(0,0,0,.3)}
+.peek .pkperch::before{left:6px;transform:rotate(-20deg) scale(1.2,.8)}
+.peek .pkperch::after{right:4px;transform:rotate(20deg) scale(1.2,.8)}
+.peek .pkglow{position:absolute;left:50%;bottom:0;width:120px;height:90px;margin-left:-60px;border-radius:50%;background:radial-gradient(closest-side,var(--pg,rgba(255,160,110,.55)),transparent);opacity:0;transition:opacity .4s}
+.peek.glow .pkglow{opacity:1}
+.peek.pop .pkclip{animation:pkpop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pkpop{0%{transform:scale(1,1)}30%{transform:scale(1.12,.86)}60%{transform:scale(.94,1.1) translateY(-6px)}100%{transform:scale(1,1)}}
+.peek.pose-breathe .pkclip{animation:pkslow 5s ease-in-out infinite}
+@keyframes pkslow{0%,100%{transform:scale(1,1)}45%{transform:scale(1.03,1.08)}}
+.peek.pose-cheer .pkclip{animation:pkcheer .6s ease-in-out infinite}
+@keyframes pkcheer{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px) scale(1.03,.97)}}
+/* Harmony tab icon: still, like the other tab icons. Wood at the top, then the cycle clockwise */
+.tenergy .ering,.tenergy .eorbit{animation:none !important}
+.tenergy .ecore{animation:none !important;transform:none;opacity:1}
+
+/* v64b: companion centred above the board, perk plaque underneath; the old lantern row is gone */
+.lanterns{display:none !important}
+.peekrow{position:relative;z-index:6;display:flex;flex-direction:column;align-items:center;margin:0 0 -2px}
+.peekrow .peek{position:relative;left:auto;top:auto}
+.pkperk{position:relative;z-index:2;margin-top:-3px;display:flex;align-items:center;gap:6px;padding:3px 12px 4px;border-radius:99px;font-size:12px;font-weight:900;color:#3A2408;white-space:nowrap;
+  background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 1.5px 0 rgba(255,255,255,.8),0 0 0 1.5px #8A5A1C,0 3px 0 #6B4418,0 5px 10px rgba(0,0,0,.35)}
+.pkperk small{font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#7A4F1E}
+.pkperk.fire{animation:pcall 1.6s ease-in-out 3}
+
+.peek .pkface{position:absolute;left:50%;bottom:-6px;width:70px;height:70px;margin-left:-35px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #FFF3CF,0 0 0 5.5px var(--gold-mid,#D9A94A),0 4px 10px rgba(0,0,0,.4)}
+.peekrow .todaychip{position:absolute;left:10px;top:50%;margin:0;transform:translateY(-60%);max-width:118px;white-space:normal;line-height:1.15;font-size:10.5px;padding:5px 9px 5px 5px}
+@media (max-width:370px){.peekrow .todaychip{max-width:92px;left:4px;font-size:9.5px;padding:4px 7px 4px 4px}.peekrow .todaychip .tco{width:16px;height:16px}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2475,7 +2510,8 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
       <div class="stat goal" id="cloudStat"><div class="goalwrap"><div class="lbl">Goals</div><div class="goals" id="goalChips"></div></div><span id="gClouds" hidden>0</span><small id="gCloudWord" hidden></small></div>
       <div class="stat" id="movesStat"><div><div class="lbl">Moves</div><div class="val" id="gMoves">20</div></div></div>
     </div>
-    <div class="lanterns" id="lanterns" aria-label="Lanterns lit"></div>
+    <div class="lanterns" id="lanterns" aria-label="Lanterns lit" hidden></div>
+    <div class="peekrow" id="peekRow" hidden><div class="peek" id="peek"><span class="pkglow"></span><span class="pkclip"><img id="pkImg" alt=""><img class="pkface" id="pkFace" alt="" hidden></span></div><button class="pkperk" id="pkPerk"></button></div>
     <div class="todaychip" id="todayChip" hidden></div>
     <div class="babybar" id="babyBar" hidden><span>Baby mode · watching and breathing together</span><button id="babyStop">Stop</button></div>
     <div class="flowbar" id="flowBar" hidden><span id="flowText"></span></div>
@@ -5749,7 +5785,7 @@ async function resolve(clear, groups, moved) {
       paint(m.t); m.t.el.classList.add('born'); setTimeout(() => m.t.el.classList.remove('born'), 460);
       bell(m.kind === 'spirit' ? 1046.5 : 783.99, 0, 0.09); bell(m.kind === 'spirit' ? 1318.5 : 1046.5, 0.09, 0.07);
       if (!reduce) sparkleAt(boardEl, m.t.c * T + T / 2, m.t.r * T + T / 2, ['#FFF6DE', '#FFE08A', '#FFFFFF'], 12);
-      questBump('special');
+      questBump('special'); peekReact('gasp', 1300);
       if (!practice) say(SP_HOW[m.kind]);
       setTimeout(() => { if (board[m.t.r] && board[m.t.r][m.t.c] === m.t) spCallout(m.t); }, 500);
     });
@@ -5805,6 +5841,8 @@ async function popSet(set) {
   const n = Math.min(arr.length, 5);
   if (combo >= 2) setTimeout(() => boop(Math.min(combo * 2, 9), 0.08), 120);
   if (arr.length >= 4) avatarReact('happy', arr.length + combo * 2);
+  if (S.buddy && arr.some(t => t.type === S.buddy)) peekReact('cheer', 1300, true);
+  else if (arr.length >= 5 || combo >= 2) peekReact('cheer', 1200);
   if (combo >= 1 && performance.now() - cheerAt > 2500) { cheerAt = performance.now(); say(rnd(CHEERS)); }
   hud();
   await wait(reduce ? 40 : 250);
@@ -6645,6 +6683,68 @@ function say(msg) {
   clearTimeout(bubbleT);
   bubbleT = setTimeout(() => { b.textContent = msg; b.classList.remove('fade'); }, 180);
 }
+
+/* ---------- the Spirit Companion watches from behind the board ----------
+   Real frames, never a float: it breathes, blinks (a quick eyes-closed frame), follows your finger,
+   cheers, gasps, breathes with you, worries a little when moves run low, and yawns if you wander off. */
+const PEEK_ART = { fire: 'pip' };                 // Pip first; the other four join once approved
+const peekWho = () => PEEK_ART[S.buddy || 'fire'] || 'pip';
+const peekArt = () => !!PEEK_ART[S.buddy || 'fire'];
+const peek = { pose: 'idle', until: 0, base: 'idle', act: performance.now(), blinkAt: 0 };
+function peekSrc(p) { return `img/peek/${peekWho()}-${p}.png`; }
+function placePeek() {
+  const row = $('#peekRow'), pk = $('#peek'); if (!row || $('#game').hidden) return;
+  if (babyOn()) { row.hidden = true; return; }
+  row.hidden = false; $('#buddyWrap').hidden = true;
+  const el = S.buddy || 'fire';
+  pk.style.setProperty('--pg', ELEM[el].glow + 'aa');
+  $('#pkPerk').innerHTML = `<small>${BUDDY[el].name}'s gift</small>${giftName(el)}`;
+  // companions still waiting for their perch art appear as their own living portrait
+  const art = peekArt(), face = $('#pkFace'); $('#pkImg').hidden = !art; face.hidden = art;
+  if (!art && (!rigs.get(face) || rigs.get(face).who !== buddyWho(el))) makeRig(face, buddyWho(el));
+  const tc = $('#todayChip'); if (tc && tc.parentNode !== $('#peekRow')) $('#peekRow').appendChild(tc);
+  ['idle', 'cheer', 'gasp', 'breathe', 'worried', 'sleepy'].forEach(p => { const i = new Image(); i.src = peekSrc(p); });
+  peekShow(peek.base, true);
+}
+$('#pkPerk').addEventListener('click', () => { const el = S.buddy || 'fire'; tick(); peekReact('cheer', 1200, true); toast(`${BUDDY[el].name}'s gift · ${giftName(el)}: ${giftText(el)}.`); });
+function peekShow(pose, quiet) {
+  const pk = $('#peek'), img = $('#pkImg'); if (!pk || $('#peekRow').hidden) return;
+  if (peekArt() && (peek.pose !== pose || !img.getAttribute('src'))) img.src = peekSrc(pose);
+  peek.pose = pose;
+  pk.className = `peek pose-${pose}`;
+  if (!quiet && !reduce) { void pk.offsetWidth; pk.classList.add('pop'); }
+}
+function peekReact(pose, ms = 1400, glow) {
+  const pk = $('#peek'); if (!pk || $('#peekRow').hidden) return;
+  peek.until = performance.now() + ms; peekShow(pose);
+  if (glow) { pk.classList.add('glow'); setTimeout(() => pk.classList.remove('glow'), ms); }
+}
+function peekLook(x) {
+  const img = $('#pkImg'), pk = $('#peek'); if (!img || $('#peekRow').hidden) return;
+  if (x == null) { img.style.transform = ''; return; }
+  const r = pk.getBoundingClientRect(), d = Math.max(-1, Math.min(1, (x - (r.left + r.width / 2)) / 220));
+  img.style.transform = `rotate(${(d * 9).toFixed(1)}deg) translateX(${(d * 3).toFixed(1)}px)`;
+}
+setInterval(() => {
+  const pk = $('#peek'); if (!pk || $('#peekRow').hidden || $('#game').hidden) return;
+  const now = performance.now();
+  const breathingNow = breathing || !$('#breathe').hidden;
+  peek.base = breathingNow ? 'breathe' : (moves <= 5 && moves > 0 && !goalsDone()) ? 'worried' : 'idle';
+  if (now < peek.until) return;
+  if (!breathingNow && !busy && now - peek.act > 14000) { peek.act = now; peekReact('sleepy', 2200); return; }
+  if (peek.pose !== peek.base) peekShow(peek.base, true);
+  if ((peek.base === 'idle' || peek.base === 'worried') && now > peek.blinkAt) {
+    peek.blinkAt = now + 3200 + Math.random() * 3000;
+    if (!peekArt()) return;
+    const back = peek.base; $('#pkImg').src = peekSrc('breathe');
+    setTimeout(() => { if (performance.now() >= peek.until && peek.pose === back) $('#pkImg').src = peekSrc(back); }, 140);
+  }
+}, 200);
+boardEl.addEventListener('pointerdown', e => { peek.act = performance.now(); peekLook(e.clientX); });
+boardEl.addEventListener('pointermove', e => { if (e.buttons) peekLook(e.clientX); });
+addEventListener('pointerup', () => setTimeout(() => peekLook(null), 350));
+addEventListener('resize', () => { if (!$('#game').hidden) setTimeout(placePeek, 60); });
+
 function paintBuddyGame() {
   const el = S.buddy, img = $('#buddyGame'), wrap = $('#buddyWrap');
   if (!el) { wrap.hidden = true; rigs.delete(img); return; }
@@ -6739,7 +6839,7 @@ function hud() {
   const p = progress();
   $('#gClouds').textContent = cl;
   const tc = $('#todayChip');
-  if (spunToday()) { tc.hidden = false; tc.innerHTML = `<span class="tco">${orbHTML(S.todayElem)}</span>${ELEM[S.todayElem].name} day · Luma fills faster`; }
+  if (spunToday()) { tc.hidden = false; tc.innerHTML = `<span class="tco">${orbHTML(S.todayElem)}</span><span>${ELEM[S.todayElem].name} day<br>Luma fills faster</span>`; }
   else tc.hidden = true;
   $('#gCloudWord').textContent = cl === 1 ? 'cloud left' : 'clouds left';
   $('#gMoves').textContent = babyOn() || practice || lab ? '∞' : Math.max(0, moves);
@@ -6968,7 +7068,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { peek: (p, g) => peekReact(p, 4000, g), breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -7466,6 +7566,7 @@ function startLevel() {
   makeRig($('#kaiFace'), heroId()); applyLooks();
   paintBuddyGame();
   syncBoosts();
+  placePeek();
   playGate();
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); hud();
@@ -8296,6 +8397,7 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
   pt.classList.remove('show'); await wait(350); pt.hidden = true;
 }
 async function winLevel() {
+  peekReact('cheer', 6000, true);
   glowGoal(false); clearHints(); hideTip();
   if (babyOn()) {                                          // baby mode: a soft cheer, then a fresh sky. No stars, coins or unlocks
     chord([523.25, 659.25, 783.99], 0.08); if (!reduce) confetti('#board');
@@ -8384,6 +8486,7 @@ $('#wNext').addEventListener('click', async () => { await hideOv('win'); toMap()
 $('#wMap').addEventListener('click', async () => { await hideOv('win'); toMap(); });
 
 function loseLevel() {
+  peekReact('worried', 4000);
   S.hearts = Math.max(0, S.hearts - 1); save(); syncWallet();
   bell(392, 0, 0.08); bell(329.63, 0.25, 0.07);
   const left = clouds().length;
@@ -8657,7 +8760,8 @@ async function introSplash() {
 introSplash();
 syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); addCardX();
 
-if (!S.audio2) { S.musicOn = false; S.audio2 = 1; save(); }   // music starts OFF for everyone
+if (!S.audio2) { S.musicOn = false; S.audio2 = 1; save(); }
+if (!S.buddy) { S.buddy = 'fire'; S.owned = [...new Set([...(S.owned || []), 'fire'])]; save(); }   // Pip is everyone's first companion   // music starts OFF for everyone
 syncMute(); syncMusic();
 renderQuests(); renderSeals(); if (S.babyMode) { S.babyLog = S.babyLog || { sessions: 0, seconds: 0 }; S.babyLog.sessions++; S.babyLog.since = Date.now(); } setBaby(S.babyMode); renderHome();
 })();
