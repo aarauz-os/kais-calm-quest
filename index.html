@@ -1874,7 +1874,8 @@ body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--tabh) + v
 
 /* ================= Season Pass v2 (v56): a golden vine of rewards ================= */
 .passglow{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(90% 40% at 50% 0%,rgba(255,220,140,.35),transparent 70%),radial-gradient(70% 50% at 50% 100%,rgba(90,200,150,.18),transparent 70%)}
-.passin{box-sizing:border-box;padding-left:0;padding-right:0}
+.passin{box-sizing:border-box;padding-left:0;padding-right:0;overflow:hidden}
+#passov{overflow:clip}
 .passin .wtitle small{white-space:nowrap;letter-spacing:.12em}
 .phero{position:relative;display:flex;align-items:center;gap:14px;margin:12px 16px 6px;padding:12px 14px 12px 12px;border-radius:24px;
   background:linear-gradient(180deg,rgba(35,82,67,.95),rgba(15,40,33,.97));box-shadow:0 0 0 1.5px #F4D78C,0 0 0 5px rgba(20,50,40,.9),0 0 0 6.5px rgba(227,188,106,.55),0 14px 30px rgba(0,0,0,.45)}
@@ -2275,6 +2276,116 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .peek .pkface{position:absolute;left:50%;bottom:-6px;width:70px;height:70px;margin-left:-35px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #FFF3CF,0 0 0 5.5px var(--gold-mid,#D9A94A),0 4px 10px rgba(0,0,0,.4)}
 .peekrow .todaychip{position:absolute;left:10px;top:50%;margin:0;transform:translateY(-60%);max-width:118px;white-space:normal;line-height:1.15;font-size:10.5px;padding:5px 9px 5px 5px}
 @media (max-width:370px){.peekrow .todaychip{max-width:92px;left:4px;font-size:9.5px;padding:4px 7px 4px 4px}.peekrow .todaychip .tco{width:16px;height:16px}}
+
+/* v65: the companion stands behind the board, both paws on its ledge, looking down at the play */
+.peekrow{height:128px;margin:0;display:block}
+@media (max-height:800px){.peekrow{height:108px}}
+.peekrow .todaychip{top:44%}
+.peek{position:absolute;z-index:5;width:150px;pointer-events:none}
+.peek .pkclip{display:block;position:relative;height:auto;overflow:visible;transform-origin:50% 100%;animation:pkbreath 3.4s ease-in-out infinite}
+.peek img{position:relative;display:block;width:100%;transform-origin:50% 100%;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
+.peek.pose-sleepy .pkclip{animation:pksleep 3s ease-in-out}
+@keyframes pksleep{0%,100%{transform:rotate(0)}40%,70%{transform:rotate(-4deg) translateY(3px) scale(1,.97)}}
+.pkrail{position:absolute;z-index:6;height:22px;padding:0 10px;border-radius:9px 9px 5px 5px;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;overflow:hidden;
+  font-family:"Marcellus SC",Georgia,serif;font-size:12.5px;color:#FFE9A8;text-shadow:0 1px 0 rgba(40,20,4,.9),0 -1px 0 rgba(255,230,160,.25);
+  background:linear-gradient(180deg,#C98F4E 0%,#9A6430 30%,#7A4A22 70%,#5E3616 100%);
+  box-shadow:inset 0 2px 0 rgba(255,220,160,.55),inset 0 -2px 0 rgba(0,0,0,.35),0 0 0 1.5px #E3BC6A,0 4px 0 #3E220A,0 7px 12px rgba(0,0,0,.4)}
+.pkrail small{font-family:Nunito,system-ui,sans-serif;font-size:9.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#F4D78C;opacity:.9}
+.pkrail::before,.pkrail::after{content:"";width:6px;height:6px;border-radius:50%;flex:none;background:radial-gradient(circle at 35% 30%,#FFF1C4,#C99A45 60%,#6B4418)}
+
+/* ================= v66 Season Pass: pages, Spirit Stars, Board Styles, Golden Path ================= */
+.sphead{display:flex;align-items:center;gap:12px;margin:10px 16px 4px;padding:10px 14px 10px 10px;border-radius:22px;background:linear-gradient(180deg,rgba(35,82,67,.95),rgba(15,40,33,.97));box-shadow:0 0 0 1.5px #F4D78C,0 0 0 5px rgba(20,50,40,.9),0 0 0 6.5px rgba(227,188,106,.55),0 12px 26px rgba(0,0,0,.45)}
+.spstars{position:relative;flex:none;display:flex;align-items:center;gap:6px;padding:6px 12px 6px 6px;border-radius:18px;background:radial-gradient(circle at 30% 40%,rgba(255,226,150,.35),transparent 70%)}
+.spstar{width:40px;height:40px;background:radial-gradient(circle at 40% 35%,#FFFBEA,#F2CC6A 55%,#C08A26);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:drop-shadow(0 0 6px rgba(255,214,120,.9));animation:spstar 3s ease-in-out infinite}
+@keyframes spstar{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.1)}}
+.spstars b{font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:30px;line-height:1;color:#FFF3CF;text-shadow:0 2px 0 rgba(40,24,6,.8)}
+.spstars small{font-size:9.5px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-hi);line-height:1.1}
+.splevel{flex:1;min-width:0}
+.splvl{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.splvl b{font-size:14px;color:#FFE9A8}.splvl em{font-style:normal;font-size:11px;font-weight:800;opacity:.85}
+.splevel .passbar{height:10px}
+.splevel small{display:block;margin-top:5px;font-size:10.5px;font-weight:700;opacity:.8;line-height:1.3}
+.sppages{display:flex;gap:6px;margin:8px 16px 2px;overflow-x:auto;scrollbar-width:none}
+.sppg{flex:1;min-width:58px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px 5px;border-radius:14px;color:#FFF6DE;background:rgba(8,16,14,.55);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.3)}
+.sppg .o{position:relative;width:24px;height:24px;display:grid;place-items:center;font-size:14px}
+.sppg b{font-size:11px;font-weight:900}.sppg small{font-size:10px;font-weight:800;opacity:.75}
+.sppg.on{background:linear-gradient(180deg,color-mix(in srgb,var(--eh) 45%,#1B3F33),#123028);box-shadow:inset 0 0 0 2px var(--eg),0 0 14px color-mix(in srgb,var(--eg) 60%,transparent)}
+.sppg.locked{opacity:.55}
+.sphero{position:relative;margin:8px 0 12px;border-radius:24px;overflow:hidden;background:radial-gradient(90% 90% at 50% 20%,color-mix(in srgb,var(--sg) 45%,transparent),transparent 70%),linear-gradient(180deg,#1F4A3D,#10291F);box-shadow:0 0 0 2px #F4D78C,0 0 0 6px rgba(30,58,48,.9),0 0 0 7.5px rgba(227,188,106,.6),0 0 34px color-mix(in srgb,var(--sg) 45%,transparent)}
+.shstage{position:relative;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:18px}
+.shrays{position:absolute;left:50%;top:40%;width:260px;height:260px;margin:-130px;background:repeating-conic-gradient(color-mix(in srgb,var(--sg) 55%,transparent) 0 7deg,transparent 7deg 20deg);-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 66%);mask-image:radial-gradient(circle,#000 20%,transparent 66%);animation:rays 24s linear infinite}
+.shbud{position:relative;width:118px;margin-bottom:-2px;animation:pkcheer .9s ease-in-out infinite;filter:drop-shadow(0 0 12px color-mix(in srgb,var(--sg) 80%,transparent))}
+.shrail{position:relative;width:78%;height:22px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:9px 9px 5px 5px;font-family:"Marcellus SC",Georgia,serif;font-size:12px;color:var(--rt,#FFE9A8);text-shadow:0 1px 0 rgba(0,0,0,.6);background:var(--rail);box-shadow:inset 0 2px 0 rgba(255,255,255,.45),inset 0 -2px 0 rgba(0,0,0,.3),0 0 0 1.5px var(--rim,#E3BC6A),0 4px 0 rgba(0,0,0,.35)}
+.shrail small{font-family:Nunito,system-ui,sans-serif;font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
+.shboard{position:absolute;bottom:0;left:11%;right:11%;height:18px;border-radius:0 0 10px 10px;background:repeating-linear-gradient(90deg,#123028 0 22px,#16382E 22px 44px);box-shadow:0 0 0 1.5px var(--rim,#E3BC6A)}
+.shtx{padding:12px 16px 16px;text-align:center}
+.shtx small{display:block;font-size:10.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi)}
+.shtx b{display:block;margin:3px 0 4px;font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:22px;color:#FFF3CF;text-shadow:0 2px 0 rgba(40,24,6,.8)}
+.shtx em{display:block;font-style:normal;font-size:13px;font-weight:700;opacity:.9;line-height:1.4}
+.shbtn,.ssgo{margin-top:10px;padding:10px 22px;border-radius:99px;font-weight:900;font-size:15px;color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 4px 0 #8A5A1C,0 0 18px rgba(255,214,120,.5)}
+.sphero.done .shbtn{color:#fff;background:linear-gradient(#9BE07F,#2F8A3C);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 4px 0 #1E5A2A}
+.sphero.locked .shbtn{color:rgba(255,246,222,.75);background:rgba(0,0,0,.3);box-shadow:none}
+.spgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.sptile{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px 26px;border-radius:18px;color:#FFF6DE;text-align:center;background:linear-gradient(180deg,rgba(36,84,68,.96),rgba(16,42,34,.97));box-shadow:0 0 0 1.5px rgba(244,215,140,.7),0 6px 14px rgba(0,0,0,.35)}
+.sptile .picw{width:62px;height:62px}
+.sptile b{font-size:11.5px;font-weight:900;line-height:1.15}
+.spcost{position:absolute;left:0;right:0;margin:0 auto;width:fit-content;bottom:-9px;min-width:44px;padding:3px 10px;border-radius:99px;font-size:12.5px;font-weight:900;color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:0 0 0 1.5px #8A5A1C,0 3px 0 #6B4418}
+.sptile.can{box-shadow:0 0 0 2px #FFF3CF,0 0 0 4px #D9A94A,0 0 20px 4px rgba(255,214,120,.5)}
+.sptile.can .spcost{animation:pcall 1.8s ease-in-out infinite}
+.sptile.done{opacity:.8}.sptile.done .spcost{color:#fff;background:linear-gradient(#7FD06A,#2F8A3C);box-shadow:0 0 0 1.5px #fff}
+.sptile.locked .picw img{filter:grayscale(.6) brightness(.7)}.sptile.locked .spcost{color:rgba(255,246,222,.8);background:#2A3A34;box-shadow:0 0 0 1.5px rgba(255,233,168,.3)}
+.spunlock{display:flex;align-items:center;justify-content:center;gap:10px;margin:18px 0 6px;font-size:13px;font-weight:800;color:#FFF6DE}
+.spunlock b{color:#FFE9A8}
+.sppips{display:flex;gap:4px}.sppips i{width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.18)}.sppips i.on{background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:0 0 6px rgba(255,214,120,.9)}
+.spgold{margin:14px 0 4px;padding:12px;border-radius:22px;background:radial-gradient(100% 80% at 50% 0%,rgba(255,214,120,.3),transparent 70%),linear-gradient(180deg,#3B2A12,#20180A);box-shadow:0 0 0 2px #F4D78C,0 0 26px rgba(255,210,120,.35)}
+.sgtitle{display:flex;justify-content:space-between;align-items:baseline;margin:0 4px 10px}
+.sgtitle b{font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:17px;color:#FFE9A8;white-space:nowrap}
+.sgtitle span{text-align:right;margin-left:8px}
+.sgtitle span{font-size:11.5px;font-weight:800;color:#F4D78C;opacity:.9}
+.sgrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sptile.golden{background:linear-gradient(180deg,#6A4A16,#3A270A);box-shadow:0 0 0 1.5px #FFE9A8,0 0 14px rgba(255,214,120,.4)}
+.sgbuy{display:block;width:100%;margin-top:18px;padding:12px;border-radius:99px;font-weight:900;font-size:16px;color:#3A2408;background:linear-gradient(#FFF6D0,#F2CC6A 50%,#D9A13E);box-shadow:inset 0 2px 0 #fff,0 4px 0 #7A4F1E,0 0 22px rgba(255,214,120,.6)}
+.sgnote{margin:8px 4px 0;font-size:11.5px;font-weight:700;line-height:1.4;color:#F6E7C4;opacity:.9;text-align:center}
+.spsheet{position:absolute;inset:0;z-index:8;display:flex;align-items:flex-end;justify-content:center;padding:16px 16px calc(20px + var(--sab));background:rgba(6,14,11,.55)}
+.sscard{position:relative;width:100%;max-width:380px;padding:22px 18px 18px;border-radius:26px;text-align:center;color:#FFF6DE;background:linear-gradient(180deg,#24574A,#123028);box-shadow:0 0 0 2px #F4D78C,0 0 0 6px rgba(20,50,40,.9),0 0 0 7.5px rgba(227,188,106,.6),0 20px 40px rgba(0,0,0,.5)}
+.sscard.golden{background:linear-gradient(180deg,#5A3E12,#2A1C08)}
+.ssx{position:absolute;top:10px;right:10px;width:32px;height:32px;border-radius:50%;font-weight:900;color:#fff;background:linear-gradient(#E85B4A,#A8322A);box-shadow:0 0 0 2px #FFE9C0}
+.ssart{display:flex;justify-content:center}.ssart .picw{width:110px;height:110px}
+.sscard small{display:block;margin-top:6px;font-size:10.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi)}
+.sscard b{display:block;margin:3px 0;font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:22px}
+.sscard p{margin:4px 0 0;font-size:14px;font-weight:700;line-height:1.45;opacity:.92}
+.sscard .ssgo{width:100%;font-size:17px}
+.ssgo.go{color:#fff;text-shadow:0 2px 0 rgba(20,70,30,.7);background:linear-gradient(180deg,#9BE07F,#4FB05A 55%,#2F8A3C);box-shadow:inset 0 3px 0 rgba(255,255,255,.55),0 4px 0 #1E5A2A,0 0 16px rgba(155,224,127,.5)}
+.sscard em{display:block;margin-top:8px;font-style:normal;font-size:12px;font-weight:800;color:var(--gold-hi)}
+.picw.m-style{width:62px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.picw.m-style img{width:84%;height:auto;margin-bottom:-2px}
+.minirail{display:block;width:100%;height:9px;border-radius:4px;background:var(--rail);box-shadow:0 0 0 1px var(--rim,#E3BC6A)}
+/* the Board Styles: each sets the ledge, its rim and the companion's glow */
+.sptile,.sphero,.picw{--rail:linear-gradient(180deg,#C98F4E 0%,#9A6430 30%,#7A4A22 70%,#5E3616 100%);--sg:#FFD98A}
+.bs-blossom{--rail:linear-gradient(180deg,#9BE0B4 0%,#3E9A6A 35%,#2A6E4C 75%,#1E5238 100%);--rim:#FFC6DA;--rt:#FFF0F5;--sg:#FFB8D2}
+.bs-lantern{--rail:linear-gradient(180deg,#F07A5A 0%,#C8312A 35%,#96201C 75%,#6E1410 100%);--rim:#FFD27A;--rt:#FFE9A8;--sg:#FFB070}
+.bs-harvest{--rail:linear-gradient(180deg,#FFE7A0 0%,#E6B24A 35%,#C08A26 75%,#8A5A12 100%);--rim:#FFF6D0;--rt:#4A2C08;--sg:#FFE08A}
+.bs-moon{--rail:linear-gradient(180deg,#E8EEF6 0%,#A9B7CC 35%,#7D8CA6 75%,#56637C 100%);--rim:#FFFFFF;--rt:#1E2A40;--sg:#CFE0FF}
+.bs-pearl{--rail:linear-gradient(180deg,#8FE0E6 0%,#2E9AA6 35%,#1B6E7C 75%,#10505C 100%);--rim:#F4F0FF;--rt:#F4FFFF;--sg:#9FE8F2}
+.bs-heavenly{--rail:linear-gradient(180deg,#FFFBEA 0%,#FFE08A 30%,#F2B640 70%,#C98A1E 100%);--rim:#FFFFFF;--rt:#5A3408;--sg:#FFF1B8}
+#game[class*="bs-"] .pkrail{background:var(--rail);color:var(--rt,#FFE9A8);box-shadow:inset 0 2px 0 rgba(255,255,255,.55),inset 0 -2px 0 rgba(0,0,0,.3),0 0 0 1.5px var(--rim),0 4px 0 rgba(0,0,0,.4),0 0 18px color-mix(in srgb,var(--sg) 55%,transparent),0 7px 12px rgba(0,0,0,.4)}
+#game[class*="bs-"] .pkrail small{color:var(--rt)}
+#game[class*="bs-"] .peek .pkglow{opacity:.55;background:radial-gradient(closest-side,var(--sg),transparent)}
+
+/* reward art inside the new tiles and sheet */
+.sptile .picw,.ssart .picw{position:relative;display:grid;place-items:center}
+.sptile .picw::before,.ssart .picw::before{content:"";position:absolute;inset:8%;border-radius:50%;background:radial-gradient(circle,var(--pg,rgba(255,226,150,.5)),transparent 70%)}
+.sptile .picw img,.ssart .picw img{position:relative;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 4px 5px rgba(0,0,0,.4))}
+.sptile .picw img.photo{width:54px !important;height:54px !important;}
+.ssart .picw img.photo{width:96px !important;height:96px !important}
+.sptile .picw img.photo,.ssart .picw img.photo{border-radius:14px;object-fit:cover;box-shadow:0 0 0 2px #F4D78C;filter:none}
+.sptile .picw img.face,.ssart .picw img.face{position:absolute;width:42%;height:42%;right:-2px;bottom:0;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #fff;filter:none}
+.sptile .picw.m-ring img:first-child,.ssart .picw.m-ring img:first-child{animation:pring 3.6s ease-in-out infinite}
+.sptile .picw.m-aura img,.ssart .picw.m-aura img{animation:paura 3.2s ease-in-out infinite}
+.sptile .picw.m-charm img,.ssart .picw.m-charm img{transform-origin:50% 8%;animation:pcharm 2.8s ease-in-out infinite}
+.sptile.locked .picw img{animation:none !important}
+.sptile .picw.m-style img,.ssart .picw.m-style img{height:auto;object-fit:contain}
+.ssart .picw.m-style{width:130px;height:110px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2511,12 +2622,14 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
       <div class="stat" id="movesStat"><div><div class="lbl">Moves</div><div class="val" id="gMoves">20</div></div></div>
     </div>
     <div class="lanterns" id="lanterns" aria-label="Lanterns lit" hidden></div>
-    <div class="peekrow" id="peekRow" hidden><div class="peek" id="peek"><span class="pkglow"></span><span class="pkclip"><img id="pkImg" alt=""><img class="pkface" id="pkFace" alt="" hidden></span></div><button class="pkperk" id="pkPerk"></button></div>
+    <div class="peekrow" id="peekRow" hidden></div>
     <div class="todaychip" id="todayChip" hidden></div>
     <div class="babybar" id="babyBar" hidden><span>Baby mode · watching and breathing together</span><button id="babyStop">Stop</button></div>
     <div class="flowbar" id="flowBar" hidden><span id="flowText"></span></div>
     <div class="boardwrap" id="boardwrap">
       <div id="board" aria-label="Puzzle board"></div>
+      <div class="peek" id="peek" hidden aria-hidden="true"><span class="pkglow"></span><span class="pkclip"><img id="pkImg" alt=""></span></div>
+      <button class="pkrail" id="pkPerk" hidden></button>
     </div>
     <div class="gbot">
       <div class="kai">
@@ -2945,21 +3058,24 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
     <div class="passglow"></div>
     <div class="passin">
       <div class="wtop"><button class="iconbtn" id="passBack" aria-label="Back">‹</button>
-        <div class="wtitle"><small>Season 1 · free for everyone</small><b class="display">Season Pass</b></div><span></span></div>
-      <div class="phero">
-        <div class="pcrest"><i class="pcrays"></i><span><small>Tier</small><b id="passTier">1</b><em>of 20</em></span></div>
-        <div class="pmeter"><div class="pnext" id="passNext"></div><div class="passbar"><i id="passFill"></i></div><div class="passxp" id="passXp"></div></div>
+        <div class="wtitle"><small>Season 1 · Kai's Calm Quest</small><b class="display">Season Pass</b></div><span></span></div>
+      <div class="sphead">
+        <div class="spstars"><i class="spstar"></i><b id="spStars">0</b><small>Spirit<br>Stars</small></div>
+        <div class="splevel"><div class="splvl"><b>Level <span id="spLvl">1</span></b><em id="spXp"></em></div><div class="passbar"><i id="spFill"></i></div><small>Every level gives a Spirit Star. Spend them on the rewards you want.</small></div>
       </div>
-      <button class="pclaimall" id="passClaimAll" hidden></button>
+      <div class="sppages" id="spPages"></div>
       <div class="pscroll" id="passScroll">
-        <button class="pgrand" id="passGrand"><i class="pgrays"></i><img class="pgtro" src="img/pass/trophy-lotus.png" alt=""><span class="pgtx"><small>Grand reward · tier 20</small><b>Golden Lotus Ring<br>+ Heavenly Gold Aura</b><em id="passGrandSub"></em></span></button>
-        <div class="passtrack" id="passTrack"></div>
+        <div class="sphero" id="spHero"></div>
+        <div class="spgrid" id="spGrid"></div>
+        <div class="spunlock" id="spUnlock"></div>
+        <div class="spgold" id="spGold"></div>
         <div class="passhow">
-          <b>Earn Season XP by playing</b>
+          <b>Earn XP by playing</b>
           <span class="xpchips"><i><img src="img/ui/flame.png" alt="">Episode <b>+100</b></i><i><img src="img/ui/star.png" alt="">Each star <b>+25</b></i><i><img src="img/faces/luma-happy.jpg" alt="" class="rnd">Deep breath <b>+20</b></i><i><img src="img/ui/letter.png" alt="">Quest <b>+40</b></i><i><img src="img/ui/crown.png" alt="">Seal <b>+50</b></i></span>
           <em>Rewards never expire. No timers. Play at your own pace.</em>
         </div>
       </div>
+      <div class="spsheet" id="spSheet" hidden></div>
     </div>
   </div>
   <div class="ov" id="letterov" hidden style="align-items:center"><div class="card lettercard" role="dialog" aria-labelledby="letterTitle">
@@ -5249,6 +5365,7 @@ function sizeBoard() {
   boardEl.style.setProperty('--t', T + 'px');
   all().forEach(t => place(t, t.r, t.c, false));
   if (board.length) drawCells();
+  if (typeof placePeek === 'function' && !$('#peek').hidden) setTimeout(placePeek, 20);
 }
 addEventListener('resize', () => { if (!$('#game').hidden) { sizeBoard(); sizeRain(); } });
 
@@ -6687,46 +6804,53 @@ function say(msg) {
 /* ---------- the Spirit Companion watches from behind the board ----------
    Real frames, never a float: it breathes, blinks (a quick eyes-closed frame), follows your finger,
    cheers, gasps, breathes with you, worries a little when moves run low, and yawns if you wander off. */
-const PEEK_ART = { fire: 'pip' };                 // Pip first; the other four join once approved
-const peekWho = () => PEEK_ART[S.buddy || 'fire'] || 'pip';
-const peekArt = () => !!PEEK_ART[S.buddy || 'fire'];
+const peekWho = () => buddyWho(S.buddy || 'fire').replace('buddy-', '');   // e.g. fire, wood-young, metal-guardian
+const peekArt = () => true;
 const peek = { pose: 'idle', until: 0, base: 'idle', act: performance.now(), blinkAt: 0 };
-function peekSrc(p) { return `img/peek/${peekWho()}-${p}.png`; }
+const PEEK_FRAME = { idle: 'hold', cheer: 'cheer', gasp: 'gasp', breathe: 'blink', worried: 'worried', sleepy: 'blink' };
+function peekSrc(p) { return `img/hold/${peekWho()}-${PEEK_FRAME[p] || 'hold'}.png`; }
 function placePeek() {
-  const row = $('#peekRow'), pk = $('#peek'); if (!row || $('#game').hidden) return;
-  if (babyOn()) { row.hidden = true; return; }
-  row.hidden = false; $('#buddyWrap').hidden = true;
-  const el = S.buddy || 'fire';
+  const row = $('#peekRow'), pk = $('#peek'), rail = $('#pkPerk'); if (!row || $('#game').hidden) return;
+  if (babyOn()) { row.hidden = pk.hidden = rail.hidden = true; return; }
+  row.hidden = false; pk.hidden = false; rail.hidden = false; $('#buddyWrap').hidden = true;
+  const gm = $('#game'); [...gm.classList].filter(c => c.startsWith('bs-')).forEach(c => gm.classList.remove(c)); if (S.bstyle) gm.classList.add('bs-' + S.bstyle);
+  const tc = $('#todayChip'); if (tc && tc.parentNode !== row) row.appendChild(tc);
+  const el = S.buddy || 'fire', wr = wrap.getBoundingClientRect(), br = boardEl.getBoundingClientRect();
+  const RH = 22, top = br.top - wr.top - RH + 5;                 // the ledge overlaps the board's frame a little
+  rail.style.left = `${br.left - wr.left - 8}px`; rail.style.width = `${br.width + 16}px`; rail.style.top = `${top}px`;
+  rail.innerHTML = `<small>${BUDDY[el].name}'s gift</small>${giftName(el)}`;
+  const room = br.top - $('.stats').getBoundingClientRect().bottom - RH - 2;   // never reaches the Goals/Moves bar
+  const im = $('#pkImg'), ratio = im.naturalWidth ? im.naturalHeight / im.naturalWidth : 1;
+  const W = Math.max(80, Math.min(150, room / ratio)); pk.style.width = `${W}px`;
+  pk.style.left = `${br.left - wr.left + br.width / 2 - W / 2}px`;
+  pk.style.top = `${top - pk.offsetHeight + 3}px`;
   pk.style.setProperty('--pg', ELEM[el].glow + 'aa');
-  $('#pkPerk').innerHTML = `<small>${BUDDY[el].name}'s gift</small>${giftName(el)}`;
-  // companions still waiting for their perch art appear as their own living portrait
-  const art = peekArt(), face = $('#pkFace'); $('#pkImg').hidden = !art; face.hidden = art;
-  if (!art && (!rigs.get(face) || rigs.get(face).who !== buddyWho(el))) makeRig(face, buddyWho(el));
-  const tc = $('#todayChip'); if (tc && tc.parentNode !== $('#peekRow')) $('#peekRow').appendChild(tc);
-  ['idle', 'cheer', 'gasp', 'breathe', 'worried', 'sleepy'].forEach(p => { const i = new Image(); i.src = peekSrc(p); });
+  ['idle', 'cheer', 'gasp', 'breathe', 'worried'].forEach(p => { const i = new Image(); i.src = peekSrc(p); });
   peekShow(peek.base, true);
+  $('#pkImg').onerror = e => { const im = e.target, h = peekSrc('idle'); if (!im.src.endsWith(h)) im.src = h; };
+  $('#pkImg').onload = () => { if (!placePeek.busy) { placePeek.busy = true; placePeek(); placePeek.busy = false; } };
 }
 $('#pkPerk').addEventListener('click', () => { const el = S.buddy || 'fire'; tick(); peekReact('cheer', 1200, true); toast(`${BUDDY[el].name}'s gift · ${giftName(el)}: ${giftText(el)}.`); });
 function peekShow(pose, quiet) {
-  const pk = $('#peek'), img = $('#pkImg'); if (!pk || $('#peekRow').hidden) return;
+  const pk = $('#peek'), img = $('#pkImg'); if (!pk || pk.hidden) return;
   if (peekArt() && (peek.pose !== pose || !img.getAttribute('src'))) img.src = peekSrc(pose);
   peek.pose = pose;
   pk.className = `peek pose-${pose}`;
   if (!quiet && !reduce) { void pk.offsetWidth; pk.classList.add('pop'); }
 }
 function peekReact(pose, ms = 1400, glow) {
-  const pk = $('#peek'); if (!pk || $('#peekRow').hidden) return;
+  const pk = $('#peek'); if (!pk || pk.hidden) return;
   peek.until = performance.now() + ms; peekShow(pose);
   if (glow) { pk.classList.add('glow'); setTimeout(() => pk.classList.remove('glow'), ms); }
 }
 function peekLook(x) {
-  const img = $('#pkImg'), pk = $('#peek'); if (!img || $('#peekRow').hidden) return;
+  const img = $('#pkImg'), pk = $('#peek'); if (!img || pk.hidden) return;
   if (x == null) { img.style.transform = ''; return; }
   const r = pk.getBoundingClientRect(), d = Math.max(-1, Math.min(1, (x - (r.left + r.width / 2)) / 220));
   img.style.transform = `rotate(${(d * 9).toFixed(1)}deg) translateX(${(d * 3).toFixed(1)}px)`;
 }
 setInterval(() => {
-  const pk = $('#peek'); if (!pk || $('#peekRow').hidden || $('#game').hidden) return;
+  const pk = $('#peek'); if (!pk || pk.hidden || $('#game').hidden) return;
   const now = performance.now();
   const breathingNow = breathing || !$('#breathe').hidden;
   peek.base = breathingNow ? 'breathe' : (moves <= 5 && moves > 0 && !goalsDone()) ? 'worried' : 'idle';
@@ -7802,61 +7926,80 @@ const FRIENDS = {
     '8-11': "Omar, 12, is raised by his grandparents and names every star over the moon pond. When his best friend moved away, the goodbye kept coming back. He's learning you can miss someone and still be okay.",
     '12-15': "Omar is the village stargazer, raised by his grandparents. Since his best friend moved, some nights feel empty. He lets the sadness come instead of pushing it away, and each long out-breath makes a little more room." } }
 };
-const PASS_XP = 200;
-const PASS = [
-  { coins: 100 }, { charm: 'sprout' }, { ring: 'jade' }, { lanterns: 1 }, { aura: 'blossom' },
-  { friend: 'leo' }, { charm: 'heart' }, { shields: 1 }, { ring: 'ember' }, { letter: 'cycle' },
-  { friend: 'june' }, { swirls: 2 }, { aura: 'moon' }, { charm: 'drop' }, { ring: 'river' },
-  { friend: 'omar' }, { pw: 'bear' }, { aura: 'sunrise' }, { letter: 'breath' }, { ring: 'lotus', aura: 'gold', final: true }
+/* ---------- Season Pass: pages of rewards you choose (after Fortnite's page system) ----------
+   Every level gives a Spirit Star. On the open page you spend stars on whichever reward you want.
+   Claim 4 of a page's 6 rewards and the next page opens. Each page's headline is a Board Style your
+   companion shows off in every level. The optional Golden Path adds two golden rewards per page and
+   pays back 5,000 coins, enough to unlock next season's Golden Path without paying again. */
+const PASS_XP = 300;
+const BSTYLES = {
+  blossom: { name: 'Blossom Grove Board', el: 'wood', note: 'A jade ledge dressed in cherry blossoms, with a soft pink glow.' },
+  lantern: { name: 'Lantern Festival Board', el: 'fire', note: 'A red-lacquer ledge hung with tiny lanterns and a warm glow.' },
+  harvest: { name: 'Golden Harvest Board', el: 'earth', note: 'A honey-gold ledge with wheat and a sunny glow.' },
+  moon: { name: 'Moonlit Silver Board', el: 'metal', note: 'A silver ledge scattered with stars and moonlight.' },
+  pearl: { name: 'River Pearl Board', el: 'water', note: 'A deep teal ledge lined with pearls and a river glow.' },
+  heavenly: { name: 'Heavenly Gold Board', el: 'earth', note: 'The Golden Path prize: a radiant gold ledge that shines.' }
+};
+const PAGES = [
+  { el: 'wood', cost: 1, head: 3, style: 'blossom', items: [{ coins: 150 }, { charm: 'sprout' }, { ring: 'jade' }, { swirls: 2 }, { friend: 'leo' }, { aura: 'blossom' }], gold: [{ coins: 600 }, { pw: 'monkey', n: 2 }] },
+  { el: 'fire', cost: 1, head: 4, style: 'lantern', items: [{ coins: 250 }, { charm: 'heart' }, { ring: 'ember' }, { pw: 'crane' }, { letter: 'cycle' }, { aura: 'sunrise' }], gold: [{ coins: 800 }, { shields: 2 }] },
+  { el: 'earth', cost: 2, head: 5, style: 'harvest', items: [{ coins: 350 }, { charm: 'root' }, { shields: 1 }, { pw: 'monkey' }, { friend: 'june' }, { lanterns: 2 }], gold: [{ coins: 1000 }, { pw: 'bear', n: 2 }] },
+  { el: 'metal', cost: 2, head: 6, style: 'moon', items: [{ coins: 450 }, { charm: 'bell' }, { ring: 'river' }, { swirls: 3 }, { letter: 'breath' }, { aura: 'moon' }], gold: [{ coins: 1200 }, { swirls: 3 }] },
+  { el: 'water', cost: 3, head: 7, style: 'pearl', items: [{ coins: 600 }, { charm: 'drop' }, { pw: 'bear' }, { friend: 'omar' }, { ring: 'lotus' }, { aura: 'gold' }], gold: [{ coins: 1400 }, { style: 'heavenly' }] }
 ];
-function passState() { if (!S.sp) S.sp = { xp: 0, claimed: [] }; return S.sp; }
-const passTier = () => Math.min(PASS.length, Math.floor(passState().xp / PASS_XP));   // tiers fully earned
+const GOLD_PRICE = '$4.99', GOLD_BACK = 5000;
+function passState() {
+  if (!S.sp) S.sp = { xp: 0, claimed: [] };
+  if (!S.sp.p) S.sp.p = {};                 // claimed rewards by key: 'p0-2', 'p0-h', 'p0-g1'
+  return S.sp;
+}
+const passLevel = () => Math.floor(passState().xp / PASS_XP);
+const spentStars = () => Object.values(passState().p).reduce((n, c) => n + c, 0);
+const starsLeft = () => Math.max(0, passLevel() - spentStars());
+const pgItem = (pi, key) => key === 'h' ? { style: PAGES[pi].style, head: true } : key[0] === 'g' ? PAGES[pi].gold[+key.slice(1)] : PAGES[pi].items[+key];
+const pgCost = (pi, key) => key === 'h' ? PAGES[pi].head : key[0] === 'g' ? PAGES[pi].cost + 1 : PAGES[pi].cost;
+const isClaimed = (pi, key) => passState().p[`p${pi}-${key}`] != null;
+const pageClaims = pi => PAGES[pi].items.filter((_, k) => isClaimed(pi, String(k))).length;
+const pageOpen = pi => pi === 0 || pageClaims(pi - 1) >= 4;
+const PASS_TOTAL = PAGES.length * 7;
+const passClaimedCount = () => PAGES.reduce((n, pg, pi) => n + pageClaims(pi) + (isClaimed(pi, 'h') ? 1 : 0), 0);
 function passLabel(r) {
-  if (r.final) return 'Golden Lotus + Heavenly Gold';
+  if (r.style) return BSTYLES[r.style].name;
   if (r.ring) return RINGS[r.ring].name;
   if (r.aura) return AURAS[r.aura].name;
-  if (r.letter) return `Sorin's letter`;
-  if (r.friend) return `Story card: ${FRIENDS[r.friend].name}`;
+  if (r.letter) return LETTERS[r.letter].title;
+  if (r.friend) return `${FRIENDS[r.friend].name} · ${FRIENDS[r.friend].feel}`;
   if (r.charm) return CHARMS.find(c => c.id === r.charm).name + ' charm';
-  if (r.pw) return POWERS.find(x => x.id === r.pw).name;
+  if (r.pw) return `${r.n > 1 ? r.n + ' ' : ''}${POWERS.find(x => x.id === r.pw).name}${r.n > 1 ? 's' : ''}`;
   return rewardText(r);
 }
-function passIcon(r) {
-  if (r.ring) return `<span class="pic ring" style="--rc:${RINGS[r.ring].c}"><img src="${faceSrc(heroId(), 'happy')}" alt=""></span>`;
-  if (r.aura) return `<span class="pic aura" style="--a1:${AURAS[r.aura].a1};--a2:${AURAS[r.aura].a2}"><img src="img/faces/luma-happy.jpg" alt=""></span>`;
-  if (r.letter) return `<span class="pic"><img src="img/icons/icon-quests.jpg" alt=""></span>`;
-  if (r.friend) return `<span class="pic"><img src="${FRIENDS[r.friend].bg}" alt=""></span>`;
-  if (r.charm) return `<span class="pic"><img src="img/icons/boost-${r.charm}.jpg" alt=""></span>`;
-  if (r.pw) return `<span class="pic"><img src="img/icons/pw-${r.pw}.jpg" alt=""></span>`;
-  if (r.lanterns) return `<span class="pic"><img src="img/icons/pw-tiger.jpg" alt=""></span>`;
-  if (r.swirls) return `<span class="pic"><img src="img/icons/pw-deer.jpg" alt=""></span>`;
-  if (r.shields) return `<span class="pic">🛡</span>`;
-  return `<span class="pic"><i class="coin"></i></span>`;
-}
+function passIcon(r) { return passArtHTML(r); }
 function addXP(n) {
   if (babyOn()) return 0;
-  const sp = passState(), before = passTier();
+  const sp = passState(), before = passLevel();
   sp.xp += n * ((S.calmUntil || 0) > Date.now() ? 2 : 1); save();
-  const after = passTier();
+  const after = passLevel();
   syncPassBtn();
   if (after > before && $('#party').hidden) {
-    toast(`Season Pass tier ${after} unlocked. Open the pass to claim it.`);
+    toast(`+${after - before} Spirit Star${after - before > 1 ? 's' : ''}! Spend ${after - before > 1 ? 'them' : 'it'} in the Season Pass.`);
     chord([659.25, 830.61, 987.77, 1318.5], 0.06);
   }
   return after - before;
 }
-function passReady() { const sp = passState(), t = passTier(); return PASS.some((_, i) => i < t && !sp.claimed.includes(i)); }
+function canAfford() {
+  const st = starsLeft(); if (!st) return false;
+  return PAGES.some((pg, pi) => pageOpen(pi) && [...pg.items.map((_, k) => String(k)), 'h', ...(passState().gold ? ['g0', 'g1'] : [])].some(k => !isClaimed(pi, k) && pgCost(pi, k) <= st));
+}
+function passReady() { return canAfford(); }
 function syncPassBtn() {
-  const sp = passState(), t = passTier();
   const e = $('#passTease'); if (!e) return;
-  const done = t >= PASS.length, n = PASS.filter((_, i) => i < t && !sp.claimed.includes(i)).length;
-  const left = PASS.length - t;
-  e.textContent = done ? 'Season complete · every reward is yours' : `${t} / ${PASS.length} rewards · ${left} to go`;
-  const part = Math.round((sp.xp % PASS_XP) / PASS_XP * 100);
-  $('#passSegs').innerHTML = PASS.map((r, i) => `<i class="${i < t ? 'on' : i === t ? 'part' : ''} ${r.final ? 'big' : ''}" style="--p:${part}%"></i>`).join('');
-  const ban = $('#passOpen'); ban.classList.toggle('ready', n > 0);
-  if (n > 0) $('#passBanNext').textContent = n > 1 ? `Claim ${n}` : 'Claim';
-  else { const nx = passArt(PASS[Math.min(t, PASS.length - 1)]); $('#passBanNext').innerHTML = `<img class="${nx.m === 'photo' ? 'photo' : ''}" src="${done ? 'img/pass/trophy-lotus.png' : nx.src}" alt="">`; }
+  const n = passClaimedCount(), st = starsLeft(), done = n >= PASS_TOTAL;
+  e.textContent = done ? 'Season complete · every reward is yours' : `${n} / ${PASS_TOTAL} rewards${st ? ` · ★ ${st} to spend` : ` · ${PASS_TOTAL - n} to go`}`;
+  const part = Math.round((passState().xp % PASS_XP) / PASS_XP * 100);
+  $('#passSegs').innerHTML = PAGES.map((pg, pi) => { const f = (pageClaims(pi) + (isClaimed(pi, 'h') ? 1 : 0)) / 7; return `<i class="${f >= 1 ? 'on' : f > 0 ? 'part' : ''} ${pi === 4 ? 'big' : ''}" style="--p:${Math.round(f * 100)}%"></i>`; }).join('');
+  const ban = $('#passOpen'), ready = canAfford(); ban.classList.toggle('ready', ready);
+  if (ready) $('#passBanNext').textContent = `★ ${st}`;
+  else { const pi = Math.max(0, PAGES.findIndex((_, k) => !pageOpen(k + 1)) ), nx = passArt({ style: PAGES[Math.min(pi, 4)].style }); $('#passBanNext').innerHTML = `<img src="${nx.src}" alt="">`; }
   $('#passDot').hidden = true;
 }
 function applyLooks() {
@@ -7868,19 +8011,21 @@ function applyLooks() {
 }
 const PASS_GLOW = { jade: 'rgba(120,220,160,.6)', ember: 'rgba(255,140,110,.6)', river: 'rgba(120,190,255,.6)', lotus: 'rgba(255,214,120,.7)', blossom: 'rgba(255,180,210,.65)', moon: 'rgba(200,180,255,.6)', sunrise: 'rgba(255,190,130,.65)', gold: 'rgba(255,214,120,.75)', sprout: 'rgba(150,230,140,.55)', heart: 'rgba(255,150,130,.55)', drop: 'rgba(140,200,255,.55)' };
 function passArt(r) {
+  if (r.style) return { src: `img/hold/${buddyWho(S.buddy || 'fire').replace('buddy-', '')}-cheer.png`, m: 'style', g: 'rgba(255,214,120,.7)' };
   if (r.final) return { src: 'img/pass/trophy-lotus.png', m: 'aura', g: PASS_GLOW.gold };
   if (r.ring) return { src: `img/pass/ring-${r.ring}.png`, m: 'ring', g: PASS_GLOW[r.ring], face: true };
   if (r.aura) return { src: `img/pass/aura-${r.aura}.png`, m: 'aura', g: PASS_GLOW[r.aura] };
   if (r.charm) return { src: `img/pass/charm-${r.charm}.png`, m: 'charm', g: PASS_GLOW[r.charm] };
   if (r.friend) return { src: FRIENDS[r.friend].bg, m: 'photo' };
   if (r.letter) return { src: 'img/ui/letter.png', m: 'item' };
-  if (r.pw) return { src: `img/ui/pw-${r.pw}.png`, m: 'item' };
+  if (r.pw) return { src: `img/ui/pw-${r.pw === 'crane' ? 'hawk' : r.pw}.png`, m: 'item' };
   if (r.lanterns) return { src: RW_ICON.lanterns, m: 'item' };
   if (r.swirls) return { src: RW_ICON.swirls, m: 'item' };
   if (r.shields) return { src: RW_ICON.shields, m: 'item' };
   return { src: RW_ICON.coins, m: 'item' };
 }
 function passKind(r) {
+  if (r.style) return 'Board Style';
   if (r.final) return 'Grand reward';
   if (r.ring) return 'Hero ring';
   if (r.aura) return 'Aura for Luma';
@@ -7893,45 +8038,47 @@ function passKind(r) {
 }
 function passArtHTML(r) {
   const a = passArt(r);
+  if (r.style) return `<span class="picw m-style bs-${r.style}"><img src="${a.src}" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('-cheer.png','-hold.png')}" alt=""><i class="minirail"></i></span>`;
   return `<span class="picw m-${a.m}" style="--pg:${a.g || 'rgba(255,226,150,.5)'}"><img class="${a.m === 'photo' ? 'photo' : ''}" src="${a.src}" alt="">${a.face ? `<img class="face" src="${faceSrc(heroId(), 'happy')}" alt="">` : ''}</span>`;
 }
-function renderPass() {
-  const sp = passState(), t = passTier();
-  $('#passTier').textContent = Math.min(PASS.length, t + (t < PASS.length ? 1 : 0));
-  $('#passFill').style.width = t >= PASS.length ? '100%' : `${(sp.xp % PASS_XP) / PASS_XP * 100}%`;
-  $('#passXp').textContent = t >= PASS.length ? 'Season 1 pass complete' : `${sp.xp % PASS_XP} / ${PASS_XP} XP to tier ${t + 1}`;
-  const nx = PASS[Math.min(t, PASS.length - 1)], na = passArt(nx);
-  $('#passNext').innerHTML = t >= PASS.length ? `<img src="img/pass/trophy-lotus.png" alt=""><span><small>Season complete</small>Every reward is yours</span>` : `<img class="${na.m === 'photo' ? 'photo' : ''}" src="${na.src}" alt=""><span><small>Next reward</small>${passLabel(nx)}</span>`;
-  const ready = PASS.filter((_, i) => i < t && !sp.claimed.includes(i)).length, ca = $('#passClaimAll');
-  ca.hidden = ready < 2; ca.textContent = `Claim all ${ready} rewards`;
-  $('#passGrandSub').textContent = t >= PASS.length ? (sp.claimed.includes(PASS.length - 1) ? 'Yours. Wear it with pride.' : 'Ready to claim!') : `${PASS.length - t} tier${PASS.length - t === 1 ? '' : 's'} to go · no timers, it waits for you`;
-  $('#passTrack').innerHTML = '<i class="pvine"></i><i class="pvlit" id="passLit"></i>' + PASS.map((r, i) => {
-    const got = sp.claimed.includes(i), open = i < t;
-    const worn = got && ((r.ring && S.ring === r.ring) || (r.aura && !r.ring && S.aura === r.aura) || (r.final && S.ring === 'lotus'));
-    const btn = !open ? `🔒 ${(i + 1) * PASS_XP - sp.xp} XP` : !got ? 'Claim' : (r.ring || r.aura) ? (worn ? 'Wearing ✓' : 'Wear') : (r.letter || r.friend) ? 'Read' : 'Claimed';
-    const node = i === t ? `<span class="pnode here"><img src="${faceSrc(heroId(), 'happy')}" alt=""><b>${i + 1}</b></span>` : `<span class="pnode ${open ? 'lit' : ''}">${i + 1}</span>`;
-    return `<div class="prow ${i % 2 ? 'r' : 'l'}">${node}<div class="ptier ${open ? '' : 'locked'} ${open && !got ? 'ready' : ''} ${got ? 'done' : ''} ${worn ? 'worn' : ''} ${r.final ? 'final' : ''}" data-tier="${i}">${passArtHTML(r)}<span class="ptx"><small>${passKind(r)}</small><b>${r.friend ? `${FRIENDS[r.friend].name} · ${FRIENDS[r.friend].feel}` : r.letter ? LETTERS[r.letter].title : passLabel(r)}</b></span><button class="pbtn">${btn}</button></div></div>`;
-  }).join('') + `<div class="prow s2 ${PASS.length % 2 ? 'r' : 'l'}"><span class="pnode">S2</span><div class="ptier"><span class="picw">?</span><span class="ptx"><small>Coming next</small><b>Season 2: new friends from Kai's village</b></span></div></div>`;
-  requestAnimationFrame(() => {
-    const tr = $('#passTrack'), nodes = $$('#passTrack .pnode'), k = Math.min(t, PASS.length - 1), lit = $('#passLit');
-    if (!nodes[k]) return;
-    const top = nodes[0].offsetTop + nodes[0].parentNode.offsetTop, n = nodes[k], y = n.offsetTop + n.parentNode.offsetTop + n.offsetHeight / 2;
-    tr.querySelector('.pvine').style.top = lit.style.top = `${top + 17}px`;
-    lit.style.height = `${Math.max(0, y - top - 17)}px`;
-  });
+let PGI = 0;
+function renderPass(fresh) {
+  $('#passov').scrollTop = 0; $('.passin', ) && ($('#passov .passin').scrollTop = 0);
+  const sp = passState(), st = starsLeft(), lv = passLevel();
+  $('#spStars').textContent = st; $('#spLvl').textContent = lv + 1;
+  $('#spFill').style.width = `${(sp.xp % PASS_XP) / PASS_XP * 100}%`;
+  $('#spXp').textContent = `${sp.xp % PASS_XP}/${PASS_XP} XP to next ★`;
+  $('#spPages').innerHTML = PAGES.map((pg, pi) => { const open = pageOpen(pi), f = pageClaims(pi) + (isClaimed(pi, 'h') ? 1 : 0);
+    return `<button class="sppg ${pi === PGI ? 'on' : ''} ${open ? '' : 'locked'}" data-pg="${pi}" style="--eh:${ELEM[pg.el].hue};--eg:${ELEM[pg.el].glow}"><span class="o">${open ? orbHTML(pg.el) : '🔒'}</span><b>Page ${pi + 1}</b><small>${f}/7</small></button>`; }).join('');
+  const pg = PAGES[PGI], open = pageOpen(PGI), hk = isClaimed(PGI, 'h'), bs = BSTYLES[pg.style], worn = S.bstyle === pg.style;
+  $('#spHero').className = `sphero bs-${pg.style} ${open ? '' : 'locked'} ${hk ? 'done' : ''}`;
+  $('#spHero').innerHTML = `<div class="shstage"><i class="shrays"></i><img class="shbud" src="img/hold/${buddyWho(S.buddy || 'fire').replace('buddy-', '')}-cheer.png" onerror="if(!this.dataset.f){this.dataset.f=1;this.src=this.src.replace('-cheer.png','-hold.png')}" alt=""><span class="shrail"><small>${BUDDY[S.buddy || 'fire'].name}'s gift</small>${giftName(S.buddy || 'fire')}</span><span class="shboard"></span></div>
+    <div class="shtx"><small>Page ${PGI + 1} headline · ${ELEM[pg.el].name}</small><b>${bs.name}</b><em>${bs.note}</em>
+    <button class="shbtn" data-key="h">${!open ? '🔒 Opens after Page ' + PGI : hk ? (worn ? 'Using it ✓' : 'Use this style') : `Claim · ★ ${pg.head}`}</button></div>`;
+  $('#spGrid').innerHTML = pg.items.map((r, k) => tileHTML(PGI, String(k), r, open)).join('');
+  const c = pageClaims(PGI);
+  $('#spUnlock').innerHTML = PGI < PAGES.length - 1 ? `<div class="sppips">${[0, 1, 2, 3].map(i => `<i class="${i < c ? 'on' : ''}"></i>`).join('')}</div><span>${c >= 4 ? `Page ${PGI + 2} is open!` : `Claim ${4 - c} more to open <b>Page ${PGI + 2}</b>`}</span>` : `<span>The last page. Finish it for the whole season's collection.</span>`;
+  const gold = !!sp.gold;
+  $('#spGold').innerHTML = `<div class="sgtitle"><b>The Golden Path</b><span>${gold ? 'Yours for the whole season ✓' : 'Optional · for grown-ups to decide'}</span></div>
+    <div class="sgrow">${pg.gold.map((r, k) => tileHTML(PGI, 'g' + k, r, open && gold, true)).join('')}</div>
+    ${gold ? `<p class="sgnote">Golden rewards pay back ${GOLD_BACK.toLocaleString()} coins this season, enough to unlock next season's Golden Path without paying again.</p>` : `<button class="sgbuy" id="spGoldBuy">Unlock the Golden Path · ${GOLD_PRICE}</button><p class="sgnote">Adds 2 golden rewards to every page and the Heavenly Gold Board. Pays back ${GOLD_BACK.toLocaleString()} coins, enough for next season's Golden Path. The free pass stays complete without it.</p>`}`;
+  if (fresh && !reduce) $$('#spHero,#spGrid .sptile,#spGold').forEach((x, k) => x.animate([{ transform: 'translateY(16px) scale(.96)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 340, delay: k * 45, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' }));
+}
+function tileHTML(pi, key, r, open, golden) {
+  const got = isClaimed(pi, key), cost = pgCost(pi, key), can = open && !got && cost <= starsLeft();
+  return `<button class="sptile ${golden ? 'golden' : ''} ${got ? 'done' : ''} ${open ? '' : 'locked'} ${can ? 'can' : ''}" data-key="${key}">${passArtHTML(r)}<b>${passLabel(r)}</b><span class="spcost">${got ? '✓' : open ? `★ ${cost}` : '🔒'}</span></button>`;
 }
 async function openPass() {
   const ov = $('#passov');
   $('#passBg').style.backgroundImage = `url(img/world/s1g-${WORLD_OF[timeOfDay()] || 'day'}.jpg)`;
-  renderPass();
+  PGI = Math.max(0, PAGES.map((_, i) => i).filter(pageOpen).pop() || 0);
+  renderPass(true);
   ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
   playSfx('swoosh', { gain: 0.6 });
-  const t = passTier(), card = $('#passTrack .ptier.ready') || $$('#passTrack .ptier')[Math.min(t, PASS.length - 1)];
-  $('#passScroll').scrollTop = 0; if (card) setTimeout(() => { const sc = $('#passScroll'); sc.scrollTo({ top: Math.max(0, card.offsetTop + card.parentNode.offsetTop + $('#passTrack').offsetTop - sc.clientHeight / 2 + 60), behavior: reduce ? 'auto' : 'smooth' }); }, 450);
-  if (!reduce) $$('#passTrack .ptier,.phero,.pgrand').forEach((c, k) => c.animate([{ transform: 'translateY(30px) scale(.9)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 360, delay: 60 + Math.min(k, 8) * 45, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' }));
+  $('#passScroll').scrollTop = 0;
 }
 $('#passOpen').addEventListener('click', () => { ac(); tick(); openPass(); });
-$('#passBack').addEventListener('click', async () => { tick(); const ov = $('#passov'); ov.classList.remove('show'); await wait(350); ov.hidden = true; syncPassBtn(); });
+$('#passBack').addEventListener('click', async () => { tick(); $('#spSheet').hidden = true; const ov = $('#passov'); ov.classList.remove('show'); await wait(350); ov.hidden = true; syncPassBtn(); });
 function syncKeep() { const k = (S.journal || []).includes(STORY_OPEN); $('#letterGo').textContent = k ? 'In your Collection ✓' : 'Keep it in my journal'; }
 $('#letterGo').addEventListener('click', () => {
   tick();
@@ -7941,51 +8088,88 @@ $('#letterGo').addEventListener('click', () => {
   }
   hideOv('letterov'); if (!$('#collect').hidden) renderCollect();
 });
-let PASS_BULK = false;
-$('#passClaimAll').addEventListener('click', async () => {
-  ac(); tick(); PASS_BULK = true;
-  const ids = PASS.map((_, i) => i).filter(i => i < passTier() && !passState().claimed.includes(i));
-  for (const i of ids) {
-    const c = $(`#passTrack .ptier[data-tier="${i}"]`); if (!c) continue;
-    const sc = $('#passScroll'); sc.scrollTo({ top: Math.max(0, c.offsetTop + c.parentNode.offsetTop + $('#passTrack').offsetTop - sc.clientHeight / 2 + 60), behavior: reduce ? 'auto' : 'smooth' });
-    await wait(260); $(`#passTrack .ptier[data-tier="${i}"]`).click(); await wait(320);
+function passDesc(r) {
+  if (r.style) return BSTYLES[r.style].note + ' It shows in every level.';
+  if (r.ring) return 'A ring for your hero. You can wear it or take it off anytime.';
+  if (r.aura) return "A new glow for Luma's Aura while you play.";
+  if (r.charm) return CHARMS.find(c => c.id === r.charm).what;
+  if (r.friend) return "A story card: a new friend from Kai's village. It goes in your Collection.";
+  if (r.letter) return 'A letter from Sorin. It goes in your Collection.';
+  if (r.pw) return POWERS.find(x => x.id === r.pw).how || 'A booster for the storm.';
+  if (r.swirls) return 'Deer Leaps: refresh the board and fill Luma a little.';
+  if (r.lanterns) return 'Tiger Claws: clear a whole row.';
+  if (r.shields) return 'Streak Shields: keep your streak safe on a missed day.';
+  return 'Coins for extras in the shop.';
+}
+function openSheet(pi, key) {
+  const r = pgItem(pi, key), got = isClaimed(pi, key), open = pageOpen(pi), golden = key[0] === 'g', cost = pgCost(pi, key), st = starsLeft();
+  const locked = !open || (golden && !passState().gold);
+  const btn = got ? (r.style ? (S.bstyle === r.style ? 'Using it ✓' : 'Use this style') : r.ring || r.aura ? 'Wear it' : r.friend || r.letter ? 'Read it' : 'Claimed ✓')
+    : locked ? (golden && open ? 'Part of the Golden Path' : `Opens after Page ${pi}`) : cost <= st ? `Claim · ★ ${cost}` : `Needs ★ ${cost} · you have ★ ${st}`;
+  const sh = $('#spSheet');
+  sh.innerHTML = `<div class="sscard ${golden ? 'golden' : ''}"><button class="ssx" aria-label="Close">✕</button><div class="ssart">${passArtHTML(r)}</div><small>${golden ? 'Golden Path · ' : ''}${passKind(r)}</small><b>${passLabel(r)}</b><p>${passDesc(r)}</p><button class="ssgo ${!got && !locked && cost <= st ? 'go' : ''}" data-pi="${pi}" data-key="${key}">${btn}</button>${!got && !locked && cost > st ? '<em>Play episodes and breathe to earn more ★</em>' : ''}</div>`;
+  sh.hidden = false;
+  if (!reduce) sh.querySelector('.sscard').animate([{ transform: 'translateY(40px) scale(.94)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 320, easing: 'cubic-bezier(.2,.9,.3,1.2)' });
+}
+function claimPass(pi, key) {
+  const r = pgItem(pi, key), sp = passState(), cost = pgCost(pi, key), wasOpen = PAGES.map((_, i) => pageOpen(i));
+  sp.p[`p${pi}-${key}`] = cost;
+  if (r.charm) S.charms[r.charm] = (S.charms[r.charm] || 0) + 1;
+  if (r.pw) { S.pw = S.pw || {}; S.pw[r.pw] = (S.pw[r.pw] || 0) + (r.n || 1); }
+  if (r.style) S.bstyle = r.style;
+  if (r.ring) S.ring = r.ring;
+  if (r.aura) S.aura = r.aura;
+  grant(r); save(); applyLooks(); syncBoosts && syncBoosts();
+  playSfx('stamp', { gain: 0.9 }); chord([659.25, 830.61, 987.77, 1318.5], 0.06);
+  try { navigator.vibrate && navigator.vibrate([10, 40, 16]); } catch (e) {}
+  $('#spSheet').hidden = true; renderPass(); syncPassBtn();
+  const tile = key === 'h' ? $('#spHero') : $(`#passov [data-key="${key}"].sptile`);
+  if (tile) { const a = $('#passov').getBoundingClientRect(), b = tile.getBoundingClientRect(); sparkleAt($('#passov'), b.left - a.left + b.width / 2, b.top - a.top + b.height / 2, ['#FFE9A8', '#FFFFFF', '#F2CC6A'], 26);
+    if (!reduce) tile.animate([{ transform: 'scale(.85)' }, { transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' }); }
+  const opened = PAGES.findIndex((_, i) => pageOpen(i) && !wasOpen[i]);
+  if (opened > 0) setTimeout(() => pageTurn(opened), 700);
+  else if (r.letter) setTimeout(() => showLetter(r.letter), 500);
+  else if (r.friend) setTimeout(() => showFriend(r.friend), 500);
+  else if (r.style) toast(`${BSTYLES[r.style].name} is on! You'll see it in your next level.`);
+}
+async function pageTurn(pi) {
+  PGI = pi; chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.08); playSfx('swoosh', { gain: 0.8 });
+  const g = $('#passScroll');
+  if (!reduce) await g.animate([{ transform: 'none', opacity: 1 }, { transform: 'translateX(-30%) rotateY(25deg)', opacity: 0 }], { duration: 300, easing: 'ease-in' }).finished;
+  renderPass(true);
+  if (!reduce) g.animate([{ transform: 'translateX(30%) rotateY(-25deg)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 380, easing: 'cubic-bezier(.2,.9,.3,1.1)' });
+  toast(`Page ${pi + 1} is open! ${BSTYLES[PAGES[pi].style].name} waits at the top.`);
+}
+$('#passov').addEventListener('click', async e => {
+  const pgb = e.target.closest('.sppg');
+  if (pgb) { const pi = +pgb.dataset.pg; tick(); if (!pageOpen(pi)) { toast(`Claim 4 rewards on Page ${pi} to open Page ${pi + 1}.`); pgb.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'none' }], { duration: 240 }); return; } PGI = pi; renderPass(true); return; }
+  if (e.target.closest('.ssx') || e.target === $('#spSheet')) { $('#spSheet').hidden = true; return; }
+  const go = e.target.closest('.ssgo');
+  if (go) {
+    const pi = +go.dataset.pi, key = go.dataset.key, r = pgItem(pi, key), golden = key[0] === 'g';
+    if (isClaimed(pi, key)) {
+      $('#spSheet').hidden = true;
+      if (r.style) { S.bstyle = S.bstyle === r.style ? null : r.style; save(); renderPass(); tick(); return; }
+      if (r.friend) return showFriend(r.friend);
+      if (r.letter) return showLetter(r.letter);
+      if (r.ring) { S.ring = S.ring === r.ring ? null : r.ring; save(); applyLooks(); tick(); return; }
+      if (r.aura) { S.aura = S.aura === r.aura ? null : r.aura; save(); applyLooks(); tick(); return; }
+      return;
+    }
+    if (!pageOpen(pi) || (golden && !passState().gold) || pgCost(pi, key) > starsLeft()) { bell(392, 0, 0.05); go.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'none' }], { duration: 260 }); return; }
+    claimPass(pi, key); return;
   }
-  PASS_BULK = false;
-  const story = ids.map(i => PASS[i]).filter(r => r.letter || r.friend).pop();
-  if (story) setTimeout(() => story.letter ? showLetter(story.letter) : showFriend(story.friend), 500);
-});
-$('#passGrand').addEventListener('click', () => { tick(); const c = $(`#passTrack .ptier[data-tier="${PASS.length - 1}"]`), sc = $('#passScroll'); sc.scrollTo({ top: c.offsetTop + c.parentNode.offsetTop + $('#passTrack').offsetTop - sc.clientHeight / 2 + 60, behavior: reduce ? 'auto' : 'smooth' }); });
-$('#passTrack').addEventListener('click', e => {
-  const card = e.target.closest('.ptier[data-tier]'); if (!card) return;
-  const i = +card.dataset.tier, r = PASS[i], sp = passState();
-  if (i >= passTier()) { card.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'none' }], { duration: 260 }); bell(392, 0, 0.05); return; }
-  if (!sp.claimed.includes(i)) {
-    sp.claimed.push(i);
-    if (r.charm) { S.charms[r.charm] = (S.charms[r.charm] || 0) + 1; }
-    if (r.pw) { S.pw[r.pw] = (S.pw[r.pw] || 0) + 1; }
-    grant(r);
-    if (r.ring) S.ring = r.ring;
-    if (r.aura) S.aura = r.aura;
-    save(); applyLooks(); syncBoosts && syncBoosts();
-    playSfx('stamp', { gain: 0.9 }); chord([659.25, 830.61, 987.77, 1318.5], 0.06);
-    try { navigator.vibrate && navigator.vibrate([10, 40, 16]); } catch (e2) {}
-    const a = $('#passov').getBoundingClientRect(), b = card.getBoundingClientRect();
-    sparkleAt($('#passov'), b.left - a.left + b.width / 2, b.top - a.top + b.height / 2, ['#FFE9A8', '#FFFFFF', '#F2CC6A'], 22);
-    renderPass(); syncPassBtn();
-    const nc = $(`#passTrack .ptier[data-tier="${i}"]`);
-    if (nc && !reduce) nc.animate([{ transform: 'scale(.85)' }, { transform: 'scale(1.08)' }, { transform: 'none' }], { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
-    if (PASS_BULK) return;
-    if (r.letter) setTimeout(() => showLetter(r.letter), 500);
-    if (r.friend) setTimeout(() => showFriend(r.friend), 500);
+  if (e.target.closest('#spGoldBuy')) {
+    if (!await grownUpGate('the Golden Path')) return;
+    passState().gold = true; save(); renderPass(true); syncPassBtn();
+    chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.08); playSfx('stamp', { gain: 0.9 });
+    toast('Preview: the Golden Path is unlocked. No charge.');
     return;
   }
-  if (r.letter) return showLetter(r.letter);
-  if (r.friend) return showFriend(r.friend);
-  if (r.ring || r.aura) {                               // wear or take off
-    if (r.ring) S.ring = S.ring === r.ring ? null : r.ring;
-    else S.aura = S.aura === r.aura ? null : r.aura;
-    save(); applyLooks(); renderPass(); tick(); bell(783.99, 0, 0.06);
-  }
+  const hb = e.target.closest('.shbtn');
+  if (hb) { tick(); openSheet(PGI, 'h'); return; }
+  const t = e.target.closest('.sptile');
+  if (t) { tick(); openSheet(PGI, t.dataset.key); return; }
 });
 let STORY_OPEN = null;
 
@@ -8098,8 +8282,8 @@ const COL_MILES = [
   { at: .75, icon: 'gift', label: '3 swirls', m: { swirls: 3 } },
   { at: 1, icon: 'crown', label: 'Grand prize', m: { coins: 5000, lanterns: 5, swirls: 5 } }
 ];
-const colStories = () => PASS.map((r, i) => r.friend ? { key: 'f:' + r.friend, tier: i, kind: 'f', id: r.friend } : r.letter ? { key: 'l:' + r.letter, tier: i, kind: 'l', id: r.letter } : null).filter(Boolean);
-const storyOpen = c => passState().claimed.includes(c.tier);
+const colStories = () => PAGES.flatMap((pg, pi) => pg.items.map((r, k) => ({ r, pi, k }))).map(({ r, pi, k }) => r.friend ? { key: 'f:' + r.friend, tier: pi, slot: k, kind: 'f', id: r.friend } : r.letter ? { key: 'l:' + r.letter, tier: pi, slot: k, kind: 'l', id: r.letter } : null).filter(Boolean);
+const storyOpen = c => isClaimed(c.tier, String(c.slot)) || passState().claimed.includes(c.tier * 99);
 const budStages = () => TYPES.reduce((n, el) => n + (owns(el) ? careStage(el) + 1 : 0), 0);
 const colTotal = () => colStories().length + SEALS.length + TYPES.length * STAGES.length;
 const colFound = () => colStories().filter(storyOpen).length + sealCount() + budStages();
@@ -8117,7 +8301,7 @@ function renderCollect() {
     const bg = c.kind === 'f' ? FRIENDS[c.id].bg : `img/world/s1g-${WORLD_OF[timeOfDay()] || 'day'}.jpg`;
     const face = c.kind === 'f' ? '' : 'img/faces/sorin-calm.jpg';
     const title = c.kind === 'f' ? FRIENDS[c.id].name : LETTERS[c.id].title;
-    const sub = !open ? `Season Pass · tier ${c.tier + 1}` : c.kind === 'f' ? `Friend · ${FRIENDS[c.id].feel}` : 'Letter from Sorin';
+    const sub = !open ? `Season Pass · Page ${c.tier + 1}` : c.kind === 'f' ? `Friend · ${FRIENDS[c.id].feel}` : 'Letter from Sorin';
     return `<button class="cstory ${open ? '' : 'locked'}" data-story="${c.key}" data-tier="${c.tier}"><span class="cbg" style="background-image:url(${bg})"></span>${face ? `<img class="cf" src="${face}" alt="">` : ''}${kept ? '<span class="kept">Kept ✓</span>' : ''}<span class="ct"><small>${sub}</small><b>${open ? title : '???'}</b></span></button>`;
   }).join('');
   const sn = sealCount();
@@ -8152,7 +8336,7 @@ $('#collect').addEventListener('click', e => {
   }
   const s = e.target.closest('.cstory');
   if (s) {
-    if (s.classList.contains('locked')) { tick(); const tr = +s.dataset.tier; if (passTier() > tr) { toast('Ready for you! Claim it in your Season Pass.'); setTimeout(openPass, 400); } else toast(`Reach tier ${tr + 1} of the Season Pass to meet this one.`); return; }
+    if (s.classList.contains('locked')) { tick(); const tr = +s.dataset.tier; if (pageOpen(tr)) { toast('Ready for you! Claim it with ★ in your Season Pass.'); setTimeout(openPass, 400); } else toast(`It's on Page ${tr + 1} of the Season Pass.`); return; }
     tick(); const [k, id] = s.dataset.story.split(':'); return k === 'f' ? showFriend(id) : showLetter(id);
   }
   if (e.target.closest('#colSeals')) { tick(); renderSeals(); showOv('sealov'); return; }
@@ -8375,20 +8559,20 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
   for (let k = 1; k <= steps; k++) { $('#pCoins').textContent = Math.round(coins * k / steps); if (k % 2) boop(Math.min(9, 2 + Math.floor(k / 3)), 0.05); await wait(reduce ? 0 : 40); }
   if (xpGain && !babyOn()) {                                  // the season bar fills; crossing a tier gets its own burst
     const bar = $('#pPassFill'), lbl = $('#pPassLbl'), pp = $('#pPass');
-    const t0 = Math.floor(xpFrom / PASS_XP), t1 = Math.min(PASS.length, Math.floor((xpFrom + xpGain) / PASS_XP));
+    const t0 = Math.floor(xpFrom / PASS_XP), t1 = Math.floor((xpFrom + xpGain) / PASS_XP);
     bar.style.transition = 'none'; bar.style.width = `${(xpFrom % PASS_XP) / PASS_XP * 100}%`;
-    lbl.textContent = `Season Pass · tier ${Math.min(PASS.length, t0 + 1)} · +${xpGain} XP`;
+    lbl.textContent = `Season Pass · level ${t0 + 1} · +${xpGain} XP`;
     pp.style.opacity = 1; void bar.offsetWidth; bar.style.transition = '';
     await wait(120);
     if (t1 > t0) {
       bar.style.width = '100%'; boop(6, 0.06); await wait(650);
-      lbl.textContent = t1 >= PASS.length ? 'Season Pass complete!' : `Tier ${t1} unlocked! Claim it in the Season Pass`;
+      lbl.textContent = `+${t1 - t0} Spirit Star${t1 - t0 > 1 ? 's' : ''}! Spend ${t1 - t0 > 1 ? 'them' : 'it'} in the Season Pass`;
       chord([659.25, 830.61, 987.77, 1318.5], 0.06); playSfx('stamp', { gain: 0.7 });
       const r = pp.getBoundingClientRect(), a = pt.getBoundingClientRect(); sparkleAt(pt, r.left - a.left + r.width / 2, r.top - a.top + r.height / 2, ['#FFE9A8', '#FFFFFF'], 18);
       bar.style.transition = 'none'; bar.style.width = '0%'; void bar.offsetWidth; bar.style.transition = '';
       await wait(60);
     }
-    bar.style.width = t1 >= PASS.length ? '100%' : `${((xpFrom + xpGain) % PASS_XP) / PASS_XP * 100}%`; boop(4, 0.05);
+    bar.style.width = `${((xpFrom + xpGain) % PASS_XP) / PASS_XP * 100}%`; boop(4, 0.05);
     await wait(650);
   }
   $('#pGo').style.opacity = 1; A($('#pGo'), pop, { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
