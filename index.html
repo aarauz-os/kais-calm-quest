@@ -2400,6 +2400,43 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .pksprite,.hsprite{display:block;width:100%;background-repeat:no-repeat;background-size:500% 100%;background-position:var(--bx,0%) 0;transform-origin:50% 100%;transition:transform .35s cubic-bezier(.3,1.4,.5,1)}
 .hsprite.shbud{width:118px;margin-bottom:-2px;animation:pkcheer .9s ease-in-out infinite;filter:drop-shadow(0 0 12px color-mix(in srgb,var(--sg) 80%,transparent))}
 .picw.m-style .hsprite{width:84%;margin-bottom:-2px}
+
+/* ================= v67: one-at-a-time progression, intro cards, new booster art ================= */
+.introcard{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px 18px 14px;border-radius:24px;text-align:center;color:#FFF6DE;
+  background:radial-gradient(90% 80% at 50% 20%,rgba(255,226,150,.35),transparent 70%),linear-gradient(180deg,#24574A,#123028);box-shadow:0 0 0 2px #F4D78C,0 0 0 6px rgba(20,50,40,.9),0 0 0 7.5px rgba(227,188,106,.6),0 16px 30px rgba(0,0,0,.45)}
+.icnew{position:absolute;top:-12px;left:50%;transform:translateX(-50%) rotate(-3deg);padding:4px 16px;border-radius:99px;font-weight:900;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:0 0 0 2px #8A5A1C,0 4px 10px rgba(0,0,0,.35);animation:pcall 1.6s ease-in-out infinite}
+.icart{min-height:92px;display:flex;align-items:center;justify-content:center;margin:6px 0 2px}
+.introcard b.display{font-size:24px;font-weight:400;color:#FFE9A8;text-shadow:0 2px 0 rgba(40,24,6,.8)}
+.introcard small{font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;opacity:.75}
+.icimg{width:92px;height:92px;object-fit:contain;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45));animation:icbob 2.8s ease-in-out infinite}
+.icimg.rnd{border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #F4D78C,0 0 22px rgba(180,230,255,.6)}
+.icimg.sm{width:56px;height:56px}
+@keyframes icbob{0%,100%{transform:rotate(-5deg) scale(1)}50%{transform:rotate(5deg) scale(1.07)}}
+.icrow{display:inline-flex;align-items:center;gap:3px}
+.ico{position:relative;display:inline-block;width:32px;height:32px}
+.icl,.icsq{display:inline-block;line-height:0}
+.iceq{display:flex;align-items:center;gap:8px}
+.icarrow{font-size:28px;color:#FFE9A8;animation:icarrow 1.2s ease-in-out infinite}
+@keyframes icarrow{50%{transform:translateX(4px)}}
+.icpiece{position:relative;display:inline-block;width:56px;height:56px;animation:icbob 2.2s ease-in-out infinite}
+.icpiece .pc{position:absolute;inset:0}
+.lightc{display:inline-block;width:40px;height:30px;background:radial-gradient(circle at 30% 60%,#EEF3F8 0 30%,transparent 31%),radial-gradient(circle at 60% 40%,#fff 0 34%,transparent 35%),radial-gradient(ellipse at 50% 70%,#D5DEE7 0 45%,transparent 46%)}
+.sunc{font-size:34px;color:#FFD66E;text-shadow:0 0 12px rgba(255,214,120,.9)}
+.icfree{position:absolute;right:18%;bottom:34%;padding:3px 10px;border-radius:99px;font-weight:900;font-size:13px;color:#fff;background:linear-gradient(#6CC286,#2B7A4B);box-shadow:0 0 0 2px #FFF3CF}
+#pwBar.none{display:none !important}
+#pwBar .pwtile[hidden]{display:none !important}
+.pwart{background:radial-gradient(circle at 50% 36%,color-mix(in srgb,var(--pc) 55%,#fff) 0%,color-mix(in srgb,var(--pc) 70%,#12302A) 75%) !important;box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -4px 8px rgba(0,0,0,.25),0 0 0 2px #F4D78C,0 4px 0 #6B4418,0 6px 10px rgba(0,0,0,.35) !important}
+#pwBar .pwart img{width:86% !important;height:86% !important;margin:7%;object-fit:contain !important;transform:none !important;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35))}
+#pwBar .pwbtn:not(.cant) .pwart img{animation:pwidle 3.2s ease-in-out infinite;animation-delay:calc(var(--i) * -.6s)}
+@keyframes pwidle{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg) translateY(-2px)}}
+
+body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
+
+.choldrow{position:relative;margin:4px 0 14px}
+.chold{display:grid;grid-template-columns:repeat(5,1fr);align-items:end;gap:2px;padding:0 4px}
+.chold .hsprite{animation:pkbreath 3.4s ease-in-out infinite}
+.chold .hsprite:nth-child(2){animation:pkcheer .9s ease-in-out infinite}
+.choldrail{display:block;height:16px;margin-top:-2px;border-radius:8px 8px 4px 4px;background:linear-gradient(180deg,#C98F4E,#9A6430 30%,#7A4A22 70%,#5E3616);box-shadow:inset 0 2px 0 rgba(255,220,160,.55),0 0 0 1.5px #E3BC6A,0 4px 0 #3E220A}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -2436,7 +2473,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
           <p class="clede">The puzzle game kids win by breathing. Clear the storm with a real, slow breath, then understand the feeling behind it.</p>
           <div class="cfaces"><img src="img/faces/hero-g1-happy.jpg" alt=""><img src="img/faces/hero-b3-happy.jpg" alt=""><img src="img/faces/hero-g4-happy.jpg" alt=""><img src="img/faces/kai-happy.jpg" alt=""><img src="img/faces/hero-g6-happy.jpg" alt=""><img src="img/faces/hero-b5-happy.jpg" alt=""><img class="cluma" src="img/faces/luma-happy.jpg" alt="Luma"><img src="img/faces/hero-g2-happy.jpg" alt=""><img src="img/faces/hero-b2-happy.jpg" alt=""><img src="img/faces/hero-g5-happy.jpg" alt=""><img src="img/faces/hero-b4-happy.jpg" alt=""><img src="img/faces/hero-g3-happy.jpg" alt=""><img src="img/faces/hero-b6-happy.jpg" alt=""></div>
           <button class="btn gold big" data-play>Play the demo</button>
-          <p class="cnote">About 3 minutes · free forever · best with the sound on</p>
+          <p class="cnote">30 episodes to play · free forever · best with the sound on</p>
         </div>
       </header>
 
@@ -2444,8 +2481,8 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
         <div class="ckick">How it plays</div>
         <h2 class="display">Match. Breathe. Understand.</h2>
         <div class="cloop">
-          <div class="cstep"><span class="cvis"><span class="orbrow" data-types="wood wood wood"></span></span><b>Match</b><em>Match orbs to grow Luma's Aura. Big matches make lanterns, lotus blooms, fireflies and the spirit star.</em></div>
-          <div class="cstep"><span class="cvis"><img src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe</b><em>A real, slow breath clears the storm and sends Luma diving. Rushing doesn't work.</em></div>
+          <div class="cstep"><span class="cvis"><span class="orbrow" data-types="wood wood wood"></span></span><b>Match</b><em>Line up 3 or more. Bigger shapes make Lanterns, Lotus blooms, Fireflies and the Spirit Star, one new piece at a time.</em></div>
+          <div class="cstep"><span class="cvis"><img src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe</b><em>A real, slow breath blows the storm clouds away and sends Luma diving. Rushing doesn't work.</em></div>
           <div class="cstep"><span class="cvis"><img src="img/journey/feel-worry.jpg" alt=""></span><b>Understand</b><em>Every win shows what your breathing did, and why a calm head helped.</em></div>
         </div>
       </section>
@@ -2460,8 +2497,9 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
           <figure><img src="img/buddy-metal.jpg" alt=""><figcaption><b>Sen</b>Tiger · Metal</figcaption></figure>
           <figure><img src="img/buddy-water.jpg" alt=""><figcaption><b>Nami</b>Bear · Water</figcaption></figure>
         </div>
+        <div class="choldrow"><div class="chold"><span class="hsprite" style="background-image:url(img/holds/wood.png?v=65);--bx:0%;aspect-ratio:1/0.923"></span><span class="hsprite" style="background-image:url(img/holds/fire.png?v=65);--bx:25%;aspect-ratio:1/0.777"></span><span class="hsprite" style="background-image:url(img/holds/earth.png?v=65);--bx:0%;aspect-ratio:1/0.803"></span><span class="hsprite" style="background-image:url(img/holds/metal.png?v=65);--bx:50%;aspect-ratio:1/0.707"></span><span class="hsprite" style="background-image:url(img/holds/water.png?v=65);--bx:0%;aspect-ratio:1/0.8"></span></div><i class="choldrail"></i></div>
         <div class="cevo"><span><img src="img/buddy-fire.jpg" alt=""><small>Baby</small></span><i>›</i><span><img src="img/buddy-fire-young.jpg" alt=""><small>Young</small></span><i>›</i><span><img src="img/buddy-fire-grown.jpg" alt=""><small>Grown</small></span><i>›</i><span><img src="img/buddy-fire-guardian.jpg" alt=""><small>Spirit Guardian</small></span></div>
-        <p class="cp">A daily care breath with your companion builds Bond. With steady care, they grow up and their gift in the game grows stronger too. Consistency, not spending, is what makes them shine.</p>
+        <p class="cp">Your companion stands right behind the board, holding its edge and watching every move: cheering big combos, gasping at new pieces and breathing along with you. A daily care breath builds Bond, and with steady care it grows up and its gift grows stronger. Consistency, not spending, is what makes them shine.</p>
         <div class="cpows">
           <span><img src="img/ui/pw-deer.png" alt=""><b>Deer Leap</b></span><span><img src="img/ui/pw-hawk.png" alt=""><b>Hawk Dive</b></span><span><img src="img/ui/pw-monkey.png" alt=""><b>Monkey Swap</b></span><span><img src="img/ui/pw-tiger.png" alt=""><b>Tiger Claw</b></span><span><img src="img/ui/pw-bear.png" alt=""><b>Bear Stomp</b></span>
         </div>
@@ -2482,7 +2520,8 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
           <li><b>12 heroes</b> kids pick to look like them, with no labels</li>
           <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
           <li><b>A real conversation</b> each episode: you feel it, Kai gets it, Sorin helps</li>
-          <li><b>Gentle difficulty</b> that builds slowly, with Luma lending extra moves when a level feels hard</li>
+          <li><b>One new thing at a time.</b> Episode 1 is just matching; every episode after adds one piece, obstacle or helper with its own showcase level</li>
+          <li><b>Boards in many shapes</b>: hearts, lotus flowers, arches, towers, waves, and gentle difficulty with Luma lending extra moves when a level feels hard</li>
         </ul>
       </section>
 
@@ -2490,7 +2529,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
         <div class="ckick">Rewards that feel good</div>
         <h2 class="display">A season to finish, a collection to fill</h2>
         <div class="crew">
-          <div><img src="img/pass/trophy-lotus.png" alt=""><b>Free Season Pass</b><em>20 tiers of rings, auras, charms and story cards. It never expires.</em></div>
+          <div><img src="img/pass/trophy-lotus.png" alt=""><b>Free Season Pass</b><em>5 pages of rewards. Earn Spirit Stars and choose what to unlock, including Board Styles your companion shows off.</em></div>
           <div><img src="img/ui/journal.png" alt=""><b>Collection</b><em>Story cards from Kai's village, Spirit Seals and every companion stage.</em></div>
           <div><img src="img/icons/icon-streak-3d.jpg" alt="" class="rnd"><b>Daily rhythm</b><em>Streaks, quests and a daily spin, all earned by practising.</em></div>
           <div><img src="img/pass/aura-moon.png" alt=""><b>Bedtime with Luma</b><em>No game, no score. Just slow breathing before sleep.</em></div>
@@ -2501,7 +2540,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
         <div class="ckick">Built on real practice</div>
         <h2 class="display">Demaris's five elements, as rules of play</h2>
         <div class="cycle" id="cycleRow"></div>
-        <p class="cp">Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. A match lights up the next element. Obstacles break by the element that controls them. Each place pairs an element with an organ, a feeling, a sound, a breath and a qigong animal from Demaris's teaching.</p>
+        <p class="cp">Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. A match lights up the next element. Obstacles break by the element that controls them. Each place pairs an element with an organ, a feeling, a sound, a breath and a qigong animal from Demaris's teaching. Storm clouds melt when you match beside them, and a slow breath blows them away.</p>
       </section>
 
       <section class="csec cfair">
@@ -2509,7 +2548,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
         <h2 class="display">Fair by design, and you can see the progress</h2>
         <ul class="cfacts">
           <li><b>Free forever.</b> No paywall, no forced ads.</li>
-          <li><b>Small extras only</b> at $0.99, $1.99 or $4.99, and a grown-up approves every purchase.</li>
+          <li><b>Small extras only</b> at $0.99, $1.99 or $4.99, and a grown-up approves every purchase. The optional Golden Path pays back enough coins for next season's.</li>
           <li><b>No chat, no leaderboards, no strangers.</b> Feelings are never "bad".</li>
           <li><b>A weekly calm summary</b>: breaths, feelings explored and a question to ask your child tonight.</li>
         </ul>
@@ -2662,11 +2701,11 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
     </div>
     <div class="gbot" style="padding-top:0;justify-content:space-between">
       <div class="boosters pwbar" id="pwBar">
-        <button class="pwtile pwbtn" data-pw="deer" style="--i:0;--pc:#7BD957" aria-label="Deer Leap"><span class="pwart"><img src="img/icons/pw-deer.jpg" alt=""></span><b class="pwname">Leap</b><i id="pwc-deer"></i></button>
-        <button class="pwtile pwbtn" data-pw="crane" style="--i:1;--pc:#FF7A55" aria-label="Hawk Dive"><span class="pwart"><img src="img/icons/pw-hawk.jpg" alt=""></span><b class="pwname">Dive</b><i id="pwc-crane"></i></button>
-        <button class="pwtile pwbtn" data-pw="monkey" style="--i:2;--pc:#F2B233" aria-label="Monkey Swap"><span class="pwart"><img src="img/icons/pw-monkey.jpg" alt=""></span><b class="pwname">Swap</b><i id="pwc-monkey"></i></button>
-        <button class="pwtile pwbtn" data-pw="tiger" style="--i:3;--pc:#DCE8F2" aria-label="Tiger Claw"><span class="pwart"><img src="img/icons/pw-tiger.jpg" alt=""></span><b class="pwname">Claw</b><i id="pwc-tiger"></i></button>
-        <button class="pwtile pwbtn" data-pw="bear" style="--i:4;--pc:#5BC0FF" aria-label="Bear Stomp"><span class="pwart"><img src="img/icons/pw-bear.jpg" alt=""></span><b class="pwname">Stomp</b><i id="pwc-bear"></i></button>
+        <button class="pwtile pwbtn" data-pw="deer" style="--i:0;--pc:#7BD957" aria-label="Deer Leap"><span class="pwart"><img src="img/ui/pw-deer.png" alt=""></span><b class="pwname">Leap</b><i id="pwc-deer"></i></button>
+        <button class="pwtile pwbtn" data-pw="crane" style="--i:1;--pc:#FF7A55" aria-label="Hawk Dive"><span class="pwart"><img src="img/ui/pw-hawk.png" alt=""></span><b class="pwname">Dive</b><i id="pwc-crane"></i></button>
+        <button class="pwtile pwbtn" data-pw="monkey" style="--i:2;--pc:#F2B233" aria-label="Monkey Swap"><span class="pwart"><img src="img/ui/pw-monkey.png" alt=""></span><b class="pwname">Swap</b><i id="pwc-monkey"></i></button>
+        <button class="pwtile pwbtn" data-pw="tiger" style="--i:3;--pc:#DCE8F2" aria-label="Tiger Claw"><span class="pwart"><img src="img/ui/pw-tiger.png" alt=""></span><b class="pwname">Claw</b><i id="pwc-tiger"></i></button>
+        <button class="pwtile pwbtn" data-pw="bear" style="--i:4;--pc:#5BC0FF" aria-label="Bear Stomp"><span class="pwart"><img src="img/ui/pw-bear.png" alt=""></span><b class="pwname">Stomp</b><i id="pwc-bear"></i></button>
         <button class="pwtile pwcoin" id="shopOpen2" style="--i:5;--pc:#F2C45A" aria-label="Coins: open the shop"><span class="pwart coinart"><i class="coin"></i><em>+</em></span><b class="pwname" data-coins>0</b></button>
       </div>
       <span class="chip boostchip" id="boostChip" hidden>2× coins <span id="boostLeft"></span></span>
@@ -2861,7 +2900,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
     <h3 class="shoph">Or watch a short video, only if you want to</h3>
     <div class="singles freebies">
       <button class="sitem ad" data-ad="heart"><span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span><b>+1 heart</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
-      <button class="sitem ad" data-ad="lantern"><span class="sgem" style="--eh:#9AA9B8"><img src="img/icons/pw-tiger.jpg" alt=""></span><b>+1 Tiger Claw</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
+      <button class="sitem ad" data-ad="lantern"><span class="sgem" style="--eh:#9AA9B8"><img src="img/ui/pw-tiger.png" alt=""></span><b>+1 Tiger Claw</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
       <button class="sitem ad" data-ad="boost"><span class="sgem" style="--eh:#F0B93A"><i class="coin"></i></span><b>2× coins, 10 min</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
       <button class="sitem" data-refill><span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span><b>Refill hearts</b><small>with coins you earned</small><span class="sprice coinprice"><i class="coin"></i> 90</span></button>
     </div>
@@ -2955,8 +2994,8 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
         <div class="loboard" id="loBoard"></div>
       </div>
       <div class="loextra" id="loExtra"></div>
-      <div class="lotitle out"><b>Bring a charm</b><span>optional</span></div>
-      <div class="lotray"><div class="charms2" id="charmRow"></div><div class="charmhint" id="charmHint">Tap a charm to bring it along</div></div>
+      <div class="lotitle out" id="loCharmT"><b>Bring a charm</b><span>optional</span></div>
+      <div class="lotray" id="loCharmTray"><div class="charms2" id="charmRow"></div><div class="charmhint" id="charmHint">Tap a charm to bring it along</div></div>
       <button class="btn big loplay" id="iGo">Play</button>
     </div>
   </div>
@@ -3198,7 +3237,7 @@ const SOUND = {
   metal: { verb: 'sigh',    say: 'ssssss',     tip: 'Like air leaving a tyre.',             dir: 'Long and low — Metal lets go.' },
   water: { verb: 'low hum', say: 'whoooooo',   tip: 'As low as your voice goes.',           dir: 'Deep and quiet — Water sinks and cools.' }
 };
-const LEVELS = [
+const BASE_LEVELS = [
   { place: 'The Root Grounds', elem: 'earth', power: 'Earth Breath', shift: 'worry → trust', organ: 'belly', moves: 60, clouds: 6,
     problem: "Kai keeps thinking about tomorrow. His belly feels tight and he can't stop worrying.",
     you: "You keep thinking about tomorrow. Your belly feels tight and the worry won't stop.",
@@ -3230,6 +3269,29 @@ const LEVELS = [
     steps: ['Put your hands on your lower back, above your hips.', 'Breathe in slowly and feel your back widen.', 'Breathe out with a low hum: whoooooo.', 'Feel your feet heavy and your back warm.'],
     line: 'When fear melts, clear thinking comes back.', inhale: 4, exhale: 6 }
 ];
+/* ---------- Season 1 progression (after Royal Kingdom): one new thing per episode ----------
+   Episode 1 is pure matching. Each later episode introduces exactly one mechanic, with a short "New!" card
+   and a level built to show it off. Boosters unlock one at a time, much later, each with 3 free to start.
+   The five places, feelings and stories cycle; goals, moves and board shapes come from this table. */
+const FEAT_AT = { breath: 2, row: 3, clouds: 4, bomb: 5, fly: 6, knots: 7, spirit: 8, storm: 9, monkey: 10, feed: 11, charms: 12, tiger: 13, glow: 15, bear: 16, crane: 20, deer: 24 };
+const INTRO_AT = Object.fromEntries(Object.entries(FEAT_AT).map(([k, v]) => [v, k]));
+const reached = () => Math.max(S && S.unlocked || 1, (typeof LI === 'number' ? LI : 0) + 1);
+const featOn = (k, ep = (typeof LI === 'number' ? LI : 0) + 1) => ep >= FEAT_AT[k];
+const featEver = k => reached() >= FEAT_AT[k];
+// shapes chosen to suit what each episode teaches (wide rows for lines, open middles for shapes)
+const EP_SHAPE = { 3: null, 4: 'round6', 5: null, 6: 'bowl', 7: 'castle', 8: 'arch', 9: 'diamond', 10: 'heart', 11: 'gate', 12: 'lotus', 13: 'hourglass', 14: 'tower', 15: 'wave' };
+const SHAPE_CYCLE = ['heart', 'diamond', 'lotus', 'arch', 'hourglass', 'castle', 'wave', 'tower', 'gate', 'bowl'];
+function makeEp(i) {
+  const ep = i + 1, b = BASE_LEVELS[i % BASE_LEVELS.length];
+  const gems = ep <= 3 ? 10 + ep * 2 : ep % 3 === 1 ? 0 : Math.min(30, 14 + Math.floor(ep / 2));
+  const clouds = ep < FEAT_AT.clouds ? 0 : Math.min(14, 3 + Math.floor((ep - FEAT_AT.clouds) * 0.8));
+  const knots = ep < FEAT_AT.knots ? 0 : (ep === FEAT_AT.knots || ep % 2 === 1) ? Math.min(8, 2 + Math.floor((ep - FEAT_AT.knots) / 3)) : 0;
+  const moves = Math.max(16, Math.min(40, 14 + Math.round(gems * 0.45 + clouds * 1.5 + knots * 1.3)));
+  const shape = ep in EP_SHAPE ? EP_SHAPE[ep] : ep > 15 ? SHAPE_CYCLE[(ep - 16) % SHAPE_CYCLE.length] : null;
+  return Object.assign({}, b, { moves, clouds, knots, gems: gems || (clouds || knots ? 0 : 12), shape, ep, intro: INTRO_AT[ep] || (ep === 1 ? 'match' : null) });
+}
+const LEVELS = Array.from({ length: 30 }, (_, i) => makeEp(i));
+
 // the Feelings Journey: 16 chapters of 60 places, then the 40-place Harmony Road (1,000 in all).
 // Framing rule: every feeling is welcome. We tame, face, untangle or hold it, never defeat it.
 const CHAPTERS = [
@@ -4095,8 +4157,10 @@ function buddyLevelGifts() {
   levelFree = {};
   if (!S.buddy || babyOn()) return;
   const el = S.buddy, t = giftTier(el);
-  if (t === 4) levelFree[{ water: 'bear', fire: 'crane', earth: 'monkey' }[el]] = 1;
-  if (el === 'wood' && t >= 2) setTimeout(() => placeGifts(t === 4 ? ['row', 'bomb'] : ['row']), 700);
+  const fp = { water: 'bear', fire: 'crane', earth: 'monkey' }[el];
+  if (t === 4 && fp && featOn(fp)) levelFree[fp] = 1;
+  const kinds = (t === 4 ? ['row', 'bomb'] : ['row']).filter(k => featOn(k));   // only pieces the player has already met
+  if (el === 'wood' && t >= 2 && kinds.length) setTimeout(() => placeGifts(kinds), 700);
 }
 async function careBreath() {
   const el = S.buddy; if (!el) return;
@@ -4853,7 +4917,6 @@ function openLevel(i) {
   if (S.hearts <= 0) { toast('Out of hearts. Refill them in the shop, or wait for them to come back.'); showOv('shop'); return; }
   LI = i; L = LEVELS[i];
   // first time only: the Practice Grove walkthrough, then episode 1
-  if (i === 0 && !S.practiceDone && !babyOn()) { runPractice(() => { LI = 0; L = LEVELS[0]; runStory(); }); return; }
   runStory();
 }
 // The board grows with the player: small and simple first, the full shaped board once they're ready.
@@ -4923,9 +4986,10 @@ $('#heroOpen').addEventListener('click', () => { ac(); pickHero(); });
 const VOICE = { hero: 520, sorin: 290, luma: 780 };
 /* ---------- difficulty: every 5th episode is Stormy (Hard), every 20th a Thunderstorm (Super Hard).
    Four easy wins, then a challenge that pays more; the rarer Thunderstorms become events. ---------- */
-const epDifficulty = ep => ep >= 40 && ep % 20 === 0 ? 'super' : ep % 5 === 0 ? 'hard' : 'normal';
+// Stormy episodes arrive only once the basics are learned, and never on an episode that introduces something new
+const epDifficulty = ep => ep >= 40 && ep % 20 === 0 ? 'super' : ep >= 12 && ep % 5 === 2 && !INTRO_AT[ep] ? 'hard' : 'normal';
 // how many Stormy episodes came before this one: the first ones are gentle, the squeeze grows slowly
-const stormRank = ep => Math.floor(ep / 5);
+const stormRank = ep => Math.max(1, Math.floor((ep - 12) / 5) + 1);
 const DIFF = {
   normal: { name: '', label: '', moves: 1, clouds: 0, knots: 0, gems: 1, coin: 1, xp: 1 },
   hard: { name: 'Stormy', label: 'Hard', moves: 0.9, clouds: 2, knots: 2, gems: 1, coin: 2, xp: 1.5 },
@@ -4939,7 +5003,7 @@ function levelSpec(i = LI) {
   if (little) { clouds = Math.min(4, clouds); moves -= 2; knots = Math.ceil(knots / 2); gems = Math.round(gems * 0.6); }
   else if (bf.tier === 2) { clouds = Math.min(6, clouds); moves -= 1; knots = Math.ceil(knots * 0.75); gems = Math.round(gems * 0.8); }
   // never overstuff: obstacles stay a small share of the cells, so the board always has room to breathe
-  const cells = bf.tier < 3 ? bf.R * bf.C : shapeCells(b.shape);
+  const cells = b.shape && SHAPES[b.shape] ? shapeCells(b.shape) : bf.R * bf.C;
   clouds = Math.min(clouds, Math.round(cells * 0.2)); knots = Math.min(knots, Math.round(cells * 0.12));
   if (S.buddy === 'water' && !babyOn()) moves += 2 + giftTier('water');   // Nami's gift: +3 to +6 as she grows
   // Luma helps after a loss: +3 moves per try on the same episode (up to +9), so nobody gets stuck and quits
@@ -4965,9 +5029,9 @@ async function runStory() {
       ? { who: 'luma', voice: 'luma', name: 'Luma', text: storyLines(L).kai[0], face: 'happy' }
       : { who: 'kai', voice: 'hero', name: 'Kai', text: storyLines(L).kai[0], face: storyLines(L).kai[1] },
     { who: 'sorin', voice: 'sorin', name: 'Sorin', text: storyLines(L).sorin, face: 'calm' },
-    { who: 'luma', voice: 'luma', name: 'Luma', goal: true, text: GOAL_LINE(g.clouds, g.moves) }
+    { who: 'luma', voice: 'luma', name: 'Luma', goal: g.clouds > 0 && (L.intro === 'clouds' || !(S.seen || {}).goaldemo), text: GOAL_LINE(g.clouds, g.moves) }
   ];
-  if (LI >= 1 && !(S.seen || {}).feed) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', demo: 'feed', text: {
+  if (featOn('feed') && !(S.seen || {}).feed) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', demo: 'feed', text: {
     '2-4': "Look! Wood makes Fire glow. Match Wood, then pop the glowing Fire!",
     '5-7': "Here's a secret: the elements help each other. Wood feeds Fire, Fire makes Earth, and so on. Match one, and the next one lights up. Lit orbs make me glow twice as much.",
     '8-11': "The elements feed each other in a circle: Wood feeds Fire, Fire makes Earth, Earth holds Metal, Metal carries Water, Water grows Wood. Match one and the next element lights up. Clearing a lit orb gives double Aura.",
@@ -4977,7 +5041,9 @@ async function runStory() {
     '5-7': "Something new: Worry tied some orbs in knots. A knotted orb can't move, but a match that includes it unties the knot.",
     '8-11': "New here: knots. Worry ties orbs down so you can't swap them. Line up a match through a knot, or match Wood right next to it. Wood breaks up Earth, like roots in soil.",
     '12-15': "New obstacle: knots. They're Earth, so they follow the control cycle: a Wood match right next to one breaks it loose, the way roots split soil. Or build a match straight through it." }[band()] });
-  if (LI === 0 || !S.tutDone || band() === '2-4') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: HOWTO[band()] });
+  const intro = L.intro && INTRO_CARD[L.intro];
+  if (intro && L.intro !== 'knots' && L.intro !== 'feed') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', intro: L.intro, text: intro.say });
+  if (LI === 0 || !S.tutDone || band() === '2-4') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: (featOn('breath') ? HOWTO : HOWTO_MATCH)[band()] });
   $('#stPips').innerHTML = beats.map(() => '<i></i>').join('') + '<i></i>';
   $('#loadout').hidden = true; $('#loadout').classList.remove('up');
   $('#stStage').hidden = false;
@@ -5203,17 +5269,54 @@ async function obstacleDemo(host, kind) {
     await wait(2200); if (!alive()) return;
   }
 }
+const PW_OF = { monkey: 'monkey', tiger: 'tiger', bear: 'bear', crane: 'crane', deer: 'deer' };
+const PW_IMG = { deer: 'deer', crane: 'hawk', monkey: 'monkey', tiger: 'tiger', bear: 'bear' };
+const INTRO_CARD = {
+  match: { t: 'Match 3', say: 'Swap two orbs to line up 3 of the same element. That is all you need today!', art: () => `<span class="icrow">${['water', 'water', 'water'].map(e => `<span class="ico">${orbHTML(e)}</span>`).join('')}</span>` },
+  breath: { t: "Luma's Breath", say: "Every match fills my Aura. When I glow, hold me and breathe slowly with me. The slower you breathe, the bigger my dive!", art: () => `<img class="icimg rnd" src="img/faces/luma-breath.jpg" alt="">` },
+  row: { t: 'Lantern', say: 'Line up 4 in a row to make a Lantern. Tap it and it lights up the whole line!', art: () => eqHTML(4, 'row') },
+  clouds: { t: 'Storm clouds', say: 'Clouds cover some orbs. Match right beside a cloud to clear it and let the sun out.', art: () => `<img class="icimg" src="img/pass/goal-cloud.png" alt="">` },
+  bomb: { t: 'Lotus', say: 'Make an L or a T shape to grow a Lotus. Tap it and it bursts everything around it!', art: () => eqHTML('LT', 'bomb') },
+  fly: { t: 'Firefly', say: 'Match 4 in a little square to wake a Firefly. It flies straight to what you need most!', art: () => eqHTML('SQ', 'fly') },
+  spirit: { t: 'Spirit Star', say: 'Line up 5 in a row for a Spirit Star. Swap it with any orb and that whole color clears!', art: () => eqHTML(5, 'spirit') },
+  storm: { t: 'Dark storm clouds', say: 'Dark storm clouds are stronger. They take two matches: dark, then light, then sunshine!', art: () => `<span class="icrow"><img class="icimg sm" src="img/pass/goal-cloud.png" alt=""><b class="icarrow">›</b><span class="lightc"></span><b class="icarrow">›</b><span class="sunc">☀</span></span>` },
+  charms: { t: 'Charms', say: 'Before a level you can now bring a charm. Each one gives you a little head start.', art: () => `<img class="icimg" src="img/pass/charm-sprout.png" alt="">` },
+  glow: { t: 'Glow streak', say: "Win levels in a row and I'll leave gifts on the board before you start. Keep your glow going!", art: () => `<span class="icrow">${pieceHTML('row', 'fire')}${pieceHTML('bomb', 'wood')}</span>` },
+  monkey: { t: 'Monkey Swap', pw: 'monkey', say: "A new helper! Monkey Swap swaps any two orbs, even ones that don't match. Here are 3 to start." },
+  tiger: { t: 'Tiger Claw', pw: 'tiger', say: 'A new helper! Tiger Claw clears a whole row. Here are 3 to start.' },
+  bear: { t: 'Bear Stomp', pw: 'bear', say: 'A new helper! Bear Stomp clears a 3×3 patch. Here are 3 to start.' },
+  crane: { t: 'Hawk Dive', pw: 'crane', say: 'A new helper! Hawk Dive clears a row and a column at once. Here are 3 to start.' },
+  deer: { t: 'Deer Leap', pw: 'deer', say: 'A new helper! Deer Leap gives you a fresh board and fills my Aura a little. Here are 3 to start.' }
+};
+function eqHTML(n, sp) {
+  const e = L ? L.elem : 'water', o = `<span class="ico">${orbHTML(e)}</span>`;
+  const left = n === 'LT' ? `<span class="icl">${o}${o}${o}<br>${o}<br>${o}</span>` : n === 'SQ' ? `<span class="icsq">${o}${o}<br>${o}${o}</span>` : `<span class="icrow">${o.repeat(n)}</span>`;
+  return `<span class="iceq">${left}<b class="icarrow">›</b><span class="icpiece">${pieceHTML(sp === 'spirit' ? 'spirit' : sp, e)}</span></span>`;
+}
+function introCardHTML(k) {
+  const c = INTRO_CARD[k]; if (!c) return '';
+  const art = c.pw ? `<img class="icimg" src="img/ui/pw-${PW_IMG[c.pw]}.png" alt=""><span class="icfree">×3 free</span>` : c.art();
+  return `<div class="introcard ${c.pw ? 'pw' : ''}"><span class="icnew">New!</span><div class="icart">${art}</div><b class="display">${c.t}</b><small>Episode ${LI + 1}</small></div>`;
+}
+function grantIntro(k) {
+  const c = INTRO_CARD[k]; if (!c || !c.pw || babyOn()) return;
+  S.pwIntro = S.pwIntro || {}; if (S.pwIntro[c.pw]) return;
+  S.pwIntro[c.pw] = 1;
+  if (c.pw === 'tiger') S.lanterns = (S.lanterns || 0) + 3; else if (c.pw === 'deer') S.swirls = (S.swirls || 0) + 3; else { S.pw = S.pw || {}; S.pw[c.pw] = (S.pw[c.pw] || 0) + 3; }
+  save();
+}
 async function showBeat(b, run, skipped, nextTap, k = 0) {
   const face = $('#stFace'), txt = $('#stText'), bub = $('#stBubble'), por = $('#stPor');
   if (k > 0) crossfadeBg(storyBg(k, b.voice));
   const newSpeaker = lastSpeaker !== b.name; lastSpeaker = b.name;
-  $('#story').classList.toggle('demoing', !!(b.knotDemo || b.demo || b.goal)); demoRun++;
+  $('#story').classList.toggle('demoing', !!(b.knotDemo || b.demo || b.goal || b.intro)); demoRun++;
   $('#stPlate').textContent = b.name;
   // the portrait stays still: one calm expression, no mouth-flapping, no bouncing
   face.onerror = () => { face.onerror = null; face.src = faceSrc(b.who, 'calm'); };
   face.src = faceSrc(b.who, b.face || (b.voice === 'luma' ? 'happy' : 'calm'));
   const goal = $('#stGoal');
-  goal.hidden = !b.goal && !b.knotDemo && !b.demo;
+  goal.hidden = !b.goal && !b.knotDemo && !b.demo && !b.intro;
+  if (b.intro) { goal.innerHTML = introCardHTML(b.intro); if (!reduce) goal.animate([{ transform: 'translateY(14px) scale(.94)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 560, easing: 'cubic-bezier(.2,.9,.3,1.2)' }); grantIntro(b.intro); }
   if (b.demo) {
     obstacleDemo(goal, b.demo);
     if (!reduce) goal.animate([{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' });
@@ -5225,6 +5328,7 @@ async function showBeat(b, run, skipped, nextTap, k = 0) {
     S.seen = Object.assign(S.seen || {}, { knots: 1 }); save();
   }
   if (b.goal) {
+    S.seen = Object.assign(S.seen || {}, { goaldemo: 1 }); save();
     const g = goalNums();
     goalDemo(goal, g);
     if (!reduce) goal.animate([{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' });
@@ -5257,6 +5361,7 @@ function showLoadout() {
   $('#loVerb').textContent = EMO_VERB[L.elem];
   $('#loName').textContent = L.place;
   $('#loEp').textContent = `Episode ${LI + 1}`;
+  $('#loCharmT').hidden = $('#loCharmTray').hidden = !featOn('charms'); if (!featOn('charms')) charmPick.clear();
   renderCharms(); renderGoal();
   lo.hidden = false; void lo.offsetWidth; lo.classList.add('up'); $('#story').classList.add('lo-up');
   chord([392, 523.25, 659.25], 0.06);
@@ -5271,7 +5376,7 @@ function renderGoal() {
   if (d.name) st.innerHTML = `<img src="img/pass/goal-cloud.png" alt=""><b>⚡ ${d.name} episode</b><span>${d.label} · rewards ×${d.coin}</span>${firstStorm ? `<em>A little harder, and it pays ${d.coin === 2 ? 'double' : 'triple'}. Take your time. If it doesn't work out, Luma lends you extra moves next try.</em>` : ''}`;
   $('#loMoves').innerHTML = `<i>↻</i>${g.moves} moves`;
   const tile = (img, n, label) => `<div class="lotile"><span class="gimg">${img}</span><b>${n}</b><small>${label}</small></div>`;
-  $('#loGoal').innerHTML = tile('<img src="img/pass/goal-cloud.png" alt="">', g.clouds, 'storm clouds')
+  $('#loGoal').innerHTML = (g.clouds ? tile('<img src="img/pass/goal-cloud.png" alt="">', g.clouds, 'storm clouds') : '')
     + (g.gems ? tile(`<span class="orbw">${orbHTML(L.elem)}</span>`, g.gems, `${ELEM[L.elem].name} orbs`) : '')
     + (g.knots ? tile('<img src="img/pass/goal-knot.png" alt="">', g.knots, 'knots') : '');
   const fresh = bf.tier > 1 && (S.boardTier || 1) < bf.tier;
@@ -5505,7 +5610,7 @@ function placeGifts(kinds) {
     if (k === 'spirit') { t.type = 'spirit'; t.sp = null; } else t.sp = k;
     paint(t); setTimeout(() => { t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460); bell(chordNote(6 + i), 0, 0.05); }, 300 + i * 250); });
 }
-const GLOW_FROM = 8;                                   // free starting gifts unlock at episode 8, once kids can make pieces themselves
+const GLOW_FROM = FEAT_AT.glow;                                   // free starting gifts unlock at episode 8, once kids can make pieces themselves
 const glowOn = () => !babyOn() && LI + 1 >= GLOW_FROM;
 function applyGlow() {
   const n = Math.min(3, S.glow || 0); if (!n || !glowOn()) return;
@@ -5516,7 +5621,7 @@ function addClouds(n, quiet) {
   // clouds settle anywhere in the upper two-thirds; matches beside them peel them away
   const top = Math.max(2, Math.ceil(R * 0.66));
   const pool = all().filter(t => !t.cloud && t.type !== 'spirit' && t.r < top).sort(() => Math.random() - 0.5);
-  const ep = (LI || 0) + 1, stormShare = babyOn() ? 0 : Math.min(0.6, Math.max(0, (ep - 4) * 0.1)) + (L && L.diff === 'hard' ? 0.1 : 0);
+  const ep = (LI || 0) + 1, stormShare = babyOn() || ep < FEAT_AT.storm ? 0 : (ep === FEAT_AT.storm ? 0.4 : Math.min(0.6, 0.2 + (ep - FEAT_AT.storm) * 0.05)) + (L && L.diff === 'hard' ? 0.1 : 0);
   pool.slice(0, n).forEach((t, i) => {
     t.cloud = i < Math.round(n * stormShare) ? 2 : 1;
     if (quiet) { paint(t); return; }
@@ -5575,15 +5680,22 @@ const SHAPES = {
   castle: { top: [1, 0, 1, 0, 1, 0, 1] },
   diamond: { top: [2, 1, 0, 0, 0, 1, 2], bot: [5, 6, 7, 7, 7, 6, 5] },
   gate: { top: [2, 2, 0, 0, 0, 2, 2] },
-  bowl: { bot: [5, 6, 7, 7, 7, 6, 5] }
+  bowl: { bot: [5, 6, 7, 7, 7, 6, 5] },
+  heart: { top: [1, 0, 0, 1, 0, 0, 1], bot: [4, 5, 6, 7, 6, 5, 4] },
+  lotus: { top: [3, 1, 0, 2, 0, 1, 3] },
+  arch: { bot: [7, 7, 5, 4, 5, 7, 7] },
+  hourglass: { top: [0, 0, 1, 2, 1, 0, 0], bot: [7, 7, 6, 5, 6, 7, 7] },
+  tower: { top: [3, 2, 0, 0, 0, 2, 3] },
+  wave: { top: [0, 1, 2, 1, 0, 1, 2], bot: [5, 6, 7, 6, 5, 6, 7] },
+  round6: { top: [1, 0, 0, 0, 0, 1], bot: [4, 5, 5, 5, 5, 4], R: 6 }
 };
-const shapeCells = name => { const sh = SHAPES[name]; if (!sh) return 56; let n = 0; for (let c = 0; c < 7; c++) n += (sh.bot ? sh.bot[c] : 7) - (sh.top ? sh.top[c] : 0) + 1; return n; };
+const shapeCells = name => { const sh = SHAPES[name]; if (!sh) return 56; const rr = sh.R || 8, cc = (sh.top || sh.bot).length; let n = 0; for (let c = 0; c < cc; c++) n += (sh.bot ? sh.bot[c] : rr - 1) - (sh.top ? sh.top[c] : 0) + 1; return n; };
 let MASK = null;
 const colTop = c => MASK ? MASK.top[c] : 0, colBot = c => MASK ? MASK.bot[c] : R - 1;
 const inCell = (r, c) => r >= 0 && r < R && c >= 0 && c < C && r >= colTop(c) && r <= colBot(c);
 function setMask(name) {
   const sh = name && SHAPES[name];
-  MASK = sh && R === 8 && C === 7 ? { top: sh.top || Array(C).fill(0), bot: sh.bot || Array(C).fill(R - 1) } : null;
+  MASK = sh && (sh.R || 8) === R && (sh.top || sh.bot).length === C ? { top: sh.top || Array(C).fill(0), bot: sh.bot || Array(C).fill(R - 1) } : null;
 }
 // the floor under the orbs: calm cells with room around every orb, and a gold edge that follows the shape
 function drawCells() {
@@ -5918,7 +6030,8 @@ async function resolve(clear, groups, moved) {
     for (const g of groups || []) {
       // Only real shapes make a power piece: 5 in a line → Spirit Star, L or T → Lotus,
       // 4 in a line → Lantern, a 2×2 square → Firefly. Loose clumps just clear.
-      const kind = g.run >= 5 ? 'spirit' : g.lt ? 'bomb' : g.run === 4 ? g.dir : g.sq ? 'fly' : null;
+      let kind = g.run >= 5 ? 'spirit' : g.lt ? 'bomb' : g.run === 4 ? g.dir : g.sq ? 'fly' : null;
+      if (kind && !practice && !featOn(kind === 'col' ? 'row' : kind)) kind = kind === 'spirit' && featOn('row') ? g.dir : null;   // not learned yet: it just clears
       if (!kind) continue;
       const free = g.cells.filter(x => !x.sp && x.type !== 'spirit' && !makes.some(m => m.t === x));
       const anchor = free.find(x => moved && moved.includes(x)) || free[Math.floor(free.length / 2)];
@@ -5989,10 +6102,11 @@ async function popSet(set) {
     // episode 1 takes roughly 10 matches to reach Heavenly, and each episode after asks for more
     // big blasts feel huge but can't fill the Aura in one go: past six orbs each counts a quarter, and one wave adds at most 25
     // v63: slower — about 2 per orb, chain reactions count half, and one move can add at most 12%
+    if (!featOn('breath')) gain = -1e9;
     arr.forEach((t, i) => { gain += (t.type === boostEl ? 2.6 : 2) * (t.fed ? 1.5 : 1) * auraRate() * (i < 6 ? 1 : 0.25); });
     if (combo > 0) gain *= 0.5;
     const room = Math.max(0, 12 - moveAura); gain = Math.min(gain, room); moveAura += gain;
-    charge = Math.min(100, charge + gain);
+    charge = Math.max(0, Math.min(100, charge + gain));
   }
   const n = Math.min(arr.length, 5);
   if (combo >= 2) setTimeout(() => boop(Math.min(combo * 2, 9), 0.08), 120);
@@ -6377,7 +6491,7 @@ function breathPlan(q) {
   const sang = lastVoiced >= 0.45;
   const cloudsOff = Math.min(cl, (tier === 'deep' ? 4 + (S.buddy === 'metal' ? 1 : 0) : tier === 'nice' ? 2 : 1) + (stillDrop ? 2 : 0));
   const orbs = 0;
-  const coins = ((tier === 'deep' ? 20 : tier === 'nice' ? 10 : 3) + (sang ? 8 : 0)) * coinMult();
+  const coins = (COIN_RULES.breath[tier] + (sang ? 1 : 0)) * coinMult();
   return { tier, cloudsOff: cloudsOff + (sang && cl > cloudsOff ? 1 : 0), orbs, coins, sang };
 }
 function showBreathResult(q) {
@@ -6496,7 +6610,19 @@ function pwTake(id) {
   if (id === 'tiger') S.lanterns--; else if (id === 'deer') S.swirls--; else S.pw[id]--;
   save();
 }
+/* ---------- coins: one table controls everything a level pays ----------
+   Tune here. A typical cleared level pays about 25-45 coins; a Stormy one about double. */
+const COIN_RULES = {
+  win: { normal: 20, hard: 40, super: 60 },   // clearing a level
+  firstClear: 10,                              // extra, the first time an episode is cleared
+  perMoveLeft: 1, movesCap: 15,                // Luma's leftover-moves bonus, at most +15
+  smooth: 5,                                   // finishing under the hidden par
+  breath: { small: 1, nice: 2, deep: 3 },      // each breath in a level
+  companionElem: 5,                            // clearing your companion's element
+  cycle: 5, harmony: 1
+};
 function syncBoosts() {
+  const bar = $('#pwBar'); if (bar) { let any = false; $$('#pwBar .pwtile[data-pw]').forEach(t => { const on = babyOn() || featEver(t.dataset.pw); t.hidden = !on; if (on) any = true; }); bar.classList.toggle('none', !any); }
   POWERS.forEach(pw => {
     const el = document.getElementById(`pwc-${pw.id}`);
     if (el) { const n = pwCount(pw.id) + (levelFree[pw.id] || 0), b = el.parentElement; el.innerHTML = n > 0 ? `${n}` : `<i class="coin"></i>${pw.cost}`; el.classList.toggle('buy', n <= 0); b.classList.toggle('has', n > 0); b.classList.toggle('cant', n <= 0 && S.coins < pw.cost); }
@@ -6537,7 +6663,7 @@ function cycleCheck(pw) {
   if (lab) return;
   if (lastPower && CREATES[lastPower] === pw.elem) {
     charge = Math.min(100, charge + 10);
-    if (!babyOn()) { S.coins += 30; save(); }
+    if (!babyOn()) { S.coins += COIN_RULES.cycle; save(); }
     say(`${ELEM[lastPower].feeds}. You followed the creation cycle.`);
     chord([ELEM[lastPower].tone, ELEM[pw.elem].tone, ELEM[pw.elem].tone * 1.5], 0.08);
     hud();
@@ -6994,17 +7120,18 @@ const goalsDone = () => clouds().length === 0 && gemsLeft() === 0 && knotsLeft()
 function renderGoalChips() {
   const el = $('#goalChips'); if (!el || !L) return;
   const cl = clouds().length, gl = gemsLeft(), kl = knotsLeft();
-  el.innerHTML = `<span class="gc ${cl ? '' : 'done'}"><i class="mini cloudicon"></i><b>${cl || '✓'}</b></span>`
+  el.innerHTML = (L.clouds ? `<span class="gc ${cl ? '' : 'done'}"><i class="mini cloudicon"></i><b>${cl || '✓'}</b></span>` : '')
     + (L.gems ? `<span class="gc ${gl ? '' : 'done'}"><span class="gco">${orbHTML(L.elem)}</span><b>${gl || '✓'}</b></span>` : '')
     + (L.knots ? `<span class="gc ${kl ? '' : 'done'}"><span class="gck"></span><b>${kl || '✓'}</b></span>` : '');
 }
 function hud() {
+  if (L && !practice && !babyOn() && !featOn('breath')) charge = 0;   // episode 1: no Aura yet
   renderGoalChips();
   const cl = clouds().length;
   const p = progress();
   $('#gClouds').textContent = cl;
   const tc = $('#todayChip');
-  if (spunToday()) { tc.hidden = false; tc.innerHTML = `<span class="tco">${orbHTML(S.todayElem)}</span><span>${ELEM[S.todayElem].name} day<br>Luma fills faster</span>`; }
+  if (spunToday() && featOn('breath')) { tc.hidden = false; tc.innerHTML = `<span class="tco">${orbHTML(S.todayElem)}</span><span>${ELEM[S.todayElem].name} day<br>Luma fills faster</span>`; }
   else tc.hidden = true;
   $('#gCloudWord').textContent = cl === 1 ? 'cloud left' : 'clouds left';
   $('#gMoves').textContent = babyOn() || practice || lab ? '∞' : Math.max(0, moves);
@@ -7390,7 +7517,7 @@ function harmony(types) {
   avatarReact('cheer');
 
   bumpTally('harmony');
-  if (!babyOn()) { S.coins += 2; save(); }
+  if (!babyOn()) { S.coins += COIN_RULES.harmony; save(); }
   hud();
 }
 // rain
@@ -7720,7 +7847,8 @@ function startLevel() {
   const bf = boardFor(LI), base = LEVELS[LI];
   R = bf.R; C = bf.C; POOL = boardPool(base.elem, bf.n);
   L = Object.assign({}, base, levelSpec(LI));
-  setMask(bf.shaped ? base.shape : null);
+  document.body.classList.toggle('nobreath', !featOn('breath') && !babyOn());
+  setMask(babyOn() ? null : L.shape || null);
   $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
   $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
@@ -7737,11 +7865,11 @@ function startLevel() {
     sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); hud();
     say(S.buddy === L.elem
       ? `${BUDDY[S.buddy].name} is at home here. Match 3 of the same element to grow Luma's Aura.`
-      : 'Swipe to match 3 of the same element. Each match grows Luma’s Aura.');
+      : featOn('breath') ? 'Swipe to match 3 of the same element. Each match grows Luma’s Aura.' : 'Swipe two orbs to line up 3 of the same element!');
     if (!running) { running = true; rainLoop(); }
     setTimeout(async () => {
       if (babyOn()) { busy = false; $('#babyBar').hidden = false; clearHints(); hideTip(); babyLoop(++babyRun); return; }
-      await arrivalBreath();
+      if (featOn('breath')) await arrivalBreath();   // episode 1 is pure matching
       busy = false;
       coachStart();
     }, 700);
@@ -8449,6 +8577,7 @@ function storyLines(lv) {
   const t = (STORY[lv.elem] || {})[band()] || (STORY[lv.elem] || {})['5-7'];
   return t || { you: [lv.you, 'calm'], kai: ["I get it. I've felt that too.", 'care'], sorin: lv.sorin };
 }
+const HOWTO_MATCH = { '2-4': 'Swap two orbs to make three in a row. Pop!', '5-7': 'Swap two orbs so three of the same element line up. Clear the goal before your moves run out.', '8-11': 'Swap neighbouring orbs to line up 3 or more of the same element. Reach the goal within your moves.', '12-15': 'Swap neighbours to line up 3+ of an element. Hit the goal inside the move limit.' };
 const HOWTO = {
   '2-4': "Match the orbs so I glow. Then we breathe together!",
   '5-7': "Every match makes my glow a little brighter. When I'm fully glowing, tap me and we'll breathe together.",
@@ -8456,6 +8585,8 @@ const HOWTO = {
   '12-15': "Matches build my Aura. At Heavenly, tap me and breathe. The longer and slower your out-breath, the more of the storm it clears."
 };
 function GOAL_LINE(c, m) {
+  if (!c) { const g0 = levelSpec(), parts = [g0.gems ? `collect ${g0.gems} ${ELEM[L.elem].name} orbs` : '', g0.knots ? `untie ${g0.knots} knots` : ''].filter(Boolean).join(' and ');
+    return ({ '2-4': `Let's ${parts}! We have ${m} moves.`, '5-7': `Let's ${parts}. We've got ${m} moves.`, '8-11': `Goal: ${parts}. ${m} moves, no rush.`, '12-15': `Goal: ${parts}, in ${m} moves.` })[band()]; }
   const g = levelSpec(), gem = g.gems ? ` Collect ${g.gems} ${ELEM[L.elem].name} orbs${g.knots ? ',' : ' too.'}` : '', kn = g.knots ? ` ${g.gems ? 'and ' : ''}untie ${g.knots} knots.` : '';
   return ({
     '2-4': `Pop the orbs next to the clouds to make the sun come out!${g.gems ? ` Get ${g.gems} ${ELEM[L.elem].name} orbs too.` : ''} We have ${m} moves.`,
@@ -8637,11 +8768,12 @@ async function winLevel() {
   // hidden par: never shown. Finishing within it earns a star and bonus coins that grow the more
   // smoothly you played. Based on moves only; speed is never rewarded.
   const par = Math.round(L.clouds * 3.5 + 10 + (L.knots || 0));
-  const smooth = movesUsed <= par, flowBonus = smooth ? Math.min(90, 30 + (par - movesUsed) * 4) * coinMult() : 0;
+  const smooth = movesUsed <= par, flowBonus = smooth ? COIN_RULES.smooth * coinMult() : 0;
   const stars = 1 + (smooth ? 1 : 0) + (deepBreaths > 0 ? 1 : 0);
   if (flowBonus && !babyOn()) S.coins += flowBonus;
   const dz = DIFF[epDifficulty(LI + 1)];
-  const coins = Math.round((30 + Math.min(moves, 20) * 5) * coinMult() * dz.coin);
+  const first = !((S.stars || {})[n]);
+  const coins = Math.round((COIN_RULES.win[epDifficulty(LI + 1)] + Math.min(moves, COIN_RULES.movesCap) * COIN_RULES.perMoveLeft + (first ? COIN_RULES.firstClear : 0)) * coinMult());
   if (!babyOn()) { if (LI + 1 >= GLOW_FROM - 1) S.glow = (S.glow || 0) + 1; if (S.fails) delete S.fails[LI + 1]; }
   if (dz.name && !babyOn()) { const ch = CHARMS[LI % CHARMS.length]; S.charms[ch.id] = (S.charms[ch.id] || 0) + 1; if (dz === DIFF.super) S.pw.bear = (S.pw.bear || 0) + 1; }
   S.stars[n] = Math.max(S.stars[n] || 0, stars);
@@ -8658,7 +8790,7 @@ async function winLevel() {
   $('#pTitle').textContent = `${L.power} · the ${SOUND[L.elem].verb}`;
   $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
   $('#pLine').textContent = L.line;
-  if (S.buddy === L.elem) { S.coins += 15 * coinMult(); save(); }
+  if (S.buddy === L.elem) { S.coins += COIN_RULES.companionElem * coinMult(); save(); }
   addBal(L.elem, 2.5);
   TYPES.forEach(t => { if (t !== L.elem && levelTally[t] > 0) addBal(t, Math.min(1, levelTally[t] / 26)); });
   const bonus = balanceBonus();
