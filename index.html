@@ -2903,7 +2903,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
 
     <div class="calmhero" id="calmHero"></div>
 
-    <h3 class="shoph">Bundles</h3>
+    <h3 class="shoph" id="bundlesH">Bundles</h3>
     <div class="bundles" id="bundles"></div>
 
     <h3 class="shoph">Single items</h3>
@@ -2912,7 +2912,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <h3 class="shoph">Or watch a short video, only if you want to</h3>
     <div class="singles freebies">
       <button class="sitem ad" data-ad="heart"><span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span><b>+1 heart</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
-      <button class="sitem ad" data-ad="lantern"><span class="sgem" style="--eh:#9AA9B8"><img src="img/ui/pw-tiger.png" alt=""></span><b>+1 Tiger Claw</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
+      <button class="sitem ad" data-ad="lantern" data-need="tiger"><span class="sgem s3d" style="--eh:#9AA9B8"><img src="img/ui/pw-tiger.png" alt=""></span><b>+1 Tiger Claw</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
       <button class="sitem ad" data-ad="boost"><span class="sgem" style="--eh:#F0B93A"><i class="coin"></i></span><b>2× coins, 10 min</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
       <button class="sitem" data-refill><span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span><b>Refill hearts</b><small>with coins you earned</small><span class="sprice coinprice"><i class="coin"></i> 90</span></button>
     </div>
@@ -8998,22 +8998,48 @@ $('#lMap').addEventListener('click', async () => { await hideOv('lose'); toMap()
 /* ---------- shop ---------- */
 /* ---------- Luma's Shop: a generous featured offer, honest bundles, a grown-up gate ---------- */
 // single-item prices are the yardstick every "worth" line is measured against
-const UNIT = { lanterns: 0.99 / 3, swirls: 0.99 / 5, shields: 0.99 / 2, coins: 0.99 / 500, hearts: 0.99 };
+const UNIT = { lanterns: 0.99 / 3, swirls: 0.99 / 5, pw: 0.99 / 3, shields: 0.99 / 2, coins: 0.99 / 500, hearts: 0.99 };
 const CALM_DAYS = 9;
+// The shop only offers what a player has already met in play: each booster appears once its episode has introduced it.
+const PW_SHOP = { monkey: ['Monkey Swap', 'pw-monkey', '#F2B233'], tiger: ['Tiger Claw', 'pw-tiger', '#9AA9B8'], bear: ['Bear Stomp', 'pw-bear', '#5BC0FF'], crane: ['Hawk Dive', 'pw-hawk', '#FF7A55'], deer: ['Deer Leap', 'pw-deer', '#6FBF4A'] };
+const pwGive = (k, n) => k === 'tiger' ? { lanterns: n } : k === 'deer' ? { swirls: n } : { pw: { [k]: n } };
 const SINGLES = [
-  { id: 's-claw', give: { lanterns: 3 }, price: 0.99, name: 'Tiger Claws', note: 'clears a whole row', icon: 'pw-tiger', eh: '#9AA9B8', qty: '×3' },
-  { id: 's-deer', give: { swirls: 5 }, price: 0.99, name: 'Deer Leaps', note: 'grows the board fresh', icon: 'pw-deer', eh: '#6FBF4A', qty: '×5' },
+  { id: 's-monkey', need: 'monkey', give: pwGive('monkey', 3), price: 0.99, name: 'Monkey Swaps', note: 'swaps any two orbs', icon: 'pw-monkey', eh: '#F2B233', qty: '×3' },
+  { id: 's-claw', need: 'tiger', give: pwGive('tiger', 3), price: 0.99, name: 'Tiger Claws', note: 'clears a whole row', icon: 'pw-tiger', eh: '#9AA9B8', qty: '×3' },
+  { id: 's-bear', need: 'bear', give: pwGive('bear', 3), price: 0.99, name: 'Bear Stomps', note: 'shakes loose a whole area', icon: 'pw-bear', eh: '#5BC0FF', qty: '×3' },
+  { id: 's-hawk', need: 'crane', give: pwGive('crane', 3), price: 0.99, name: 'Hawk Dives', note: 'clears one orb or cloud', icon: 'pw-hawk', eh: '#FF7A55', qty: '×3' },
+  { id: 's-deer', need: 'deer', give: pwGive('deer', 5), price: 0.99, name: 'Deer Leaps', note: 'grows the board fresh', icon: 'pw-deer', eh: '#6FBF4A', qty: '×5' },
   { id: 's-hearts', give: { hearts: 1 }, price: 0.99, name: 'Full hearts', note: 'back to 5 tries', icon: 'heart', eh: '#E0697F' },
   { id: 's-shield', give: { shields: 2 }, price: 0.99, name: 'Streak Shields', note: 'covers a missed day', icon: 'shield', eh: '#C9D2DA', qty: '×2' },
   { id: 's-coins', give: { coins: 500 }, price: 0.99, name: '500 coins', note: 'for charms and refills', icon: 'coin', eh: '#F0B93A' },
   { id: 's-coins2', give: { coins: 1500 }, price: 1.99, name: '1,500 coins', note: '50% more per dollar', icon: 'coin', eh: '#F0B93A' }
 ];
+// a bundle opens once its first booster has been met, and lists only the parts the player already knows
 const BUNDLES = [
-  { id: 'b-starter', rib: 'One per player', name: 'Starter Satchel', price: 0.99, once: true, give: { lanterns: 3, swirls: 5, coins: 500 }, gems: ['pw-tiger', 'coin', 'pw-deer'], list: ['3 Tiger Claws', '5 Deer Leaps', '500 coins'] },
-  { id: 'b-five', rib: 'All five elements', name: 'Five Elements Chest', price: 2.99, give: { lanterns: 5, swirls: 10, shields: 2, coins: 1500, charms: 1 }, gems: ['pw-bear', 'pw-crane', 'pw-monkey'], list: ['5 Tiger Claws', '10 Deer Streams', '2 Streak Shields', '1,500 coins', '1 of each charm'] },
-  { id: 'b-treasure', rib: 'Everything', name: "Breather's Treasure", price: 4.99, give: { lanterns: 10, swirls: 15, shields: 5, coins: 4000, charms: 2, pw: 3, aura: 'starlight' }, gems: ['pw-tiger', 'coin', 'pw-crane'], list: ['10 Tiger Claws', '15 Deer Streams', '3 Bear Stomps + 3 Crane Wings', '5 Streak Shields', '4,000 coins', '2 of each charm', 'Starlight Aura, yours to keep'] }
+  { id: 'b-starter', need: 'monkey', rib: 'One per player', name: 'Starter Satchel', price: 0.99, once: true,
+    parts: [['monkey', 3], ['tiger', 3], ['deer', 5], [null, { coins: 500 }, '500 coins', 'coin']] },
+  { id: 'b-five', need: 'tiger', rib: 'All five elements', name: 'Five Elements Chest', price: 2.99,
+    parts: [['monkey', 3], ['tiger', 5], ['bear', 3], ['deer', 10], [null, { shields: 2 }, '2 Streak Shields', 'shield'], [null, { coins: 1500 }, '1,500 coins', 'coin'], ['charms', { charms: 1 }, '1 of each charm']] },
+  { id: 'b-treasure', need: 'bear', rib: 'Everything', name: "Breather's Treasure", price: 4.99,
+    parts: [['monkey', 5], ['tiger', 10], ['bear', 3], ['crane', 3], ['deer', 15], [null, { shields: 5 }, '5 Streak Shields', 'shield'], [null, { coins: 4000 }, '4,000 coins', 'coin'], ['charms', { charms: 2 }, '2 of each charm'], [null, { aura: 'starlight' }, 'Starlight Aura, yours to keep']] }
 ];
-const worthOf = g => (g.lanterns || 0) * UNIT.lanterns + (g.swirls || 0) * UNIT.swirls + (g.shields || 0) * UNIT.shields + (g.coins || 0) * UNIT.coins + (g.hearts ? UNIT.hearts : 0);
+const shopHas = k => !k || babyOn() || featEver(k);
+// what a bundle holds right now: [give, label, icon] for each part the player has met
+function bundleNow(b) {
+  return b.parts.filter(p => shopHas(p[0])).map(p => PW_SHOP[p[0]] && typeof p[1] === 'number'
+    ? [pwGive(p[0], p[1]), `${p[1]} ${PW_SHOP[p[0]][0]}s`, PW_SHOP[p[0]][1]]
+    : [p[1], p[2], p[3]]);
+}
+function mergeGive(list) {
+  const g = {};
+  list.forEach(x => Object.entries(x).forEach(([k, v]) => {
+    if (k === 'pw') { g.pw = g.pw || {}; Object.entries(v).forEach(([a, n]) => g.pw[a] = (g.pw[a] || 0) + n); }
+    else g[k] = typeof v === 'number' ? (g[k] || 0) + v : v;
+  }));
+  return g;
+}
+const shopBundles = () => BUNDLES.filter(b => shopHas(b.need)).map(b => { const now = bundleNow(b); return Object.assign({}, b, { now, give: mergeGive(now.map(x => x[0])) }); });
+const worthOf = g => Object.values(g.pw || {}).reduce((a, n) => a + n, 0) * UNIT.pw + (g.lanterns || 0) * UNIT.lanterns + (g.swirls || 0) * UNIT.swirls + (g.shields || 0) * UNIT.shields + (g.coins || 0) * UNIT.coins + (g.hearts ? UNIT.hearts : 0);
 const money = n => `$${n.toFixed(2)}`;
 const calmLeft = () => Math.max(0, Math.ceil(((S.calmUntil || 0) - Date.now()) / 86400000));
 const SHOP_ART = { 'pw-tiger': 'img/ui/pw-tiger.png', 'pw-deer': 'img/ui/pw-deer.png', 'pw-crane': 'img/ui/pw-hawk.png', 'pw-hawk': 'img/ui/pw-hawk.png', 'pw-monkey': 'img/ui/pw-monkey.png', 'pw-bear': 'img/ui/pw-bear.png', coin: 'img/ui/coins.png', heart: 'img/ui/heart.png', shield: 'img/ui/shield.png' };
@@ -9028,21 +9054,24 @@ function renderShop() {
       <li><i>2×</i>Double coins from every win and every breath</li>
       <li><i>2×</i>Double Season Pass XP</li>
       <li><i>♥</i>Hearts refill every morning</li>
-      <li><i>✦</i>A free charm every day</li>
+      ${featEver('charms') ? '<li><i>✦</i>A free charm every day</li>' : ''}
       <li><i>✺</i>The Golden Nine aura, yours to keep</li>
     </ul>
     <div class="lanterns9">${Array.from({ length: CALM_DAYS }, (_, i) => `<span class="${left && i < CALM_DAYS - left + 1 ? 'lit' : ''}"></span>`).join('')}</div>
     ${left ? `<div class="calmactive">Active · day ${CALM_DAYS - left + 1} of 9</div>` : `<button class="calmbuy" data-buyid="calm"><span>$1.99 · 9 days</span><small>about 22¢ a day</small></button>`}`;
-  $('#bundles').innerHTML = BUNDLES.map(b => {
+  const bl = shopBundles();
+  $('#bundles').hidden = $('#bundlesH').hidden = !bl.length;
+  $('#bundles').innerHTML = bl.map(b => {
     const owned = b.once && (S.bought || []).includes(b.id), w = worthOf(b.give);
     return `<button class="bundle" data-buyid="${b.id}" ${owned ? 'disabled style="opacity:.55"' : ''}><span class="rib">${b.rib}</span>
-      <span class="gems">${b.gems.map((g, i) => gemHTML(g, ['#6FBF4A', '#F0B93A', '#3C86C9'][i])).join('')}</span>
-      <h4>${b.name}</h4><ul>${b.list.map(x => `<li>${x}</li>`).join('')}</ul>
-      <span class="worth">Worth <s>${money(w)}</s> bought separately${b.give.charms || b.give.pw || b.give.aura ? ', plus extras' : ''}</span>
+      <span class="gems">${b.now.filter(x => x[2]).slice(0, 3).map(x => gemHTML(x[2], PW_SHOP[Object.keys(PW_SHOP).find(k => PW_SHOP[k][1] === x[2])]?.[2])).join('')}</span>
+      <h4>${b.name}</h4><ul>${b.now.map(x => `<li>${x[1]}</li>`).join('')}</ul>
+      <span class="worth">Worth <s>${money(w)}</s> bought separately${b.give.charms || b.give.aura ? ', plus extras' : ''}</span>
       <span class="sprice">${owned ? 'Owned' : money(b.price)}</span></button>`;
   }).join('');
-  $('#singles').innerHTML = SINGLES.map(it => `<button class="sitem" data-buyid="${it.id}">${it.qty ? `<span class="qty">${it.qty}</span>` : ''}
+  $('#singles').innerHTML = SINGLES.filter(it => shopHas(it.need)).map(it => `<button class="sitem" data-buyid="${it.id}">${it.qty ? `<span class="qty">${it.qty}</span>` : ''}
     ${it.icon ? gemHTML(it.icon, it.eh) : `<span class="sgem" style="--eh:${it.eh}">${it.glyph}</span>`}<b>${it.name}</b><small>${it.note}</small><span class="sprice">${money(it.price)}</span></button>`).join('');
+  $$('#shop [data-need]').forEach(x => x.hidden = !shopHas(x.dataset.need));
   $('#shopFloat').innerHTML = Array.from({ length: 8 }, (_, i) => `<i class="coin" style="left:${8 + i * 12}%;animation-delay:${i * 0.62}s"></i>`).join('');
 }
 // a grown-up check before any purchase: a question young children can't answer
@@ -9073,7 +9102,7 @@ function giveGoods(g) {
   if (g.coins) S.coins += g.coins;
   if (g.hearts) S.hearts = 5;
   if (g.charms) CHARMS.forEach(c => { S.charms[c.id] = (S.charms[c.id] || 0) + g.charms; });
-  if (g.pw) { S.pw.bear = (S.pw.bear || 0) + g.pw; S.pw.crane = (S.pw.crane || 0) + g.pw; }
+  if (g.pw) { S.pw = S.pw || {}; Object.entries(g.pw).forEach(([k, n]) => S.pw[k] = (S.pw[k] || 0) + n); }
   if (g.aura) { S.auras = [...new Set([...(S.auras || []), g.aura])]; S.aura = g.aura; applyLooks(); }
   save(); syncWallet(); renderStreak(); $('#lRetry').textContent = 'Try again · uses a heart';
 }
@@ -9095,12 +9124,12 @@ async function buyThing(id) {
     calmDaily(true); save(); renderShop();
     return showGot('Nine Days of Calm', [[`<span class="sgem" style="--eh:#F0B93A"><b style="font:400 30px 'Marcellus SC',serif;color:#3A2408">9</b></span>`, '9 days'], [`<span class="sgem" style="--eh:#F0B93A"><i class="coin"></i></span>`, '2× coins'], [`<span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span>`, 'daily hearts'], [`<span class="sgem" style="--eh:#FFD45A"><img src="img/faces/luma-happy.jpg" alt=""></span>`, 'Golden Nine aura']]);
   }
-  const b = BUNDLES.find(x => x.id === id), it = SINGLES.find(x => x.id === id), thing = b || it;
+  const b = shopBundles().find(x => x.id === id), it = SINGLES.find(x => x.id === id && shopHas(x.need)), thing = b || it;
   if (!thing || !await grownUpGate(thing.name)) return;
   giveGoods(thing.give);
   if (b && b.once) S.bought = [...(S.bought || []), b.id];
   S.bought = [...(S.bought || []), 'x']; save(); renderShop();
-  const shown = b ? b.gems.map((g, i) => [gemHTML(g, ['#6FBF4A', '#F0B93A', '#3C86C9'][i]), b.list[i] || '']) : [[it.icon ? gemHTML(it.icon, it.eh) : `<span class="sgem" style="--eh:${it.eh}">${it.glyph}</span>`, `${it.qty || ''} ${it.name}`]];
+  const shown = b ? b.now.filter(x => x[2]).map(x => [gemHTML(x[2], PW_SHOP[Object.keys(PW_SHOP).find(k => PW_SHOP[k][1] === x[2])]?.[2]), x[1]]) : [[it.icon ? gemHTML(it.icon, it.eh) : `<span class="sgem" style="--eh:${it.eh}">${it.glyph}</span>`, `${it.qty || ''} ${it.name}`]];
   showGot(thing.name, shown);
 }
 // while Nine Days of Calm is active: hearts refill and a charm arrives, once each morning
