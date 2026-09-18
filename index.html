@@ -2695,10 +2695,15 @@ async function leaveBaby() {
   setBaby(false); return true;
 }
 $('#babyToggle').addEventListener('click', async () => {
-  if (babyOn()) { if (await leaveBaby()) toast('Baby mode off.'); return; }
-  setBaby(!babyOn());
-  toast(babyOn() ? 'Baby mode on. The game will play and breathe by itself.' : 'Baby mode off.');
-  if (babyOn() && !$('#game').hidden) { $('#babyBar').hidden = false; babyLoop(++babyRun); }
+  // tapping Baby always opens a board that plays itself; turning it off is the Stop button, behind the grown-up question
+  if (!$('#game').hidden && babyOn()) { if (await leaveBaby()) toast('Baby mode off.'); return; }
+  setBaby(true);
+  if (!$('#game').hidden) { $('#babyBar').hidden = false; clearHints(); hideTip(); babyLoop(++babyRun); return; }
+  // straight to a board that plays and breathes by itself: no story, no loadout, no arrival breath, no hearts
+  $$('.ov.show').forEach(o => { o.classList.remove('show'); o.hidden = true; });
+  const st = $('#story'); if (st) { st.classList.remove('show'); st.hidden = true; }
+  LI = Math.max(0, Math.min(S.unlocked || 1, LEVELS.length) - 1); L = LEVELS[LI];
+  startLevel();
 });
 $('#babyStop').addEventListener('click', async () => { if (await leaveBaby()) toast('Baby mode off. Your turn.'); });
 
@@ -3474,8 +3479,9 @@ const DIFF = {
   super: { name: 'Thunderstorm', label: 'Super Hard', moves: 0.8, clouds: 4, knots: 4, gems: 1.2, coin: 3, xp: 2 }
 };
 function levelSpec(i = LI) {
-  const b = LEVELS[i], diff = epDifficulty(i + 1), d = DIFF[diff], little = S.boardSize === 'little' && !babyOn();
+  const b = LEVELS[i], diff = babyOn() ? 'normal' : epDifficulty(i + 1), d = DIFF[diff], little = S.boardSize === 'little' && !babyOn();
   let moves = Math.round(b.moves * d.moves), clouds = b.clouds + d.clouds, knots = b.knots ? b.knots + d.knots : 0, gems = b.gems ? Math.round(b.gems * d.gems) : 0;
+  if (babyOn()) { knots = 0; gems = 0; }                   // baby boards are gentle: clouds only
   if (little) { clouds = Math.min(4, clouds); moves -= 2; knots = Math.ceil(knots / 2); gems = Math.round(gems * 0.6); }
   if (S.buddy === 'water' && !babyOn()) moves += 3;        // Nami's gift
   return { moves, clouds, knots, gems, diff };
@@ -4867,7 +4873,7 @@ function hud() {
   if (spunToday()) { tc.hidden = false; tc.innerHTML = `<span class="tco">${orbHTML(S.todayElem)}</span>${ELEM[S.todayElem].name} day · Luma fills faster`; }
   else tc.hidden = true;
   $('#gCloudWord').textContent = cl === 1 ? 'cloud left' : 'clouds left';
-  $('#gMoves').textContent = Math.max(0, moves);
+  $('#gMoves').textContent = babyOn() ? '∞' : Math.max(0, moves);
   $('#movesStat').style.boxShadow = moves <= 3 ? 'inset 0 0 0 2px #F2A07B' : '';
   if (moves === 3 && !hud.warned) { hud.warned = true; avatarReact('worry'); }
   if (moves > 3) hud.warned = false;
@@ -6009,6 +6015,12 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
 }
 async function winLevel() {
   glowGoal(false); clearHints(); hideTip();
+  if (babyOn()) {                                          // baby mode: a soft cheer, then a fresh sky. No stars, coins or unlocks
+    chord([523.25, 659.25, 783.99], 0.08); if (!reduce) confetti('#board');
+    say('The sky is clear. Luma will start again.');
+    await wait(2200); if (babyOn()) startLevel(); else busy = false;
+    return;
+  }
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.13);
   say('The storm passed. You can breathe again.');
   await wait(1400);
