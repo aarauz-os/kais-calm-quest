@@ -36,6 +36,21 @@
 .emboss-d{text-shadow:0 2px 0 rgba(0,0,0,.45)}
 html,body{height:100%}
 [hidden]{display:none!important}
+.seccard .askart{display:flex;justify-content:center;margin:8px 0 12px}
+.seccard .askart img{width:118px;height:118px;border-radius:30px;object-fit:cover;box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 3px rgba(255,236,180,.55)}
+/* the grown-up Stop: a small pill up top, clear of the board and the companion */
+body.baby #babyBar{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);left:50%;transform:translateX(-50%);margin:0;padding:4px;z-index:30}
+body.baby #babyBar span{display:none}
+#askov .seccard #askNo{color:#E4EFE8 !important;font-size:14px;font-weight:800;text-decoration:underline;text-underline-offset:3px;padding:10px 16px}
+/* baby mode: no words on screen (they can't read yet); only the grown-up Stop bar */
+body.baby #bubble, body.baby #flowBar, body.baby #toast, body.baby #todayChip, body.baby #toMap, body.baby #pkPerk, body.baby #pwBar [id^="pwc-"], body.baby .tipbox{display:none!important}
+#babyBloom{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(12,22,40,0) 25%,rgba(12,22,40,.38) 100%);opacity:0;transition:opacity .6s ease}
+#babyBloom.on{opacity:1}
+#babyBloom .bl{position:relative;width:46%;aspect-ratio:1;transform:scale(.7);transition-property:transform;transition-timing-function:cubic-bezier(.35,0,.3,1)}
+#babyBloom .bl img{position:relative;width:100%;height:100%;border-radius:50%;object-fit:cover;box-shadow:0 0 0 4px rgba(255,255,255,.75),0 0 44px 16px rgba(255,236,170,.75)}
+#babyBloom .bl i{position:absolute;inset:-16%;border-radius:50%;border:3px solid rgba(255,240,190,.65);animation:bbring 2.4s ease-out infinite}
+#babyBloom .bl i+i{animation-delay:1.2s}
+@keyframes bbring{from{transform:scale(.8);opacity:.9}to{transform:scale(1.5);opacity:0}}
 .seccard #secArt{display:flex;justify-content:center;margin:8px 0 12px}
 .seccard #secArt img{width:118px;height:118px;border-radius:30px;object-fit:cover;box-shadow:0 10px 28px rgba(0,0,0,.35),0 0 0 3px rgba(255,236,180,.55)}
 .seccard .secorb{width:104px;height:104px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0,#C8F5B8 18%,#5FCB7E 52%,#1E7A52 100%);box-shadow:0 0 30px 8px rgba(120,230,150,.55)}
@@ -2651,7 +2666,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     </button>
     <button class="babycard" id="babyToggle" aria-pressed="false">
       <span class="qhead"><b>Baby mode</b><span class="babysw"><i></i></span></span>
-      <span class="balsub">For very small children: the game plays itself and Luma leads the breathing, over and over, until you switch it off.</span>
+      <span class="balsub">For very small children: five gentle boards play themselves, Luma breathes over the board, and every touch sparkles. No words, nothing to buy or lose.</span>
     </button>
     <button class="sealcard" id="sealCard">
       <span class="qhead"><b>Spirit Seals</b><span class="qtease" id="sealTease"></span></span>
@@ -2817,6 +2832,13 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="note">Every seal marks something you did: an element calmed, a cycle kept, your own voice used, the balance held.</div>
   </div></div>
 
+  <div class="ov" id="askov" hidden style="align-items:center"><div class="card rewardcard seccard" role="dialog" aria-labelledby="askName">
+    <div class="eyebrow" style="color:var(--gold2)">Just checking</div>
+    <div id="askArt" class="askart"></div>
+    <h2 class="display" id="askName"></h2>
+    <p id="askSay" style="color:#D8E6DF"></p>
+    <div class="stack"><button class="btn gold" id="askGo"></button><button class="linkbtn dark" id="askNo">Not now</button></div>
+  </div></div>
   <div class="ov" id="secov" hidden style="align-items:center"><div class="card rewardcard seccard" role="dialog" aria-labelledby="secName">
     <div class="eyebrow" style="color:var(--gold2)">New!</div>
     <div id="secArt"></div>
@@ -3113,7 +3135,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <li><b>Small extras only, behind a grown-up gate.</b> $0.99, $1.99 or $4.99, never pushed.</li>
         <li><b>Feelings are never "bad".</b> School-safe language throughout.</li>
         <li><b>Written by people.</b> Stories are written ahead of time and checked with a qigong teacher and a school counselor, never generated on your child's device.</li>
-        <li><b>Baby mode</b> for the littlest ones: the game plays itself while Luma leads the breathing.</li>
+        <li><b>Baby mode</b> for the littlest ones: five gentle boards play themselves with no words on screen, Luma breathes right over the board, and every touch, swipe and helper makes something happen.</li>
       </ul>
       <div class="whytry">
         <b>Try it together tonight</b>
@@ -3303,8 +3325,8 @@ const BASE_LEVELS = [
 const FEAT_AT = { breath: 3, row: 6, clouds: 9, monkey: 12, bomb: 15, charms: 18, knots: 21, fly: 24, tiger: 30, storm: 33, feed: 39, bear: 42, glow: 48, spirit: 51, crane: 57, deer: 60 };
 const INTRO_AT = Object.fromEntries(Object.entries(FEAT_AT).map(([k, v]) => [v, k]));
 const reached = () => Math.max(S && S.unlocked || 1, (typeof LI === 'number' ? LI : 0) + 1);
-const featOn = (k, ep = (typeof LI === 'number' ? LI : 0) + 1) => ep >= FEAT_AT[k];
-const featEver = k => reached() >= FEAT_AT[k];
+const featOn = (k, ep = (typeof LI === 'number' ? LI : 0) + 1) => babyOn() || ep >= FEAT_AT[k];   // baby mode has everything, no waiting
+const featEver = k => babyOn() || reached() >= FEAT_AT[k];
 // Home sections open one at a time, each after finishing an episode that's a multiple of 3.
 // Like Royal Kingdom holding back Teams (21) and its pass (31): a new player sees only what they need.
 // Grown-up things (Why MorQi, Baby mode, Bedtime, the Shop) are always there.
@@ -3891,8 +3913,20 @@ function balanceBonus() {
 // A parent switches this on and hands the phone over. The game plays itself, slowly, and
 // Luma leads the breathing again and again so a small child can copy her. Nothing can be
 // lost, nothing can be bought, and it never leaves the board until the parent stops it.
-let babyRun = 0;
+let babyRun = 0, babyIx = 0, babyTouchAt = 0;
 const babyOn = () => !!S.babyMode;
+// Five boards on a loop, one per element, each with a shape. Three spirit companions hold them:
+// Pip, Momo and Nami (the three every child starts with). The wood board is held by Nami and the
+// metal board by Momo, because water feeds wood and earth makes metal in the creation cycle.
+const BABY_BOARDS = [
+  { elem: 'fire', shape: 'heart', pal: 'fire' },
+  { elem: 'earth', shape: 'bowl', pal: 'earth' },
+  { elem: 'water', shape: 'lotus', pal: 'water' },
+  { elem: 'wood', shape: 'round6', pal: 'water' },
+  { elem: 'metal', shape: 'diamond', pal: 'earth' }
+];
+const babyBoard = () => BABY_BOARDS[babyIx % BABY_BOARDS.length];
+const babyTouch = () => { babyTouchAt = performance.now(); };
 function setBaby(on) {
   // baby time is logged privately (for a future parent dashboard); it never touches scores or stats
   if (!S.babyLog) S.babyLog = { sessions: 0, seconds: 0 };
@@ -3910,7 +3944,7 @@ async function babyLoop(run) {
   while (run === babyRun && babyOn() && !$('#game').hidden) {
     await wait(900);
     if (run !== babyRun || !babyOn()) return;
-    if (busy) continue;
+    if (busy || performance.now() - babyTouchAt < 2600) continue;   // the baby is playing: wait for them
     if (charge >= 100) { await babyBreath(run); continue; }
     const pc = all().find(t => (t.sp || t.type === 'spirit') && !t.cloud && !t.knot);
     if (pc) { moves = Math.max(moves, 5); await fireTap(pc); continue; }
@@ -3925,50 +3959,68 @@ async function babyLoop(run) {
     await trySwap(a, b);
   }
 }
+// Luma breathes right over the board: she swells on the in-breath and settles on the out-breath.
+// No card and no words; the sound and the light lead, and the companion breathes along.
 async function babyBreath(run) {
+  if (busy || !babyOn()) return;
   if (S.babyLog) { S.babyLog.breaths = (S.babyLog.breaths || 0) + 1; save(); }
-  busy = true; breathing = true;
-  $('#brChoose').hidden = true; $('#brPlay').hidden = false; $('#brResult').hidden = true; $('#breathe .bcard').classList.remove('res');
-  $('#brSwitch').hidden = true; $('#brCancel').hidden = true; $('#brMeter').hidden = true;
-  buildDandelion(); seeds(0); $('#dand').classList.remove('show');
-  $('#brEyebrow').textContent = `${L.power} · breathe with Luma`;
-  glowGoal(true);
-  await showOv('breathe');
+  busy = true; breathing = true; glowGoal(true);
+  let bb = $('#babyBloom');
+  if (!bb) { bb = document.createElement('div'); bb.id = 'babyBloom'; bb.innerHTML = '<span class="bl"><i></i><i></i><img src="img/faces/luma-breath.jpg" alt=""></span>'; }
+  boardEl.appendChild(bb);
+  const bl = bb.querySelector('.bl');
+  bl.style.transitionDuration = '0s'; bl.style.transform = 'scale(.7)'; void bl.offsetWidth;
+  bb.classList.add('on'); await wait(600);
   for (let i = 0; i < 3 && run === babyRun && babyOn(); i++) {
-    lumaPhase('in');
-    brText('Breathe in…', 'Luma is breathing in through her nose. Copy her.');
-    brAuto(0, 1, L.inhale);
+    bl.style.transitionDuration = `${L.inhale}s`; bl.style.transform = 'scale(1.18)';
     breathSound('in', L.inhale); bell(523.25, 0, 0.05);
-    await wait(L.inhale * 1000);
+    await wait(L.inhale * 1000 + 600);
     if (run !== babyRun) break;
-    brText('Hold…', 'Full of air.');
-    await wait(700);
-    lumaPhase('out');
-    $('#dand').classList.add('show');
-    brText('And out…', 'Luma is breathing out through her mouth. Let it go slowly.');
-    brAuto(1, 0, L.exhale);
+    bl.style.transitionDuration = `${L.exhale}s`; bl.style.transform = 'scale(.7)';
     breathSound('out', L.exhale);
     await wait(L.exhale * 1000);
-    seeds(1);
   }
-  lumaPhase('happy');
+  bb.classList.remove('on'); await wait(400); bb.remove();
+  glowGoal(false); charge = 0; hud();
+  if (run !== babyRun || !babyOn()) { breathing = false; busy = false; return; }
   chord([523.25, 659.25, 783.99, 1046.5], 0.09);
-  await wait(900);
-  await hideOv('breathe');
-  $('#brSwitch').hidden = false; $('#brCancel').hidden = false;
-  glowGoal(false);
-  charge = 0; hud();
-  const set = new Set(all().filter(t => t.type === L.elem && !t.cloud).slice(0, 6));
-  const cl = clouds().sort(() => Math.random() - 0.5).slice(0, 2);
-  cl.forEach((t, i) => setTimeout(() => { t.cloud = false; paint(t); boop(3 + i, 0.09); }, i * 120));
-  await wait(400);
-  if (set.size) await resolve(set, [], null);
-  breathing = false; busy = false; hud();
-  if (!clouds().length) {
-    say('The sky is clear. Luma will start again.');
-    await wait(1400);
-    if (babyOn()) startLevel();
+  const dive = { k: 2, cross: true, tier: 'deep' };
+  await lumaDive(bestDiveSpot(dive), dive);
+  if (!reduce) confetti('#board');
+  breathing = false; hud();
+  await settle();
+}
+// the baby's own touches: a swipe that makes no line still wiggles and sings; a tap sparkles
+function babyWiggle(a, b) {
+  bump(a.el); bump(b.el); boop(5, 0.06); setTimeout(() => boop(7, 0.05), 110);
+  peekReact('gasp', 700);
+}
+function babyPoke(t) {
+  const br = boardEl.getBoundingClientRect(), r = t.el.getBoundingClientRect();
+  sparkleAt(boardEl, r.left - br.left + r.width / 2, r.top - br.top + r.height / 2, [ELEM[t.type] ? ELEM[t.type].glow : '#FFE9A8', '#FFFFFF', '#FFE9A8'], 12);
+  if (!reduce) t.el.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.22)' }, { transform: 'scale(1)' }], { duration: 380, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+  boop(2 + Math.floor(Math.random() * 6), 0.06);
+  if (Math.random() < 0.35) peekReact('cheer', 900);
+}
+// a booster pressed in baby mode works at once, free, on the spot where it helps most
+function babyBoostSpot(id) {
+  let best = null, score = -1;
+  all().forEach(t => { const area = powerArea(id, t), sc = area.filter(x => x.cloud).length * 3 + area.length * 0.1 + Math.random(); if (sc > score) { score = sc; best = t; } });
+  return best;
+}
+async function babyBoost(pw) {
+  if (busy) return;
+  if (pw.id === 'deer') {
+    busy = true; playSfx('sfx-deer', { gain: 0.9 }) || elemSound('wood', 0, 4);
+    await fxDeerStream(); await shuffle();
+    charge = Math.min(100, charge + 10); hud(); busy = false; return;
   }
+  mode = pw.id;
+  if (pw.id === 'monkey') {
+    const pair = findSwap(); if (!pair) { mode = null; return; }
+    monkeyFirst = pair[0]; await usePowerOn(pair[1]);
+  } else await usePowerOn(babyBoostSpot(pw.id));
+  mode = null; monkeyFirst = null; setAim(null);
 }
 function brAuto(from, to, secs) {
   const track = $('#brTrack'), knob = $('#brKnob'), light = $('#brGhost');
@@ -3982,21 +4034,31 @@ function brAuto(from, to, secs) {
 }
 // turning baby mode OFF needs a grown-up's answer; a wrong answer just closes the question
 async function leaveBaby() {
-  if (!await grownUpGate('', 'Answer to turn off baby mode.', true)) { toast('Baby mode stays on.'); return false; }
-  setBaby(false); return true;
+  if (!await grownUpGate('', 'Answer to turn off baby mode.', true)) return false;
+  setBaby(false); if (!$('#game').hidden) toMap(); return true;
+}
+// Baby mode and Bedtime each ask once, so a stray tap never starts them by accident
+function askFirst(title, say, go, art) {
+  return new Promise(async res => {
+    $('#askArt').innerHTML = `<img src="${art}" alt="">`;
+    $('#askName').textContent = title; $('#askSay').textContent = say; $('#askGo').textContent = go;
+    const done = ok => { $('#askGo').onclick = $('#askNo').onclick = null; hideOv('askov'); res(ok); };
+    $('#askGo').onclick = () => { tick(); done(true); }; $('#askNo').onclick = () => { tick(); done(false); };
+    await showOv('askov');
+  });
 }
 $('#babyToggle').addEventListener('click', async () => {
   // tapping Baby always opens a board that plays itself; turning it off is the Stop button, behind the grown-up question
   if (!$('#game').hidden && babyOn()) { if (await leaveBaby()) toast('Baby mode off.'); return; }
+  if (!await askFirst('Start Baby mode?', 'The game plays itself with soft sounds, and Luma breathes slowly for your little one to copy. Touches, swipes and helpers all make something happen. Nothing can be bought or lost. To stop, tap Stop and answer a grown-up question.', 'Start Baby mode', 'img/icons/icon-baby-3d.jpg')) return;
   setBaby(true);
   if (!$('#game').hidden) { $('#babyBar').hidden = false; clearHints(); hideTip(); babyLoop(++babyRun); return; }
   // straight to a board that plays and breathes by itself: no story, no loadout, no arrival breath, no hearts
   $$('.ov.show').forEach(o => { o.classList.remove('show'); o.hidden = true; });
   const st = $('#story'); if (st) { st.classList.remove('show'); st.hidden = true; }
-  LI = Math.max(0, Math.min(S.unlocked || 1, LEVELS.length) - 1); L = LEVELS[LI];
   startLevel();
 });
-$('#babyStop').addEventListener('click', async () => { if (await leaveBaby()) toast('Baby mode off. Your turn.'); });
+$('#babyStop').addEventListener('click', async () => { if (await leaveBaby()) toast('Baby mode off.'); });
 
 /* ---------- bedtime: only Luma, only breathing ---------- */
 // No board, no score, no way to lose. A parent can hand this to a toddler at bedtime, or
@@ -4030,7 +4092,7 @@ async function bedtime() {
   ai.classList.remove('on'); ao.classList.remove('on');
   img.src = LUMA.idle;
 }
-$('#bedOpen').addEventListener('click', bedtime);
+$('#bedOpen').addEventListener('click', async () => { if (await askFirst('Start Bedtime?', 'No game and no score. Luma breathes slowly with soft sounds for as long as you like. A calm way to wind down before sleep.', 'Start Bedtime', 'img/icons/icon-bedtime-3d.jpg')) bedtime(); });
 $('#bedStop').addEventListener('click', async () => { bedRun++; breathSound('out', 0.4); await hideOv('bedov'); });
 
 /* ---------- the seal book ---------- */
@@ -5013,7 +5075,7 @@ function openLevel(i) {
 // The board grows with the player: small and simple first, the full shaped board once they're ready.
 // The littlest (ages 2-4) stay on each size twice as long.
 function boardFor(i = LI) {
-  if (babyOn()) return { R: 8, C: 7, n: 5, tier: 3, shaped: false };
+  if (babyOn()) { const sh = SHAPES[babyBoard().shape]; return sh && sh.R ? { R: sh.R, C: (sh.top || sh.bot).length, n: 4, tier: 3, shaped: true } : { R: 8, C: 7, n: 4, tier: 3, shaped: true }; }
   const ep = i + 1, k = band() === '2-4' ? 2 : 1;
   if (ep <= 2 * k) return { R: 5, C: 5, n: 3, tier: 1, name: 'Sprout board' };
   if (ep <= 4 * k) return { R: 6, C: 6, n: 4, tier: 2, name: 'Grove board' };
@@ -5512,6 +5574,7 @@ $('#charmRow').addEventListener('click', e => {
 });
 // charms take effect as the board fills
 function applyCharms() {
+  if (babyOn()) return;
   charmPick.forEach(id => {
     const c = CHARMS.find(x => x.id === id);
     if (charmCount(id) > 0) S.charms[id]--; else S.coins -= c.cost;
@@ -5713,7 +5776,7 @@ function addClouds(n, quiet) {
   // clouds settle anywhere in the upper two-thirds; matches beside them peel them away
   const top = Math.max(2, Math.ceil(R * 0.66));
   const pool = all().filter(t => !t.cloud && t.type !== 'spirit' && t.r < top).sort(() => Math.random() - 0.5);
-  const ep = (LI || 0) + 1, stormShare = babyOn() || ep < FEAT_AT.storm ? 0 : (ep === FEAT_AT.storm ? 0.4 : Math.min(0.6, 0.2 + (ep - FEAT_AT.storm) * 0.05)) + (L && L.diff === 'hard' ? 0.1 : 0);
+  const ep = (LI || 0) + 1, stormShare = babyOn() ? 0.3 : ep < FEAT_AT.storm ? 0 : (ep === FEAT_AT.storm ? 0.4 : Math.min(0.6, 0.2 + (ep - FEAT_AT.storm) * 0.05)) + (L && L.diff === 'hard' ? 0.1 : 0);
   pool.slice(0, n).forEach((t, i) => {
     t.cloud = i < Math.round(n * stormShare) ? 2 : 1;
     if (quiet) { paint(t); return; }
@@ -5909,6 +5972,7 @@ async function trySwap(a, b) {
     const m = findMatches();
     if (!m.clear.size) {
       swapCells(a, b); await wait(220);
+      if (babyOn()) { babyWiggle(a, b); busy = false; return; }
       wrongSwaps++;
       if (wrongSwaps < HINT_WRONG) say('Those two don\'t make a line. Try another swap.');
       busy = false; return;
@@ -6290,6 +6354,7 @@ function flowStep(el) {
 /* ---------- input ---------- */
 function clearSel() { if (sel) sel.el.classList.remove('sel'); sel = null; }
 boardEl.addEventListener('pointerdown', e => {
+  if (babyOn()) babyTouch();
   const el = e.target.closest('.tile'); if (!el) return;
   if (lumaAiming) { const t0 = ids.get(el.dataset.id); if (!t0) return; aimT = t0; showPreview(lumaArea(t0, lumaAiming.d)); try { boardEl.setPointerCapture(e.pointerId); } catch (err) {} return; }
   if (busy) return;
@@ -6330,7 +6395,7 @@ const endDrag = () => {
   if (sel && sel !== d.t && adjacent(sel, d.t)) { const a = sel; clearSel(); trySwap(a, d.t); }
   else if (sel === d.t) clearSel();
   else if ((d.t.sp || d.t.type === 'spirit') && !d.t.knot && !d.t.cloud) { clearSel(); fireTap(d.t); }
-  else { clearSel(); sel = d.t; sel.el.classList.add('sel'); boop(0, 0.06); }
+  else { clearSel(); sel = d.t; sel.el.classList.add('sel'); if (babyOn()) babyPoke(d.t); else boop(0, 0.06); }
 };
 boardEl.addEventListener('pointerup', endDrag);
 boardEl.addEventListener('pointercancel', () => { if (drag) clearTimeout(drag.hold); drag = null; aimT = null; clearPreview(); });
@@ -6501,6 +6566,7 @@ function micExhale(secs, run) {
 
 async function openBreath() {
   ac();
+  if (babyOn()) { babyTouch(); if (charge >= 100 && !busy) babyBreath(babyRun); else bump(bBtn); return; }
   if (busy) return;
   if (charge < 100) { say(`Luma's Aura is ${auraName(charge)}. Keep matching to make it Heavenly.`); bump(bBtn); return; }
   if (practice && !(practice.allow && practice.allow.luma)) { pNudge(); return; }
@@ -6736,7 +6802,7 @@ function syncBoosts() {
     if (el) { const n = pwCount(pw.id) + (levelFree[pw.id] || 0), b = el.parentElement; el.innerHTML = n > 0 ? `${n}` : `<i class="coin"></i>${pw.cost}`; el.classList.toggle('buy', n <= 0); b.classList.toggle('has', n > 0); b.classList.toggle('cant', n <= 0 && S.coins < pw.cost); }
   });
   const left = (S.boostUntil || 0) - Date.now();
-  $('#boostChip').hidden = left <= 0;
+  $('#boostChip').hidden = left <= 0 || babyOn();
   if (left > 0) $('#boostLeft').textContent = `${Math.floor(left / 60000)}:${String(Math.floor(left / 1000) % 60).padStart(2, '0')}`;
 }
 setInterval(syncBoosts, 1000);
@@ -6761,14 +6827,14 @@ function setAim(id) {
   $$('.pwbtn').forEach(b => b.classList.toggle('on', b.dataset.pw === id));
 }
 async function paidFor(pw) {
-  if (lab) return true;
+  if (lab || babyOn()) return true;
   if (levelFree[pw.id]) { levelFree[pw.id]--; syncBoosts(); toast(`${BUDDY[S.buddy].name}'s gift: a free ${pw.name}.`); return true; }
   if (pwCount(pw.id) > 0) { pwTake(pw.id); syncBoosts(); return true; }
   return spend(pw.cost);
 }
 // the creation cycle, taught through the powers: use them in order and it pays
 function cycleCheck(pw) {
-  if (lab) return;
+  if (lab || babyOn()) return;
   if (lastPower && CREATES[lastPower] === pw.elem) {
     charge = Math.min(100, charge + 10);
     if (!babyOn()) { S.coins += COIN_RULES.cycle; save(); }
@@ -6783,6 +6849,7 @@ $('#pwBar').addEventListener('click', async e => {
   if (!reduce) { b.querySelector('.pwart').animate([{ transform: 'scale(1)' }, { transform: 'scale(.86)' }, { transform: 'scale(1.1)' }, { transform: 'scale(1)' }], { duration: 360, easing: 'cubic-bezier(.3,1.6,.5,1)' });
     const ring = document.createElement('span'); ring.className = 'pwring'; b.appendChild(ring); ring.animate([{ transform: 'scale(.6)', opacity: .9 }, { transform: 'scale(1.7)', opacity: 0 }], { duration: 520, easing: 'ease-out' }).onfinish = () => ring.remove(); }
   const pw = POWERS.find(p => p.id === b.dataset.pw);
+  if (babyOn()) { babyTouch(); await babyBoost(pw); return; }
   if (mode === pw.id) { setAim(null); monkeyFirst = null; say('Put away.'); return; }
   S.seenPw = S.seenPw || {};
   if (!S.seenPw[pw.id]) { const go = await pwDemo(pw); S.seenPw[pw.id] = 1; save(); if (!go) return; }
@@ -7078,7 +7145,7 @@ function say(msg) {
 /* ---------- the Spirit Companion watches from behind the board ----------
    Real frames, never a float: it breathes, blinks (a quick eyes-closed frame), follows your finger,
    cheers, gasps, breathes with you, worries a little when moves run low, and yawns if you wander off. */
-const peekWho = () => buddyWho(S.buddy || 'fire').replace('buddy-', '');   // e.g. fire, wood-young, metal-guardian
+const peekWho = () => babyOn() ? babyBoard().pal : buddyWho(S.buddy || 'fire').replace('buddy-', '');   // e.g. fire, wood-young, metal-guardian
 const peekArt = () => true;
 const peek = { pose: 'idle', until: 0, base: 'idle', act: performance.now(), blinkAt: 0 };
 // one sprite sheet per companion and stage: hold · cheer · gasp · blink · worried, side by side
@@ -7089,7 +7156,6 @@ function holdSprite(tag, pose, cls = '') { return `<span class="hsprite ${cls}" 
 function setPose(pose) { const im = $('#pkImg'); if (im) im.style.setProperty('--bx', (PEEK_X[pose] || 0) + '%'); }
 function placePeek() {
   const row = $('#peekRow'), pk = $('#peek'), rail = $('#pkPerk'); if (!row || $('#game').hidden) return;
-  if (babyOn()) { row.hidden = pk.hidden = rail.hidden = true; return; }
   row.hidden = false; pk.hidden = false; rail.hidden = false; $('#buddyWrap').hidden = true;
   const gm = $('#game'); [...gm.classList].filter(c => c.startsWith('bs-')).forEach(c => gm.classList.remove(c)); if (S.bstyle) gm.classList.add('bs-' + S.bstyle);
   const tc = $('#todayChip'); if (tc && tc.parentNode !== row) row.appendChild(tc);
@@ -7498,7 +7564,7 @@ const COMBO_WORDS = ['Nice', 'Lovely', 'Beautiful', 'Wonderful', 'Unreal'];
 // element words for a big single-element clear; power words carry the animal, element and organ
 const ELEM_WORDS = { water: 'Flowing!', fire: 'Blazing!', earth: 'Rooted!', wood: 'Growing!', metal: 'Shining!' };
 function bigWord(arr, juice, pw) {
-  if (reduce) return;
+  if (reduce || babyOn()) return;
   const by = {}; arr.forEach(t => { if (ELEM[t.type]) by[t.type] = (by[t.type] || 0) + 1; });
   const top = Object.keys(by).sort((a, b) => by[b] - by[a])[0] || 'earth';
   let word = null, sub = '', el = top;
@@ -7555,7 +7621,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { babyState: () => ({ babyIx, busy, charge, shape: L && L.shape, R, C, pal: peekWho(), peekHidden: $('#peek').hidden, clouds: clouds().length, bubble: getComputedStyle($('#bubble')).display }), fillAura: () => { charge = 100; hud(); }, hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -7589,7 +7655,7 @@ function auraBurstFx() {
   setTimeout(() => { flash(); shake(12); impact(22); try { navigator.vibrate && navigator.vibrate([20, 40, 30]); } catch (e) {} }, 450);
 }
 function comboWord(level) {
-  if (reduce) return;
+  if (reduce || babyOn()) return;
   const d = document.createElement('div');
   d.className = 'comboword display';
   d.textContent = COMBO_WORDS[Math.min(level - 2, COMBO_WORDS.length - 1)];
@@ -7857,7 +7923,7 @@ async function coachBreathDone() {
 }
 // idle hints on every level, so nobody sits there stuck
 setInterval(() => {
-  if ($('#game').hidden || busy || tut || practice || lab || hintShown || $$('.ov').some(o => !o.hidden)) return;
+  if ($('#game').hidden || busy || tut || practice || lab || babyOn() || hintShown || $$('.ov').some(o => !o.hidden)) return;
   if (performance.now() - idleAt < HINT_IDLE_MS && wrongSwaps < HINT_WRONG) return;
   hintShown = true; wrongSwaps = 0;
   const piece = all().find(t => (t.sp || t.type === 'spirit') && !t.knot && !t.cloud);
@@ -8039,11 +8105,12 @@ function startLevel() {
   if (practice) { practice = null; document.body.classList.remove('practicing'); }
   setGroove('play');
   // Little board: 5x5 with the place's element and its two cycle neighbours, and fewer clouds
+  if (babyOn()) { const bi = LEVELS.findIndex(l => l.elem === babyBoard().elem); LI = Math.max(0, bi); }
   const bf = boardFor(LI), base = LEVELS[LI];
   R = bf.R; C = bf.C; POOL = boardPool(base.elem, bf.n);
-  L = Object.assign({}, base, levelSpec(LI));
+  L = Object.assign({}, base, levelSpec(LI), babyOn() ? { shape: babyBoard().shape, clouds: 6, knots: 0, gems: 0, moves: 99, intro: null } : {});
   document.body.classList.toggle('nobreath', !featOn('breath') && !babyOn());
-  setMask(babyOn() ? null : L.shape || null);
+  setMask(L.shape || null);
   $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
   $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
@@ -8953,7 +9020,7 @@ async function winLevel() {
   glowGoal(false); clearHints(); hideTip();
   if (babyOn()) {                                          // baby mode: a soft cheer, then a fresh sky. No stars, coins or unlocks
     chord([523.25, 659.25, 783.99], 0.08); if (!reduce) confetti('#board');
-    say('The sky is clear. Luma will start again.');
+    babyIx = (babyIx + 1) % BABY_BOARDS.length;
     await wait(2200); if (babyOn()) startLevel(); else busy = false;
     return;
   }
@@ -8963,9 +9030,12 @@ async function winLevel() {
   const n = LI + 1;
   // hidden par: never shown. Finishing within it earns a star and bonus coins that grow the more
   // smoothly you played. Based on moves only; speed is never rewarded.
-  const par = Math.round(L.clouds * 3.5 + 10 + (L.knots || 0));
+  // Through episode 50 stars are forgiving while kids learn the game: the flow allowance is half again as
+  // big, any breath with Luma earns the breath star, and before the breath arrives a smooth win earns all three.
+  const easy = n <= 50, par = Math.round((L.clouds * 3.5 + 10 + (L.knots || 0)) * (easy ? 1.5 : 1) + (easy ? 5 : 0));
   const smooth = movesUsed <= par, flowBonus = smooth ? COIN_RULES.smooth * coinMult() : 0;
-  const stars = 1 + (smooth ? 1 : 0) + (deepBreaths > 0 ? 1 : 0);
+  const breathStar = easy ? (!featOn('breath') ? smooth : levelBreaths > 1 || deepBreaths > 0) : deepBreaths > 0;
+  const stars = 1 + (smooth ? 1 : 0) + (breathStar ? 1 : 0);
   if (flowBonus && !babyOn()) S.coins += flowBonus;
   const dz = DIFF[epDifficulty(LI + 1)];
   const first = !((S.stars || {})[n]);
@@ -8980,7 +9050,7 @@ async function winLevel() {
   $('#wStars').innerHTML = '★'.repeat(stars) + `<span class="off">${'★'.repeat(3 - stars)}</span>`;
   $('#wCoins').textContent = coins;
   $('#wLeft').innerHTML = [smooth ? `<b>Smooth flow!</b> +${flowBonus} bonus coins` : '',
-    deepBreaths ? '' : 'One slow, deep breath earns a star.', !smooth ? 'A smoother flow earns a bonus.' : ''].filter(Boolean).join(' · ') || '<b>Every star earned.</b>';
+    breathStar ? '' : easy ? 'Breathing with Luma earns a star.' : 'One slow, deep breath earns a star.', !smooth ? 'A smoother flow earns a bonus.' : ''].filter(Boolean).join(' · ') || '<b>Every star earned.</b>';
   $('#wXp').textContent = `+${Math.round((100 + stars * 25) * dz.xp)}`;
   if (dz.name) $('#wLeft').innerHTML = `<b>⚡ ${dz.name} episode cleared!</b> Rewards ×${dz.coin}, plus a ${CHARMS[LI % CHARMS.length].name} charm${dz === DIFF.super ? ' and a Bear Stomp' : ''}. ` + $('#wLeft').innerHTML;
   $('#pTitle').textContent = `${L.power} · the ${SOUND[L.elem].verb}`;
