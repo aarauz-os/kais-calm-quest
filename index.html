@@ -1034,6 +1034,34 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 3px 0 rgba(255,255,255,.8),0 0 0 3px var(--wood),0 6px 0 3px var(--wood-d),0 16px 30px rgba(0,0,0,.5)}
 .wseason small{display:block;font-family:Nunito,system-ui,sans-serif;font-size:12px;font-weight:900;letter-spacing:.08em}
 .world.later .wimg{filter:saturate(.45) brightness(.6) !important}
+
+/* ================= age bands + journey entrance ================= */
+.agestep{gap:12px}
+.hpprev.small{width:84px;height:84px;margin:0 0 4px}
+.agegrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:340px}
+.agegrid button{padding:12px 8px 11px;border-radius:18px;text-align:center;color:#3A2408;background:linear-gradient(#FFFDF4,#EEDDB6);
+  box-shadow:inset 0 3px 0 #fff,0 0 0 3px var(--gold-mid),0 0 0 6px var(--wood),0 6px 0 6px var(--wood-d);transition:transform .2s cubic-bezier(.3,1.6,.5,1)}
+.agegrid button b{display:block;font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:26px;line-height:1.05}
+.agegrid button span{display:block;font-size:12px;font-weight:900;color:#7A5A20}
+.agegrid button.wide{grid-column:1/-1;background:linear-gradient(#24463B,#132A23);color:#FFF6DE}
+.agegrid button.wide b{font-size:20px}.agegrid button.wide span{color:var(--gold-hi)}
+.agegrid button.on{transform:translateY(-3px) scale(1.04);box-shadow:inset 0 3px 0 #fff,0 0 0 3px #fff,0 0 0 6px var(--gold-mid),0 0 22px 6px rgba(255,220,130,.8),0 6px 0 6px var(--wood-d)}
+.agenote{max-width:340px;margin:0;text-align:center;font-size:12.5px;font-weight:800;line-height:1.45;opacity:.85}
+.agenote b{color:var(--gold-hi)}
+.enter{position:absolute;inset:0;z-index:25;overflow:hidden;color:#FFF6DE;opacity:0;transition:opacity .5s}
+.enter.show{opacity:1}
+.enter .stbg::after{background:linear-gradient(rgba(6,12,10,.25),rgba(6,12,10,.35) 40%,rgba(6,12,10,.92) 78%)}
+.enin{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:12px;padding:0 20px 28px;text-align:center}
+.enseason{display:inline-flex;align-items:center;gap:8px;font-family:"Marcellus SC",Georgia,serif;font-size:16px}
+.enseason span{padding:3px 10px;border-radius:99px;font-family:Nunito,system-ui,sans-serif;font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A)}
+.entitle{font-size:clamp(34px,10vw,44px);line-height:1.02;text-shadow:0 3px 0 rgba(40,24,6,.85),0 0 24px rgba(255,210,140,.6)}
+.entitle span{display:inline-block}
+.entitle .ew{white-space:nowrap}
+.enline{margin:0;max-width:340px;font-size:16px;font-weight:800;line-height:1.45}
+.enlayers{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;max-width:360px}
+.enlayers i{font-style:normal;padding:5px 11px;border-radius:99px;font-size:12px;font-weight:900;background:rgba(0,0,0,.45);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.5)}
+.enlayers i b{color:var(--gold-hi);margin-right:4px}
+.enter .btn.big{width:100%;max-width:320px;margin-top:6px}
 </style>
 
 <div id="app">
@@ -1480,6 +1508,16 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       <button class="btn gold big begin" id="iGo">Begin</button>
     </div>
   </div>
+  <div class="enter" id="enter" hidden>
+    <div class="stbg" style="background-image:url(img/journey/roundtable.jpg)"></div>
+    <div class="enin">
+      <div class="enseason"><span>Season 1</span>Kai's Calm Quest</div>
+      <div class="entitle display">The Feelings Journey</div>
+      <p class="enline" id="enLine"></p>
+      <div class="enlayers" id="enLayers"></div>
+      <button class="btn gold big" id="enGo">Enter the Journey</button>
+    </div>
+  </div>
   <div class="world" id="world" hidden>
     <div class="wmap" id="wdMap">
       <img class="wimg" id="wImg" alt="">
@@ -1536,6 +1574,19 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       <div class="hpprev"><span class="stglow"></span><span class="string"><img id="hpFace" alt="Your hero"></span></div>
       <div class="hpgrid" id="hpGrid"></div>
       <button class="btn gold big" id="hpGo">This is me!</button>
+    </div>
+    <div class="hpin agestep" id="ageStep" hidden>
+      <div class="hpprev small"><span class="stglow"></span><span class="string"><img id="ageFace" alt=""></span></div>
+      <div class="hptitle display">How old is our explorer?</div>
+      <div class="agegrid" id="ageGrid">
+        <button data-band="2-4"><b>2–4</b><span>Little sprouts</span></button>
+        <button data-band="5-7"><b>5–7</b><span>Seedlings</span></button>
+        <button data-band="8-11"><b>8–11</b><span>Saplings</span></button>
+        <button data-band="12-15"><b>12–15</b><span>Young trees</span></button>
+        <button data-band="16" class="wide"><b>16 or older</b><span>Grown-ups playing along</span></button>
+      </div>
+      <p class="agenote" id="ageNote">Grown-ups: this sets how deep the stories go. Only the age band is kept, on this device. You can change it anytime from the hero button.</p>
+      <button class="btn gold big" id="ageGo" disabled style="opacity:.5">Continue</button>
     </div>
   </div>
   <div class="party" id="party" hidden>
@@ -2652,6 +2703,7 @@ function pickHero() {
       if (!cur) return;
       S.hero = cur; save(); syncHero();
       chord([523.25, 659.25, 783.99, 1046.5], 0.08);
+      await ageStep();
       ov.classList.remove('show'); await wait(350); ov.hidden = true; res(cur);
     };
     ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
@@ -2682,11 +2734,11 @@ async function runStory() {
   st.style.setProperty('--sg', ELEM[L.elem].glow);
   const g = goalNums();
   const beats = [
-    { who: heroId(), voice: 'hero', name: 'You', text: L.you },
-    { who: 'sorin', voice: 'sorin', name: 'Sorin', text: L.sorin },
+    { who: heroId(), voice: 'hero', name: 'You', text: storyLines(L).you },
+    { who: 'sorin', voice: 'sorin', name: 'Sorin', text: storyLines(L).sorin },
     { who: 'luma', voice: 'luma', name: 'Luma', goal: true, text: `Help me blow away ${g.clouds} storm clouds. You have ${g.moves} moves.` }
   ];
-  if (LI === 0 || !S.tutDone) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: "Match orbs to grow my Aura. When I'm Heavenly, tap me and we'll breathe together." });
+  if (LI === 0 || !S.tutDone || band() === '2-4') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: HOWTO[band()] });
   $('#stPips').innerHTML = beats.map(() => '<i></i>').join('') + '<i></i>';
   $('#loadout').hidden = true; $('#loadout').classList.remove('up');
   $('#stStage').hidden = false;
@@ -2737,7 +2789,7 @@ async function showBeat(b, run, skipped, nextTap) {
       const t = a.currentTime, gn = a.createGain(); gn.connect(voice(0, 0.2)); env(gn, t, 0.03, 0.004, 0.05);
       osc(a, 'sine', f0 * (0.92 + Math.random() * 0.18), t, 0.07, gn);
     }
-    await wait(reduce ? 0 : 26);
+    await wait(reduce ? 0 : band() === '2-4' ? 38 : 26);        // slower for the littlest readers
   }
   txt.textContent = words; face.src = faceSrc(b.who, b.voice === 'hero' ? 'calm' : 'happy');
   bub.classList.add('done');
@@ -4327,7 +4379,7 @@ async function openWorld(i = 0, dir = 0) {
   $('#wCount').textContent = `Ep ${WI * 60 + 1}–${WI * 60 + 60}`;
   $('#wVerb').textContent = ch.verb;
   const n = chapterBoard(WI);
-  $('#wMeta').textContent = `${n}×${n} board · watch for ${ch.obstacle} · earn ${ch.reward}`;
+  $('#wMeta').textContent = WI === 0 ? `Meet all five feelings · ${n}×${n} board · earn ${ch.reward}` : `Goes deeper each episode: notice → name → why → what helps → help a friend · earn ${ch.reward}`;
   $('#wdPrev').disabled = WI === 0; $('#wdNext').disabled = WI === CHAPTERS.length - 1;
   w.style.setProperty('--bg', glow);
   // path
@@ -4389,7 +4441,8 @@ $('#wNodes').addEventListener('click', async e => {
   if (b.classList.contains('locked')) {
     b.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' }], { duration: 260 });
     bell(392, 0, 0.05);
-    toast(pn <= LEVELS.length ? `Finish episode ${pn - 1} to open this one.` : `Episode ${pn} opens as the season grows.`);
+    const layer = LAYERS[(pn - 1) % 60 < 8 ? (pn - 1) % 60 : 7];
+    toast(pn <= LEVELS.length ? `Finish episode ${pn - 1} to open this one.` : WI === 0 ? `Episode ${pn} opens as the season grows.` : `Episode ${pn} · ${layer}: ${CHAPTERS[WI].name}. Opens as the season grows.`);
     return;
   }
   chord([659.25, 783.99, 1046.5], 0.05);
@@ -4535,6 +4588,109 @@ function showLetter(id) {
   $('#letterTitle').textContent = l.title; $('#letterText').textContent = l.text;
   $('#letterov').style.zIndex = 30;
   showOv('letterov');
+}
+
+/* ---------- age bands: the same feeling, told at the depth each age is ready for ----------
+   Bands follow Montessori's planes of development. Stories are written ahead of time and
+   reviewed by people (Demaris + a school counselor) — never generated live on a child's device. */
+const BANDS = { '2-4': 'Little sprouts', '5-7': 'Seedlings', '8-11': 'Saplings', '12-15': 'Young trees' };
+const band = () => S.band || '5-7';
+const STORY = {
+  earth: {
+    '2-4': ["Your tummy feels tight. That's Worry saying hello.", "Let's hum like a bee. Mmmmm. Worry gets smaller."],
+    '8-11': ["There's a test tomorrow and your mind keeps playing 'what if' on repeat. Your stomach knew before you did.", "Worry is your mind trying to protect you from the future. Thank it, then come back to now. A long, low hum tells your body you're safe here."],
+    '12-15': ["Your group chat went quiet after you posted something, and now your brain is writing ten stories about why.", "Worry fills silence with guesses. Notice which thoughts are facts and which are stories. Settle the body first with a low hum; clear thinking comes after."]
+  },
+  wood: {
+    '2-4': ["Someone took your toy! You feel hot and stompy.", "Big feelings need big breaths. Reach up tall like a tree, then blow it out: haaa!"],
+    '8-11': ["Your friend broke your lantern and laughed. Your face is hot and your hands want to push.", "Anger shows up when something feels unfair. Feeling it is okay. What you do next is your choice: breathe first, then use your words."],
+    '12-15': ["Someone said something about you that isn't true, and people believed it. You're furious, and you want to say something you can't take back.", "Anger often guards a hurt underneath it. Let the breath cool the heat so you can find that hurt, then speak up for yourself clearly instead of loudly."]
+  },
+  fire: {
+    '2-4': ["You feel so bouncy you can't sit still! Wheee!", "Hands on your heart. Breathe in, and out slow. Bouncy can rest too."],
+    '8-11': ["It's the night before your birthday and your thoughts are zooming so fast you can't listen to anyone.", "Excitement is joy with the volume turned all the way up. You don't have to switch it off. Just turn it down a little so you can really enjoy it."],
+    '12-15': ["Everything's happening at once: plans, messages, ideas. Your heart is racing even though it's all good stuff.", "Too much of a good thing still tires the heart. A slow laughing breath lets the extra energy out without losing the joy."]
+  },
+  metal: {
+    '2-4': ["Your balloon floated away. You feel droopy and want a hug.", "Sad is okay. Open your arms wide like wings and sigh it out: sssss."],
+    '8-11': ["Your best friend is moving to another town, and the goodbye keeps coming back to you.", "Sadness shows how much something mattered. Sighing and crying are how the chest makes room again. You can miss someone and still be okay."],
+    '12-15': ["A friendship you counted on has quietly changed, and you're not sure when it happened.", "Grief isn't only for big losses. Letting yourself feel it, instead of pushing it away, is what lets it move. Each long out-breath is a small letting go."]
+  },
+  water: {
+    '2-4': ["It's dark and you hear a noise. You feel shivery.", "Hands on your back. Breathe in slow, then whoooo. Brave can be quiet."],
+    '8-11': ["You have to read out loud in front of the class. Your legs feel shaky and your mind goes blank.", "Fear is your body getting ready, like a runner at the start line. A slow breath tells it there's no danger here, and your clear thinking comes back."],
+    '12-15': ["You want to try out for something new, but the fear of messing up in front of everyone is louder than the wanting.", "Courage isn't having no fear. It's taking one step while the fear is still there. Warm your low back, breathe slow, and let the fear come along."]
+  }
+};
+function storyLines(lv) {
+  const b = band(), t = (STORY[lv.elem] || {})[b];
+  return t ? { you: t[0], sorin: t[1] } : { you: lv.you, sorin: lv.sorin };
+}
+const HOWTO = {
+  '2-4': "Match the orbs to make me glow. Then breathe with me!",
+  '5-7': "Match orbs to grow my Aura. When I'm Heavenly, tap me and we'll breathe together.",
+  '8-11': "Every match grows my Aura. When it's Heavenly, tap me: a slow breath clears the storm and my Aura Burst clears the board.",
+  '12-15': "Matches build my Aura. At Heavenly, tap me and breathe: the slower and longer your out-breath, the more of the storm it clears."
+};
+// every chapter climbs the same eight layers, so the understanding deepens episode by episode
+const LAYERS = ['Notice it', 'Name it', 'Where it lives', 'Why it comes', 'What helps', 'Help a friend', 'Mixed feelings', 'Meet it'];
+let agePicked = null;
+function ageStep() {
+  return new Promise(res => {
+    const hp = $('.hpin:not(.agestep)'), st = $('#ageStep');
+    hp.hidden = true; st.hidden = false;
+    $('#ageFace').src = faceSrc(heroId(), 'happy');
+    agePicked = S.band || null;
+    const draw = () => {
+      $$('#ageGrid button').forEach(b => b.classList.toggle('on', b.dataset.band === agePicked || (agePicked === '12-15' && b.dataset.band === '16' && S.adult)));
+      $('#ageGo').disabled = !agePicked; $('#ageGo').style.opacity = agePicked ? 1 : .5;
+    };
+    draw();
+    if (!reduce) $$('#ageGrid button').forEach((b, k) => b.animate([{ transform: 'translateY(20px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 320, delay: 60 + k * 60, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' }));
+    $('#ageGrid').onclick = e => {
+      const b = e.target.closest('[data-band]'); if (!b) return;
+      S.adult = b.dataset.band === '16';
+      agePicked = S.adult ? '12-15' : b.dataset.band;
+      $('#ageNote').innerHTML = S.adult
+        ? '<b>MorQi Kids is made for ages 2–15.</b> A grown-up edition, MorQi, is on the way. Until then you can play along with the 12–15 stories.'
+        : `Stories for <b>${BANDS[agePicked]}</b>: the same feelings, told at the depth this age is ready for. Only the age band is kept, on this device.`;
+      boop(['2-4', '5-7', '8-11', '12-15'].indexOf(agePicked) * 2 + 2, 0.08); tick();
+      draw();
+      b.animate([{ transform: 'scale(.92)' }, { transform: 'scale(1.08)' }, { transform: 'translateY(-3px) scale(1.04)' }], { duration: 320, easing: 'cubic-bezier(.3,1.6,.5,1)' });
+    };
+    $('#ageGo').onclick = () => {
+      if (!agePicked) return;
+      S.band = agePicked;
+      if (agePicked === '2-4') S.boardSize = 'little';       // the littlest start on the little board
+      save(); chord([523.25, 659.25, 783.99, 1046.5], 0.08);
+      st.hidden = true; hp.hidden = false; res(agePicked);
+    };
+  });
+}
+// the doorway into the season: the round table, the promise, the layers ahead
+async function enterJourney() {
+  const en = $('#enter');
+  $('#enLine').textContent = {
+    '2-4': 'Meet five feelings. Every feeling is welcome here.',
+    '5-7': 'Five feelings are waiting at the round table. Every feeling is welcome, and each one can teach you something.',
+    '8-11': 'Each chapter is one feeling. The further you go, the deeper you understand it, and the more you can help it and your friends.',
+    '12-15': 'Each chapter follows one feeling from noticing it to understanding where it comes from, what helps, and how it mixes with others.'
+  }[band()];
+  $('#enLayers').innerHTML = LAYERS.map((l, i) => `<i><b>${i + 1}</b>${l}</i>`).join('');
+  en.hidden = false; void en.offsetWidth; en.classList.add('show');
+  playSfx('drum', { gain: 0.8, send: 0.6 });
+  if (!reduce) {
+    const t = $('.entitle');
+    t.innerHTML = 'The Feelings Journey'.split(' ').map(w => `<span class="ew">${[...w].map(c => `<span>${c}</span>`).join('')}</span>`).join(' ');
+    $$('.entitle .ew span').forEach((sp, i) => sp.animate([{ transform: 'translateY(24px) scale(.6)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 420, delay: 200 + i * 40, easing: 'cubic-bezier(.2,.9,.3,1.3)', fill: 'backwards' }));
+    $$('#enLayers i').forEach((x, i) => { x.animate([{ transform: 'scale(.6)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 320, delay: 1000 + i * 90, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'backwards' }); setTimeout(() => boop(i, 0.035), 1000 + i * 90); });
+  }
+  await new Promise(r => { $('#enGo').onclick = r; });
+  chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
+  S.enteredJourney = true; save();
+  $('#map').hidden = false; $('#welcome').hidden = true;
+  en.classList.remove('show'); await wait(300); en.hidden = true;
+  openWorld(0);
 }
 async function playGate() {
   const g = $('#gate'), el = L.elem;
@@ -4803,7 +4959,7 @@ syncHero(); syncPassBtn(); applyLooks();
 $$('[data-play]').forEach(b => b.addEventListener('click', () => {
   ac();
   $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome();
-  (S.hero ? Promise.resolve() : pickHero()).then(() => openLevel(0));
+  (S.hero && S.band ? Promise.resolve() : pickHero()).then(() => S.enteredJourney ? openWorld(0) : enterJourney());
 }));
 $('#retut').addEventListener('click', () => { S.tutDone = false; save(); toast('The guided walkthrough will play on level 1.'); });
 $('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome(); });
