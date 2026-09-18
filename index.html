@@ -1389,6 +1389,33 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
 .wrow .streakrow{margin:0;padding:0;background:none !important;box-shadow:none !important;font-size:13.5px;line-height:1.35}
 .wincard .practice{text-align:left}
 .wincard .stack .btn.big{width:100%}
+.sp-bomb .orb{box-shadow:inset 0 0 0 3px #FFD7F0,0 0 12px 3px rgba(255,170,220,.85);animation:bombpulse 1.6s ease-in-out infinite}
+.sp-bomb .orb::after{content:"";position:absolute;inset:18%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(circle,#fff 0 18%,transparent 20%),conic-gradient(from 0deg,rgba(255,240,250,.95) 0 10%,transparent 10% 20%,rgba(255,240,250,.95) 20% 30%,transparent 30% 40%,rgba(255,240,250,.95) 40% 50%,transparent 50% 60%,rgba(255,240,250,.95) 60% 70%,transparent 70% 80%,rgba(255,240,250,.95) 80% 90%,transparent 90%);
+  -webkit-mask:radial-gradient(circle,#000 62%,transparent 64%);mask:radial-gradient(circle,#000 62%,transparent 64%)}
+@keyframes bombpulse{50%{box-shadow:inset 0 0 0 3px #fff,0 0 18px 6px rgba(255,170,220,.95)}}
+.goalwrap{min-width:0}
+.goals{display:flex;gap:6px;margin-top:3px;flex-wrap:nowrap}
+.gc{display:inline-flex;align-items:center;gap:5px;padding:3px 8px 3px 4px;border-radius:99px;background:rgba(0,0,0,.25);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.gc b{font-size:17px;font-weight:900;font-variant-numeric:tabular-nums}
+.gc .mini{width:24px !important;height:24px !important}
+.gc .gco{position:relative;width:22px;height:22px;display:block}
+.gc .gck{width:20px;height:20px;border-radius:50%;background:radial-gradient(circle,#8A5A24 0 20%,#C99550 22% 32%,transparent 34%),linear-gradient(45deg,transparent 42%,#D6A660 42% 58%,transparent 58%),linear-gradient(-45deg,transparent 42%,#D6A660 42% 58%,transparent 58%),#F5E9CF}
+.gc.done{background:rgba(90,190,110,.35);box-shadow:inset 0 0 0 1.5px #9BE07F}
+.gc.done b{color:#DFF7D4}
+.diffban,.glowban{flex-basis:100%;display:flex;flex-direction:column;align-items:center;gap:1px;padding:8px 12px;border-radius:14px;color:#FFF6DE;text-align:center}
+.diffban{background:linear-gradient(135deg,#5B2A7A,#A0304A);box-shadow:inset 0 0 0 1.5px rgba(255,210,255,.45),0 0 16px rgba(160,60,140,.45)}
+.diffban.super{background:linear-gradient(135deg,#2A1040,#8A1030);box-shadow:inset 0 0 0 2px #FFD45A,0 0 22px rgba(255,90,90,.55)}
+.diffban b,.glowban b{font-size:15px}.diffban span,.glowban span{font-size:12px;font-weight:800;opacity:.9}
+.glowban{background:linear-gradient(135deg,#B8561C,#E0A93E);box-shadow:inset 0 0 0 1.5px rgba(255,236,170,.6)}
+.logoal{flex-wrap:wrap}
+.wnode.hard{box-shadow:inset 0 3px 3px rgba(255,255,255,.6),0 0 0 3px #E07AD0,0 0 0 6px #5B2A7A,0 6px 0 6px #2E123D,0 0 18px rgba(200,80,180,.6)}
+.wnode.super{box-shadow:inset 0 3px 3px rgba(255,255,255,.6),0 0 0 3px #FFD45A,0 0 0 6px #8A1030,0 6px 0 6px #3D0814,0 0 22px rgba(255,90,90,.7)}
+.wnode .wdiff{position:absolute;left:-8px;top:-8px;font-size:15px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.6))}
+.dcell.gd{margin:6px 0 0 6px;transition:left .4s cubic-bezier(.4,0,.2,1),top .42s cubic-bezier(.4,1.3,.5,1)}
+.gdchips{display:flex;justify-content:center;gap:8px;margin:-2px 0 8px}
+.gdlevel{margin-top:4px;justify-content:center;flex-wrap:wrap;gap:6px}
+.gdlevel .gchip{font-size:12px;padding:4px 9px}
 </style>
 
 <div id="app">
@@ -1575,7 +1602,7 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
       <button class="iconbtn" data-music aria-label="Music off">♫</button>
     </div>
     <div class="stats">
-      <div class="stat goal" id="cloudStat"><div class="mini cloudicon"></div><div><div class="lbl">Clear the storm</div><div class="val"><span id="gClouds">0</span> <small id="gCloudWord">clouds left</small></div></div></div>
+      <div class="stat goal" id="cloudStat"><div class="goalwrap"><div class="lbl">Goals</div><div class="goals" id="goalChips"></div></div><span id="gClouds" hidden>0</span><small id="gCloudWord" hidden></small></div>
       <div class="stat" id="movesStat"><div><div class="lbl">Moves</div><div class="val" id="gMoves">20</div></div></div>
     </div>
     <div class="lanterns" id="lanterns" aria-label="Lanterns lit"></div>
@@ -2039,25 +2066,25 @@ const LEVELS = [
     sorin: "Worry likes to sit in the belly. Where is that feeling trying to go? Let's hum it loose.",
     steps: ['Stand with soft knees and put both hands on your belly.', 'Breathe in and feel your belly fill like a drum.', 'Hum the breath out low: mmmmmm. Feel your hands buzz.', 'Three times, then notice your middle feeling steady.'],
     line: 'Worry gets stuck in the middle. Humming moves it.', inhale: 4, exhale: 6 },
-  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 58, clouds: 8, knots: 0,
+  { place: 'Whispering Forest', elem: 'wood', power: 'Wood Breath', shift: 'anger → kindness', organ: 'sides', moves: 58, clouds: 8, knots: 0, gems: 20,
     problem: "Kai's friend broke his lantern. He is so angry he wants to shout at everybody.",
     you: "A friend broke your lantern. You feel so angry you want to shout at everybody.",
     sorin: "Anger is strong power looking for a way out. Let's give it a way out that helps.",
     steps: ['Stand tall like a tree with your feet rooted.', 'Breathe in and reach your arms up and out like branches.', 'Breathe out with a big haaaa and let your arms drop.', 'Shake your hands out, then stand still.'],
     line: 'Anger is strong. Let it out and it can turn into kindness.', inhale: 4, exhale: 5 },
-  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 55, clouds: 10, knots: 5,
+  { place: 'Valley of Echoes', elem: 'fire', power: 'Fire Breath', shift: 'too much → peace', organ: 'heart', moves: 55, clouds: 10, knots: 5, gems: 24,
     problem: 'Kai is so excited he cannot sit still or listen. His chest is racing and everything echoes.',
     you: "You're so excited you can't sit still or listen. Your chest is racing and everything echoes.",
     sorin: "Your heart is running bright and fast. Let a little out, then let it rest.",
     steps: ['Put both hands on your heart.', 'Breathe in and feel your chest lift.', 'Breathe out with a soft laugh: ha-ha-haaa.', 'Now be still and feel your heart slow down.'],
     line: 'Excitement settles when the heart is held.', inhale: 3, exhale: 5 },
-  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 52, clouds: 12, knots: 7,
+  { place: 'Sky Temple', elem: 'metal', power: 'Metal Breath', shift: 'sadness → strength', organ: 'lungs', moves: 52, clouds: 12, knots: 7, gems: 25,
     problem: 'Something Kai loved has ended. His chest feels heavy and empty up in the cold wind.',
     you: "Something you loved has ended. Your chest feels heavy and empty, up here in the cold wind.",
     sorin: "Sad feelings live in the lungs. Every long sigh carries a little of it out.",
     steps: ['Stand with your arms open wide like wings.', 'Breathe in through your nose and fill your lungs.', 'Breathe out with a long sigh: sssssss.', 'Let your shoulders drop lower each time.'],
     line: 'Sad feelings leave on the out-breath.', inhale: 4, exhale: 6 },
-  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 50, clouds: 14, knots: 9,
+  { place: 'Lantern River', elem: 'water', power: 'Water Breath', shift: 'fear → wisdom', organ: 'low back', moves: 50, clouds: 12, knots: 7, gems: 30,
     problem: 'It is dark and Kai is scared. His legs feel shaky and his thinking has gone cloudy.',
     you: "It's dark and you feel scared. Your legs are shaky and your thoughts have gone cloudy.",
     sorin: "Fear lives low, near your back. Let's warm it until your clear thinking comes back.",
@@ -2491,7 +2518,7 @@ function syncWallet() {
 }
 async function showOv(id) {
   if (id === 'shop') renderShop();
-  const o = $('#' + id); o.hidden = false; void o.offsetWidth; await wait(20); o.classList.add('show');
+  const o = $('#' + id); o.hidden = false; o.querySelectorAll('.card').forEach(c => { c.scrollTop = 0; }); void o.offsetWidth; await wait(20); o.classList.add('show');
   if (id === 'breathe' || id === 'bedov') { setGroove('calm'); return; }   // every breath: drums out, only the pad
   playSfx('swoosh', { gain: 0.55 });
   if (reduce) return;
@@ -2578,6 +2605,10 @@ function balanceBonus() {
 let babyRun = 0;
 const babyOn = () => !!S.babyMode;
 function setBaby(on) {
+  // baby time is logged privately (for a future parent dashboard); it never touches scores or stats
+  if (!S.babyLog) S.babyLog = { sessions: 0, seconds: 0 };
+  if (on && !S.babyMode) { S.babyLog.sessions++; S.babyLog.since = Date.now(); }
+  if (!on && S.babyMode && S.babyLog.since) { S.babyLog.seconds += Math.round((Date.now() - S.babyLog.since) / 1000); S.babyLog.since = 0; }
   S.babyMode = !!on; save();
   const t = $('#babyToggle');
   t.classList.toggle('on', babyOn());
@@ -2604,6 +2635,7 @@ async function babyLoop(run) {
   }
 }
 async function babyBreath(run) {
+  if (S.babyLog) { S.babyLog.breaths = (S.babyLog.breaths || 0) + 1; save(); }
   busy = true; breathing = true;
   $('#brChoose').hidden = true; $('#brPlay').hidden = false; $('#brResult').hidden = true;
   $('#brSwitch').hidden = true; $('#brCancel').hidden = true; $('#brMeter').hidden = true;
@@ -2657,12 +2689,18 @@ function brAuto(from, to, secs) {
     el.style.transform = `translateY(${-(to * (H - K))}px)`;
   });
 }
-$('#babyToggle').addEventListener('click', () => {
+// turning baby mode OFF needs a grown-up's answer; a wrong answer just closes the question
+async function leaveBaby() {
+  if (!await grownUpGate('', 'A grown-up needs to answer to turn off baby mode.')) { toast('Baby mode stays on.'); return false; }
+  setBaby(false); return true;
+}
+$('#babyToggle').addEventListener('click', async () => {
+  if (babyOn()) { if (await leaveBaby()) toast('Baby mode off.'); return; }
   setBaby(!babyOn());
   toast(babyOn() ? 'Baby mode on. The game will play and breathe by itself.' : 'Baby mode off.');
   if (babyOn() && !$('#game').hidden) { $('#babyBar').hidden = false; babyLoop(++babyRun); }
 });
-$('#babyStop').addEventListener('click', () => { setBaby(false); toast('Baby mode off. Your turn.'); });
+$('#babyStop').addEventListener('click', async () => { if (await leaveBaby()) toast('Baby mode off. Your turn.'); });
 
 /* ---------- bedtime: only Luma, only breathing ---------- */
 // No board, no score, no way to lose. A parent can hand this to a toddler at bedtime, or
@@ -2762,12 +2800,13 @@ $('#sealClose').addEventListener('click', () => hideOv('sealov'));
 /* ---------- daily quests ---------- */
 // Three small asks a day. One of them always points at the element that has gone quiet.
 const QUEST_KINDS = [
-  { id: 'harmony', goal: 2, reward: { coins: 80 }, text: 'Make 2 harmonies' },
+  { id: 'knots', goal: 5, reward: { coins: 80 }, text: 'Untie 5 knots' },
+  { id: 'special', goal: 3, reward: { lanterns: 1 }, text: 'Make 3 special orbs' },
   { id: 'deep', goal: 2, reward: { coins: 70 }, text: 'Take 2 deep breaths' },
   { id: 'sound', goal: 1, reward: { swirls: 1 }, text: 'Use your voice on a breath' },
   { id: 'win', goal: 1, reward: { coins: 50 }, text: 'Finish a place' },
-  { id: 'flow', goal: 1, reward: { lanterns: 1 }, text: 'Reach flow ×3' },
-  { id: 'clouds', goal: 6, reward: { coins: 60 }, text: 'Free 6 storm clouds' }
+
+  { id: 'clouds', goal: 10, reward: { coins: 60 }, text: 'Free 10 storm clouds' }
 ];
 function newQuests() {
   const low = balState().low.t;
@@ -3426,13 +3465,29 @@ $('#heroOpen').addEventListener('click', () => { ac(); pickHero(); });
 
 /* ---------- story intro: tap through one line at a time, then the loadout ---------- */
 const VOICE = { hero: 520, sorin: 290, luma: 780 };
-const goalNums = () => { const b = LEVELS[LI], nami = S.buddy === 'water' ? 3 : 0; return S.boardSize === 'little' ? { clouds: Math.min(4, b.clouds), moves: b.moves - 2 + nami } : { clouds: b.clouds, moves: b.moves + nami }; };
+/* ---------- difficulty: every 5th episode is Stormy (Hard), every 20th a Thunderstorm (Super Hard).
+   Four easy wins, then a challenge that pays more; the rarer Thunderstorms become events. ---------- */
+const epDifficulty = ep => ep % 20 === 0 ? 'super' : ep % 5 === 0 ? 'hard' : 'normal';
+const DIFF = {
+  normal: { name: '', label: '', moves: 1, clouds: 0, knots: 0, gems: 1, coin: 1, xp: 1 },
+  hard: { name: 'Stormy', label: 'Hard', moves: 0.9, clouds: 2, knots: 2, gems: 1, coin: 2, xp: 1.5 },
+  super: { name: 'Thunderstorm', label: 'Super Hard', moves: 0.8, clouds: 4, knots: 4, gems: 1.2, coin: 3, xp: 2 }
+};
+function levelSpec(i = LI) {
+  const b = LEVELS[i], diff = epDifficulty(i + 1), d = DIFF[diff], little = S.boardSize === 'little' && !babyOn();
+  let moves = Math.round(b.moves * d.moves), clouds = b.clouds + d.clouds, knots = b.knots ? b.knots + d.knots : 0, gems = b.gems ? Math.round(b.gems * d.gems) : 0;
+  if (little) { clouds = Math.min(4, clouds); moves -= 2; knots = Math.ceil(knots / 2); gems = Math.round(gems * 0.6); }
+  if (S.buddy === 'water' && !babyOn()) moves += 3;        // Nami's gift
+  return { moves, clouds, knots, gems, diff };
+}
+const goalNums = () => levelSpec();
 let storyRun = 0;
 async function runStory() {
   const run = ++storyRun, st = $('#story'); lastSpeaker = null;
   stBgFront = 0; $('#stBg').style.opacity = 1; $('#stBg2').style.opacity = 0;
   $('#stBg').style.backgroundImage = `url(${storyBg(0, 'hero')})`;
-  $('#stVerb').textContent = `Chapter 1 · Episode ${LI + 1} · ${EMO_VERB[L.elem]}`;
+  const dd = DIFF[epDifficulty(LI + 1)];
+  $('#stVerb').textContent = `Chapter 1 · Episode ${LI + 1}${dd.name ? ` · ⚡ ${dd.name} (${dd.label})` : ''} · ${EMO_VERB[L.elem]}`;
   $('#stName').textContent = L.place;
   st.style.setProperty('--sg', ELEM[L.elem].glow);
   const g = goalNums();
@@ -3551,6 +3606,84 @@ async function feedDemo(host) {
     await wait(2600); if (!alive()) return;
   }
 }
+
+// the goal, shown on a mini board: dig under a cloud, it sinks, matching the level's element fills that goal, the cloud floats away at the bottom
+async function goalDemo(host, g) {
+  const run = demoRun, E = L.elem, f = ['wood', 'fire', 'earth', 'metal', 'water'].filter(x => x !== E), [a, b, c, d] = f;
+  const grid = [[b, c, d, a], [c, b, E, d], [E, E, a, c], [a, a, b, a]];
+  host.innerHTML = `<div class="odemo">
+      <div class="odhead"><b>How to win</b></div>
+      <div class="gdchips"><span class="gc" data-g="cloud"><i class="mini cloudicon"></i><b>1</b></span><span class="gc" data-g="gem"><span class="gco">${orbHTML(E)}</span><b>3</b></span></div>
+      <div class="odboard" style="width:${4 * DEMO_T}px;height:${4 * DEMO_T}px;overflow:hidden"><i class="odhand">👆</i></div>
+      <div class="odsteps"><i></i><i></i><i></i></div>
+      <div class="odcap" id="odCap"></div>
+      <div class="goalchips gdlevel"><span class="gchip">☁ ${g.clouds} clouds</span>${g.gems ? `<span class="gchip"><i style="background:${ELEM[E].hue}"></i>${g.gems} ${ELEM[E].name}</span>` : ''}${g.knots ? `<span class="gchip">🪢 ${g.knots} knots</span>` : ''}<span class="gchip">${g.moves} moves</span></div>
+    </div>`;
+  const board = host.querySelector('.odboard'), hand = host.querySelector('.odhand'), cap = host.querySelector('#odCap'), steps = [...host.querySelectorAll('.odsteps i')];
+  const chip = k => host.querySelector(`[data-g="${k}"]`);
+  const at = (el, r, c) => { el.style.left = `${c * DEMO_T + DEMO_T / 2}px`; el.style.top = `${r * DEMO_T + DEMO_T / 2}px`; };
+  const alive = () => run === demoRun && host.isConnected && !host.hidden;
+  const step = (i, text) => { steps.forEach((s2, k) => s2.classList.toggle('on', k === i)); cap.innerHTML = `<b>${i + 1}</b><span>${text}</span>`; if (!reduce) cap.animate([{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'none' }], { duration: 360, easing: 'ease-out' }); };
+  const pos = x => { x.el.style.left = `${x.c * DEMO_T}px`; x.el.style.top = `${x.r * DEMO_T}px`; };
+  const mk = (type, r, c, cloud) => { const el = document.createElement('span'); el.className = 'dcell gd'; el.innerHTML = orbHTML(type); if (cloud) el.firstElementChild.classList.add('clouded'); const x = { el, type, r, c, cloud }; pos(x); board.appendChild(el); return x; };
+  const tickChip = (k, n) => { const ch = chip(k); ch.querySelector('b').textContent = n || '✓'; ch.classList.toggle('done', !n); if (!reduce) ch.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.25)' }, { transform: 'scale(1)' }], { duration: 360, easing: 'cubic-bezier(.3,1.6,.5,1)' }); };
+  let cells = [];
+  const find = (r, c) => cells.find(x => x.r === r && x.c === c);
+  const swap = async (r1, c1, r2, c2) => {
+    const p = find(r1, c1), q = find(r2, c2);
+    at(hand, r1, c1); hand.style.opacity = 1; await wait(450); if (!alive()) return;
+    hand.style.transition = 'opacity .25s,left .4s,top .4s'; at(hand, r2, c2);
+    [p.r, q.r] = [q.r, p.r]; [p.c, q.c] = [q.c, p.c]; pos(p); pos(q); tick();
+    await wait(450); hand.style.opacity = 0; hand.style.transition = '';
+  };
+  const pop = async (list, toChip) => {
+    list.forEach((x, i) => {
+      if (toChip && !reduce) {
+        const br = x.el.getBoundingClientRect(), cr = toChip.getBoundingClientRect();
+        x.el.animate([{ transform: 'none', opacity: 1 }, { transform: `translate(${cr.left + 12 - br.left}px,${cr.top + 4 - br.top}px) scale(.4)`, opacity: .9 }], { duration: 560, delay: i * 90, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
+      } else if (!reduce) x.el.animate([{ transform: 'none', opacity: 1 }, { transform: 'scale(1.35)', opacity: 0 }], { duration: 380, fill: 'forwards' });
+      else x.el.style.opacity = 0;
+    });
+    boop(4, 0.05);
+    await wait(toChip ? 560 + list.length * 90 : 400);
+    list.forEach(x => x.el.remove()); cells = cells.filter(x => !list.includes(x));
+  };
+  const fall = async () => {
+    for (let c = 0; c < 4; c++) {
+      const col = cells.filter(x => x.c === c).sort((p, q) => q.r - p.r);
+      col.forEach((x, i) => { x.r = 3 - i; });
+      for (let r = 3 - col.length; r >= 0; r--) { const n = mk(f[(r + c * 2) % 4], r - 4, c); cells.push(n); void n.el.offsetWidth; n.r = r; }
+    }
+    await wait(30); cells.forEach(pos); await wait(460);
+  };
+  while (alive()) {
+    board.querySelectorAll('.dcell').forEach(x => x.remove());
+    cells = []; grid.forEach((row, r) => row.forEach((t, c) => cells.push(mk(t, r, c, r === 1 && c === 1))));
+    chip('cloud').querySelector('b').textContent = '1'; chip('gem').querySelector('b').textContent = '3';
+    chip('cloud').classList.remove('done'); chip('gem').classList.remove('done');
+    // 1 · dig under the cloud
+    step(0, 'Match the orbs under a storm cloud. The cloud sinks down.');
+    await wait(900); if (!alive()) return;
+    await swap(3, 2, 3, 3); if (!alive()) return;
+    await pop([find(3, 0), find(3, 1), find(3, 2)]); if (!alive()) return;
+    await fall(); await wait(700); if (!alive()) return;
+    // 2 · match the goal element
+    step(1, `Match ${ELEM[E].name} orbs to fill the ${ELEM[E].name} goal.`);
+    await wait(900); if (!alive()) return;
+    await swap(3, 2, 2, 2); if (!alive()) return;
+    await pop([find(3, 0), find(3, 1), find(3, 2)], chip('gem')); if (!alive()) return;
+    tickChip('gem', 0); bell(chordNote(5), 0, 0.05);
+    await fall(); if (!alive()) return;
+    // 3 · at the bottom, the cloud floats away
+    step(2, 'At the bottom, the cloud floats away. Finish every goal to win.');
+    const cl = cells.find(x => x.cloud);
+    await wait(500); if (!alive()) return;
+    if (cl) await pop([cl], chip('cloud'));
+    tickChip('cloud', 0); bell(chordNote(7), 0, 0.05);
+    if (!reduce) host.querySelector('.gdchips').animate([{ filter: 'brightness(1)' }, { filter: 'brightness(1.6) drop-shadow(0 0 10px #FFE9A8)' }, { filter: 'brightness(1)' }], { duration: 900 });
+    await wait(2600);
+  }
+}
 async function obstacleDemo(host, kind) {
   if (kind === 'feed') return feedDemo(host);
   const run = demoRun;
@@ -3606,7 +3739,7 @@ async function showBeat(b, run, skipped, nextTap, k = 0) {
   const face = $('#stFace'), txt = $('#stText'), bub = $('#stBubble'), por = $('#stPor');
   if (k > 0) crossfadeBg(storyBg(k, b.voice));
   const newSpeaker = lastSpeaker !== b.name; lastSpeaker = b.name;
-  $('#story').classList.toggle('demoing', !!(b.knotDemo || b.demo)); demoRun++;
+  $('#story').classList.toggle('demoing', !!(b.knotDemo || b.demo || b.goal)); demoRun++;
   $('#stPlate').textContent = b.name;
   // the portrait stays still: one calm expression, no mouth-flapping, no bouncing
   face.onerror = () => { face.onerror = null; face.src = faceSrc(b.who, 'calm'); };
@@ -3625,8 +3758,7 @@ async function showBeat(b, run, skipped, nextTap, k = 0) {
   }
   if (b.goal) {
     const g = goalNums();
-    goal.innerHTML = `<div class="cloudpile"><i style="left:6px;top:30px;width:58px;height:50px"></i><i style="left:40px;top:6px;width:70px;height:66px"></i><i style="left:88px;top:28px;width:56px;height:50px"></i><b>${g.clouds}</b></div>
-      <div class="goalchips"><span class="gchip">${g.moves} moves</span><span class="gchip"><i style="background:${ELEM[L.elem].hue}"></i>${ELEM[L.elem].name} · ${L.shift}</span></div>`;
+    goalDemo(goal, g);
     if (!reduce) goal.animate([{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' });
   }
   if (!reduce && newSpeaker) {
@@ -3662,7 +3794,10 @@ function showLoadout() {
 }
 function renderGoal() {
   const g = goalNums();
-  $('#loGoal').innerHTML = `<span class="gchip">☁ ${g.clouds} storm clouds</span><span class="gchip">${g.moves} moves</span><span class="gchip"><i style="background:${ELEM[L.elem].hue}"></i>${ELEM[L.elem].name}</span>`;
+  const d = DIFF[g.diff];
+  $('#loGoal').innerHTML = (d.name ? `<div class="diffban ${g.diff}"><b>⚡ ${d.name} episode</b><span>${d.label} · rewards ×${d.coin}</span></div>` : '')
+    + `<span class="gchip">☁ ${g.clouds} storm clouds</span>${g.gems ? `<span class="gchip"><i style="background:${ELEM[L.elem].hue}"></i>${g.gems} ${ELEM[L.elem].name} orbs</span>` : ''}${g.knots ? `<span class="gchip">🪢 ${g.knots} knots</span>` : ''}<span class="gchip">${g.moves} moves</span>`
+    + ((S.glow || 0) > 0 && !babyOn() ? `<div class="glowban"><b>🔥 Glow streak ×${Math.min(3, S.glow)}</b><span>${['', 'You start with a lantern', 'You start with a lantern and a Blossom', 'You start with a lantern, a Blossom and a spirit star'][Math.min(3, S.glow)]}</span></div>` : '');
 }
 $('#iGo').addEventListener('click', async () => {
   const st = $('#story');
@@ -3775,7 +3910,7 @@ function addKnots(n) {
 function untie(t) {
   t.knot = false; paint(t);
   t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460);
-  playSfx('wood', { rate: 1.5, gain: 0.5 }); boop(5, 0.06);
+  playSfx('wood', { rate: 1.5, gain: 0.5 }); boop(5, 0.06); questBump('knots');
   if (!reduce) sparkleAt(boardEl, t.c * T + T / 2, t.r * T + T / 2, ['#E8C27A', '#FFF1C8', '#B58440'], 10);
 }
 
@@ -3844,7 +3979,7 @@ function freeCloud(t, i = 0) {
     { transform: `translate(${dx - T / 2}px,${dy - T / 2}px) scale(.3)`, opacity: 0 }], { duration: 900, delay: i * 120, easing: 'cubic-bezier(.5,0,.3,1)', fill: 'forwards' });
   setTimeout(() => { t.el.remove(); hud(); bump($('#cloudStat')); }, reduce ? 0 : 900 + i * 120);
   setTimeout(() => { playSfx('swoosh', { rate: 1.25, gain: 0.45 }); bell(chordNote(6 + Math.min(i, 3)), 0, 0.05); }, i * 120);
-  cloudsFreed++;
+  cloudsFreed++; questBump('clouds');
 }
 async function collectClouds() {
   for (let guard = 0; guard < 8; guard++) {
@@ -3856,6 +3991,19 @@ async function collectClouds() {
     gravity();
     await wait(reduce ? 60 : 300);
   }
+}
+
+// Glow streak: every win in a row lights one more starting gift (lantern, Blossom, spirit star)
+function placeGifts(kinds) {
+  const pool = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== 'spirit').sort((a, b) => ((a.r * 5 + a.c * 3) % 7) - ((b.r * 5 + b.c * 3) % 7) || a.r - b.r);
+  kinds.forEach((k, i) => { const t = pool[i * 3 % pool.length]; if (!t) return;
+    if (k === 'spirit') { t.type = 'spirit'; t.sp = null; } else t.sp = k;
+    paint(t); setTimeout(() => { t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460); bell(chordNote(6 + i), 0, 0.05); }, 300 + i * 250); });
+}
+function applyGlow() {
+  const n = Math.min(3, S.glow || 0); if (!n || babyOn()) return;
+  placeGifts(['row', 'bomb', 'spirit'].slice(0, n));
+  setTimeout(() => say(`Glow streak ×${n}. Luma left you ${n === 1 ? 'a gift' : n + ' gifts'} on the board.`), 900);
 }
 function addClouds(n, quiet) {
   // clouds start in the top half; the player brings them down by clearing what's under them
@@ -3901,7 +4049,7 @@ function findMatches() {
     blob.forEach(x => clear.add(x));
     const runs = groups.filter(g => g.cells.some(x => blob.includes(x)));
     const longest = runs.reduce((m, g) => (g.cells.length > m.cells.length ? g : m), runs[0]);
-    blobs.push({ cells: blob, dir: longest.dir, run: longest.cells.length });
+    blobs.push({ cells: blob, dir: longest.dir, run: longest.cells.length, lt: runs.some(g => g.dir === 'row') && runs.some(g => g.dir === 'col') });
   }
   return { clear, groups: blobs };
 }
@@ -3918,7 +4066,7 @@ function fill() {
   }
   if (!hasMove()) { fill(); return; }
   addClouds(L.clouds, true);
-  if (L.knots) addKnots(S.boardSize === 'little' && !babyOn() ? Math.ceil(L.knots / 2) : L.knots);
+  if (L.knots) addKnots(L.knots);
 }
 function hasMove() {
   if (all().some(t => t.type === 'spirit')) return true;
@@ -3962,11 +4110,27 @@ async function trySwap(a, b) {
   busy = true; swish();
   swapCells(a, b);
   await wait(220);
-  if (a.type === 'spirit' || b.type === 'spirit') {
+  if (a.sp && b.sp && a.type !== 'spirit' && b.type !== 'spirit') {
+    // two specials swapped together: lantern+lantern = cross, lantern+Blossom = three rows and columns, Blossom+Blossom = 5×5
+    useMove();
+    const kinds = [a.sp, b.sp].sort().join('+'), r = b.r, c = b.c, set = new Set([a, b]);
+    const addRow = rr => (board[rr] || []).forEach(x => x && set.add(x)), addCol = cc => board.forEach(row => row[cc] && set.add(row[cc]));
+    let name;
+    if (kinds === 'bomb+bomb') { around(r, c, 2).forEach(x => set.add(x)); name = 'Mega Blossom'; }
+    else if (kinds.includes('bomb')) { [-1, 0, 1].forEach(d => { addRow(r + d); addCol(c + d); }); name = 'Wide Burst'; }
+    else { addRow(r); addCol(c); name = 'Cross Light'; }
+    a.sp = b.sp = null;
+    [...set].forEach(x => { if (x.cloud) set.delete(x); });
+    powerUsed = { name, elem: a.type, sub: 'Special combo' };
+    flash(); chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.05);
+    await resolve(set, [], null);
+  } else if (a.type === 'spirit' || b.type === 'spirit') {
     useMove();
     const sp = a.type === 'spirit' ? a : b, other = sp === a ? b : a;
     const color = other.type === 'spirit' ? L.elem : other.type;
     sp.fired = true;
+    // the spirit star with a special turns every orb of that colour into that special
+    if (other.sp) all().filter(t => t.type === color && !t.cloud && !t.knot).forEach(t => { t.sp = other.sp; paint(t); t.el.classList.add('born'); });
     const set = new Set([sp, ...all().filter(t => t.type === color)]);
     if (other.type === 'spirit') { other.fired = true; set.add(other); }
     flash(); chord([523.25, 659.25, 783.99, 1046.5], 0.06);
@@ -3990,12 +4154,14 @@ async function trySwap(a, b) {
   await settle();
 }
 
+const around = (r, c, k) => { const o = []; for (let dr = -k; dr <= k; dr++) for (let dc = -k; dc <= k; dc++) { const x = board[r + dr] && board[r + dr][c + dc]; if (x) o.push(x); } return o; };
 function expand(clear) {
   const q = [...clear];
   while (q.length) {
     const t = q.pop(); let extra = [];
     if (t.sp === 'row') extra = board[t.r];
     else if (t.sp === 'col') extra = board.map(row => row[t.c]);
+    else if (t.sp === 'bomb') extra = around(t.r, t.c, 1);
     else if (t.type === 'spirit' && !t.fired) { t.fired = true; extra = all().filter(x => x.type === L.elem); }
     for (const x of extra) if (x && !clear.has(x)) { clear.add(x); q.push(x); }
   }
@@ -4009,7 +4175,7 @@ async function resolve(clear, groups, moved) {
       if (g.cells.length < 4) continue;
       const free = g.cells.filter(x => !x.sp && x.type !== 'spirit' && !makes.some(m => m.t === x));
       const anchor = free.find(x => moved && moved.includes(x)) || free[Math.floor(free.length / 2)];
-      if (anchor) makes.push({ t: anchor, kind: (g.run || g.cells.length) >= 5 || g.cells.length >= 7 ? 'spirit' : g.dir });
+      if (anchor) makes.push({ t: anchor, kind: (g.run || g.cells.length) >= 5 || g.cells.length >= 7 ? 'spirit' : g.lt ? 'bomb' : g.dir });
     }
     const hadSpecial = [...clear].some(t => t.sp || t.type === 'spirit');
     expand(clear);
@@ -4022,7 +4188,8 @@ async function resolve(clear, groups, moved) {
       if (m.kind === 'spirit') { m.t.type = 'spirit'; m.t.sp = null; } else m.t.sp = m.kind;
       paint(m.t); m.t.el.classList.add('born'); setTimeout(() => m.t.el.classList.remove('born'), 460);
       bell(m.kind === 'spirit' ? 1046.5 : 783.99, 0, 0.09);
-      say(m.kind === 'spirit' ? 'A spirit star! Swap it with any orb to clear that whole color.' : 'Four in a row makes a lantern. Match it to light up the whole line.');
+      questBump('special');
+      say(m.kind === 'spirit' ? 'A spirit star! Swap it with any orb to clear that whole color.' : m.kind === 'bomb' ? 'An L or T shape makes a Blossom. Match it and it bursts everything around it.' : 'Four in a row makes a lantern. Match it to light up the whole line.');
     });
     gravity();
     await wait(reduce ? 60 : 280);
@@ -4063,8 +4230,9 @@ async function popSet(set) {
     const boostEl = spunToday() ? S.todayElem : null;
     let gain = 0;
     // episode 1 takes roughly 10 matches to reach Heavenly, and each episode after asks for more
-    arr.forEach(t => { gain += (t.type === boostEl ? 4 : 3) * (t.fed ? 2 : 1) * auraRate(); });
-    charge = Math.min(100, charge + gain);
+    // big blasts feel huge but can't fill the Aura in one go: past six orbs each counts a quarter, and one wave adds at most 25
+    arr.forEach((t, i) => { gain += (t.type === boostEl ? 4 : 3) * (t.fed ? 2 : 1) * auraRate() * (i < 6 ? 1 : 0.25); });
+    charge = Math.min(100, charge + Math.min(25, gain));
   }
   const n = Math.min(arr.length, 5);
   if (combo >= 2) setTimeout(() => boop(Math.min(combo * 2, 9), 0.08), 120);
@@ -4095,8 +4263,7 @@ function gravity() {
 
 async function settle() {
   hud();
-  const cl = clouds().length;
-  if (!cl) { busy = true; await winLevel(); return; }
+  if (goalsDone()) { busy = true; await winLevel(); return; }
   if (moves <= 0 && charge < 100 && !babyOn()) { busy = true; await wait(400); loseLevel(); return; }
   if (!hasMove()) { say('No swaps left, so Luma is stirring the orbs.'); await shuffle(); }
   busy = false;
@@ -4451,7 +4618,7 @@ async function applyBreath(q) {
   stillDrop = false;
   if (p.tier === 'deep') { deepBreaths++; questBump('deep'); addXP(20); }
   if (p.sang) { questBump('sound'); bumpTally('voiced'); }
-  if (p.cloudsOff) questBump('clouds', p.cloudsOff);
+
   S.coins += p.coins; save();
   charge = 0; hud();
   flash();
@@ -4469,6 +4636,11 @@ async function applyBreath(q) {
     auraBurstFx();
     await wait(reduce ? 0 : 700);                 // let the light land before the board clears
     await resolve(new Set(orbs), [], null);
+  }
+  // a deeper breath quietly leaves more behind; nobody says so, kids just notice
+  if (!babyOn()) {
+    if (p.tier === 'deep') { placeGifts(['bomb', 'bomb']); S.coins += 10; save(); syncWallet(); if (!reduce) confetti('#board'); }
+    else if (p.tier === 'nice') placeGifts(['row']);
   }
   breathing = false;
   charge = 0; hud();
@@ -4674,7 +4846,20 @@ function avatarReact(kind, size = 0) {
   const hold = 1200 + level * 700;
   [kr, br].forEach(r => r && faceLevel(r, level, hold));
 }
+
+// what's left to do, and whether it's all done
+const gemsLeft = () => L && L.gems ? Math.max(0, L.gems - (levelTally[L.elem] || 0)) : 0;
+const knotsLeft = () => L && L.knots ? all().filter(t => t.knot).length : 0;
+const goalsDone = () => clouds().length === 0 && gemsLeft() === 0 && knotsLeft() === 0;
+function renderGoalChips() {
+  const el = $('#goalChips'); if (!el || !L) return;
+  const cl = clouds().length, gl = gemsLeft(), kl = knotsLeft();
+  el.innerHTML = `<span class="gc ${cl ? '' : 'done'}"><i class="mini cloudicon"></i><b>${cl || '✓'}</b></span>`
+    + (L.gems ? `<span class="gc ${gl ? '' : 'done'}"><span class="gco">${orbHTML(L.elem)}</span><b>${gl || '✓'}</b></span>` : '')
+    + (L.knots ? `<span class="gc ${kl ? '' : 'done'}"><span class="gck"></span><b>${kl || '✓'}</b></span>` : '');
+}
 function hud() {
+  renderGoalChips();
   const cl = clouds().length;
   const p = progress();
   $('#gClouds').textContent = cl;
@@ -5063,7 +5248,7 @@ function harmony(types) {
   charge = Math.min(100, charge + 5);
   buddyHop();
   avatarReact('cheer');
-  questBump('harmony');
+
   bumpTally('harmony');
   if (!babyOn()) { S.coins += 2; save(); }
   hud();
@@ -5228,11 +5413,11 @@ function startLevel() {
   const little = S.boardSize === 'little' && !babyOn(), base = LEVELS[LI];
   R = little ? 5 : 8; C = little ? 5 : 7;
   POOL = little ? [base.elem, CREATES[base.elem], Object.keys(CREATES).find(k => CREATES[k] === base.elem)] : TYPES;
-  L = little ? Object.assign({}, base, { clouds: Math.min(4, base.clouds), moves: base.moves - 2 }) : base;
+  L = Object.assign({}, base, levelSpec(LI));
   $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
   $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
-  moves = L.moves + (S.buddy === 'water' && !babyOn() ? 3 : 0); charge = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
+  moves = L.moves; charge = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
   deepBreaths = 0; breathing = false; movesUsed = 0; cloudsFreed = 0;
   levelTally = { wood: 0, fire: 0, earth: 0, metal: 0, water: 0 };
   setAim(null); monkeyFirst = null; lastPower = null;
@@ -5241,7 +5426,7 @@ function startLevel() {
   syncBoosts();
   playGate();
   setTimeout(() => {
-    sizeBoard(); sizeRain(); fill(); applyCharms(); hud();
+    sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); hud();
     say(S.buddy === L.elem
       ? `${BUDDY[S.buddy].name} is at home here. Match 3 of the same element to grow Luma's Aura.`
       : 'Swipe to match 3 of the same element. Each match grows Luma’s Aura.');
@@ -5371,7 +5556,8 @@ async function openWorld(i = 0, dir = 0) {
   $('#wNodes').innerHTML = places.map((pn, k) => {
     const real = pn <= LEVELS.length, open = real && pn <= (S.unlocked || 1), st = (S.stars || {})[pn] || 0;
     const isCur = real && pn === cur && WI === 0;
-    return `<button class="wnode ${open ? '' : 'locked'} ${isCur ? 'current' : ''}" data-place="${pn}" style="left:${WPTS[k][0]}%;top:${WPTS[k][1]}%">${pn}${open && st ? `<span class="wst">${'★'.repeat(st)}</span>` : ''}${open ? '' : '<span class="wlock">🔒</span>'}</button>`;
+    const df = epDifficulty(pn);
+    return `<button class="wnode ${open ? '' : 'locked'} ${isCur ? 'current' : ''} ${df !== 'normal' ? df : ''}" data-place="${pn}" style="left:${WPTS[k][0]}%;top:${WPTS[k][1]}%">${df !== 'normal' ? `<span class="wdiff">${df === 'super' ? '⚡⚡' : '⚡'}</span>` : ''}${pn}${open && st ? `<span class="wst">${'★'.repeat(st)}</span>` : ''}${open ? '' : '<span class="wlock">🔒</span>'}</button>`;
   }).join('') + (WI === 0 ? (() => { const k = cur - 1; return k < WPTS.length ? `<span class="wme" style="left:${WPTS[k][0]}%;top:${WPTS[k][1]}%"><img src="${faceSrc(heroId(), 'happy')}" alt=""></span>` : ''; })() : '');
   // the feeling at the top
   const boss = $('#wBoss'), known = WI === 0 || FEEL_ART[ch.name] || WI === 15;
@@ -5655,12 +5841,15 @@ const HOWTO = {
   '8-11': "Each match builds my Aura. When it's Heavenly, tap me. A slow breath clears the storm, and my Aura Burst clears the board.",
   '12-15': "Matches build my Aura. At Heavenly, tap me and breathe. The longer and slower your out-breath, the more of the storm it clears."
 };
-const GOAL_LINE = (c, m) => ({
-  '2-4': `Pop the orbs under the clouds so they float down and away! We have ${m} moves.`,
-  '5-7': `Help me free ${c} storm clouds. Clear the orbs under them and they sink. At the bottom they float away. We've got ${m} moves.`,
-  '8-11': `${c} storm clouds to free. Clear what's underneath and they sink; at the bottom row they float away. ${m} moves, no rush.`,
-  '12-15': `${c} storm clouds, ${m} moves. Dig under them to bring them down, and use my breath to lift the stubborn ones.`
-})[band()];
+function GOAL_LINE(c, m) {
+  const g = levelSpec(), gem = g.gems ? ` Collect ${g.gems} ${ELEM[L.elem].name} orbs${g.knots ? ',' : ' too.'}` : '', kn = g.knots ? ` ${g.gems ? 'and ' : ''}untie ${g.knots} knots.` : '';
+  return ({
+    '2-4': `Pop the orbs under the clouds so they float away!${g.gems ? ` Get ${g.gems} ${ELEM[L.elem].name} orbs too.` : ''} We have ${m} moves.`,
+    '5-7': `Help me free ${c} storm clouds. Clear the orbs under them and they sink.${gem}${kn} We've got ${m} moves.`,
+    '8-11': `${c} storm clouds to free.${gem}${kn} ${m} moves, no rush.`,
+    '12-15': `${c} storm clouds, ${m} moves.${gem}${kn} Dig under the clouds and use my breath on the stubborn ones.`
+  })[band()];
+}
 // every chapter climbs the same eight layers, so the understanding deepens episode by episode
 const LAYERS = ['Notice it', 'Name it', 'Where it lives', 'Why it comes', 'What helps', 'Help a friend', 'Mixed feelings', 'Meet it'];
 let agePicked = null;
@@ -5754,7 +5943,8 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
   pt.style.setProperty('--pc', ELEM[L.elem].hue);
   const heroImg = $('#pHero'), lumaImg = $('#pLuma');
   heroImg.src = faceSrc(heroId(), 'cheer'); lumaImg.src = faceSrc('luma', 'cheer');
-  $('#pWord').textContent = stars === 3 ? 'Radiant!' : stars === 2 ? 'Wonderful!' : 'You did it!';
+  const dzz = DIFF[epDifficulty(LI + 1)];
+  $('#pWord').textContent = dzz.name ? `${dzz.name} cleared!` : stars === 3 ? 'Radiant!' : stars === 2 ? 'Wonderful!' : 'You did it!';
   $('#pFeel').innerHTML = `${from[0].toUpperCase() + from.slice(1)} → <b>${to[0].toUpperCase() + to.slice(1)}</b> · you earned ${to[0].toUpperCase() + to.slice(1)}`;
   $$('#pStars i').forEach(s => s.classList.remove('lit'));
   $('#pCoins').textContent = '0';
@@ -5829,7 +6019,10 @@ async function winLevel() {
   const smooth = movesUsed <= par, flowBonus = smooth ? Math.min(90, 30 + (par - movesUsed) * 4) * coinMult() : 0;
   const stars = 1 + (smooth ? 1 : 0) + (deepBreaths > 0 ? 1 : 0);
   if (flowBonus && !babyOn()) S.coins += flowBonus;
-  const coins = (30 + moves * 5) * coinMult();
+  const dz = DIFF[epDifficulty(LI + 1)];
+  const coins = Math.round((30 + Math.min(moves, 20) * 5) * coinMult() * dz.coin);
+  if (!babyOn()) S.glow = (S.glow || 0) + 1;
+  if (dz.name && !babyOn()) { const ch = CHARMS[LI % CHARMS.length]; S.charms[ch.id] = (S.charms[ch.id] || 0) + 1; if (dz === DIFF.super) S.pw.bear = (S.pw.bear || 0) + 1; }
   S.stars[n] = Math.max(S.stars[n] || 0, stars);
   S.unlocked = Math.max(S.unlocked, Math.min(LEVELS.length, n + 1));
   if (n === LEVELS.length) S.unlocked = LEVELS.length + 1;
@@ -5839,7 +6032,8 @@ async function winLevel() {
   $('#wCoins').textContent = coins;
   $('#wLeft').innerHTML = [smooth ? `<b>Smooth flow!</b> +${flowBonus} bonus coins` : '',
     deepBreaths ? '' : 'One slow, deep breath earns a star.', !smooth ? 'A smoother flow earns a bonus.' : ''].filter(Boolean).join(' · ') || '<b>Every star earned.</b>';
-  $('#wXp').textContent = `+${100 + stars * 25}`;
+  $('#wXp').textContent = `+${Math.round((100 + stars * 25) * dz.xp)}`;
+  if (dz.name) $('#wLeft').innerHTML = `<b>⚡ ${dz.name} episode cleared!</b> Rewards ×${dz.coin}, plus a ${CHARMS[LI % CHARMS.length].name} charm${dz === DIFF.super ? ' and a Bear Stomp' : ''}. ` + $('#wLeft').innerHTML;
   $('#pTitle').textContent = `${L.power} · the ${SOUND[L.elem].verb}`;
   $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
   $('#pLine').textContent = L.line;
@@ -5886,7 +6080,7 @@ async function winLevel() {
   renderStreak(); renderBal(); teaseBal(); renderBuddy();
   $('#wNext').hidden = n >= LEVELS.length;
   $('#wTitle').textContent = n >= LEVELS.length ? 'Every lantern is home.' : 'The storm has passed.';
-  const xpFrom = passState().xp, xpGain = 100 + stars * 25;
+  const xpFrom = passState().xp, xpGain = Math.round((100 + stars * 25) * dz.xp);
   addXP(xpGain);
   await party(stars, coins, xpFrom, xpGain);
   showOv('win');
@@ -5898,7 +6092,8 @@ function loseLevel() {
   S.hearts = Math.max(0, S.hearts - 1); save(); syncWallet();
   bell(392, 0, 0.08); bell(329.63, 0.25, 0.07);
   const left = clouds().length;
-  $('#lText').textContent = `You blew away ${L.clouds - left} of ${L.clouds} clouds. ${left} left. You have ${S.hearts} ${S.hearts === 1 ? 'heart' : 'hearts'} left.`;
+  S.glow = 0; save();                                                    // the glow streak rests; no shame in it
+  $('#lText').textContent = `So close. ${left ? `${left} ${left === 1 ? 'cloud' : 'clouds'}` : 'a goal'} still to go. You have ${S.hearts} ${S.hearts === 1 ? 'heart' : 'hearts'} left.`;
   $('#lRetry').textContent = S.hearts > 0 ? 'Try again · uses a heart' : 'Refill hearts to try again';
   showOv('lose');
 }
@@ -5965,12 +6160,12 @@ function renderShop() {
   $('#shopFloat').innerHTML = Array.from({ length: 8 }, (_, i) => `<i class="coin" style="left:${8 + i * 12}%;animation-delay:${i * 0.62}s"></i>`).join('');
 }
 // a grown-up check before any purchase: a question young children can't answer
-function grownUpGate(label) {
+function grownUpGate(label, why) {
   return new Promise(res => {
     const pairs = [[7, 8], [6, 9], [8, 4], [9, 7], [6, 7], [8, 9]], k = (new Date().getMinutes() + (S.bought || []).length) % pairs.length;
     const [x, y] = pairs[k], ans = x * y, opts = [ans, ans + x, ans - y, ans + 10].sort((p, q) => (p * 7) % 13 - (q * 7) % 13);
     $('#gateQ').textContent = `What is ${x} × ${y}?`;
-    $('#gateFor').textContent = `A grown-up needs to answer to get ${label}.`;
+    $('#gateFor').textContent = why || `A grown-up needs to answer to get ${label}.`;
     $('#gateGrid').innerHTML = opts.map(o => `<button data-g="${o}">${o}</button>`).join('');
     $('#gateGrid').onclick = e => { const b = e.target.closest('[data-g]'); if (!b) return; hideOv('gateov'); res(+b.dataset.g === ans); };
     $('#gateNo').onclick = () => { hideOv('gateov'); res(false); };
@@ -6029,7 +6224,6 @@ $$('[data-shopfor]').forEach(b => b.addEventListener('click', async () => {
   const it = $(`#singles [data-buyid="${b.dataset.shopfor === 'hearts' ? 's-hearts' : 's-coins'}"]`);
   if (!it) return;
   setTimeout(() => {
-    it.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
     if (!reduce) setTimeout(() => it.animate([{ boxShadow: '0 0 0 0 rgba(255,220,130,0)' }, { boxShadow: '0 0 0 4px #fff, 0 0 26px 8px rgba(255,220,130,.9)' }, { boxShadow: '0 0 0 0 rgba(255,220,130,0)' }], { duration: 1400, easing: 'ease-in-out' }), 350);
   }, 150);
 }));
@@ -6155,6 +6349,6 @@ async function introSplash() {
   done();
 }
 introSplash();
-syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals(); setBaby(S.babyMode); renderHome();
+syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals(); if (S.babyMode) { S.babyLog = S.babyLog || { sessions: 0, seconds: 0 }; S.babyLog.sessions++; S.babyLog.since = Date.now(); } setBaby(S.babyMode); renderHome();
 })();
 </script>
