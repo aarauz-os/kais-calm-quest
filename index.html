@@ -1070,6 +1070,77 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
   box-shadow:inset 0 0 0 3px rgba(150,100,40,.9),inset 0 0 0 5px rgba(230,190,120,.6);filter:drop-shadow(0 2px 1px rgba(0,0,0,.45))}
 .tile.knotted .orb{filter:saturate(.8) brightness(.92)}
 .stgoal .knotdemo{position:relative;width:74px;height:74px}
+/* ================= Luma's Shop ================= */
+.shopcard{padding-top:0}
+.shophero{position:relative;height:150px;margin:0 -20px 4px;display:grid;place-items:center;overflow:hidden;border-radius:26px 26px 0 0;
+  background:radial-gradient(80% 90% at 50% 100%,#2E6B54,#12302A 75%)}
+.shoprays{position:absolute;left:50%;top:100%;width:520px;height:520px;margin:-260px 0 0 -260px;border-radius:50%;
+  background:repeating-conic-gradient(rgba(255,233,168,.22) 0 7deg,transparent 7deg 20deg);animation:rays 18s linear infinite}
+.shophero img{position:relative;width:126px;height:126px;margin-top:34px;border-radius:50%;object-fit:cover;object-position:50% 20%;box-shadow:0 0 0 4px var(--gold-hi),0 0 0 8px var(--gold-lo),0 0 40px 10px rgba(191,232,245,.55)}
+.shopfloat i{position:absolute;bottom:-20px;width:14px;height:14px;animation:coinrise 5s linear infinite;opacity:0}
+@keyframes coinrise{10%{opacity:.9}100%{transform:translateY(-190px) rotate(360deg);opacity:0}}
+.shopline{text-align:center;font-weight:800;color:#5A5444}
+.shoph{margin:18px 2px 8px;font-size:12.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#8A6A2E}
+.calmhero{position:relative;overflow:hidden;border-radius:22px;padding:18px 16px 16px;color:#FFF6DE;
+  background:radial-gradient(120% 90% at 85% 0%,rgba(255,214,120,.35),transparent 55%),linear-gradient(160deg,#2B5E4C,#12302A);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.2),0 0 0 3px var(--gold-mid),0 0 0 6px var(--wood),0 7px 0 6px var(--wood-d),0 0 30px rgba(255,210,120,.35)}
+.calmhero::after{content:"";position:absolute;top:0;bottom:0;width:36%;left:-50%;transform:skewX(-18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);animation:shine 3.4s ease-in-out infinite}
+.calmtop{display:flex;align-items:center;gap:14px}
+.nine{position:relative;flex:none;width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font:400 44px/1 "Marcellus SC",Georgia,serif;color:#3A2408;
+  background:radial-gradient(circle at 40% 30%,#FFF8DC,#F2CC6A 55%,#C08A26);box-shadow:inset 0 3px 3px rgba(255,255,255,.8),0 0 0 3px var(--gold-hi),0 0 24px 6px rgba(255,210,120,.6)}
+.calmtop small{display:block;font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-hi)}
+.calmtop b{display:block;font:400 26px/1.05 "Marcellus SC",Georgia,serif}
+.calmtop em{display:block;font-style:normal;font-size:13px;font-weight:800;opacity:.85}
+.perks{list-style:none;margin:14px 0 12px;padding:0;display:grid;gap:7px}
+.perks li{display:flex;align-items:center;gap:10px;font-size:14px;font-weight:800}
+.perks li i{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:900;color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A)}
+.lanterns9{display:flex;justify-content:space-between;gap:4px;margin:4px 0 12px}
+.lanterns9 span{flex:1;height:10px;border-radius:99px;background:rgba(255,255,255,.14)}
+.lanterns9 span.lit{background:linear-gradient(90deg,#FFE9A8,#F2B84B);box-shadow:0 0 10px rgba(255,210,120,.8)}
+.calmbuy{position:relative;z-index:1;width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px;border-radius:16px;font-weight:900;font-size:18px;color:#3A2408;
+  background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 3px 0 rgba(255,255,255,.8),0 4px 0 #7A5310,0 8px 18px rgba(0,0,0,.35)}
+.calmbuy small{font-size:12px;font-weight:800;opacity:.75}
+.calmactive{text-align:center;font-weight:900;color:var(--gold-hi)}
+.bundles{display:flex;gap:12px;overflow-x:auto;padding:10px 4px 16px;margin:0 -4px;scroll-snap-type:x mandatory}
+.bundle{position:relative;flex:none;width:210px;scroll-snap-align:start;border-radius:20px;padding:16px 14px 14px;display:flex;flex-direction:column;gap:8px;text-align:left;color:var(--ink);
+  background:linear-gradient(#FFFDF4,#F1E1BC);box-shadow:inset 0 3px 0 #fff,0 0 0 3px var(--gold-mid),0 0 0 6px var(--wood),0 7px 0 6px var(--wood-d)}
+.bundle .rib{position:absolute;top:-11px;left:12px;padding:3px 10px;border-radius:8px;font-size:11px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#FFF6DE;background:linear-gradient(#2F5E4E,#1B3B31);box-shadow:0 0 0 2px var(--gold-hi)}
+.bundle .gems{position:relative;height:74px;display:flex;align-items:center;justify-content:center}
+.bundle .gems .sgem{width:52px;height:52px;margin:0 -7px;animation:gemfloat 3s ease-in-out infinite}
+.bundle .gems .sgem:nth-child(2){width:62px;height:62px;z-index:2;animation-delay:-.8s}
+.bundle .gems .sgem:nth-child(3){animation-delay:-1.6s}
+.bundle h4{margin:0;font:400 21px/1.05 "Marcellus SC",Georgia,serif;color:#1D5044}
+.bundle ul{margin:0;padding-left:16px;font-size:13px;font-weight:800;line-height:1.45;color:#4A4536}
+.bundle .worth{font-size:12px;font-weight:900;color:#2F8A3C}
+.bundle .worth s{color:#9A8F76;font-weight:800}
+.bundle .sprice{align-self:stretch;text-align:center;margin-top:auto}
+.singles{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sitem{position:relative;display:grid;justify-items:center;gap:4px;padding:14px 8px 10px;border-radius:18px;text-align:center;color:var(--ink);
+  background:linear-gradient(#FFFFFF,#F4E8CC);box-shadow:inset 0 2px 0 #fff,0 0 0 1.5px rgba(184,134,47,.45),0 4px 0 rgba(120,88,40,.35),0 9px 14px rgba(80,50,10,.12)}
+.sitem b{font-size:14px;font-weight:900;line-height:1.15}
+.sitem small{font-size:11.5px;font-weight:700;color:var(--muted);line-height:1.25}
+.sgem{position:relative;width:58px;height:58px;border-radius:50%;overflow:hidden;display:grid;place-items:center;
+  background:radial-gradient(circle at 50% 40%,#FFFFFF 0%,color-mix(in srgb,var(--eh,#F0B93A) 45%,#fff) 45%,var(--eh,#F0B93A) 100%);
+  box-shadow:inset 0 -6px 10px rgba(0,0,0,.25),inset 0 3px 4px rgba(255,255,255,.8),0 0 0 3px var(--gold-hi),0 0 0 5px var(--gold-lo),0 4px 0 5px rgba(0,0,0,.25)}
+.sgem img{position:absolute;inset:6%;width:88%;height:88%;border-radius:50%;object-fit:cover;mix-blend-mode:multiply}
+.sgem .coin{position:relative;z-index:1;width:30px;height:30px;box-shadow:0 0 0 3px rgba(122,83,16,.55),0 3px 0 rgba(122,83,16,.6)}
+.sgem .heartg{font-size:30px;color:#fff;text-shadow:0 2px 0 rgba(120,20,40,.5)}
+.sgem .shieldg{font-size:28px}
+.sgem::after{content:"";position:absolute;left:14%;top:8%;width:46%;height:28%;border-radius:50%;background:linear-gradient(rgba(255,255,255,.9),rgba(255,255,255,0));transform:rotate(-18deg)}
+.sitem .qty{position:absolute;top:8px;right:10px;min-width:26px;padding:2px 7px;border-radius:99px;font-size:12px;font-weight:900;color:#fff;background:linear-gradient(#5CB27A,#2B7A4B);box-shadow:0 0 0 2px #FFE9C0}
+.sprice{margin-top:4px;padding:7px 14px;border-radius:12px;font-weight:900;font-variant-numeric:tabular-nums;color:#FBF3E2;background:linear-gradient(#2F5E4E,#1B3B31);box-shadow:inset 0 2px 0 rgba(255,255,255,.2),0 3px 0 #0E221C}
+.sprice.free{color:#3A2408;background:linear-gradient(#FFE9A8,#D9A94A);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 3px 0 #7A5310}
+.sprice.coinprice{display:inline-flex;align-items:center;gap:5px;color:#3A2408;background:linear-gradient(#FFFFFF,#EFE2C4);box-shadow:0 0 0 1.5px rgba(184,134,47,.5),0 3px 0 rgba(120,88,40,.4)}
+.sitem:active,.bundle:active,.calmbuy:active{transform:translateY(2px) scale(.98)}
+.gatecard{text-align:center}
+.gategrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0 6px}
+.gategrid button{padding:14px 0;border-radius:14px;font:900 22px Nunito,system-ui,sans-serif;color:#1D5044;background:linear-gradient(#FFFFFF,#F4E8CC);box-shadow:0 0 0 1.5px rgba(184,134,47,.5),0 4px 0 rgba(120,88,40,.4)}
+.ghostbtn{background:none !important;box-shadow:none !important;color:var(--muted) !important}
+.gotcard{position:relative;overflow:hidden;text-align:center}
+.gotrays{position:absolute;left:50%;top:40%;width:560px;height:560px;margin:-280px 0 0 -280px;border-radius:50%;pointer-events:none;
+  background:repeating-conic-gradient(rgba(255,210,120,.2) 0 8deg,transparent 8deg 22deg);-webkit-mask-image:radial-gradient(circle,#000 15%,transparent 60%);mask-image:radial-gradient(circle,#000 15%,transparent 60%);animation:rays 14s linear infinite}
+.gotitems{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin:14px 0 6px}
+.gotitems .gi{display:grid;justify-items:center;gap:6px;font-size:13px;font-weight:900;width:76px}
 </style>
 
 <div id="app">
@@ -1450,29 +1521,48 @@ body.baby .boosters, body.baby #shopOpen2, body.baby #shopOpen1{display:none}
     <div class="stack"><button class="btn gold" id="cbGo">Take the gift</button></div>
   </div></div>
 
-  <div class="ov" id="shop" hidden><div class="card" role="dialog" aria-labelledby="sTitle">
-    <div class="eyebrow">Free to play · No forced ads</div>
+  <div class="ov" id="shop" hidden><div class="card shopcard" role="dialog" aria-labelledby="sTitle">
+    <div class="shophero">
+      <span class="shoprays"></span>
+      <img src="img/luma-3d.jpg" alt="Luma">
+      <div class="shopfloat" id="shopFloat"></div>
+    </div>
+    <div class="eyebrow">Free to play, always · no forced ads</div>
     <h2 class="display" id="sTitle">Luma's Shop</h2>
-    <p>The game is free. Only extras are for sale: power-ups, hearts, and boosts.</p>
-    <h3 class="shoph">Power-ups and extras</h3>
-    <div class="stack" style="margin-top:6px">
-      <button class="pack" data-buy="lanterns"><span class="bigic">✦</span><span class="amt">3 Tiger Claws<small>Each clears a whole row of orbs</small></span><span class="price">$0.99</span></button>
-      <button class="pack" data-buy="swirls"><span class="bigic">↻</span><span class="amt">5 Deer Streams<small>Each re-flows the board and fills Luma a little</small></span><span class="price">$0.99</span></button>
-      <button class="pack" data-buy="hearts"><span class="bigic heart">♥</span><span class="amt">Full hearts<small>Back to 5 tries right away</small></span><span class="price">$0.99</span></button>
-      <button class="pack" data-buy="boost"><span class="bigic">✺</span><span class="amt">Calm Boost<small>Double coins for 30 minutes</small></span><span class="price">$1.99</span></button>
-      <button class="pack" data-buy="shields"><span class="bigic">🛡</span><span class="amt">2 Streak Shields<small>Each covers a day you miss</small></span><span class="price">$0.99</span></button>
+    <p class="shopline">The whole game is free. These are extras, for when you want a little more.</p>
+
+    <div class="calmhero" id="calmHero"></div>
+
+    <h3 class="shoph">Bundles</h3>
+    <div class="bundles" id="bundles"></div>
+
+    <h3 class="shoph">Single items</h3>
+    <div class="singles" id="singles"></div>
+
+    <h3 class="shoph">Or watch a short video, only if you want to</h3>
+    <div class="singles freebies">
+      <button class="sitem ad" data-ad="heart"><span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span><b>+1 heart</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
+      <button class="sitem ad" data-ad="lantern"><span class="sgem" style="--eh:#6FBF4A"><img src="img/icons/pw-tiger.jpg" alt=""></span><b>+1 Tiger Claw</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
+      <button class="sitem ad" data-ad="boost"><span class="sgem" style="--eh:#F0B93A"><i class="coin"></i></span><b>2× coins, 10 min</b><small>about 15 seconds</small><span class="sprice free">Free</span></button>
+      <button class="sitem" data-refill><span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span><b>Refill hearts</b><small>with coins you earned</small><span class="sprice coinprice"><i class="coin"></i> 90</span></button>
     </div>
-    <h3 class="shoph">Or watch a short video, if you want to</h3>
-    <div class="stack" style="margin-top:6px">
-      <button class="pack adpack" data-ad="heart"><span class="bigic">▶</span><span class="amt">+1 heart<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
-      <button class="pack adpack" data-ad="lantern"><span class="bigic">▶</span><span class="amt">+1 Tiger Claw<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
-      <button class="pack adpack" data-ad="boost"><span class="bigic">▶</span><span class="amt">Double coins for 10 minutes<small>Optional · about 15 seconds</small></span><span class="price free">Free</span></button>
-    </div>
-    <div class="stack" style="margin-top:14px"><button class="pack" data-hearts><span class="bigic heart">♥</span><span class="amt">Refill hearts with coins<small>Coins come from breathing and winning</small></span><span class="price coinprice"><i class="coin"></i> 90</span></button></div>
-    <div class="note">Preview: nothing is charged and no real video plays. Prices are placeholders. Tapping an item gives it to you so you can try it.</div>
+    <div class="note">Every purchase asks a grown-up first. Nothing here expires or counts down. Preview: nothing is charged and no real video plays; prices are placeholders.</div>
     <div class="stack stickyclose"><button class="btn" data-close>Close</button></div>
   </div></div>
-
+  <div class="ov" id="gateov" hidden style="align-items:center"><div class="card gatecard" role="dialog" aria-labelledby="gateQ">
+    <div class="eyebrow">For grown-ups</div>
+    <h2 class="display" id="gateQ"></h2>
+    <p id="gateFor"></p>
+    <div class="gategrid" id="gateGrid"></div>
+    <div class="stack"><button class="btn ghostbtn" id="gateNo">Not now</button></div>
+  </div></div>
+  <div class="ov" id="gotov" hidden style="align-items:center"><div class="card gotcard" role="dialog" aria-labelledby="gotTitle">
+    <span class="gotrays"></span>
+    <div class="eyebrow">Thank you</div>
+    <h2 class="display" id="gotTitle"></h2>
+    <div class="gotitems" id="gotItems"></div>
+    <div class="stack"><button class="btn gold" id="gotGo">Let's play</button></div>
+  </div></div>
   <div class="ov" id="adov" hidden style="align-items:center"><div class="card" role="dialog" aria-labelledby="adTitle" style="text-align:center">
     <div class="eyebrow">Optional video · preview</div>
     <h2 class="display" id="adTitle">A short video would play here</h2>
@@ -2088,6 +2178,7 @@ function syncWallet() {
   $$('[data-hearts]').forEach(e => e.textContent = S.hearts);
 }
 async function showOv(id) {
+  if (id === 'shop') renderShop();
   const o = $('#' + id); o.hidden = false; void o.offsetWidth; await wait(20); o.classList.add('show');
   if (id === 'breathe' || id === 'bedov') { setGroove('calm'); return; }   // every breath: drums out, only the pad
   playSfx('swoosh', { gain: 0.55 });
@@ -3723,7 +3814,7 @@ function syncBoosts() {
   if (left > 0) $('#boostLeft').textContent = `${Math.floor(left / 60000)}:${String(Math.floor(left / 1000) % 60).padStart(2, '0')}`;
 }
 setInterval(syncBoosts, 1000);
-const coinMult = () => (S.boostUntil || 0) > Date.now() ? 2 : 1;
+const coinMult = () => (S.boostUntil || 0) > Date.now() || (S.calmUntil || 0) > Date.now() ? 2 : 1;
 function usePower(kind, cost) {
   if (S[kind] > 0) { S[kind]--; save(); syncBoosts(); return true; }
   return spend(cost);
@@ -4653,7 +4744,7 @@ $('#bossGo').addEventListener('click', () => { tick(); hideOv('bossov'); });
 
 /* ---------- Season 1 Pass: free, never expires, fed by play you already do ---------- */
 const RINGS = { jade: { name: 'Jade Ring', c: '#58C08A' }, ember: { name: 'Ember Ring', c: '#FF6A4A' }, river: { name: 'River Ring', c: '#4AA8FF' }, lotus: { name: 'Golden Lotus Ring', c: '#FFD45A' } };
-const AURAS = { blossom: { name: 'Blossom Aura', a1: 'rgba(255,214,232,.95)', a2: 'rgba(255,150,200,.6)' }, moon: { name: 'Moonlight Aura', a1: 'rgba(235,240,255,.95)', a2: 'rgba(160,180,255,.6)' },
+const AURAS = { nine: { name: 'Golden Nine Aura', a1: 'rgba(255,248,215,1)', a2: 'rgba(255,196,70,.7)' }, starlight: { name: 'Starlight Aura', a1: 'rgba(240,245,255,1)', a2: 'rgba(170,150,255,.65)' }, blossom: { name: 'Blossom Aura', a1: 'rgba(255,214,232,.95)', a2: 'rgba(255,150,200,.6)' }, moon: { name: 'Moonlight Aura', a1: 'rgba(235,240,255,.95)', a2: 'rgba(160,180,255,.6)' },
   sunrise: { name: 'Sunrise Aura', a1: 'rgba(255,240,200,.95)', a2: 'rgba(255,170,90,.6)' }, gold: { name: 'Heavenly Gold Aura', a1: 'rgba(255,250,220,1)', a2: 'rgba(255,205,90,.75)' } };
 const LETTERS = {
   cycle: { title: 'The Creation Cycle', text: 'Wood feeds Fire. Fire makes Earth. Earth holds Metal. Metal carries Water. Water grows Wood. Nothing in the circle works alone, and neither do you. When one part of you feels quiet, the one before it can help it wake up.' },
@@ -4711,7 +4802,7 @@ function passIcon(r) {
 function addXP(n) {
   if (babyOn()) return 0;
   const sp = passState(), before = passTier();
-  sp.xp += n; save();
+  sp.xp += n * ((S.calmUntil || 0) > Date.now() ? 2 : 1); save();
   const after = passTier();
   syncPassBtn();
   if (after > before && $('#party').hidden) {
@@ -5094,7 +5185,116 @@ $('#lRetry').addEventListener('click', async () => {
 $('#lMap').addEventListener('click', async () => { await hideOv('lose'); toMap(); });
 
 /* ---------- shop ---------- */
+/* ---------- Luma's Shop: a generous featured offer, honest bundles, a grown-up gate ---------- */
+// single-item prices are the yardstick every "worth" line is measured against
+const UNIT = { lanterns: 0.99 / 3, swirls: 0.99 / 5, shields: 0.99 / 2, coins: 0.99 / 500, hearts: 0.99 };
+const CALM_DAYS = 9;
+const SINGLES = [
+  { id: 's-claw', give: { lanterns: 3 }, price: 0.99, name: 'Tiger Claws', note: 'clears a whole row', icon: 'pw-tiger', eh: '#6FBF4A', qty: '×3' },
+  { id: 's-deer', give: { swirls: 5 }, price: 0.99, name: 'Deer Streams', note: 're-flows the board', icon: 'pw-deer', eh: '#3C86C9', qty: '×5' },
+  { id: 's-hearts', give: { hearts: 1 }, price: 0.99, name: 'Full hearts', note: 'back to 5 tries', glyph: '<b class="heartg">♥</b>', eh: '#E0697F' },
+  { id: 's-shield', give: { shields: 2 }, price: 0.99, name: 'Streak Shields', note: 'covers a missed day', glyph: '<b class="shieldg">🛡</b>', eh: '#C9D2DA', qty: '×2' },
+  { id: 's-coins', give: { coins: 500 }, price: 0.99, name: '500 coins', note: 'for charms and refills', glyph: '<i class="coin"></i>', eh: '#F0B93A' },
+  { id: 's-coins2', give: { coins: 1500 }, price: 1.99, name: '1,500 coins', note: '50% more per dollar', glyph: '<i class="coin"></i>', eh: '#F0B93A' }
+];
+const BUNDLES = [
+  { id: 'b-starter', rib: 'One per player', name: 'Starter Satchel', price: 0.99, once: true, give: { lanterns: 3, swirls: 5, coins: 500 }, gems: ['pw-tiger', 'coin', 'pw-deer'], list: ['3 Tiger Claws', '5 Deer Streams', '500 coins'] },
+  { id: 'b-five', rib: 'All five elements', name: 'Five Elements Chest', price: 2.99, give: { lanterns: 5, swirls: 10, shields: 2, coins: 1500, charms: 1 }, gems: ['pw-bear', 'pw-crane', 'pw-monkey'], list: ['5 Tiger Claws', '10 Deer Streams', '2 Streak Shields', '1,500 coins', '1 of each charm'] },
+  { id: 'b-treasure', rib: 'Everything', name: "Breather's Treasure", price: 4.99, give: { lanterns: 10, swirls: 15, shields: 5, coins: 4000, charms: 2, pw: 3, aura: 'starlight' }, gems: ['pw-tiger', 'coin', 'pw-crane'], list: ['10 Tiger Claws', '15 Deer Streams', '3 Bear Stomps + 3 Crane Wings', '5 Streak Shields', '4,000 coins', '2 of each charm', 'Starlight Aura, yours to keep'] }
+];
+const worthOf = g => (g.lanterns || 0) * UNIT.lanterns + (g.swirls || 0) * UNIT.swirls + (g.shields || 0) * UNIT.shields + (g.coins || 0) * UNIT.coins + (g.hearts ? UNIT.hearts : 0);
+const money = n => `$${n.toFixed(2)}`;
+const calmLeft = () => Math.max(0, Math.ceil(((S.calmUntil || 0) - Date.now()) / 86400000));
+function gemHTML(icon, eh) {
+  if (icon === 'coin') return `<span class="sgem" style="--eh:#E08A2E"><i class="coin"></i></span>`;
+  return `<span class="sgem" style="--eh:${eh || '#F0B93A'}"><img src="img/icons/${icon}.jpg" alt=""></span>`;
+}
+function renderShop() {
+  const left = calmLeft();
+  $('#calmHero').innerHTML = `
+    <div class="calmtop"><span class="nine">9</span><span><small>Featured · ${left ? 'active' : 'best value'}</small><b>Nine Days of Calm</b><em>${left ? `${left} of 9 days left. Enjoy them.` : 'Everything good in the game, doubled, for nine days.'}</em></span></div>
+    <ul class="perks">
+      <li><i>2×</i>Double coins from every win and every breath</li>
+      <li><i>2×</i>Double Season Pass XP</li>
+      <li><i>♥</i>Hearts refill every morning</li>
+      <li><i>✦</i>A free charm every day</li>
+      <li><i>✺</i>The Golden Nine aura, yours to keep</li>
+    </ul>
+    <div class="lanterns9">${Array.from({ length: CALM_DAYS }, (_, i) => `<span class="${left && i < CALM_DAYS - left + 1 ? 'lit' : ''}"></span>`).join('')}</div>
+    ${left ? `<div class="calmactive">Active · day ${CALM_DAYS - left + 1} of 9</div>` : `<button class="calmbuy" data-buyid="calm"><span>$1.99 · 9 days</span><small>about 22¢ a day</small></button>`}`;
+  $('#bundles').innerHTML = BUNDLES.map(b => {
+    const owned = b.once && (S.bought || []).includes(b.id), w = worthOf(b.give);
+    return `<button class="bundle" data-buyid="${b.id}" ${owned ? 'disabled style="opacity:.55"' : ''}><span class="rib">${b.rib}</span>
+      <span class="gems">${b.gems.map((g, i) => gemHTML(g, ['#6FBF4A', '#F0B93A', '#3C86C9'][i])).join('')}</span>
+      <h4>${b.name}</h4><ul>${b.list.map(x => `<li>${x}</li>`).join('')}</ul>
+      <span class="worth">Worth <s>${money(w)}</s> bought separately${b.give.charms || b.give.pw || b.give.aura ? ', plus extras' : ''}</span>
+      <span class="sprice">${owned ? 'Owned' : money(b.price)}</span></button>`;
+  }).join('');
+  $('#singles').innerHTML = SINGLES.map(it => `<button class="sitem" data-buyid="${it.id}">${it.qty ? `<span class="qty">${it.qty}</span>` : ''}
+    ${it.icon ? gemHTML(it.icon, it.eh) : `<span class="sgem" style="--eh:${it.eh}">${it.glyph}</span>`}<b>${it.name}</b><small>${it.note}</small><span class="sprice">${money(it.price)}</span></button>`).join('');
+  $('#shopFloat').innerHTML = Array.from({ length: 8 }, (_, i) => `<i class="coin" style="left:${8 + i * 12}%;animation-delay:${i * 0.62}s"></i>`).join('');
+}
+// a grown-up check before any purchase: a question young children can't answer
+function grownUpGate(label) {
+  return new Promise(res => {
+    const pairs = [[7, 8], [6, 9], [8, 4], [9, 7], [6, 7], [8, 9]], k = (new Date().getMinutes() + (S.bought || []).length) % pairs.length;
+    const [x, y] = pairs[k], ans = x * y, opts = [ans, ans + x, ans - y, ans + 10].sort((p, q) => (p * 7) % 13 - (q * 7) % 13);
+    $('#gateQ').textContent = `What is ${x} × ${y}?`;
+    $('#gateFor').textContent = `A grown-up needs to answer to get ${label}.`;
+    $('#gateGrid').innerHTML = opts.map(o => `<button data-g="${o}">${o}</button>`).join('');
+    $('#gateGrid').onclick = e => { const b = e.target.closest('[data-g]'); if (!b) return; hideOv('gateov'); res(+b.dataset.g === ans); };
+    $('#gateNo').onclick = () => { hideOv('gateov'); res(false); };
+    $('#gateov').style.zIndex = 30; showOv('gateov');
+  });
+}
+function giveGoods(g) {
+  if (g.lanterns) S.lanterns += g.lanterns;
+  if (g.swirls) S.swirls += g.swirls;
+  if (g.shields) S.shields += g.shields;
+  if (g.coins) S.coins += g.coins;
+  if (g.hearts) S.hearts = 5;
+  if (g.charms) CHARMS.forEach(c => { S.charms[c.id] = (S.charms[c.id] || 0) + g.charms; });
+  if (g.pw) { S.pw.bear = (S.pw.bear || 0) + g.pw; S.pw.crane = (S.pw.crane || 0) + g.pw; }
+  if (g.aura) { S.auras = [...new Set([...(S.auras || []), g.aura])]; S.aura = g.aura; applyLooks(); }
+  save(); syncWallet(); renderStreak(); $('#lRetry').textContent = 'Try again · uses a heart';
+}
+async function showGot(title, items) {
+  $('#gotTitle').textContent = title;
+  $('#gotItems').innerHTML = items.map(([html, label]) => `<span class="gi">${html}<span>${label}</span></span>`).join('');
+  $('#gotov').style.zIndex = 30;
+  await showOv('gotov');
+  playSfx('stamp', { gain: 0.8 }); chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06); confetti('#gotov .card');
+  if (!reduce) $$('#gotItems .gi').forEach((g, i) => { g.animate([{ transform: 'scale(.2) translateY(30px)', opacity: 0 }, { transform: 'scale(1.1)', opacity: 1, offset: .6 }, { transform: 'none', opacity: 1 }], { duration: 480, delay: 200 + i * 120, easing: 'cubic-bezier(.3,1.6,.5,1)', fill: 'backwards' }); setTimeout(() => boop(3 + i, 0.06), 200 + i * 120); });
+}
+$('#gotGo').addEventListener('click', () => { tick(); hideOv('gotov'); });
+async function buyThing(id) {
+  if (id === 'calm') {
+    if (!await grownUpGate('Nine Days of Calm')) return;
+    S.calmUntil = Math.max(Date.now(), S.calmUntil || 0) + CALM_DAYS * 86400000;
+    S.auras = [...new Set([...(S.auras || []), 'nine'])]; S.aura = 'nine'; applyLooks();
+    calmDaily(true); save(); renderShop();
+    return showGot('Nine Days of Calm', [[`<span class="sgem" style="--eh:#F0B93A"><b style="font:400 30px 'Marcellus SC',serif;color:#3A2408">9</b></span>`, '9 days'], [`<span class="sgem" style="--eh:#F0B93A"><i class="coin"></i></span>`, '2× coins'], [`<span class="sgem" style="--eh:#E0697F"><b class="heartg">♥</b></span>`, 'daily hearts'], [`<span class="sgem" style="--eh:#FFD45A"><img src="img/faces/luma-happy.jpg" alt=""></span>`, 'Golden Nine aura']]);
+  }
+  const b = BUNDLES.find(x => x.id === id), it = SINGLES.find(x => x.id === id), thing = b || it;
+  if (!thing || !await grownUpGate(thing.name)) return;
+  giveGoods(thing.give);
+  if (b && b.once) S.bought = [...(S.bought || []), b.id];
+  S.bought = [...(S.bought || []), 'x']; save(); renderShop();
+  const shown = b ? b.gems.map((g, i) => [gemHTML(g, ['#6FBF4A', '#F0B93A', '#3C86C9'][i]), b.list[i] || '']) : [[it.icon ? gemHTML(it.icon, it.eh) : `<span class="sgem" style="--eh:${it.eh}">${it.glyph}</span>`, `${it.qty || ''} ${it.name}`]];
+  showGot(thing.name, shown);
+}
+// while Nine Days of Calm is active: hearts refill and a charm arrives, once each morning
+function calmDaily(force) {
+  if (!calmLeft() || babyOn()) return;
+  if (!force && S.calmDay === dayKey()) return;
+  S.calmDay = dayKey(); S.hearts = 5;
+  const c = CHARMS[(daysBetween('2026-01-01', dayKey()) % CHARMS.length + CHARMS.length) % CHARMS.length];
+  S.charms[c.id] = (S.charms[c.id] || 0) + 1; save(); syncWallet();
+  if (!force) toast(`Nine Days of Calm: hearts refilled and a ${c.name} charm for today.`);
+}
 $('#shop').addEventListener('click', async e => {
+  const bid = e.target.closest('[data-buyid]');
+  if (bid && !bid.disabled) { tick(); await buyThing(bid.dataset.buyid); return; }
   const buy = e.target.closest('[data-buy]');
   if (buy) {
     const k = buy.dataset.buy;
@@ -5116,7 +5316,7 @@ $('#shop').addEventListener('click', async e => {
     save(); syncWallet(); bell(880);
     return;
   }
-  if (e.target.closest('[data-hearts]')) {
+  if (e.target.closest('[data-refill]')) {
     if (S.hearts >= 5) { toast('Your hearts are already full.'); return; }
     if (S.coins < 90) { toast('Not enough coins. Grab a pack above.'); return; }
     S.coins -= 90; S.hearts = 5; save(); syncWallet(); bell(880); toast('Hearts refilled.');
@@ -5172,7 +5372,7 @@ $('#gDone').addEventListener('click', () => { guideRun++; breathSound('out', 0.3
 
 /* ---------- boot ---------- */
 document.documentElement.style.setProperty('--scene', `url(img/home/${HOME_SCENE[homeElement()]}.jpg)`);
-syncHero(); syncPassBtn(); applyLooks();
+syncHero(); syncPassBtn(); applyLooks(); calmDaily();
 $$('[data-play]').forEach(b => b.addEventListener('click', () => {
   ac();
   $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome();
