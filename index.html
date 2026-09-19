@@ -162,6 +162,66 @@ body.baby #babyBar span{display:none}
 .rscap{position:absolute;left:10px;top:9px;padding:4px 11px;border-radius:999px;background:rgba(8,18,14,.58);color:#FFE9A8;font-size:11px;font-weight:900;letter-spacing:.04em;max-width:70%}
 .wnode.ep{box-shadow:0 0 0 3px #FFE9A8,0 0 18px 4px rgba(255,220,140,.7) !important}
 .wnode .wep{position:absolute;left:50%;top:-13px;transform:translateX(-50%);padding:1px 7px;border-radius:999px;font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(#FFF1C4,#E8C063);color:#4A300A;box-shadow:0 2px 4px rgba(0,0,0,.35);white-space:nowrap}
+/* the win card: dark glass and gold like every other card, 3D stars that land one by one */
+.ov .card.wincard{color:#FBF3E2;box-shadow:0 0 0 2px #E3BC6A,0 0 0 5px rgba(60,38,8,.55),0 24px 60px rgba(0,0,0,.55) !important}
+.wincard .eyebrow{color:#FFE7A8}
+.wstars3d{display:flex;justify-content:center;align-items:flex-end;gap:4px;margin:6px 0 8px;height:88px}
+.wstars3d img{width:64px;height:64px;object-fit:contain;filter:grayscale(1) brightness(.5);opacity:.45}
+.wstars3d img:nth-child(2){width:84px;height:84px;margin-bottom:6px}
+.wstars3d img.on{opacity:1;filter:drop-shadow(0 6px 8px rgba(0,0,0,.45)) drop-shadow(0 0 16px rgba(255,214,110,.75));animation:wstarpop .75s cubic-bezier(.3,1.7,.5,1) both}
+.wstars3d img.on:nth-child(1){animation-delay:.25s}.wstars3d img.on:nth-child(2){animation-delay:.55s}.wstars3d img.on:nth-child(3){animation-delay:.85s}
+@keyframes wstarpop{0%{transform:scale(.2) rotate(-40deg);opacity:0}60%{transform:scale(1.18) rotate(8deg);opacity:1}100%{transform:none;opacity:1}}
+.wincard .wsum{grid-template-columns:1fr 1fr;gap:10px}
+.wincard .wtile{flex-direction:row;gap:10px;padding:10px 12px;background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,.04));box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 0 0 1.5px rgba(227,188,106,.75),0 4px 0 rgba(0,0,0,.3)}
+.wincard .wtile img{width:38px;height:38px;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4))}
+.wincard .wtile div{text-align:left}
+.wincard .wtile b{color:#FFE9A8;font-size:22px}
+.wincard .wtile small{color:#CFE3DA}
+.wincard .whint{color:#EAF2EE}.wincard .whint b{color:#8FE0A8}
+.wincard .wcalm{background:linear-gradient(135deg,rgba(120,190,255,.2),rgba(190,160,255,.14));box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.2)}
+.wincard .wcalm p{color:#FBF3E2}.wincard .wcalm small{color:#9FD3FF}.wincard .wcalm .wstat{background:rgba(255,255,255,.14);color:#FFE9A8}
+.wincard .streakrow{background:rgba(255,255,255,.08);color:#EAF2EE}
+.wincard .streakrow.gold{color:#3A2408}
+.wincard .linkbtn{color:#E4EFE8 !important}
+.wincard .practice{background:linear-gradient(#2F6B57,#1B3F34);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 0 0 1.5px rgba(227,188,106,.8),0 4px 0 rgba(0,0,0,.3)}
+.wpsorin{flex:none;width:58px;height:58px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px var(--gold-hi),0 0 0 5px var(--gold-lo)}
+.wpsorin video{width:100%;height:100%;object-fit:cover;display:block}
+.wincard .practice .wpwhy{margin:10px 0 8px;font-style:italic;font-weight:700;color:#EAF2EE !important}
+.wpgets{display:flex;flex-wrap:wrap;gap:6px}
+.wpgets span{padding:4px 10px;border-radius:999px;font-size:12px;font-weight:800;background:rgba(255,236,170,.14);color:#FFE9A8;box-shadow:inset 0 0 0 1px rgba(255,236,170,.35)}
+/* the story rescue example */
+.rsdemo{display:flex;flex-direction:column;align-items:center;gap:8px}
+.rsdrow{display:flex;align-items:center;gap:10px}
+.rsdscene{position:relative;width:118px;height:132px;border-radius:14px;overflow:hidden;box-shadow:0 0 0 2px #E3BC6A,0 6px 14px rgba(0,0,0,.4)}
+.rsdscene img{width:100%;height:100%;object-fit:cover;object-position:78% 50%}
+.rsdglow{position:absolute;left:47%;top:44%;width:60px;height:60px;margin:-30px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,130,.95),rgba(255,200,80,.35) 40%,rgba(0,0,0,0) 70%);opacity:0;mix-blend-mode:screen}
+.rsfly{position:absolute;z-index:5;width:10px;height:10px;margin:-5px;border-radius:50%;background:radial-gradient(circle,#FFFBEA 0,#FFD66E 45%,rgba(255,200,80,0) 72%);box-shadow:0 0 12px 4px rgba(255,210,110,.8);pointer-events:none}
+/* win pop-ups: one small card at a time */
+#win .wincard{width:min(92vw,360px);padding:20px 18px 16px}
+#win .wstep{display:none;flex-direction:column;align-items:center;gap:12px}
+#win .wstep.on{display:flex}
+#win .wstep > .btn{width:100%}
+#win .wcalm{position:relative;width:100%;gap:6px;padding:16px 14px}
+#win .wcalm .wfaces img{width:64px;height:64px}
+#win .wct{font-size:22px;color:#FFE9A8}
+#win .wcalm .more{margin:6px 0 0 !important;font-size:14px;line-height:1.4}
+#win .wcalm .more small{display:block;margin-bottom:2px}
+#win .wcalm .ibtn{position:absolute;right:10px;top:10px}
+#win .practice{width:100%;margin:0}
+.ibtn{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:italic 800 15px Georgia,serif;color:#3A2408;background:linear-gradient(#FFF1C4,#E8C063);box-shadow:0 0 0 1.5px #FFFBEA,0 2px 4px rgba(0,0,0,.35)}
+.ibtn.on{background:linear-gradient(#FFFBEA,#FFE7A8)}
+.wclaimart{width:84px;height:84px;border-radius:24px;box-shadow:0 0 0 3px #E3BC6A,0 8px 18px rgba(0,0,0,.4);animation:dpdue 2.2s ease-in-out infinite}
+.wclaimt{margin:0;color:#FFE9A8}
+#win #wTitle{margin:4px 0 0}
+/* legibility: headings on dark cards are solid cream with a soft shadow, never engraved */
+.ov .card.rewardcard h2,.ov .card.rewardcard h3,.ov .card.wincard h2,.ov .card.wincard h3{color:#FFF3D6;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+#win #wTitle{display:table;margin:2px auto 4px;padding:9px 26px 11px;color:#FFF7DE !important;font-size:24px;line-height:1.1;border-radius:12px;
+  background:linear-gradient(180deg,#F6CF6A,#D9A13A 55%,#B77E22);text-shadow:0 2px 0 rgba(110,60,0,.85);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.6),inset 0 -4px 0 rgba(120,70,0,.4),0 6px 0 rgba(120,70,0,.35),0 10px 16px rgba(0,0,0,.25)}
+/* the place name on the board sits on dark glass, so it reads on any sky */
+.gtop .place{padding:5px 12px 6px;border-radius:14px;background:linear-gradient(180deg,rgba(18,40,33,.82),rgba(10,24,20,.74));box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 0 1.5px rgba(227,188,106,.6),0 4px 10px rgba(0,0,0,.25)}
+.gtop .place span{color:#EAF2EE;opacity:1}
+.gtop .iconbtn{background:linear-gradient(180deg,rgba(18,40,33,.82),rgba(10,24,20,.74)) !important;color:#FFE9A8 !important;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 0 0 1.5px rgba(227,188,106,.6),0 4px 10px rgba(0,0,0,.25) !important;opacity:1 !important}
 /* baby mode: no words on screen (they can't read yet); only the grown-up Stop bar */
 body.baby #bubble, body.baby #flowBar, body.baby #toast, body.baby #todayChip, body.baby #toMap, body.baby #pkPerk, body.baby #pwBar [id^="pwc-"], body.baby .tipbox{display:none!important}
 #babyBloom{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(12,22,40,0) 25%,rgba(12,22,40,.38) 100%);opacity:0;transition:opacity .6s ease}
@@ -1037,9 +1097,9 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
 .pav{position:relative;width:124px;height:124px}
 .pword{font-size:clamp(34px,10vw,48px);line-height:1;color:#FFF8E6;-webkit-text-stroke:1px rgba(60,30,5,.6);filter:drop-shadow(0 3px 0 rgba(60,30,5,.95)) drop-shadow(0 0 16px rgba(255,214,130,.9))}
 .pstars{display:flex;gap:10px;align-items:flex-end}
-.pstars i{position:relative;width:54px;height:54px;background:rgba(0,0,0,.35);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.pstars i{position:relative;width:58px;height:58px;background:url(img/ui/star.png) center/contain no-repeat;filter:grayscale(1) brightness(.4);opacity:.5;will-change:transform,opacity}
 .pstars i:nth-child(2){width:68px;height:68px}
-.pstars i.lit{background:linear-gradient(#FFF6C8,#FFD45A 45%,#E09A1E)}
+.pstars i.lit{filter:drop-shadow(0 6px 8px rgba(0,0,0,.45)) drop-shadow(0 0 16px rgba(255,214,110,.75));opacity:1}
 .pfeel{padding:8px 16px;border-radius:99px;font-weight:900;font-size:15px;background:rgba(0,0,0,.4);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.55);text-align:center}
 .pfeel b{color:var(--gold-hi)}
 .pcoins{display:flex;align-items:center;gap:8px;font-size:26px;font-weight:900;text-shadow:0 2px 0 rgba(0,0,0,.5)}
@@ -1929,7 +1989,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .ov{padding-top:calc(var(--sat) + 30px) !important;padding-bottom:calc(var(--sab) + 22px) !important}
 .ov .card{max-height:calc(100% - 8px)}
 .qknot{display:block;width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,#8A5A24 0 20%,#C99550 22% 32%,transparent 34%),linear-gradient(45deg,transparent 42%,#D6A660 42% 58%,transparent 58%),linear-gradient(-45deg,transparent 42%,#D6A660 42% 58%,transparent 58%),#F5E9CF;box-shadow:0 0 0 2px #C99550}
-.ov .card.rewardcard,.ov .card.bcard,.ov .card.bedcardov,#guide .card{background:radial-gradient(120% 60% at 50% 0%,#2F6B57 0%,#1D4238 55%,#102B24 100%) !important;color:#FBF3E2}
+.ov .card.rewardcard,.ov .card.bcard,.ov .card.bedcardov,#guide .card,.ov .card.wincard{background:radial-gradient(120% 60% at 50% 0%,#2F6B57 0%,#1D4238 55%,#102B24 100%) !important;color:#FBF3E2}
 .ov .card.rewardcard p,.ov .card.bcard p,.ov .card.bedcardov p,#guide .card p{color:#EAF2EE}
 .lhero{position:relative;height:120px;margin:4px -8px 12px;border-radius:18px;background:#DDE8D8 center 40%/cover no-repeat;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6),0 4px 0 rgba(160,120,60,.3)}
 .lhero img{position:absolute;left:50%;bottom:-22px;width:64px;height:64px;margin-left:-32px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #FFF6DE,0 0 0 5.5px #E3BC6A,0 6px 10px rgba(0,0,0,.3)}
@@ -2903,34 +2963,48 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     </div>
   </div></div>
 
-  <div class="ov" id="win" hidden><div class="card wincard" role="dialog" aria-labelledby="wTitle">
-    <div class="eyebrow" id="wEyebrow">The Root Grounds</div>
-    <h2 class="display" id="wTitle">The storm has passed.</h2>
-    <div class="wcalm" id="wCalm" hidden></div>
-    <div class="wsum">
-      <div class="wtile"><div class="bigstars" id="wStars"></div><small>Stars</small></div>
-      <div class="wtile"><b><i class="coin"></i>+<span id="wCoins">0</span></b><small>Coins</small></div>
-      <div class="wtile"><b id="wXp">+0</b><small>Season XP</small></div>
+  <div class="ov" id="win" hidden style="align-items:center"><div class="card wincard" role="dialog" aria-labelledby="wTitle">
+    <div class="wstep" data-step="calm">
+      <div class="eyebrow" id="wEyebrow"></div>
+      <div class="wcalm" id="wCalm" hidden></div>
+      <button class="btn gold wgo">Next</button>
     </div>
-    <div class="whint" id="wLeft"></div>
-    <button class="btn gold" id="wClaim" hidden style="width:100%;margin-top:10px">Claim streak reward</button>
-    <div class="wprog">
-      <div class="wrow"><img src="img/icons/icon-streak-3d.jpg" alt=""><div class="streakrow" id="wStreak"></div></div>
-      <div class="wrow"><img id="wHarmImg" src="img/faces/kai-happy.jpg" alt="" style="border-radius:50%"><div class="streakrow" id="wBalance"></div></div>
-      <div class="wrow"><img id="wBuddyImg" alt=""><div class="streakrow" id="wBuddy" hidden></div></div>
-    </div>
-    <div class="practice">
-      <div class="row" style="align-items:center;gap:12px">
-        <img src="img/faces/sorin-calm.jpg" alt="Sorin" style="width:56px;height:56px;border-radius:50%;object-fit:cover;flex:none">
-        <div><div class="eyebrow">Today's practice</div><h3 class="display" id="pTitle">Bear Root</h3></div>
+    <div class="wstep" data-step="prac">
+      <div class="practice" id="wPrac">
+        <div class="row" style="align-items:center;gap:12px">
+          <span class="wpsorin"><video src="img/sorin/sorin-breath.mp4?v=78" poster="img/sorin-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span>
+          <div style="flex:1"><div class="eyebrow">Sorin's move</div><h3 class="display" id="pTitle"></h3></div>
+          <button class="ibtn" data-more aria-label="Why this move">i</button>
+        </div>
+        <p class="wpwhy more" id="pLine" hidden></p>
+        <ol id="pSteps" hidden></ol>
+        <div class="wpgets" id="pGets"></div>
+        <button class="btn gold" id="wPractice" style="width:100%;margin-top:10px">Try it · 1 min</button>
       </div>
-      <ol id="pSteps"></ol>
-      <div class="line" id="pLine"></div>
-      <button class="btn gold" id="wPractice" style="width:100%;margin-top:12px">Try it with Sorin</button>
+      <button class="linkbtn dark wgo" id="wPracLater">Later</button>
     </div>
-    <div class="stack">
-      <button class="btn gold big" id="wNext">Next place</button>
-      <button class="linkbtn dark" id="wMap" style="align-self:center">Back to the map</button>
+    <div class="wstep" data-step="claim">
+      <img class="wclaimart" src="img/icons/icon-streak-3d.jpg" alt="">
+      <h3 class="display wclaimt">Streak gift!</h3>
+      <button class="btn gold" id="wClaim" hidden style="width:100%">Open it</button>
+      <button class="linkbtn dark wgo">Later</button>
+    </div>
+    <div class="wstep" data-step="end">
+      <h2 class="display" id="wTitle">The storm has passed.</h2>
+      <div class="whint" id="wLeft"></div>
+      <div class="wsum" hidden>
+        <div class="wstars3d" id="wStars"></div>
+        <div class="wtile"><b>+<span id="wCoins">0</span></b></div><div class="wtile"><b id="wXp">+0</b></div>
+      </div>
+      <div class="wprog" hidden>
+        <div class="wrow"><img src="img/icons/icon-streak-3d.jpg" alt=""><div class="streakrow" id="wStreak"></div></div>
+        <div class="wrow"><img id="wHarmImg" src="img/faces/kai-happy.jpg" alt="" style="border-radius:50%"><div class="streakrow" id="wBalance"></div></div>
+        <div class="wrow"><img id="wBuddyImg" alt=""><div class="streakrow" id="wBuddy" hidden></div></div>
+      </div>
+      <div class="stack">
+        <button class="btn gold big" id="wNext">Next place</button>
+        <button class="linkbtn dark" id="wMap" style="align-self:center">Back to the map</button>
+      </div>
     </div>
   </div></div>
 
@@ -5021,7 +5095,10 @@ function renderOutcome() {
   const t = (STORY[L.elem] || {})[band()] || (STORY[L.elem] || {})['5-7'], who = heroId(), feel = t && t.you ? t.you[1] : 'worried';
   const line = (OUTCOME[L.elem] || {})[band()] || '';
   box.innerHTML = `<span class="wfaces"><img class="before" src="img/faces/${who}-${feel}.jpg" alt=""><b>➜</b><img src="img/faces/${who}-relief.jpg" alt=""></span>
-    <span><small>What your breathing did</small><p>${line}</p><span class="wstat">🌬 ${levelBreaths} calm breath${levelBreaths === 1 ? '' : 's'} · ${Math.max(0, moves)} moves to spare</span></span>`;
+    <b class="wct display">Your breathing helped!</b>
+    <span class="wstat">🌬 ${levelBreaths} calm breath${levelBreaths === 1 ? '' : 's'}</span>
+    <button class="ibtn" data-more aria-label="What your breathing did">i</button>
+    <p class="more" hidden><small>What your breathing did</small>${line}</p>`;
   box.hidden = false;
 }
 function renderHome() {
@@ -5073,9 +5150,9 @@ function renderHome() {
    Guardrails (approved by Demaris, 2026-09-18): delight, never guilt or loss; nothing here can be bought or
    skipped with money; three a day at most, so "come back tomorrow" is a healthy place to stop. */
 const DP = [
-  { id: 'sun', when: 'Morning', name: 'Sunrise breath', art: 'img/sorin/solo-breath.webp', say: 'Three slow breaths to wake up your body.' },
-  { id: 'sky', when: 'Afternoon', name: 'Lift the Sky', art: 'img/sorin/solo-sky.webp', say: 'A qigong move: lift your hands to the sky, then float them down.' },
-  { id: 'feel', when: 'Evening', name: 'How does your body feel?', art: 'img/sorin/solo-meditate.webp', say: 'Notice how you feel, then breathe with it.' }
+  { id: 'sun', when: 'Morning', name: 'Sunrise breath', art: 'img/sorin/solo-breath.webp', say: 'Three slow breaths.' },
+  { id: 'sky', when: 'Afternoon', name: 'Lift the Sky', art: 'img/sorin/solo-sky.webp', say: 'Reach up, float down.' },
+  { id: 'feel', when: 'Evening', name: 'How does your body feel?', art: 'img/sorin/solo-meditate.webp', say: 'Check in, then breathe.' }
 ];
 const FEELS = [
   { el: 'wood', word: 'Frustrated', face: 'frustrated', breath: 'Cooling breath', how: 'Breathe out long and slow, like wind through the trees.' },
@@ -5128,7 +5205,7 @@ function bondAdd(el, n) {
 }
 function renderPractice() {
   const st = dpState(), slot = dpSlot(), n = dpDoneCount(), el = dpCompanion();
-  $('#dpSub').textContent = n >= 3 ? `All three done today. ${BUDDY[el].name} is glowing. See you tomorrow!` : `Three tiny practices a day. Each one helps ${BUDDY[el].name} grow and warms up Luma.`;
+  $('#dpSub').textContent = n >= 3 ? 'All done today. See you tomorrow!' : `Each one helps ${BUDDY[el].name} grow.`;
   $('#dpList').innerHTML = DP.map(p => `<button class="dpitem ${st.done[p.id] ? 'done' : ''} ${p.id === slot && !st.done[p.id] ? 'now' : ''}" data-dp="${p.id}" ${st.done[p.id] ? 'disabled' : ''}>
     <img src="${p.art}" alt=""><span><small>${p.when}${p.id === slot ? ' · now' : ''}</small><b>${p.name}</b><em>${p.say}</em></span><i>${st.done[p.id] ? '✓' : '›'}</i></button>`).join('');
   const fam = $('#dpFam'); fam.classList.toggle('done', !!st.fam); fam.disabled = !!st.fam;
@@ -5280,23 +5357,45 @@ async function babyInterlude(pal) {
    path gate by gate; Luma's breath pushes the flow along. Prototype: Episode 1 (Puzzle 3, Valley of Echoes, Fire).
    The story line (say) is a placeholder until Demaris and the counselor review it. */
 const RESCUES = {
-  3: { cap: "Guide the fireflies to Kai's lantern",
+  fire: { cap: "Guide the fireflies to Kai's lantern", demo: ['Each one frees a firefly. They fly down the path.', "Fill Kai's lantern and he calms down."],
     say: "Kai is so fizzy he can't keep still. Fireflies love slow, calm light. Match the Fire orbs to open the path, and guide them to his lantern.",
     vid: { idle: 'img/rescue/fire-fizzy.mp4', arrive: 'img/rescue/fire-arrive.mp4', calm: 'img/rescue/fire-calm.mp4', poster: 'img/rescue/fire-fizzy.jpg' },
     // path in video coordinates (0..1 of the 16:9 frame): from the firefly meadow to Kai's lantern
     path: [[.13, .2], [.2, .3], [.17, .44], [.22, .6], [.34, .7], [.46, .66], [.5, .54], [.57, .46], [.62, .47], [.665, .5]],
     gates: [.2, .42, .63, .84],
-    fly: [255, 214, 120], bud: [236, 92, 170], stoneOff: [182, 170, 230] }
+    fly: [255, 214, 120], bud: [236, 92, 170], stoneOff: [182, 170, 230] },
+  earth: { cap: 'Guide the honey-light to Kai', demo: ['Each one frees a drop of honey-light. It flows down the path.', 'Fill Kai with warm light and the worry loosens.'],
+    say: "Kai is all tangled up in worry. Warm honey-light loosens knots. Match the Earth orbs to open the path, and guide the light down the roots to him.",
+    vid: { idle: 'img/rescue/earth-a.mp4', arrive: 'img/rescue/earth-arrive.mp4', calm: 'img/rescue/earth-b.mp4', poster: 'img/rescue/earth-a.jpg' },
+    path: [[.1, .13], [.2, .22], [.15, .36], [.26, .46], [.4, .54], [.5, .64], [.58, .71], [.64, .63], [.68, .54], [.705, .49]],
+    gates: [.2, .42, .63, .84], fly: [255, 196, 84], bud: [255, 110, 120], stoneOff: [206, 186, 244] },
+  metal: { cap: "Guide the rain to Kai's garden", demo: ['Each one frees a raindrop. It falls down the path.', "Water Kai's garden and it blooms. So does he."],
+    say: "Kai feels heavy and sad, and his little garden is dry. Match the Metal orbs to open the path, and guide the rain to help it bloom.",
+    vid: { idle: 'img/rescue/metal-a.mp4', arrive: 'img/rescue/metal-arrive.mp4', calm: 'img/rescue/metal-b.mp4', poster: 'img/rescue/metal-a.jpg' },
+    path: [[.2, .22], [.3, .3], [.25, .44], [.36, .54], [.48, .5], [.56, .6], [.62, .7], [.7, .74], [.77, .77]],
+    gates: [.2, .42, .63, .84], fly: [150, 212, 255], bud: [255, 120, 190], stoneOff: [230, 214, 255], shape: 'drop', focus: .8 },
+  water: { cap: 'Guide the moon-drops to the bridge lanterns', demo: ['Each one frees a moon-drop. It floats down the path.', 'Light the bridge lanterns and Kai feels brave.'],
+    say: "Kai is scared of the dark bridge. Moon-drops light the way. Match the Water orbs to open the path, and guide them to the bridge lanterns.",
+    vid: { idle: 'img/rescue/water-a.mp4', arrive: 'img/rescue/water-arrive.mp4', calm: 'img/rescue/water-b.mp4', poster: 'img/rescue/water-a.jpg' },
+    path: [[.11, .23], [.2, .33], [.3, .3], [.4, .41], [.5, .37], [.6, .45], [.68, .41], [.74, .37], [.8, .35]],
+    gates: [.2, .42, .63, .84], fly: [178, 200, 255], bud: [190, 120, 255], stoneOff: [170, 178, 236], shape: 'drop', focus: .82 },
+  wood: { cap: 'Guide the cool breeze to Kai', demo: ['Each one frees a cool leaf. It drifts down the path.', 'Cool Kai down and he can smile again.'],
+    say: "Kai is hot and frustrated. A cool breeze helps. Match the Wood orbs to open the path, and guide the cool leaves to him.",
+    vid: { idle: 'img/rescue/wood-a.mp4', arrive: 'img/rescue/wood-arrive.mp4', calm: 'img/rescue/wood-b.mp4', poster: 'img/rescue/wood-a.jpg' },
+    path: [[.16, .22], [.24, .34], [.2, .48], [.3, .6], [.42, .72], [.52, .68], [.6, .6], [.66, .54], [.71, .5], [.745, .48]],
+    gates: [.2, .42, .63, .84], fly: [130, 255, 196], bud: [255, 120, 170], stoneOff: [200, 236, 214], shape: 'leaf', focus: .62 }
 };
+const rescueCfg = n => isEpisode(n) && LEVELS[n - 1] && RESCUES[LEVELS[n - 1].elem] ? RESCUES[LEVELS[n - 1].elem] : null;
 let RS = null, rsRun = 0;
 function rescueStop() { rsRun++; RS = null; $('#rescue').hidden = true; $('#game').classList.remove('rescuing'); $$('#rescue video').forEach(v => { v.pause(); v.classList.remove('on'); }); }
 function rescueStart() {
-  const cfg = RESCUES[LI + 1];
+  const cfg = rescueCfg(LI + 1);
   if (!cfg || babyOn() || practice) { rescueStop(); return; }
   const box = $('#rescue'); box.hidden = false; $('#game').classList.add('rescuing');
   $('#peekRow').hidden = true; $('#peek').hidden = true; $('#pkPerk').hidden = true;
   $('#rsCap').textContent = cfg.cap;
   const a = $('#rsVidA'), b = $('#rsVidB');
+  $$('#rescue video').forEach(v => { v.style.objectPosition = `${(cfg.focus ?? .5) * 100}% 50%`; });
   a.poster = cfg.vid.poster; a.src = cfg.vid.idle + '?v=82'; a.loop = true; a.classList.add('on'); a.play().catch(() => {});
   b.classList.remove('on'); b.removeAttribute('src');
   RS = { cfg, flies: [], opened: 0, gateFx: [], fill: 0, push: 0, t: 0, run: ++rsRun, done: false };
@@ -5313,7 +5412,7 @@ function rsGeom() {
   const cv = $('#rsCv'), dpr = Math.min(2, devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
   if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
   // the video is shown object-fit: cover at 16:9, so map its frame to the box
-  const sc = Math.max(W / 16, H / 9), vw = 16 * sc, vh = 9 * sc, ox = (W - vw) / 2, oy = (H - vh) / 2;
+  const sc = Math.max(W / 16, H / 9), vw = 16 * sc, vh = 9 * sc, ox = (W - vw) * (RS.cfg.focus ?? .5), oy = (H - vh) / 2;
   const pts = RS.cfg.path.map(([u, v]) => [ox + u * vw, oy + v * vh]), seg = []; let L0 = 0;
   for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); seg.push(d); L0 += d; }
   return { cv, dpr, W, H, pts, seg, len: L0, sc };
@@ -5388,7 +5487,10 @@ function rsDraw() {
     fl.tr.forEach(([tx, ty], ti) => { x.fillStyle = `rgba(${fr},${fg},${fb},${.08 * ti * bl})`; x.beginPath(); x.arc(tx, ty, 2.4 * k, 0, 6.3); x.fill(); });
     const h = x.createRadialGradient(qx, qy, 0, qx, qy, 10 * k); h.addColorStop(0, `rgba(${fr},${fg},${fb},${.7 * bl})`); h.addColorStop(.35, `rgba(${fr},${Math.round(fg * .8)},${Math.round(fb * .6)},${.22 * bl})`); h.addColorStop(1, 'rgba(0,0,0,0)');
     x.fillStyle = h; x.beginPath(); x.arc(qx, qy, 10 * k, 0, 6.3); x.fill();
-    x.fillStyle = `rgba(255,255,240,${.7 + .3 * bl})`; x.beginPath(); x.arc(qx, qy, 2.4 * k, 0, 6.3); x.fill();
+    x.fillStyle = `rgba(255,255,240,${.7 + .3 * bl})`;
+    if (c.shape === 'leaf') { x.save(); x.translate(qx, qy); x.rotate(fl.ph * .6); x.fillStyle = `rgba(${Math.min(255, fr + 60)},255,${Math.min(255, fb + 30)},${.75 + .25 * bl})`; x.beginPath(); x.ellipse(0, 0, 4.6 * k, 2.2 * k, 0, 0, 6.3); x.fill(); x.restore(); }
+    else if (c.shape === 'drop') { x.save(); x.translate(qx, qy); x.beginPath(); x.moveTo(0, -4.4 * k); x.quadraticCurveTo(3.2 * k, 0.4 * k, 0, 3 * k); x.quadraticCurveTo(-3.2 * k, 0.4 * k, 0, -4.4 * k); x.fill(); x.restore(); }
+    else { x.beginPath(); x.arc(qx, qy, 2.4 * k, 0, 6.3); x.fill(); }
   });
   x.globalCompositeOperation = 'source-over';
 }
@@ -5412,15 +5514,15 @@ async function rescueFinish() {
 /* ---------- Sections that open as you play ---------- */
 const SEC_SEL = { practice: '[data-open="dpOpen"]', streak: '[data-open="streakChip"]', quests: '[data-open="questCard"]', wheel: '[data-open="wheelCard"]', buddy: '[data-open="buddyCard"]', seals: '[data-open="sealCard"]', collection: '#tabbar [data-tab="collection"]', harmony: '#tabbar [data-tab="harmony"]', pass: '.homepass' };
 const SEC_CARD = {
-  practice: ["Today's practice", 'img/sorin-3d.jpg', 'Sorin has three tiny practices for you every day. Each one helps your companion grow and warms up Luma for your next puzzle.'],
-  streak: ['Daily streak', 'img/icons/icon-streak-3d.jpg', 'Practise or play one puzzle a day to grow your streak. Every few days brings a gift.'],
-  quests: ["Today's quests", 'img/icons/icon-quests-3d.jpg', 'Three small things to try each day. Finish all three for a chest.'],
-  collection: ['Collection', 'img/ui/journal.png', 'Everything you find on your journey is kept here, ready to look back on.'],
-  buddy: ['Your companion', 'img/icons/icon-buddy-3d.jpg', 'Your companion has a home of its own now. Visit, breathe together and watch it grow.'],
-  harmony: ['Harmony', null, 'See how your five elements are glowing, and which one could use a little care.'],
-  seals: ['Spirit Seals', 'img/icons/icon-seal-3d.jpg', 'Special seals for special moments. Collect them all in your book.'],
-  wheel: ['Daily wheel', 'img/icons/icon-wheel-3d.jpg', "Spin once a day to choose today's element and find a small gift."],
-  pass: ['Season Pass', 'img/pass/trophy-lotus.png', 'Every puzzle now earns Spirit Stars. Spend them on pages of rewards all season long.']
+  practice: ["Today's practice", 'img/sorin-3d.jpg', 'Three tiny practices a day with Sorin.'],
+  streak: ['Daily streak', 'img/icons/icon-streak-3d.jpg', 'Come back each day. Gifts await.'],
+  quests: ["Today's quests", 'img/icons/icon-quests-3d.jpg', 'Three small things to try each day.'],
+  collection: ['Collection', 'img/ui/journal.png', 'Everything you find, kept safe.'],
+  buddy: ['Your companion', 'img/icons/icon-buddy-3d.jpg', 'Breathe together and watch it grow.'],
+  harmony: ['Harmony', null, 'See how your five elements glow.'],
+  seals: ['Spirit Seals', 'img/icons/icon-seal-3d.jpg', 'Collect a seal for special moments.'],
+  wheel: ['Daily wheel', 'img/icons/icon-wheel-3d.jpg', 'One spin a day, one small gift.'],
+  pass: ['Season Pass', 'img/pass/trophy-lotus.png', 'Earn stars. Unlock rewards.']
 };
 function applySections() {
   Object.entries(SEC_SEL).forEach(([k, sel]) => $$(sel).forEach(x => { x.hidden = !secOn(k); }));
@@ -5704,7 +5806,7 @@ async function runStory() {
   $('#stName').textContent = L.place;
   st.style.setProperty('--sg', ELEM[L.elem].glow);
   const g = goalNums();
-  const epi = isEpisode(LI + 1), rs = RESCUES[LI + 1];
+  const epi = isEpisode(LI + 1), rs = rescueCfg(LI + 1);
   const beats = !epi ? [] : [
     { who: heroId(), voice: 'hero', name: 'You', text: storyLines(L).you[0], face: storyLines(L).you[1] },
     // the friend who makes you feel seen; if you're playing as Kai, Luma is that friend
@@ -5712,7 +5814,7 @@ async function runStory() {
       ? { who: 'luma', voice: 'luma', name: 'Luma', text: storyLines(L).kai[0], face: 'happy' }
       : { who: 'kai', voice: 'hero', name: 'Kai', text: storyLines(L).kai[0], face: storyLines(L).kai[1] },
     { who: 'sorin', voice: 'sorin', name: 'Sorin', text: storyLines(L).sorin, face: 'calm' },
-    rs ? { who: 'luma', voice: 'luma', name: 'Luma', face: 'happy', text: rs.say }
+    rs ? { who: 'luma', voice: 'luma', name: 'Luma', face: 'happy', text: rs.say, rescueDemo: true }
       : { who: 'luma', voice: 'luma', name: 'Luma', goal: g.clouds > 0 && (L.intro === 'clouds' || !(S.seen || {}).goaldemo), text: GOAL_LINE(g.clouds, g.moves) }
   ];
   // puzzles between episodes go straight to the board; they only stop to show a goal the first time
@@ -5904,6 +6006,51 @@ async function goalDemo(host, g) {
     await wait(2600);
   }
 }
+// the story rescue, shown before it starts: swipe to line up 3 Fire orbs, they pop, fireflies fly to Kai's lantern
+async function rescueDemo(host, cfg) {
+  const run = demoRun, el = L.elem;
+  const rows = [['earth', el, 'wood', 'water'], ['wood', 'water', el, el], ['metal', 'earth', 'water', 'wood']];
+  host.innerHTML = `<div class="odemo rsdemo">
+      <div class="odhead"><span class="odnew">Story</span><b>Rescue</b><em class="odel">${ELEM[el].name}</em></div>
+      <div class="rsdrow"><div class="odboard" style="width:${4 * DEMO_T}px;height:${3 * DEMO_T}px">${demoBoard(rows)}<i class="odline"></i><i class="odhand">👆</i></div>
+        <div class="rsdscene"><img src="${cfg.vid.poster}" alt=""><span class="rsdglow"></span></div></div>
+      <div class="odsteps"><i></i><i></i><i></i></div>
+      <div class="odcap"></div>
+    </div>`;
+  const cell = (r, c) => host.querySelector(`.dcell[data-r="${r}"][data-c="${c}"]`), hand = host.querySelector('.odhand'), line = host.querySelector('.odline'), cap = host.querySelector('.odcap');
+  const steps = [...host.querySelectorAll('.odsteps i')], glow = host.querySelector('.rsdglow'), scene = host.querySelector('.rsdscene'), demo = host.querySelector('.rsdemo');
+  // the glow sits where the help arrives: the end of the path, mapped into the little cropped scene
+  const [tu, tv] = cfg.path[cfg.path.length - 1], sw = 132 * 16 / 9, gx = (118 - sw) * .78 + tu * sw, gy = tv * 132;
+  glow.style.left = `${gx}px`; glow.style.top = `${gy}px`; glow.style.background = `radial-gradient(circle,rgba(255,250,230,.95),rgba(${cfg.fly},.5) 40%,rgba(0,0,0,0) 70%)`;
+  const at = (e, r, c) => { e.style.left = `${c * DEMO_T + DEMO_T / 2}px`; e.style.top = `${r * DEMO_T + DEMO_T / 2}px`; };
+  const alive = () => run === demoRun && host.isConnected && !host.hidden;
+  const step = (i, text) => { steps.forEach((s2, k) => s2.classList.toggle('on', k === i)); cap.innerHTML = `<b>${i + 1}</b>${text}`; };
+  const mv = (e, kf, ms) => reduce ? Promise.resolve() : e.animate(kf, { duration: ms, easing: 'cubic-bezier(.4,0,.2,1)', fill: 'forwards' }).finished.catch(() => {});
+  while (alive()) {
+    host.querySelectorAll('.dcell').forEach(c => { c.getAnimations().forEach(a => a.cancel()); c.style.opacity = 1; });
+    line.style.opacity = 0; hand.style.opacity = 0; glow.getAnimations().forEach(a => a.cancel()); glow.style.opacity = 0;
+    step(0, `Swipe to line up 3 ${ELEM[el].name} orbs.`);
+    const up = cell(0, 1), down = cell(1, 1);
+    at(hand, 0, 1); hand.style.opacity = 1; await wait(600); if (!alive()) return;
+    await Promise.all([mv(hand, [{ transform: 'translate(-30%,-10%)' }, { transform: `translate(-30%,calc(-10% + ${DEMO_T}px))` }], 560),
+      mv(up, [{ transform: 'none' }, { transform: `translateY(${DEMO_T}px)` }], 560), mv(down, [{ transform: 'none' }, { transform: `translateY(${-DEMO_T}px)` }], 560)]);
+    hand.style.opacity = 0;
+    line.style.left = `${1 * DEMO_T + 4}px`; line.style.top = `${1 * DEMO_T + DEMO_T / 2}px`; line.style.width = `${3 * DEMO_T - 8}px`;
+    line.style.opacity = 1; if (!reduce) line.animate([{ transform: 'translateY(-50%) scaleX(0)' }, { transform: 'translateY(-50%) scaleX(1)' }], { duration: 420, easing: 'ease-out', fill: 'forwards' });
+    await wait(900); if (!alive()) return;
+    step(1, cfg.demo[0]);
+    line.style.opacity = 0;
+    const popped = [up, cell(1, 2), cell(1, 3)], hr = demo.getBoundingClientRect(), sr = scene.getBoundingClientRect();
+    const tx = sr.left - hr.left + gx, ty = sr.top - hr.top + gy;
+    const flies = popped.map(c => { const r = c.getBoundingClientRect(), f = document.createElement('i'); f.className = 'rsfly'; f.style.background = `radial-gradient(circle,#FFFBEA 0,rgb(${cfg.fly}) 45%,rgba(${cfg.fly},0) 72%)`; f.style.boxShadow = `0 0 12px 4px rgba(${cfg.fly},.8)`; f.style.left = `${r.left - hr.left + r.width / 2}px`; f.style.top = `${r.top - hr.top + r.height / 2}px`; demo.appendChild(f); return f; });
+    popped.forEach(c => mv(c, [{ opacity: 1, transform: getComputedStyle(c).transform === 'none' ? 'scale(1)' : getComputedStyle(c).transform }, { opacity: 0, transform: 'scale(1.3)' }], 380));
+    await Promise.all(flies.map((f, i) => mv(f, [{ transform: 'translate(0,0) scale(1)' }, { transform: `translate(${(tx - parseFloat(f.style.left)) * .5}px,${(ty - parseFloat(f.style.top)) * .5 - 40}px) scale(1.4)`, offset: .5 }, { transform: `translate(${tx - parseFloat(f.style.left)}px,${ty - parseFloat(f.style.top)}px) scale(.6)` }], 1100 + i * 180)));
+    flies.forEach(f => f.remove());
+    step(2, cfg.demo[1]);
+    await mv(glow, [{ opacity: 0, transform: 'scale(.5)' }, { opacity: 1, transform: 'scale(1.25)' }, { opacity: .9, transform: 'scale(1)' }], 700);
+    await wait(2000); if (!alive()) return;
+  }
+}
 async function obstacleDemo(host, kind) {
   if (kind === 'feed') return feedDemo(host);
   const run = demoRun;
@@ -5995,13 +6142,14 @@ async function showBeat(b, run, skipped, nextTap, k = 0) {
   const face = $('#stFace'), txt = $('#stText'), bub = $('#stBubble'), por = $('#stPor');
   if (k > 0) crossfadeBg(storyBg(k, b.voice));
   const newSpeaker = lastSpeaker !== b.name; lastSpeaker = b.name;
-  $('#story').classList.toggle('demoing', !!(b.knotDemo || b.demo || b.goal || b.intro)); demoRun++;
+  $('#story').classList.toggle('demoing', !!(b.knotDemo || b.demo || b.goal || b.intro || b.rescueDemo)); demoRun++;
   $('#stPlate').textContent = b.name;
   // the portrait stays still: one calm expression, no mouth-flapping, no bouncing
   face.onerror = () => { face.onerror = null; face.src = faceSrc(b.who, 'calm'); };
   face.src = faceSrc(b.who, b.face || (b.voice === 'luma' ? 'happy' : 'calm'));
   const goal = $('#stGoal');
-  goal.hidden = !b.goal && !b.knotDemo && !b.demo && !b.intro;
+  goal.hidden = !b.goal && !b.knotDemo && !b.demo && !b.intro && !b.rescueDemo;
+  if (b.rescueDemo) { rescueDemo(goal, rescueCfg(LI + 1)); if (!reduce) goal.animate([{ transform: 'translateY(12px)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 600, easing: 'cubic-bezier(.2,.7,.2,1)' }); }
   if (b.intro) { goal.innerHTML = introCardHTML(b.intro); if (!reduce) goal.animate([{ transform: 'translateY(14px) scale(.94)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 560, easing: 'cubic-bezier(.2,.9,.3,1.2)' }); grantIntro(b.intro); }
   if (b.demo) {
     obstacleDemo(goal, b.demo);
@@ -7172,7 +7320,7 @@ async function runBreath() {
   glowGoal(true);
   brUI(0, 0);
   if (S.breathMode === 'mic') {
-    brText('Getting the dandelion ready…', 'Your phone may ask to use the microphone. It only listens for how strong your breath is. Nothing is recorded.');
+    brText('One moment…', 'The microphone only hears how strong you blow. Nothing is recorded.');
     micH = await openMic();
     if (run !== brRun) { closeMic(); return; }
     if (!micH) { S.breathMode = 'touch'; save(); toast("The microphone isn't available here, so trace the breath with your finger."); }
@@ -7183,7 +7331,7 @@ async function runBreath() {
   const brLG = lumaGuide($('#brGuide')); brLG.rest();
   followPhase.onStart = (d, secs) => d === 'up' ? brLG.in(secs) : brLG.out(secs);
   lumaPhase('in');
-  brText('Breathe in through your nose', 'Press and hold Luma, then slide her up with the glowing ring. Watch her breathe in with you.');
+  brText('Breathe in', 'Hold Luma and slide her up.');
   bell(523.25, 0, 0.06);
   const brHand = $('#brHand');
   brHand.className = 'brhand up'; brHand.hidden = !!S.tutDone;
@@ -7195,7 +7343,7 @@ async function runBreath() {
   // little pause at the top
   brHand.hidden = true;
   lumaPhase('in');
-  brText('Hold it…', 'Feel your belly full of air.');
+  brText('Hold…', '');
   await wait(900);
   if (run !== brRun) return;
 
@@ -7211,7 +7359,7 @@ async function runBreath() {
     const r = await micExhale(L.exhale, run);
     qout = r.q; lastVoiced = r.voiced; lastHz = r.hz;
   } else {
-    brText('Now breathe out slowly', `Slide Luma down with the light. Say it out loud if you can: ${snd.say}`);
+    brText('Breathe out slowly', `Slide her down. ${snd.say}`);
     brHand.className = 'brhand down'; brHand.hidden = !!S.tutDone;
     qout = await followPhase('down', L.exhale, run);
     lastVoiced = 0; lastHz = 0;
@@ -8195,7 +8343,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { rsSet: n => { levelTally[L.elem] = n; hud(); return { gems: L.gems, opened: RS && RS.opened, fill: RS && RS.fill }; }, rsWin: async () => { levelTally[L.elem] = L.gems; hud(); await settle(); return 'won'; }, dpTry: id => { try { const pr = runDaily(id); return pr.then(() => 'done', e => String(e && e.stack)).then(x => x); } catch (e) { return String(e.stack); } }, babyInter: pal => babyInterlude(pal), babyState: () => ({ babyIx, busy, charge, shape: L && L.shape, R, C, pal: peekWho(), peekHidden: $('#peek').hidden, clouds: clouds().length, bubble: getComputedStyle($('#bubble')).display }), fillAura: () => { charge = 100; hud(); }, hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { winFlow: () => winFlow(), rsSet: n => { levelTally[L.elem] = n; hud(); return { gems: L.gems, opened: RS && RS.opened, fill: RS && RS.fill }; }, rsWin: async () => { levelTally[L.elem] = L.gems; hud(); await settle(); return 'won'; }, dpTry: id => { try { const pr = runDaily(id); return pr.then(() => 'done', e => String(e && e.stack)).then(x => x); } catch (e) { return String(e.stack); } }, babyInter: pal => babyInterlude(pal), babyState: () => ({ babyIx, busy, charge, shape: L && L.shape, R, C, pal: peekWho(), peekHidden: $('#peek').hidden, clouds: clouds().length, bubble: getComputedStyle($('#bubble')).display }), fillAura: () => { charge = 100; hud(); }, hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -8697,6 +8845,7 @@ function startLevel() {
   paintBuddyGame();
   syncBoosts();
   placePeek(); rescueStart();
+  winLevel.on = false;
   const gateDone = playGate();
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); const warmed = dpWarm(); hud();
@@ -8718,18 +8867,28 @@ function startLevel() {
 // level begins: it always moves on. Breathing along (hold the screen on the in-breath, let go on the
 // out-breath, or be heard on the out-breath if the grown-up turned the microphone on) earns a Good or Deep
 // breath: the breath star, and Luma starts brighter.
-async function arrivalBreath() {
-  setGroove('calm');
-  const ov = $('#arrive'), cue = $('#arCue'), sub = $('#arSub'), bar = $('#arBar'), mic = $('#arMic');
+// set the arrival up; 'instant' puts it in place fully drawn (used behind the title, so the title opens onto Luma)
+function arrivalPrep(instant) {
+  const ov = $('#arrive');
+  const lg = lumaGuide($('#arScene'), { in: 'img/luma/scene-in.mp4?v=80', out: 'img/luma/scene-out.mp4?v=80' });
+  if (!ov.hidden && ov.classList.contains('show')) return lg;
   $('#arPlace').textContent = L.place;
   $('#arTitle').textContent = EMO_VERB[L.elem];
   ov.style.setProperty('--gc', ELEM[L.elem].hue);
   ov.classList.remove('good'); $$('#arrive .arresult').forEach(x => x.remove());
-  cue.textContent = 'Breathe with Luma';
-  sub.textContent = 'Hold the screen while you breathe in. Let go as you breathe out.';
-  bar.style.transition = 'none'; bar.style.width = '0%';
-  const lg = lumaGuide($('#arScene'), { in: 'img/luma/scene-in.mp4?v=80', out: 'img/luma/scene-out.mp4?v=80' }); lg.rest();
-  ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
+  $('#arCue').textContent = 'Breathe with Luma';
+  $('#arSub').textContent = 'Hold on to breathe in. Let go to breathe out.';
+  const bar = $('#arBar'); bar.style.transition = 'none'; bar.style.width = '0%';
+  lg.rest();
+  ov.hidden = false;
+  if (instant) { ov.style.transition = 'none'; ov.classList.add('show'); void ov.offsetWidth; ov.style.transition = ''; }
+  else { void ov.offsetWidth; ov.classList.add('show'); }
+  return lg;
+}
+async function arrivalBreath() {
+  setGroove('calm');
+  const ov = $('#arrive'), cue = $('#arCue'), sub = $('#arSub'), bar = $('#arBar'), mic = $('#arMic');
+  const lg = arrivalPrep();
   let down = false;
   const on = () => { down = true; ac(); }, off = () => { down = false; };
   ov.addEventListener('pointerdown', on); addEventListener('pointerup', off); addEventListener('pointercancel', off);
@@ -8747,12 +8906,12 @@ async function arrivalBreath() {
     return n ? hit / n : 0;
   };
   let floor = 0, fn = 0, loud = 0, ln = 0;
-  cue.textContent = 'Breathe in with Luma'; sub.textContent = 'Through your nose, nice and slow.';
+  cue.textContent = 'Breathe in'; sub.textContent = 'Nice and slow.';
   lg.in(L.inhale); breathSound('in', L.inhale);
   const qi = await phase(L.inhale, true, () => { if (mh) { floor += mh.level(); fn++; } });
-  cue.textContent = 'Hold…'; sub.textContent = 'Feel your belly full of air.';
+  cue.textContent = 'Hold…'; sub.textContent = '';
   await wait(800);
-  cue.textContent = 'And breathe out slowly'; sub.textContent = `Let go and breathe out with Luma. ${SOUND[L.elem].say}`;
+  cue.textContent = 'Breathe out'; sub.textContent = SOUND[L.elem].say;
   lg.out(L.exhale); breathSound('out', L.exhale);
   const fl = Math.max(0.006, fn ? floor / fn * 2.2 : 0.012);
   const qo = await phase(L.exhale, false, () => { if (mh) { ln++; if (mh.level() > fl) loud++; } });
@@ -8767,8 +8926,7 @@ async function arrivalBreath() {
   const starred = tier === 'deep' || (tier === 'good' && LI + 1 <= 50);
   charge = Math.max(charge, tier === 'deep' ? 25 : tier === 'good' ? 15 : 5, S.buddy === 'earth' ? [15, 25, 35, 50][giftTier('earth') - 1] : 0);
   cue.textContent = 'You have arrived.';
-  sub.textContent = tier === 'calm' ? 'Luma breathed for you this time. Breathe along with her next time to earn a star.'
-    : `${tier === 'deep' ? 'A deep breath together!' : 'You breathed with Luma!'} ${starred ? 'The breath star is yours, and Luma starts brighter.' : 'Luma starts brighter.'}`;
+  sub.textContent = tier === 'calm' ? 'Breathe along next time for a star.' : starred ? 'Star earned! Luma glows brighter.' : 'Luma glows brighter.';
   if (tier !== 'calm') { const r = document.createElement('div'); r.className = 'arresult'; r.textContent = tier === 'deep' ? '★ Deep breath' : '★ Good breath'; $('#arrive .arbot').appendChild(r);
     if (!reduce) r.animate([{ transform: 'scale(.6)', opacity: 0 }, { transform: 'scale(1.08)', opacity: 1, offset: .6 }, { transform: 'scale(1)' }], { duration: 500, easing: 'cubic-bezier(.3,1.5,.5,1)' }); chord([523.25, 659.25, 783.99, 1046.5], 0.1); }
   else bell(523.25, 0, 0.05);
@@ -9523,13 +9681,14 @@ async function playGate() {
   tap.classList.remove('on');
   g.hidden = false; g.style.clipPath = 'circle(150% at 50% 50%)';
   elemSound(el, 0, 2); bell(ELEM[el].tone, 0.15, 0.06);
-  if (reduce) { await wait(3000); g.hidden = true; v.pause(); return; }
+  if (reduce) { await wait(3000); if (featOn('breath') && !practice) arrivalPrep(true); g.hidden = true; v.pause(); return; }
   [bg, v].forEach(x => x.animate([{ transform: 'scale(1.14)' }, { transform: 'scale(1)' }], { duration: 5200, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' }));
   $('#gatePlate').animate([{ opacity: 0, transform: 'translateY(28px) scale(.95)' }, { opacity: 1, transform: 'none' }], { duration: 800, delay: 350, easing: 'cubic-bezier(.2,.9,.3,1.1)', fill: 'backwards' });
   $('#gateOrb').animate([{ transform: 'scale(.4) rotate(-90deg)', opacity: 0 }, { transform: 'scale(1.1) rotate(10deg)', opacity: 1, offset: .6 }, { transform: 'scale(1)' }], { duration: 800, delay: 650, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' });
   const tapped = new Promise(res => setTimeout(() => { tap.classList.add('on'); g.addEventListener('pointerdown', res, { once: true }); }, 1200));
   await Promise.race([wait(4200), tapped]);
   tap.classList.remove('on');
+  if (featOn('breath') && !practice) arrivalPrep(true);     // the title opens straight onto the arrival breath, never a glimpse of the board
   const a = g.animate([{ clipPath: 'circle(150% at 50% 50%)' }, { clipPath: 'circle(0% at 50% 50%)' }], { duration: 620, easing: 'cubic-bezier(.6,0,.4,1)' });
   await a.finished.catch(() => {});
   g.hidden = true; v.pause();
@@ -9552,6 +9711,8 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
   pt.style.setProperty('--pc', ELEM[L.elem].hue);
   const heroImg = $('#pHero'), lumaImg = $('#pLuma');
   heroImg.src = faceSrc(heroId(), 'cheer'); lumaImg.src = faceSrc('luma', 'cheer');
+  $$('#rescue video').forEach(v => v.pause());
+  await Promise.all([heroImg, lumaImg].map(im => im.decode ? im.decode().catch(() => {}) : null));   // no pop-in: faces are ready before anything moves
   const dzz = DIFF[epDifficulty(LI + 1)];
   $('#pWord').textContent = dzz.name ? `${dzz.name} cleared!` : stars === 3 ? 'Radiant!' : stars === 2 ? 'Wonderful!' : 'You did it!';
   const fromW = { 'too much': 'the Fizzies' }[from] || from[0].toUpperCase() + from.slice(1);
@@ -9618,6 +9779,8 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
   pt.classList.remove('show'); await wait(350); pt.hidden = true;
 }
 async function winLevel() {
+  if (winLevel.lv === LI && winLevel.on) return;          // one win per board, however it's reached
+  winLevel.on = true; winLevel.lv = LI;
   peekReact('cheer', 6000, true);
   glowGoal(false); clearHints(); hideTip();
   if (babyOn()) {                                          // baby mode: a soft cheer, then a fresh sky. No stars, coins or unlocks
@@ -9649,16 +9812,16 @@ async function winLevel() {
   S.unlocked = Math.max(S.unlocked, Math.min(LEVELS.length, n + 1));
   if (n === LEVELS.length) S.unlocked = LEVELS.length + 1;
   S.coins += coins; save();
-  $('#wEyebrow').textContent = `${L.place} · ${ELEM[L.elem].name} · ${L.shift}`;
-  $('#wStars').innerHTML = '★'.repeat(stars) + `<span class="off">${'★'.repeat(3 - stars)}</span>`;
+  $('#wEyebrow').textContent = L.place;
+  $('#wStars').innerHTML = [0, 1, 2].map(i => `<img src="img/ui/star.png" class="${i < stars ? 'on' : ''}" alt="${i < stars ? 'star earned' : 'star not yet earned'}">`).join('');
   $('#wCoins').textContent = coins;
-  $('#wLeft').innerHTML = [smooth ? `<b>Smooth flow!</b> +${flowBonus} bonus coins` : '',
-    breathStar ? '' : easy ? 'Breathing with Luma earns a star.' : 'One slow, deep breath earns a star.', !smooth ? 'A smoother flow earns a bonus.' : ''].filter(Boolean).join(' · ') || '<b>Every star earned.</b>';
+  $('#wLeft').innerHTML = smooth ? `<b>Smooth flow!</b> +${flowBonus} coins` : '';
   $('#wXp').textContent = `+${Math.round((100 + stars * 25) * dz.xp)}`;
   if (dz.name) $('#wLeft').innerHTML = `<b>⚡ ${dz.name} ${isEpisode(LI + 1) ? 'episode' : 'puzzle'} cleared!</b> Rewards ×${dz.coin}, plus a ${CHARMS[LI % CHARMS.length].name} charm${dz === DIFF.super ? ' and a Bear Stomp' : ''}. ` + $('#wLeft').innerHTML;
   $('#pTitle').textContent = `${L.power} · the ${SOUND[L.elem].verb}`;
   $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
   $('#pLine').textContent = L.line;
+  renderWinPractice();
   if (S.buddy === L.elem) { S.coins += COIN_RULES.companionElem * coinMult(); save(); }
   addBal(L.elem, 2.5);
   TYPES.forEach(t => { if (t !== L.elem && levelTally[t] > 0) addBal(t, Math.min(1, levelTally[t] / 26)); });
@@ -9689,7 +9852,7 @@ async function winLevel() {
   $('#wStreak').closest('.wrow').hidden = !secOn('streak');
   $('#wBalance').closest('.wrow').hidden = !secOn('harmony');
   $('#wBuddy').closest('.wrow').hidden = !secOn('buddy');
-  if (mile) $('#wClaim').onclick = () => celebrate(mile);
+  if (mile) $('#wClaim').onclick = async () => { await celebrate(mile); $('#wClaim').hidden = true; const g = $('#win .wstep.on .wgo'); g && g.click(); };
   const br = $('#wBuddy');
   $('#wBuddyImg').src = S.buddy ? buddyArt(S.buddy) : 'img/icons/icon-buddy.jpg';
   if (freshBuddy) {
@@ -9709,8 +9872,31 @@ async function winLevel() {
   const xpFrom = passState().xp, xpGain = secOn('pass') ? Math.round((100 + stars * 25) * dz.xp) : 0;
   addXP(xpGain);
   await party(stars, coins, xpFrom, xpGain);
-  showOv('win');
+  winFlow();
 }
+// After the celebration: small pop-ups one at a time, a few words each; anything longer sits behind an i
+function winFlow() {
+  const want = { calm: !$('#wCalm').hidden, prac: !$('#wPrac').hidden, claim: !$('#wClaim').hidden, end: true };
+  const steps = $$('#win .wstep').filter(st => want[st.dataset.step]);
+  let i = 0, readyAt = 0;
+  const show = () => {
+    readyAt = performance.now() + 550;                  // little fingers double-tap: each pop-up gets a moment before it can be skipped
+    $$('#win .wstep').forEach(st => st.classList.toggle('on', st === steps[i]));
+    $$('#win .more').forEach(m => { m.hidden = true; });
+    if (!reduce) steps[i].animate([{ transform: 'translateY(18px) scale(.94)', opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 380, easing: 'cubic-bezier(.2,.9,.3,1.2)' });
+    boop(3 + i, 0.05);
+  };
+  $$('#win .wgo').forEach(b => { b.onclick = () => { if (performance.now() < readyAt) return; tick(); if (i < steps.length - 1) { i++; show(); } }; });
+  show(); showOv('win');
+}
+// the little i: tap it to read a bit more, tap again to hide
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-more]'); if (!b) return;
+  let box = b.parentElement; while (box && !box.querySelector('.more')) box = box.parentElement;
+  const m = box && box.querySelector('.more'); if (!m) return;
+  tick(); m.hidden = !m.hidden; b.classList.toggle('on', !m.hidden);
+  if (!m.hidden && !reduce) m.animate([{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }], { duration: 240 });
+});
 $('#wNext').addEventListener('click', async () => { await hideOv('win'); toMap(); openLevel(LI + 1); });
 $('#wMap').addEventListener('click', async () => { await hideOv('win'); toMap(); });
 
@@ -9942,6 +10128,17 @@ $('#lAd').addEventListener('click', async () => {
 
 /* ---------- guided practice ---------- */
 let guideRun = 0;
+// Sorin's move from the story: shown only on story episodes; finishing it counts as a real practice
+function renderWinPractice() {
+  const box = $('#wPrac'); if (!box) return;
+  box.hidden = !isEpisode(LI + 1) || babyOn();
+  if (box.hidden) return;
+  const st = dpState(), el = dpCompanion(), done = !!st.done.story, first = !Object.keys(st.done).length && !st.fam;
+  const gets = done ? ['✓ Done today'] : ['💛 +1 Bond', featOn('breath', reached()) ? '✨ Warm Aura' : '', first ? '🌷 Flower' : ''].filter(Boolean);
+  $('#pGets').innerHTML = gets.map(g => `<span>${g}</span>`).join('');
+  $('#wPractice').textContent = done ? 'Again' : 'Try it · 1 min';
+  $('#wPracLater').textContent = done ? 'Next' : 'Later';
+}
 $('#wPractice').addEventListener('click', async () => {
   const run = ++guideRun;
   $('#gEyebrow').textContent = L.power;
@@ -9965,6 +10162,12 @@ $('#wPractice').addEventListener('click', async () => {
   if (run !== guideRun) return;
   txt.textContent = 'Notice how your body feels now.';
   sub.textContent = L.line;
+  if (!dpState().done.story && !babyOn()) {
+    const got = dpFinish('story', L.elem);
+    if (got.length) sub.textContent = got.map(g => g[1]).join(' · ');
+    renderWinPractice();
+    if (dpFinish.evolve) { const e = dpFinish.evolve; dpFinish.evolve = null; setTimeout(() => evolveBuddy(e.el, e.from, e.to), 1600); }
+  }
   $('#gDone').textContent = 'Done';
   chord([523.25, 659.25, 783.99], 0.15);
 });
