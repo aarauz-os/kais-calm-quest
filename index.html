@@ -56,7 +56,7 @@ body.baby #babyBar span{display:none}
 .card:has(.cardx) > .eyebrow,.card:has(.cardx) > h2:first-of-type,.card:has(.cardx) > .display:first-of-type{padding-inline:46px !important}   /* the corner close button never sits on the heading */
 .dpsorin{flex:none;width:84px;height:84px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #E3BC6A,0 8px 18px rgba(0,0,0,.35)}
 .dpsorin video{width:100%;height:100%;object-fit:cover;display:block}
-.dphead h2{margin:2px 0}.dphead p{margin:0;font-size:13px;color:#D8E6DF}
+.card.rewardcard.dpcard .dphead h2{margin:2px 0;font-size:27px;line-height:1.1}.dphead p{margin:0;font-size:13px;color:#D8E6DF}
 .dplist{display:flex;flex-direction:column;gap:8px;margin:14px 0 10px}
 .dpitem{display:flex;align-items:center;gap:12px;padding:8px 12px 8px 8px;border-radius:18px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);color:#FBF3E2;text-align:left}
 .dpitem img{flex:none;width:58px;height:58px;border-radius:14px;object-fit:cover}
@@ -159,6 +159,27 @@ body.baby #babyBar span{display:none}
 .arbar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#FFE9A8,#F2C45A)}
 .armic{font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;background:rgba(0,0,0,.3);color:#FFE9A8}
 .arresult{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:900;background:linear-gradient(#FFF1C4,#E8C063);color:#4A300A;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+/* Sorin's practice, full screen: Sorin does the practice in its own time of day, clip timed to each breath */
+.dps{position:absolute;inset:0;z-index:41;color:#FFF6DE;opacity:0;transition:opacity .35s}
+.dps.show{opacity:1}
+#dpsScene{position:absolute;inset:0;z-index:0;background:#0B1A16}
+#dpsPoster{position:absolute;inset:0;background:url(img/sorin/practice/rest.jpg?v=97) 0% 50%/300% 100% no-repeat}
+#dpsScene > .lguide{position:absolute;inset:0;border-radius:0;background:none}
+#dpsScene > .lguide video{transform:none;object-fit:cover}
+.dps::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(6,16,20,.6),rgba(6,16,20,0) 22%,rgba(6,16,20,0) 52%,rgba(6,16,20,.78))}
+.dpsin{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:space-between;padding:calc(var(--sat,0px) + 30px) 20px calc(var(--sab,0px) + 22px)}
+.dpstop{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.dps .areyebrow,.dps .artitle{text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.dpsbot{display:flex;flex-direction:column;align-items:center;gap:10px;max-width:360px;width:100%;margin:0 auto}
+.dpscue{text-align:center;font-weight:900;font-size:19px;line-height:1.35;padding:10px 16px;border-radius:18px;background:rgba(8,20,18,.55);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(255,233,168,.22)}
+.dpscue:empty{display:none}
+.dps .dpfeel,.dps .dpgot{width:100%;margin:0}
+.dps .dpfeel button,.dps .dpgot div{background:rgba(8,20,18,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.dps .dpgrown{margin:0}
+.dps .dphold{background:rgba(8,20,18,.55)}
+.dps .stack{width:100%}
+.dps #dpStop{color:#FFE9A8;font-weight:800;text-decoration:underline;text-underline-offset:3px;padding:8px 16px}
+.dpitem .dpth{flex:none;width:58px;height:58px;border-radius:14px;background:url(img/sorin/practice/rest.jpg?v=97) var(--sx,0%) 60%/600% auto no-repeat}
 /* the Calm icon is the child's own hero, breathing slowly (4 in, 6 out) with a small glowing heart */
 .calmicon .cmhart img{animation:cmbreathe 10s ease-in-out infinite;transform-origin:50% 70%}
 @keyframes cmbreathe{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
@@ -3209,16 +3230,6 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       <div class="dptime" id="dpTime" hidden></div>
       <div class="stack"><button class="btn" id="dpClose">Close</button></div>
     </div>
-    <div id="dpRun" hidden>
-      <div class="eyebrow" style="color:var(--gold2)" id="dpRunEy"></div>
-      <h2 class="display" id="dpRunTitle"></h2>
-      <div class="dpstage"><span class="dpring" id="dpRing"></span><img id="dpArt" alt=""><span class="dpbuddy" id="dpBuddy"></span></div>
-      <div class="btext" id="dpText"></div>
-      <div class="dpfeel" id="dpFeel" hidden></div>
-      <div class="dpgrown" id="dpGrown" hidden><button class="dphold" data-h="0"><i></i>You</button><button class="dphold" data-h="1"><i></i>Grown-up</button></div>
-      <div class="dpgot" id="dpGot" hidden></div>
-      <div class="stack"><button class="btn gold" id="dpGo" hidden>Lovely</button><button class="linkbtn dark" id="dpStop">Stop</button></div>
-    </div>
   </div></div>
   <div class="babyinter" id="babyInter" hidden><video id="biVid" muted playsinline preload="auto"></video><span class="bispr" id="biSpr"></span></div>
   <div class="ov" id="meov" hidden><div class="card rewardcard mecard" role="dialog" aria-labelledby="meTitle">
@@ -3638,6 +3649,21 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="armic" id="arMic" hidden>🎤 Luma can hear your breath</div>
         <div class="arstart" id="arStart" hidden></div>
       </div>
+    </div>
+  </div>
+  <div class="dps" id="dps" hidden role="dialog" aria-labelledby="dpRunTitle">
+    <div id="dpsScene"><div id="dpsPoster"></div></div>
+    <div class="dpsin" id="dpRun" hidden>
+      <div class="dpstop"><div class="areyebrow" id="dpRunEy"></div><div class="artitle display" id="dpRunTitle"></div></div>
+      <div class="dpsbot">
+        <div class="dpscue" id="dpText"></div>
+        <div class="arbar dpsbar"><i id="dpsBar"></i></div>
+        <div class="dpfeel" id="dpFeel" hidden></div>
+        <div class="dpgrown" id="dpGrown" hidden><button class="dphold" data-h="0"><i></i>You</button><button class="dphold" data-h="1"><i></i>Grown-up</button></div>
+        <div class="dpgot" id="dpGot" hidden></div>
+        <div class="stack"><button class="btn gold" id="dpGo" hidden>Lovely</button><button class="linkbtn" id="dpStop">Stop</button></div>
+      </div>
+      <span id="dpRing" hidden></span><img id="dpArt" alt="" hidden><span class="dpbuddy" id="dpBuddy" hidden></span>
     </div>
   </div>
   <div class="calm" id="calm" hidden role="dialog" aria-labelledby="cmTitle">
@@ -5354,9 +5380,9 @@ function renderHome() {
    Guardrails (approved by Demaris, 2026-09-18): delight, never guilt or loss; nothing here can be bought or
    skipped with money; three a day at most, so "come back tomorrow" is a healthy place to stop. */
 const DP = [
-  { id: 'sun', when: 'Morning', name: 'Sunrise breath', art: 'img/sorin/solo-breath.webp', say: 'Three slow breaths.' },
-  { id: 'sky', when: 'Afternoon', name: 'Lift the Sky', art: 'img/sorin/solo-sky.webp', say: 'Reach up, float down.' },
-  { id: 'feel', when: 'Evening', name: 'How does your body feel?', art: 'img/sorin/solo-meditate.webp', say: 'Check in, then breathe.' }
+  { id: 'sun', when: 'Morning', name: 'Sunrise breath', sx: '0%', tx: '10%', say: 'Three slow breaths.' },
+  { id: 'sky', when: 'Afternoon', name: 'Lift the Sky', sx: '50%', tx: '50%', say: 'Reach up, float down.' },
+  { id: 'feel', when: 'Evening', name: 'How does your body feel?', sx: '100%', tx: '90%', say: 'Check in, then breathe.' }
 ];
 const FEELS = [
   { el: 'wood', word: 'Frustrated', face: 'frustrated', breath: 'Cooling breath', how: 'Breathe out long and slow, like wind through the trees.' },
@@ -5411,7 +5437,7 @@ function renderPractice() {
   const st = dpState(), slot = dpSlot(), n = dpDoneCount(), el = dpCompanion();
   $('#dpSub').textContent = n >= 3 ? 'All done today. See you tomorrow!' : `Each one helps ${BUDDY[el].name} grow.`;
   $('#dpList').innerHTML = DP.map(p => `<button class="dpitem ${st.done[p.id] ? 'done' : ''} ${p.id === slot && !st.done[p.id] ? 'now' : ''}" data-dp="${p.id}" ${st.done[p.id] ? 'disabled' : ''}>
-    <img src="${p.art}" alt=""><span><small>${p.when}${p.id === slot ? ' · now' : ''}</small><b>${p.name}</b><em>${p.say}</em></span><i>${st.done[p.id] ? '✓' : '›'}</i></button>`).join('');
+    <i class="dpth" style="--sx:${p.tx}"></i><span><small>${p.when}${p.id === slot ? ' · now' : ''}</small><b>${p.name}</b><em>${p.say}</em></span><i>${st.done[p.id] ? '✓' : '›'}</i></button>`).join('');
   const fam = $('#dpFam'); fam.classList.toggle('done', !!st.fam); fam.disabled = !!st.fam;
   fam.textContent = st.fam ? '✓ You breathed together with a grown-up today' : '👫 Breathe together with a grown-up';
   const wk = weekKey(), days = [...Array(7)].map((_, i) => { const t = new Date(wk + 'T12:00:00'); t.setDate(t.getDate() + i); return t.toISOString().slice(0, 10); });
@@ -5424,13 +5450,17 @@ function renderPractice() {
 }
 let dpRunId = 0;
 function dpPose(pose) { const sp = $('#dpBuddy .hsprite'); if (sp) sp.style.setProperty('--bx', (PEEK_X[pose] || 0) + '%'); }
+let dpLg = null;
 async function dpBreath(run, n, IN = 4, OUT = 5, lines) {
-  const ring = $('#dpRing'), txt = $('#dpText');
+  const ring = $('#dpRing'), txt = $('#dpText'), bar = $('#dpsBar');
+  const fill = (secs, up) => { bar.parentNode.hidden = false; bar.style.transition = 'none'; bar.style.width = up ? '0%' : '100%'; void bar.offsetWidth; bar.style.transition = `width ${secs}s linear`; bar.style.width = up ? '100%' : '0%'; };
   for (let i = 0; i < n; i++) {
     txt.textContent = lines ? lines[0] : 'Breathe in…'; dpPose('blink');
+    if (dpLg) dpLg.in(IN); fill(IN, true);
     ring.style.transition = `transform ${IN}s cubic-bezier(.35,0,.3,1)`; ring.style.transform = 'scale(1)';
     breathSound('in', IN); bell(523.25, 0, 0.05); await wait(reduce ? 500 : IN * 1000); if (run !== dpRunId) return false;
     txt.textContent = lines ? lines[1] : 'And slowly out…'; dpPose('idle');
+    if (dpLg) dpLg.out(OUT); fill(OUT, false);
     ring.style.transition = `transform ${OUT}s cubic-bezier(.4,0,.3,1)`; ring.style.transform = 'scale(.62)';
     breathSound('out', OUT); await wait(reduce ? 500 : OUT * 1000); if (run !== dpRunId) return false;
   }
@@ -5444,13 +5474,18 @@ async function openPractice() {
 async function runDaily(id) {
   const run = ++dpRunId, p = DP.find(x => x.id === id), el = dpCompanion();
   const title = $('#dpRunTitle'), txt = $('#dpText'), art = $('#dpArt');
-  $('#dpHome').hidden = true; $('#dpRun').hidden = false;
+  const scene = id === 'fam' ? dpSlot() : id, stage = $('#dps');
+  await hideOv('dpov');
+  $('#dpsPoster').style.backgroundPosition = `${DP.find(x => x.id === scene).sx} 50%`;
+  dpLg = lumaGuide($('#dpsScene'), { in: `img/sorin/practice/${scene}-in.mp4?v=97`, out: `img/sorin/practice/${scene}-out.mp4?v=97` });
+  dpLg.rest(); $('#dpsBar').parentNode.hidden = true;
+  stage.hidden = false; void stage.offsetWidth; stage.classList.add('show'); setGroove('calm');
+  $('#dpRun').hidden = false;
   $('#dpFeel').hidden = $('#dpGrown').hidden = $('#dpGot').hidden = $('#dpGo').hidden = true; $('#dpStop').hidden = false;
   $('#dpRing').style.transition = 'none'; $('#dpRing').style.transform = 'scale(.62)';
   $('#dpBuddy').innerHTML = holdSprite(buddyWho(el).replace('buddy-', ''), 'idle') + '<i class="dprail"></i>';
   $('#dpRunEy').textContent = id === 'fam' ? 'Breathe together' : `${p.when} practice`;
   title.textContent = id === 'fam' ? 'You and a grown-up' : p.name;
-  art.src = id === 'fam' ? 'img/sorin/solo-breath.webp' : p.art;
   let feelEl = null, ok = false;
   if (id === 'sun') {
     txt.textContent = `Sit tall and soft. ${BUDDY[el].name} will breathe with you.`; await wait(reduce ? 300 : 2400);
@@ -5483,13 +5518,14 @@ async function runDaily(id) {
     gb.hidden = true;
   }
   if (!ok || run !== dpRunId) return;
+  if (dpLg) dpLg.rest(); $('#dpsBar').parentNode.hidden = true;   // Sorin settles back to rest for the thank-you
   dpPose('cheer'); chord([523.25, 659.25, 783.99, 1046.5], 0.08);
   const got = dpFinish(id, feelEl);
   txt.textContent = id === 'fam' ? 'Breathing together is a superpower.' : 'Beautiful. Your body will remember this.';
   $('#dpGot').innerHTML = got.map(([img, t]) => `<div><img src="${img}" alt="">${t}</div>`).join(''); $('#dpGot').hidden = !got.length;
   $('#dpStop').hidden = true; $('#dpGo').hidden = false;
   await new Promise(res => { $('#dpGo').onclick = () => { tick(); res(); }; });
-  await hideOv('dpov');
+  await closeDps();
   renderHome();
   if (dpFinish.evolve) { const e = dpFinish.evolve; dpFinish.evolve = null; await evolveBuddy(e.el, e.from, e.to); renderBuddy(); renderHome(); }
 }
@@ -5528,7 +5564,11 @@ $('#dpOpen').addEventListener('click', openPractice);
 $('#dpClose').addEventListener('click', () => hideOv('dpov'));
 $('#dpList').addEventListener('click', e => { const b = e.target.closest('[data-dp]'); if (b && !b.disabled) { tick(); runDaily(b.dataset.dp); } });
 $('#dpFam').addEventListener('click', () => { if (!dpState().fam) { tick(); runDaily('fam'); } });
-$('#dpStop').addEventListener('click', () => { dpRunId++; breathSound('out', 0.4); $('#dpRun').hidden = true; $('#dpHome').hidden = false; renderPractice(); });
+async function closeDps() {
+  const st = $('#dps'); st.classList.remove('show'); if (dpLg) dpLg.hide();
+  await wait(360); st.hidden = true; $('#dpRun').hidden = true; setGroove('home');
+}
+$('#dpStop').addEventListener('click', async () => { dpRunId++; breathSound('out', 0.4); await closeDps(); $('#dpHome').hidden = false; renderPractice(); showOv('dpov'); });
 // grown-ups pick a practice time on the Why MorQi page; the Practice button glows from then on each day
 $('#dpSave').addEventListener('click', async () => {
   if (!await grownUpGate('', 'Answer to set the practice time.', true)) return;
