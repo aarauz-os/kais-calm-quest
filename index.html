@@ -157,8 +157,14 @@ body.baby #babyBar span{display:none}
 .arbar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#FFE9A8,#F2C45A)}
 .armic{font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;background:rgba(0,0,0,.3);color:#FFE9A8}
 .arresult{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:900;background:linear-gradient(#FFF1C4,#E8C063);color:#4A300A;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+/* the Calm icon is the child's own hero, breathing slowly (4 in, 6 out) with a small glowing heart */
+.calmicon .cmhart img{animation:cmbreathe 10s ease-in-out infinite;transform-origin:50% 70%}
+@keyframes cmbreathe{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
+.cmheart{position:absolute;right:5px;top:5px;width:13px;height:13px;background:#FF8FA3;clip-path:path('M6.5 12 L1.2 6.6 A3.2 3.2 0 0 1 6.5 2.2 A3.2 3.2 0 0 1 11.8 6.6 Z');filter:drop-shadow(0 0 4px #FFD1DA);animation:cmheart 10s ease-in-out infinite}
+@keyframes cmheart{0%{opacity:.75;transform:scale(.9)}40%{opacity:1;transform:scale(1.15)}100%{opacity:.75;transform:scale(.9)}}
+@media (prefers-reduced-motion:reduce){.calmicon .cmhart img,.cmheart{animation:none}}
 /* Calm Corner: any time a big feeling shows up. Pick how you feel, breathe with Luma in that feeling's place */
-.calm{position:fixed;inset:0;z-index:40;color:#FFF6DE;opacity:0;transition:opacity .35s}
+.calm{position:absolute;inset:0;z-index:40;color:#FFF6DE;opacity:0;transition:opacity .35s}
 .calm.show{opacity:1}
 #cmScene{position:absolute;inset:0;z-index:0;background:#0B1A16 center/cover no-repeat}
 #cmScene::before{content:"";position:absolute;inset:0;background:inherit;filter:blur(10px) brightness(.55) saturate(1.1);transform:scale(1.1)}
@@ -2982,7 +2988,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       </div>
       <div class="rail">
         <button class="hicon dpicon" data-open="dpOpen"><span class="hart h3d"><video class="hvid" src="img/sorin/sorin-breath.mp4?v=78" poster="img/sorin-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Practice</b><i class="hbadge" id="bPractice"></i></button>
-        <button class="hicon calmicon" id="calmOpen"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-calm.mp4?v=93" poster="img/icons/icon-calm-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Calm</b></button>
+        <button class="hicon calmicon" id="calmOpen"><span class="hart h3d cmhart"><img id="calmFace" src="img/faces/kai-calm.jpg" alt=""><i class="cmheart"></i></span><b>Calm</b></button>
         <button class="hicon" data-open="babyToggle"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-baby.mp4?v=60" poster="img/icons/icon-baby-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Baby</b><i class="hbadge" id="bBaby"></i></button>
         <button class="hicon" data-open="bedOpen"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-bedtime.mp4?v=60" poster="img/icons/icon-bedtime-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Bedtime</b></button>
       </div>
@@ -5915,7 +5921,9 @@ let charmPick = new Set();
 /* ---------- heroes: the player picks who goes on the quest (no labels, just faces) ---------- */
 const HEROES = ['kai', 'hero-b2', 'hero-b3', 'hero-b4', 'hero-b5', 'hero-b6', 'hero-g1', 'hero-g2', 'hero-g3', 'hero-g4', 'hero-g5', 'hero-g6'];
 const heroId = () => S.hero || 'kai';
-function syncHero() { const b = $('#heroBtnImg'); if (b) b.src = faceSrc(heroId(), 'calm'); }
+function syncHero() { const b = $('#heroBtnImg'); if (b) b.src = faceSrc(heroId(), 'calm'); const c = $('#calmFace'); if (c) c.src = faceSrc(heroId(), 'calm'); }
+// the Calm icon's hero breathes with the icon: eyes close on the in-breath, open on the out-breath
+setInterval(() => { const c = $('#calmFace'); if (!c || !c.offsetParent) return; const t = (Date.now() % 10000) / 10000; const want = faceSrc(heroId(), t < 0.4 ? 'breath' : 'calm'); if (!c.src.endsWith(want)) c.src = want; }, 250);
 function pickHero() {
   return new Promise(res => {
     const ov = $('#heroov');
