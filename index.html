@@ -106,6 +106,52 @@ body.baby #babyBar span{display:none}
 .babyinter .hsprite{display:block;width:100%;background-size:500% 100%;background-position:var(--bx,0%) 0}
 @keyframes bibreath{0%,100%{transform:scale(.92)}45%{transform:scale(1.1)}}
 #bubble:empty{visibility:hidden}
+.lguide{position:absolute;inset:0;border-radius:50%;overflow:hidden;opacity:0;transition:opacity .35s ease;pointer-events:none;background:#F4ECDD;z-index:2}
+.lguide.on{opacity:1}.lguide.broken{display:none}
+.lguide video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.32);transform-origin:50% 44%}
+.lguide video.on{opacity:1}
+.arcircle > .lguide{inset:auto;left:50%;top:50%;width:160px;height:160px;margin:-80px 0 0 -80px;box-shadow:0 0 0 4px var(--gold-mid),0 0 0 8px var(--wood),0 10px 30px rgba(0,0,0,.5)}
+.bedstage > .lguide{inset:auto;left:50%;top:50%;width:156px;height:156px;margin:-78px 0 0 -78px;box-shadow:0 0 0 3px rgba(242,196,90,.7),0 0 30px 8px rgba(255,220,150,.35)}
+#babyBloom .bl > .lguide{box-shadow:0 0 0 4px rgba(255,255,255,.75),0 0 44px 16px rgba(255,236,170,.75)}
+.brguide{position:relative;flex:none;align-self:center;width:116px;height:116px;border-radius:50%;overflow:hidden;background:#F4ECDD;box-shadow:0 0 0 3px #FBF3E2,0 8px 20px rgba(0,0,0,.35)}
+.brguide img{width:100%;height:100%;object-fit:cover}
+#brStage{gap:12px}#brStage #dand{width:72px;height:88px}
+/* the episode title: a living vista of the place behind an elegant gold-rimmed plaque */
+.gate{pointer-events:auto}
+.gatein{overflow:hidden}
+.gatebg,.gatevid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 60%}
+.gateshade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,18,14,.45),rgba(6,18,14,0) 26%,rgba(6,18,14,0) 58%,rgba(6,18,14,.6))}
+.gateplate{position:relative;margin-top:-8vh;width:min(84%,330px);padding:48px 22px 20px;border-radius:26px;text-align:center;
+  background:radial-gradient(120% 80% at 50% 0%,rgba(47,107,87,.9),rgba(16,43,36,.93));-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  box-shadow:0 0 0 2px #E3BC6A,0 0 0 5px rgba(60,38,8,.55),0 22px 50px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.2)}
+.gateplate .gateorb{position:absolute;left:50%;top:0;width:80px;height:80px;margin:-40px 0 0 -40px;filter:drop-shadow(0 6px 12px rgba(0,0,0,.45))}
+.gateey{font-size:11px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:#FFE7A8}
+.gateplate .gatetitle{margin:8px 0 2px;line-height:1.05}
+.gaterule{width:62%;height:1px;margin:10px auto 9px;background:linear-gradient(90deg,transparent,#E3BC6A,transparent)}
+.gateplate .gatesub{font-size:15px;font-weight:800;letter-spacing:.01em;text-transform:none;color:#EAF2EE}
+.gatetap{position:absolute;left:0;right:0;bottom:calc(30px + env(safe-area-inset-bottom,0px));text-align:center;font-size:11.5px;font-weight:900;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,241,207,.9);text-shadow:0 1px 3px rgba(0,0,0,.6);opacity:0;transition:opacity .6s}
+.gatetap.on{opacity:1;animation:gtap 2.2s ease-in-out infinite}
+@keyframes gtap{50%{opacity:.45}}
+/* companions grip every ledge: the part below their paws tucks behind it */
+.chold .hsprite,.picw.m-style .hsprite,.hsprite.shbud,.dpbuddy .hsprite{translate:0 calc(var(--sink,0) * 100%)}
+.choldrail,.shrail,.dprail{position:relative;z-index:3}
+.minirail{position:relative;z-index:3}
+.dprail{display:block;height:12px;margin-top:-1px;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,#C98F4E,#9A6430 30%,#7A4A22 70%,#5E3616);box-shadow:inset 0 2px 0 rgba(255,220,160,.55),0 0 0 1.5px #E3BC6A,0 3px 0 rgba(0,0,0,.35)}
+/* the arrival breath: Luma breathes full screen on the level's own timing; breathing along earns more */
+.arrive.arscene{place-items:stretch}
+#arScene{position:absolute;inset:0;z-index:0;background:radial-gradient(90% 70% at 50% 60%,color-mix(in srgb,var(--gc,#2E6B54) 55%,#123) ,#081410)}
+#arScene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#arScene > .lguide{border-radius:0;inset:0;background:none}
+#arScene > .lguide video{transform:none}
+.arrive.arscene::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(6,16,20,.62),rgba(6,16,20,0) 24%,rgba(6,16,20,0) 58%,rgba(6,16,20,.72));transition:box-shadow .5s}
+.arrive.arscene.good::after{box-shadow:inset 0 0 90px 24px rgba(255,226,140,.55)}
+.arrive.arscene .arin{position:absolute;inset:0;z-index:2;max-width:none;justify-content:space-between;padding:calc(var(--sat,0px) + 40px) 24px calc(var(--sab,0px) + 34px)}
+.artop,.arbot{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:360px;margin:0 auto}
+.arrive.arscene .areyebrow,.arrive.arscene .artitle,.arrive.arscene .arcue,.arrive.arscene .arsub{text-shadow:0 2px 8px rgba(0,0,0,.55)}
+.arbar{width:180px;height:5px;border-radius:3px;background:rgba(255,255,255,.2);overflow:hidden}
+.arbar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#FFE9A8,#F2C45A)}
+.armic{font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;background:rgba(0,0,0,.3);color:#FFE9A8}
+.arresult{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:900;background:linear-gradient(#FFF1C4,#E8C063);color:#4A300A;box-shadow:0 4px 12px rgba(0,0,0,.35)}
 /* baby mode: no words on screen (they can't read yet); only the grown-up Stop bar */
 body.baby #bubble, body.baby #flowBar, body.baby #toast, body.baby #todayChip, body.baby #toMap, body.baby #pkPerk, body.baby #pwBar [id^="pwc-"], body.baby .tipbox{display:none!important}
 #babyBloom{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(12,22,40,0) 25%,rgba(12,22,40,.38) 100%);opacity:0;transition:opacity .6s ease}
@@ -2831,6 +2877,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     </div>
     <div id="brPlay" hidden>
       <div class="stage" id="brStage">
+        <span class="brguide" id="brGuide"><img src="img/luma-3d.jpg" alt="Luma breathing"></span>
         <div class="meter" id="brMeter" hidden aria-hidden="true"><i></i><span class="pitch" id="brPitch" hidden></span></div>
         <div class="track" id="brTrack"><div class="fill" id="brFill"></div><div class="pacelight" id="brGhost"></div><div class="knob" id="brKnob"><img src="img/faces/luma-calm.jpg" alt="Luma" id="brKnobImg"><span class="airin" id="airIn"></span><span class="airout" id="airOut"></span></div><div class="brhand" id="brHand" hidden aria-hidden="true">👆</div></div>
         <svg id="dand" viewBox="0 0 100 120" aria-hidden="true"></svg>
@@ -3327,14 +3374,18 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="ppass" id="pPass"><small id="pPassLbl">Season Pass</small><div class="passbar"><i id="pPassFill"></i></div></div>
     <button class="btn gold big" id="pGo">Continue</button>
   </div>
-  <div class="arrive" id="arrive" hidden>
+  <div class="arrive arscene" id="arrive" hidden>
+    <div id="arScene"><img id="arPoster" src="img/luma/scene-rest.jpg?v=80" alt=""></div>
     <div class="arin">
-      <div class="areyebrow" id="arPlace"></div>
-      <div class="artitle display" id="arTitle"></div>
-      <div class="arcircle"><span class="arring" id="arRing"></span><img id="arLuma" src="img/faces/luma-calm.jpg" alt="Luma"></div>
-      <div class="arcue display" id="arCue">One breath to arrive</div>
-      <div class="arsub" id="arSub">Press and hold anywhere while Luma breathes in. Let go as she breathes out.</div>
-      <div class="arstart" id="arStart">Touch to begin</div>
+      <div class="artop"><div class="areyebrow" id="arPlace"></div><div class="artitle display" id="arTitle"></div></div>
+      <div class="arcircle" hidden><span class="arring" id="arRing"></span><img id="arLuma" src="img/faces/luma-calm.jpg" alt="Luma"></div>
+      <div class="arbot">
+        <div class="arcue display" id="arCue">Breathe with Luma</div>
+        <div class="arbar"><i id="arBar"></i></div>
+        <div class="arsub" id="arSub"></div>
+        <div class="armic" id="arMic" hidden>🎤 Luma can hear your breath</div>
+        <div class="arstart" id="arStart" hidden></div>
+      </div>
     </div>
   </div>
   <div class="ov" id="journeyov" hidden><div class="card" role="dialog" aria-labelledby="journeyTitle">
@@ -3344,7 +3395,18 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="jlist" id="jList"></div>
     <div class="stack"><button class="btn" id="journeyClose">Close</button></div>
   </div></div>
-  <div class="gate" id="gate" hidden><div class="gatein"><div class="gateorb" id="gateOrb"></div><div class="gatetitle display" id="gateTitle"></div><div class="gatesub" id="gateSub"></div></div></div>
+  <div class="gate" id="gate" hidden><div class="gatein">
+    <img class="gatebg" id="gateBg" alt=""><video class="gatevid" id="gateVid" muted playsinline loop preload="auto"></video>
+    <div class="gateshade"></div>
+    <div class="gateplate" id="gatePlate">
+      <div class="gateorb" id="gateOrb"></div>
+      <div class="gateey" id="gateEy"></div>
+      <div class="gatetitle display" id="gateTitle"></div>
+      <div class="gaterule"></div>
+      <div class="gatesub" id="gateSub"></div>
+    </div>
+    <div class="gatetap" id="gateTap">Tap to begin</div>
+  </div></div>
   <div class="toast" id="toast" role="status"></div>
 </div>
 
@@ -4072,15 +4134,15 @@ async function babyBreath(run) {
   let bb = $('#babyBloom');
   if (!bb) { bb = document.createElement('div'); bb.id = 'babyBloom'; bb.innerHTML = '<span class="bl"><i></i><i></i><img src="img/faces/luma-breath.jpg" alt=""></span>'; }
   boardEl.appendChild(bb);
-  const bl = bb.querySelector('.bl');
+  const bl = bb.querySelector('.bl'), lg = lumaGuide(bl); lg.rest();
   bl.style.transitionDuration = '0s'; bl.style.transform = 'scale(.7)'; void bl.offsetWidth;
   bb.classList.add('on'); await wait(600);
   for (let i = 0; i < 3 && run === babyRun && babyOn(); i++) {
-    bl.style.transitionDuration = `${L.inhale}s`; bl.style.transform = 'scale(1.18)';
+    bl.style.transitionDuration = `${L.inhale}s`; bl.style.transform = 'scale(1.18)'; lg.in(L.inhale);
     breathSound('in', L.inhale); bell(523.25, 0, 0.05);
     await wait(L.inhale * 1000 + 600);
     if (run !== babyRun) break;
-    bl.style.transitionDuration = `${L.exhale}s`; bl.style.transform = 'scale(.7)';
+    bl.style.transitionDuration = `${L.exhale}s`; bl.style.transform = 'scale(.7)'; lg.out(L.exhale);
     breathSound('out', L.exhale);
     await wait(L.exhale * 1000);
   }
@@ -4176,24 +4238,25 @@ async function bedtime() {
   await showOv('bedov');
   const img = $('#bedLuma'), ring = $('#bedRing'), txt = $('#bedText'), ai = $('#bedIn'), ao = $('#bedOut');
   const IN = 4, HOLD = 1, OUT = 6;
+  const lg = lumaGuide(img.parentNode); lg.rest();
   let n = 0;
   while (run === bedRun) {
     n++;
-    img.src = LUMA.in; ai.classList.add('on'); ao.classList.remove('on');
+    img.src = LUMA.in; lg.in(IN); ai.classList.add('on'); ao.classList.remove('on');
     txt.textContent = 'Breathe in…';
     ring.style.transition = `transform ${IN}s cubic-bezier(.35,0,.3,1)`; ring.style.transform = 'scale(1)';
     breathSound('in', IN); bell(392, 0, 0.05);
     await wait(IN * 1000); if (run !== bedRun) break;
     txt.textContent = 'Hold…';
     await wait(HOLD * 1000); if (run !== bedRun) break;
-    img.src = LUMA.out; ai.classList.remove('on'); ao.classList.add('on');
+    img.src = LUMA.out; lg.out(OUT); ai.classList.remove('on'); ao.classList.add('on');
     txt.textContent = 'And out…';
     ring.style.transition = `transform ${OUT}s cubic-bezier(.4,0,.3,1)`; ring.style.transform = 'scale(.45)';
     breathSound('out', OUT); bell(261.63, 0, 0.04);
     await wait(OUT * 1000);
     $('#bedCount').textContent = `${n} breath${n === 1 ? '' : 's'} together`;
   }
-  ai.classList.remove('on'); ao.classList.remove('on');
+  ai.classList.remove('on'); ao.classList.remove('on'); lg.hide();
   img.src = LUMA.idle;
 }
 $('#bedOpen').addEventListener('click', async () => { if (await askFirst('Start Bedtime?', 'No game and no score. Luma breathes slowly with soft sounds for as long as you like. A calm way to wind down before sleep.', 'Start Bedtime', 'img/icons/icon-bedtime-3d.jpg')) bedtime(); });
@@ -5089,7 +5152,7 @@ async function runDaily(id) {
   $('#dpHome').hidden = true; $('#dpRun').hidden = false;
   $('#dpFeel').hidden = $('#dpGrown').hidden = $('#dpGot').hidden = $('#dpGo').hidden = true; $('#dpStop').hidden = false;
   $('#dpRing').style.transition = 'none'; $('#dpRing').style.transform = 'scale(.62)';
-  $('#dpBuddy').innerHTML = holdSprite(buddyWho(el).replace('buddy-', ''), 'idle');
+  $('#dpBuddy').innerHTML = holdSprite(buddyWho(el).replace('buddy-', ''), 'idle') + '<i class="dprail"></i>';
   $('#dpRunEy').textContent = id === 'fam' ? 'Breathe together' : `${p.when} practice`;
   title.textContent = id === 'fam' ? 'You and a grown-up' : p.name;
   art.src = id === 'fam' ? 'img/sorin/solo-breath.webp' : p.art;
@@ -6762,6 +6825,36 @@ async function openMic() {
 function closeMic() { if (micH) { micH.close(); micH = null; } }
 
 // in = eyes closed and filling, out = the small round mouth
+/* ---------- Luma leads every breath on video ----------
+   Two real clips: in (resting to full) and out (full back to resting). Each plays stretched to the exact
+   seconds of the breath being led, and the in-clip holds on its last frame through any pause, so a child
+   can simply copy her: belly fills, eyes close, then a slow rounded out-breath. */
+const LUMA_CLIP = { in: 'img/luma/luma-in.mp4?v=80', out: 'img/luma/luma-out.mp4?v=80' };
+function lumaGuide(host, clips = LUMA_CLIP) {
+  const none = { in() {}, out() {}, rest() {}, hide() {} };
+  if (!host || reduce) return none;
+  let g = host.querySelector(':scope > .lguide');
+  if (!g) {
+    g = document.createElement('span'); g.className = 'lguide';
+    g.innerHTML = `<video class="lgin on" src="${clips.in}" muted playsinline preload="auto"></video><video class="lgout" src="${clips.out}" muted playsinline preload="auto"></video>`;
+    host.appendChild(g);
+    g.querySelectorAll('video').forEach(v => { v.onerror = () => g.classList.add('broken'); });
+  }
+  const vi = g.querySelector('.lgin'), vo = g.querySelector('.lgout');
+  const play = (v, other, secs) => {
+    g.classList.add('on'); other.pause(); v.pause();
+    try { v.currentTime = 0; } catch (e) {}
+    v.playbackRate = Math.min(4, Math.max(0.25, (v.duration || 5) / Math.max(0.5, secs)));
+    v.classList.add('on'); other.classList.remove('on');           // the clips share their joining frame, so the swap is seamless
+    v.play().catch(() => {});
+  };
+  return {
+    in: secs => play(vi, vo, secs),
+    out: secs => play(vo, vi, secs),
+    rest() { g.classList.add('on'); vo.classList.remove('on'); vi.classList.add('on'); vi.pause(); vo.pause(); try { vi.currentTime = 0; } catch (e) {} },
+    hide() { g.classList.remove('on'); vi.pause(); vo.pause(); }
+  };
+}
 const LUMA = { idle: 'img/faces/luma-calm.jpg', in: 'img/faces/luma-blink.jpg', out: 'img/faces/luma-breath.jpg', happy: 'img/faces/luma-joy.jpg' };
 function lumaPhase(phase) {
   const img = $('#brKnobImg'), ai = $('#airIn'), ao = $('#airOut');
@@ -6801,7 +6894,7 @@ function followPhase(dir, secs, run, onTick) {
     const down = e => {
       pressing = true; try { brStage.setPointerCapture(e.pointerId); } catch (err) {}
       move(e);
-      if (!started) { started = performance.now(); if (!micH) breathSound(dir === 'up' ? 'in' : 'out', secs); }
+      if (!started) { started = performance.now(); if (!micH) breathSound(dir === 'up' ? 'in' : 'out', secs); if (followPhase.onStart) followPhase.onStart(dir, secs); }
     };
     const move = e => { if (!pressing) return; const r = brTrack.getBoundingClientRect(); target = clamp(1 - (e.clientY - r.top) / r.height, 0, 1); };
     const up = () => { pressing = false; };
@@ -6933,7 +7026,9 @@ async function runBreath() {
   }
   $('#brSwitch').textContent = S.breathMode === 'mic' ? 'Use my finger instead' : 'Blow on a dandelion instead';
 
-  // inhale
+  // inhale: Luma breathes on video, in step with the pace light
+  const brLG = lumaGuide($('#brGuide')); brLG.rest();
+  followPhase.onStart = (d, secs) => d === 'up' ? brLG.in(secs) : brLG.out(secs);
   lumaPhase('in');
   brText('Breathe in through your nose', 'Press and hold Luma, then slide her up with the glowing ring. Watch her breathe in with you.');
   bell(523.25, 0, 0.06);
@@ -6959,6 +7054,7 @@ async function runBreath() {
   if (micH) {
     $('#brMeter').hidden = false;
     brText(`Now ${snd.verb} it out: ${snd.say}`, `${snd.tip} ${snd.dir}`);
+    brLG.out(L.exhale);
     const r = await micExhale(L.exhale, run);
     qout = r.q; lastVoiced = r.voiced; lastHz = r.hz;
   } else {
@@ -6967,7 +7063,7 @@ async function runBreath() {
     qout = await followPhase('down', L.exhale, run);
     lastVoiced = 0; lastHz = 0;
   }
-  closeMic();
+  closeMic(); followPhase.onStart = null;
   brHand.hidden = true;
   lumaPhase('happy');
   if (run !== brRun) return;
@@ -7471,8 +7567,12 @@ const peek = { pose: 'idle', until: 0, base: 'idle', act: performance.now(), bli
 const HOLD_AR = {"earth-grown":0.83,"earth-guardian":0.93,"earth-young":0.813,"earth":0.803,"fire-grown":0.917,"fire-guardian":0.94,"fire-young":0.84,"fire":0.777,"metal-grown":0.88,"metal-guardian":0.827,"metal-young":0.73,"metal":0.707,"water-grown":0.723,"water-guardian":0.823,"water-young":0.847,"water":0.8,"wood-grown":0.97,"wood-guardian":0.953,"wood-young":1.193,"wood":0.923};
 const PEEK_X = { idle: 0, cheer: 25, gasp: 50, breathe: 75, blink: 75, worried: 100, sleepy: 75 };
 function peekSrc() { return `img/holds/${peekWho()}.png?v=65`; }
-function holdSprite(tag, pose, cls = '') { return `<span class="hsprite ${cls}" style="background-image:url(img/holds/${tag}.png?v=65);--bx:${PEEK_X[pose] || 0}%;aspect-ratio:1/${HOLD_AR[tag] || 1}"></span>`; }
+// how much of each sheet sits below the flat cut under the paws: that part tucks behind the ledge, so the paws grip it
+// (measured per sheet: the lowest row where the body still fills the middle, plus a little grip)
+const HOLD_SINK = {"earth-grown": 0.047, "earth-guardian": 0.067, "earth-young": 0.101, "earth": 0.101, "fire-grown": 0.151, "fire-guardian": 0.063, "fire-young": 0.158, "fire": 0.159, "metal-grown": 0.035, "metal-guardian": 0.035, "metal-young": 0.035, "metal": 0.035, "water-grown": 0.035, "water-guardian": 0.035, "water-young": 0.043, "water": 0.122, "wood-grown": 0.035, "wood-guardian": 0.038, "wood-young": 0.08, "wood": 0.089};
+function holdSprite(tag, pose, cls = '') { return `<span class="hsprite ${cls}" style="background-image:url(img/holds/${tag}.png?v=65);--bx:${PEEK_X[pose] || 0}%;aspect-ratio:1/${HOLD_AR[tag] || 1};--sink:${HOLD_SINK[tag] ?? .06}"></span>`; }
 function setPose(pose) { const im = $('#pkImg'); if (im) im.style.setProperty('--bx', (PEEK_X[pose] || 0) + '%'); }
+function sinkStatic() { $$('.chold .hsprite').forEach(x => { const m = /holds\/([a-z-]+)\.png/.exec(x.style.backgroundImage); if (m) x.style.setProperty('--sink', HOLD_SINK[m[1]] ?? .06); }); }
 function placePeek() {
   const row = $('#peekRow'), pk = $('#peek'), rail = $('#pkPerk'); if (!row || $('#game').hidden) return;
   row.hidden = false; pk.hidden = false; rail.hidden = false; $('#buddyWrap').hidden = true;
@@ -7485,9 +7585,10 @@ function placePeek() {
   const room = br.top - $('.stats').getBoundingClientRect().bottom - RH - 2;   // never reaches the Goals/Moves bar
   const im = $('#pkImg'), ratio = HOLD_AR[peekWho()] || 1;
   im.style.backgroundImage = `url(${peekSrc()})`; im.style.aspectRatio = `1 / ${ratio}`;
-  const W = Math.max(80, Math.min(150, room / ratio)); pk.style.width = `${W}px`;
+  const sink = HOLD_SINK[peekWho()] ?? .06;
+  const W = Math.max(80, Math.min(150, room / (ratio * (1 - sink)))); pk.style.width = `${W}px`;
   pk.style.left = `${br.left - wr.left + br.width / 2 - W / 2}px`;
-  pk.style.top = `${top - pk.offsetHeight + 3}px`;
+  pk.style.top = `${top - pk.offsetHeight + Math.round(pk.offsetHeight * sink)}px`;   // paws on the ledge, the flat cut hidden behind it
   pk.style.setProperty('--pg', ELEM[el].glow + 'aa');
   peekShow(peek.base, true);
 }
@@ -8441,13 +8542,14 @@ function startLevel() {
   paintBuddyGame();
   syncBoosts();
   placePeek();
-  playGate();
+  const gateDone = playGate();
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); const warmed = dpWarm(); hud();
     // a new board starts quiet: Luma speaks only when there is something to say
     say(warmed ? 'Your practice with Sorin warmed up Luma. Her Aura is already glowing.' : '');
     if (!running) { running = true; rainLoop(); }
     setTimeout(async () => {
+      await gateDone;                                  // the title has its moment before anything asks for attention
       if (babyOn()) { busy = false; $('#babyBar').hidden = false; clearHints(); hideTip(); babyLoop(++babyRun); return; }
       if (featOn('breath')) await arrivalBreath();   // episode 1 is pure matching
       busy = false;
@@ -8457,54 +8559,67 @@ function startLevel() {
 }
 // One breath to arrive. Required before every board (baby mode skips it). It never fails:
 // a steadier breath just starts Luma's Aura brighter.
+// One breath to arrive. Luma breathes on her own, full screen, on this level's exact timing, and then the
+// level begins: it always moves on. Breathing along (hold the screen on the in-breath, let go on the
+// out-breath, or be heard on the out-breath if the grown-up turned the microphone on) earns a Good or Deep
+// breath: the breath star, and Luma starts brighter.
 async function arrivalBreath() {
   setGroove('calm');
-  const ov = $('#arrive'), ring = $('#arRing'), img = $('#arLuma'), cue = $('#arCue'), sub = $('#arSub'), go = $('#arStart');
-  const face = e => { img.src = `img/faces/luma-${e}.jpg`; };
+  const ov = $('#arrive'), cue = $('#arCue'), sub = $('#arSub'), bar = $('#arBar'), mic = $('#arMic');
   $('#arPlace').textContent = L.place;
   $('#arTitle').textContent = EMO_VERB[L.elem];
   ov.style.setProperty('--gc', ELEM[L.elem].hue);
-  ov.classList.remove('good'); face('calm'); ring.getAnimations().forEach(a => a.cancel());
-  cue.textContent = 'One breath to arrive';
-  sub.textContent = 'Press and hold anywhere while Luma breathes in. Let go as she breathes out.';
-  go.hidden = false;
+  ov.classList.remove('good'); $$('#arrive .arresult').forEach(x => x.remove());
+  cue.textContent = 'Breathe with Luma';
+  sub.textContent = 'Hold the screen while you breathe in. Let go as you breathe out.';
+  bar.style.transition = 'none'; bar.style.width = '0%';
+  const lg = lumaGuide($('#arScene'), { in: 'img/luma/scene-in.mp4?v=80', out: 'img/luma/scene-out.mp4?v=80' }); lg.rest();
   ov.hidden = false; void ov.offsetWidth; ov.classList.add('show');
   let down = false;
   const on = () => { down = true; ac(); }, off = () => { down = false; };
   ov.addEventListener('pointerdown', on); addEventListener('pointerup', off); addEventListener('pointercancel', off);
-  await new Promise(res => ov.addEventListener('pointerdown', res, { once: true }));
-  go.hidden = true;
-  const phase = async (secs, want, from, to) => {
+  // the microphone only listens if the grown-up already chose it for the dandelion and it is allowed: never a surprise prompt
+  let mh = null;
+  try { if (S.breathMode === 'mic' && navigator.permissions && (await navigator.permissions.query({ name: 'microphone' })).state === 'granted') mh = await openMic(); } catch (e) {}
+  mic.hidden = !mh;
+  await wait(1400);
+  const phase = async (secs, want, onTick) => {
     let hit = 0, n = 0;
-    ring.animate([{ transform: `scale(${from})` }, { transform: `scale(${to})` }], { duration: secs * 1000, easing: 'ease-in-out', fill: 'forwards' });
+    bar.style.transition = 'none'; bar.style.width = want ? '0%' : '100%'; void bar.offsetWidth;
+    bar.style.transition = `width ${secs}s linear`; bar.style.width = want ? '100%' : '0%';
     const end = performance.now() + secs * 1000;
-    while (performance.now() < end) { await wait(100); n++; if (down === want) hit++; ov.classList.toggle('good', down === want); }
+    while (performance.now() < end) { await wait(100); n++; if (down === want) hit++; ov.classList.toggle('good', down === want && (want || hit > 2)); if (onTick) onTick(); }
     return n ? hit / n : 0;
   };
-  let q = 0;
-  for (let attempt = 0; attempt < 2; attempt++) {
-    face('blink'); cue.textContent = 'Breathe in through your nose';
-    sub.textContent = attempt ? "Let's try once more together. Hold while the circle grows." : 'Keep holding while the circle grows.';
-    breathSound('in', L.inhale);
-    const qi = await phase(L.inhale, true, 0.64, 1);
-    cue.textContent = 'Hold…'; sub.textContent = 'Feel your belly full of air.';
-    await wait(800);
-    face('breath'); cue.textContent = 'Now breathe out slowly'; sub.textContent = `Let go and breathe out with Luma. ${SOUND[L.elem].say}`;
-    breathSound('out', L.exhale);
-    const qo = await phase(L.exhale, false, 1, 0.64);
-    // letting go only counts if they held on the way in, so doing nothing never scores
-    q = Math.max(q, qi < 0.2 ? qi * 0.5 : qi * 0.5 + qo * 0.5);
-    if (qi >= 0.3) break;
-  }
+  let floor = 0, fn = 0, loud = 0, ln = 0;
+  cue.textContent = 'Breathe in with Luma'; sub.textContent = 'Through your nose, nice and slow.';
+  lg.in(L.inhale); breathSound('in', L.inhale);
+  const qi = await phase(L.inhale, true, () => { if (mh) { floor += mh.level(); fn++; } });
+  cue.textContent = 'Hold…'; sub.textContent = 'Feel your belly full of air.';
+  await wait(800);
+  cue.textContent = 'And breathe out slowly'; sub.textContent = `Let go and breathe out with Luma. ${SOUND[L.elem].say}`;
+  lg.out(L.exhale); breathSound('out', L.exhale);
+  const fl = Math.max(0.006, fn ? floor / fn * 2.2 : 0.012);
+  const qo = await phase(L.exhale, false, () => { if (mh) { ln++; if (mh.level() > fl) loud++; } });
   ov.removeEventListener('pointerdown', on); removeEventListener('pointerup', off); removeEventListener('pointercancel', off);
+  if (mh) { mh.close(); }
   ov.classList.remove('good');
-  charge = Math.max(charge, Math.round(5 + q * 10), S.buddy === 'earth' ? [15, 25, 35, 50][giftTier('earth') - 1] : 0);   // a Root Stone charm can start it higher                       // 8% to 30%: a good arrival starts the Aura Glowing
-  face('happy'); cue.textContent = 'You have arrived.';
-  sub.textContent = `Luma's Aura starts ${auraName(charge)}. Match orbs to make it Heavenly.`;
-  chord([523.25, 659.25, 783.99], 0.1);
+  // letting go only counts if they held on the way in, so doing nothing never scores
+  const qTouch = qi < 0.2 ? 0 : qi * 0.5 + qo * 0.5, qMic = ln ? loud / ln : 0;
+  const q = Math.max(qTouch, qMic >= 0.35 ? Math.min(1, qMic + 0.2) : 0);
+  const tier = q >= 0.7 ? 'deep' : q >= 0.3 ? 'good' : 'calm';
+  if (tier !== 'calm' && !babyOn()) { levelBreaths++; logDay('b'); if (tier === 'deep') { deepBreaths++; logDay('d'); } }
+  const starred = tier === 'deep' || (tier === 'good' && LI + 1 <= 50);
+  charge = Math.max(charge, tier === 'deep' ? 25 : tier === 'good' ? 15 : 5, S.buddy === 'earth' ? [15, 25, 35, 50][giftTier('earth') - 1] : 0);
+  cue.textContent = 'You have arrived.';
+  sub.textContent = tier === 'calm' ? 'Luma breathed for you this time. Breathe along with her next time to earn a star.'
+    : `${tier === 'deep' ? 'A deep breath together!' : 'You breathed with Luma!'} ${starred ? 'The breath star is yours, and Luma starts brighter.' : 'Luma starts brighter.'}`;
+  if (tier !== 'calm') { const r = document.createElement('div'); r.className = 'arresult'; r.textContent = tier === 'deep' ? '★ Deep breath' : '★ Good breath'; $('#arrive .arbot').appendChild(r);
+    if (!reduce) r.animate([{ transform: 'scale(.6)', opacity: 0 }, { transform: 'scale(1.08)', opacity: 1, offset: .6 }, { transform: 'scale(1)' }], { duration: 500, easing: 'cubic-bezier(.3,1.5,.5,1)' }); chord([523.25, 659.25, 783.99, 1046.5], 0.1); }
+  else bell(523.25, 0, 0.05);
   hud();
-  await wait(1500);
-  ov.classList.remove('show'); await wait(400); ov.hidden = true;
+  await wait(2200);
+  lg.hide(); ov.classList.remove('show'); await wait(400); ov.hidden = true;
   setGroove('play');
 }
 function renderJourney() {
@@ -9236,21 +9351,33 @@ async function enterJourney() {
   en.classList.remove('show'); await wait(300); en.hidden = true;
   openWorld(0);
 }
+// Each episode opens on a living vista of its place, with the title on a gold-rimmed plaque.
+// It stays long enough to read (about four seconds); a tap moves on sooner. Baby mode skips it (no words there).
 async function playGate() {
-  const g = $('#gate'), el = L.elem;
+  if (babyOn()) return;
+  const g = $('#gate'), el = L.elem, v = $('#gateVid'), bg = $('#gateBg'), tap = $('#gateTap');
+  const ep = LI + 1, dz = DIFF[epDifficulty(ep)], cap = w => w[0].toUpperCase() + w.slice(1), [from, to] = L.shift.split(' → ');
   $('#gateOrb').innerHTML = orbHTML(el);
+  $('#gateEy').textContent = `Chapter ${Math.floor(LI / 60) + 1} · Episode ${ep}${dz.name ? ` · ⚡ ${dz.name}` : ''}`;
   $('#gateTitle').textContent = L.place;
-  $('#gateSub').textContent = `${ELEM[el].name} · ${L.shift}`;
+  $('#gateSub').textContent = `Where ${cap(from)} becomes ${cap(to)}`;
   g.querySelector('.gatein').style.setProperty('--gc', ELEM[el].hue);
-  g.hidden = false;
-  g.style.clipPath = 'circle(150% at 50% 50%)';
+  bg.hidden = v.hidden = false; bg.onerror = () => { bg.hidden = true; }; v.onerror = () => { v.hidden = true; };
+  bg.src = `img/vista/${el}.jpg?v=80`; v.src = `img/vista/${el}.mp4?v=80`;
+  v.play().catch(() => {});
+  tap.classList.remove('on');
+  g.hidden = false; g.style.clipPath = 'circle(150% at 50% 50%)';
   elemSound(el, 0, 2); bell(ELEM[el].tone, 0.15, 0.06);
-  if (reduce) { await wait(600); g.hidden = true; return; }
-  $('#gateOrb').animate([{ transform: 'scale(.4) rotate(-90deg)', opacity: 0 }, { transform: 'scale(1.1) rotate(10deg)', opacity: 1, offset: .5 }, { transform: 'scale(1)' }], { duration: 600, easing: 'cubic-bezier(.3,1.5,.5,1)' });
-  await wait(900);
-  const a = g.animate([{ clipPath: 'circle(150% at 50% 50%)' }, { clipPath: 'circle(0% at 50% 50%)' }], { duration: 520, easing: 'cubic-bezier(.6,0,.4,1)' });
+  if (reduce) { await wait(3000); g.hidden = true; v.pause(); return; }
+  [bg, v].forEach(x => x.animate([{ transform: 'scale(1.14)' }, { transform: 'scale(1)' }], { duration: 5200, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' }));
+  $('#gatePlate').animate([{ opacity: 0, transform: 'translateY(28px) scale(.95)' }, { opacity: 1, transform: 'none' }], { duration: 800, delay: 350, easing: 'cubic-bezier(.2,.9,.3,1.1)', fill: 'backwards' });
+  $('#gateOrb').animate([{ transform: 'scale(.4) rotate(-90deg)', opacity: 0 }, { transform: 'scale(1.1) rotate(10deg)', opacity: 1, offset: .6 }, { transform: 'scale(1)' }], { duration: 800, delay: 650, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' });
+  const tapped = new Promise(res => setTimeout(() => { tap.classList.add('on'); g.addEventListener('pointerdown', res, { once: true }); }, 1200));
+  await Promise.race([wait(4200), tapped]);
+  tap.classList.remove('on');
+  const a = g.animate([{ clipPath: 'circle(150% at 50% 50%)' }, { clipPath: 'circle(0% at 50% 50%)' }], { duration: 620, easing: 'cubic-bezier(.6,0,.4,1)' });
   await a.finished.catch(() => {});
-  g.hidden = true;
+  g.hidden = true; v.pause();
 }
 function toMap() {
   if (practice) { practice = null; document.body.classList.remove('practicing'); pClearFocus(); clearPreview(); }
@@ -9744,6 +9871,6 @@ syncMute(); renderMap(); streakOnOpen(); renderBal(); teaseBal(); renderWheel();
 if (!S.audio2) { S.musicOn = false; S.audio2 = 1; save(); }
 if (!S.buddy) { S.buddy = 'fire'; S.owned = [...new Set([...(S.owned || []), 'fire'])]; save(); }   // Pip is everyone's first companion   // music starts OFF for everyone
 syncMute(); syncMusic();
-renderQuests(); renderSeals(); if (S.babyMode) { S.babyLog = S.babyLog || { sessions: 0, seconds: 0 }; S.babyLog.sessions++; S.babyLog.since = Date.now(); } setBaby(S.babyMode); renderHome();
+sinkStatic(); renderQuests(); renderSeals(); if (S.babyMode) { S.babyLog = S.babyLog || { sessions: 0, seconds: 0 }; S.babyLog.sessions++; S.babyLog.since = Date.now(); } setBaby(S.babyMode); renderHome();
 })();
 </script>
