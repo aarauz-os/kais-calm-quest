@@ -152,6 +152,19 @@ body.baby #babyBar span{display:none}
 .arbar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#FFE9A8,#F2C45A)}
 .armic{font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;background:rgba(0,0,0,.3);color:#FFE9A8}
 .arresult{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:900;background:linear-gradient(#FFF1C4,#E8C063);color:#4A300A;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+/* story rescue: on story episodes the board powers a little scene above it */
+.rescue{position:relative;z-index:6;flex:none;height:min(236px,27vh);margin:4px 16px 0;border-radius:22px;overflow:hidden;background:#1D2A26;
+  box-shadow:0 0 0 2px #E3BC6A,0 0 0 5px rgba(60,38,8,.5),0 10px 24px rgba(0,0,0,.35)}
+@media (max-height:760px){.rescue{height:min(190px,25vh)}}
+#game.rescuing .boardwrap{align-items:flex-start;padding-top:10px}
+.rescue canvas{position:absolute;inset:0;width:100%;height:100%}
+.rskid{position:absolute;right:10px;bottom:10px;width:56px;height:56px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #FBF3E2,0 6px 14px rgba(0,0,0,.45);transition:transform .4s}
+.rskid img{width:100%;height:100%;object-fit:cover}
+.rskid.joy{animation:rsjoy .8s ease-in-out 3}
+@keyframes rsjoy{50%{transform:translateY(-8px) scale(1.08)}}
+.rscap{position:absolute;left:10px;top:9px;padding:4px 11px;border-radius:999px;background:rgba(8,18,14,.58);color:#FFE9A8;font-size:11px;font-weight:900;letter-spacing:.04em;max-width:70%}
+.wnode.ep{box-shadow:0 0 0 3px #FFE9A8,0 0 18px 4px rgba(255,220,140,.7) !important}
+.wnode .wep{position:absolute;left:50%;top:-13px;transform:translateX(-50%);padding:1px 7px;border-radius:999px;font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(#FFF1C4,#E8C063);color:#4A300A;box-shadow:0 2px 4px rgba(0,0,0,.35);white-space:nowrap}
 /* baby mode: no words on screen (they can't read yet); only the grown-up Stop bar */
 body.baby #bubble, body.baby #flowBar, body.baby #toast, body.baby #todayChip, body.baby #toMap, body.baby #pkPerk, body.baby #pwBar [id^="pwc-"], body.baby .tipbox{display:none!important}
 #babyBloom{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(12,22,40,0) 25%,rgba(12,22,40,.38) 100%);opacity:0;transition:opacity .6s ease}
@@ -2621,7 +2634,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
           <p class="clede">The puzzle game kids win by breathing. Clear the storm with a real, slow breath, then understand the feeling behind it.</p>
           <div class="cfaces"><img src="img/faces/hero-g1-happy.jpg" alt=""><img src="img/faces/hero-b3-happy.jpg" alt=""><img src="img/faces/hero-g4-happy.jpg" alt=""><img src="img/faces/kai-happy.jpg" alt=""><img src="img/faces/hero-g6-happy.jpg" alt=""><img src="img/faces/hero-b5-happy.jpg" alt=""><img class="cluma" src="img/faces/luma-happy.jpg" alt="Luma"><img src="img/faces/hero-g2-happy.jpg" alt=""><img src="img/faces/hero-b2-happy.jpg" alt=""><img src="img/faces/hero-g5-happy.jpg" alt=""><img src="img/faces/hero-b4-happy.jpg" alt=""><img src="img/faces/hero-g3-happy.jpg" alt=""><img src="img/faces/hero-b6-happy.jpg" alt=""></div>
           <button class="btn gold big" data-play>Play the demo</button>
-          <p class="cnote">60 episodes to play · free forever · best with the sound on</p>
+          <p class="cnote">60 puzzles and 20 story episodes · free forever · best with the sound on</p>
         </div>
       </header>
 
@@ -2667,8 +2680,8 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <ul class="cfacts">
           <li><b>12 heroes</b> kids pick to look like them, with no labels</li>
           <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
-          <li><b>A real conversation</b> each episode: you feel it, Kai gets it, Sorin helps</li>
-          <li><b>One new thing at a time.</b> Episode 1 is just matching; every third episode adds one piece, obstacle or helper with its own showcase level, and every ninth from 27 is a harder Stormy episode, with a Thunderstorm at 54</li>
+          <li><b>A real conversation</b> every third puzzle, in a story episode: you feel it, Kai gets it, Sorin helps</li>
+          <li><b>One new thing at a time.</b> Puzzle 1 is just matching. Every third puzzle is a story episode that brings one new piece, obstacle or helper, and its board powers a little story rescue above it. Puzzles 27, 36 and 45 are harder Stormy episodes, with a Thunderstorm at 54</li>
           <li><b>The game opens up as you play.</b> A new player starts with just Home, the Journey and the Shop. The streak, quests, Collection, companion, Harmony, seals, daily wheel and Season Pass arrive one at a time over the first 24 episodes, each with its own welcome</li>
           <li><b>Boards in many shapes</b>: hearts, lotus flowers, arches, towers, waves, and gentle difficulty with Luma lending extra moves when a level feels hard</li>
         </ul>
@@ -2707,7 +2720,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="ckick">What funding builds</div>
         <h2 class="display">From prototype to a household name</h2>
         <div class="cgrid">
-          <div><b>Season 1, complete</b><em>240 episodes across four chapters, each with its own obstacle and finale</em></div>
+          <div><b>Season 1, complete</b><em>240 puzzles and 80 story episodes across four chapters, each with its own obstacle and finale</em></div>
           <div><b>Voices</b><em>Sorin guiding each breath, plus the heroes and their families</em></div>
           <div><b>iPhone &amp; Android</b><em>Native apps with real mic breath-sensing and haptics</em></div>
           <div><b>Kai's village</b><em>Ten friends from every kind of family, as Season Pass story cards</em></div>
@@ -2831,6 +2844,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="todaychip" id="todayChip" hidden></div>
     <div class="babybar" id="babyBar" hidden><span>Baby mode · watching and breathing together</span><button id="babyStop">Stop</button></div>
     <div class="flowbar" id="flowBar" hidden><span id="flowText"></span></div>
+    <div class="rescue" id="rescue" hidden><canvas id="rsCv"></canvas><span class="rskid"><img id="rsKid" alt=""></span><div class="rscap" id="rsCap"></div></div>
     <div class="boardwrap" id="boardwrap">
       <div id="board" aria-label="Puzzle board"></div>
       <div class="peek" id="peek" hidden aria-hidden="true"><span class="pkglow"></span><span class="pkclip"><span id="pkImg" class="pksprite"></span></span></div>
@@ -3317,7 +3331,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="spgold" id="spGold"></div>
         <div class="passhow">
           <b>Earn XP by playing</b>
-          <span class="xpchips"><i><img src="img/ui/flame.png" alt="">Episode <b>+100</b></i><i><img src="img/ui/star.png" alt="">Each star <b>+25</b></i><i><img src="img/faces/luma-happy.jpg" alt="" class="rnd">Deep breath <b>+20</b></i><i><img src="img/ui/letter.png" alt="">Quest <b>+40</b></i><i><img src="img/ui/crown.png" alt="">Seal <b>+50</b></i></span>
+          <span class="xpchips"><i><img src="img/ui/flame.png" alt="">Puzzle <b>+100</b></i><i><img src="img/ui/star.png" alt="">Each star <b>+25</b></i><i><img src="img/faces/luma-happy.jpg" alt="" class="rnd">Deep breath <b>+20</b></i><i><img src="img/ui/letter.png" alt="">Quest <b>+40</b></i><i><img src="img/ui/crown.png" alt="">Seal <b>+50</b></i></span>
           <em>Rewards never expire. No timers. Play at your own pace.</em>
         </div>
       </div>
@@ -3486,6 +3500,9 @@ const BASE_LEVELS = [
 // else is spaced so each new thing gets several levels to settle before the next arrives.
 // every new thing lands on a multiple of 3; multiples of 9 from 27 are Stormy episodes, so the two never meet
 const FEAT_AT = { breath: 3, row: 6, clouds: 9, monkey: 12, bomb: 15, charms: 18, knots: 21, fly: 24, tiger: 30, storm: 33, feed: 39, bear: 42, glow: 48, spirit: 51, crane: 57, deer: 60 };
+// A's structure (2026-09-18): every level is a Puzzle; every 3rd puzzle is a story Episode (story + story rescue).
+const isEpisode = n => n % 3 === 0;
+const lvLabel = (n, long) => isEpisode(n) ? `Episode ${n / 3}${long ? ` · Puzzle ${n}` : ''}` : `Puzzle ${n}`;
 const INTRO_AT = Object.fromEntries(Object.entries(FEAT_AT).map(([k, v]) => [v, k]));
 const reached = () => Math.max(S && S.unlocked || 1, (typeof LI === 'number' ? LI : 0) + 1);
 const featOn = (k, ep = (typeof LI === 'number' ? LI : 0) + 1) => babyOn() || ep >= FEAT_AT[k];   // baby mode has everything, no waiting
@@ -4428,7 +4445,7 @@ const buddyWho = (el, st = careStage(el)) => `buddy-${el}${stageKey(el, st) ? '-
 const caredToday = el => bondOf(el).last === dayKey();
 const ROMAN = ['I', 'II', 'III', 'IV'];
 const GIFT_TIERS = {
-  water: ['+3 moves in every episode', '+4 moves in every episode', '+5 moves in every episode', '+6 moves and a free Bear Stomp in every episode'],
+  water: ['+3 moves in every puzzle', '+4 moves in every puzzle', '+5 moves in every puzzle', '+6 moves and a free Bear Stomp in every puzzle'],
   wood: ['A free Deer Leap every day you practise', 'A free Deer Leap every day, and a Lantern waiting on the board', 'Two free Deer Leaps every day, and a Lantern on the board', 'Two free Deer Leaps every day, and a Lantern and a Blossom on the board'],
   fire: ['Every match lights 1 extra orb for the Creation Cycle', 'Every match lights 2 extra orbs', 'Every match lights 3 extra orbs', '3 extra lit orbs, and a free Hawk Dive in every episode'],
   earth: ["Luma's Aura never starts below 15%", "Luma's Aura never starts below 25%", "Luma's Aura never starts below 35%", 'Luma starts at 50%, and a free Monkey Swap in every episode'],
@@ -4573,7 +4590,7 @@ $('#earlyPass').addEventListener('click', () => {
 
 /* ---------- Spirit Companions: each one brings a real, fair gift while they're with you ---------- */
 const GIFTS = {
-  water: { icon: '🌊', name: 'Calm Waters', text: '+3 moves in every episode' },
+  water: { icon: '🌊', name: 'Calm Waters', text: '+3 moves in every puzzle' },
   earth: { icon: '⛰', name: 'Steady Ground', text: "Luma's Aura never starts below 15%" },
   fire: { icon: '✦', name: 'Warm Heart', text: 'Every match lights one extra orb for the Creation Cycle' },
   metal: { icon: '🌬', name: 'Clear Lungs', text: 'A deep breath clears one extra cloud' },
@@ -5044,7 +5061,7 @@ function renderHome() {
   const next = Math.min(S.unlocked, LEVELS.length) - 1;
   $('#places').innerHTML = LEVELS.map((l, i) => `<button class="lvmed ${i + 1 > S.unlocked ? 'locked' : ''} ${i === next ? 'next' : ''}" data-lv="${i}" aria-label="${l.place}">${orbHTML(l.elem)}<span class="st">${'★'.repeat(S.stars[i + 1] || 0)}</span></button>`).join('');
   const dz = DIFF[epDifficulty(next + 1)];
-  $('#playNext').innerHTML = `Play<small>Episode ${next + 1} · ${LEVELS[next].place}${dz.name ? ` · ⚡ ${dz.name}` : ''}</small>`;
+  $('#playNext').innerHTML = `Play<small>${lvLabel(next + 1, true)} · ${LEVELS[next].place}${dz.name ? ` · ⚡ ${dz.name}` : ''}</small>`;
   $('#playNext').classList.toggle('stormy', !!dz.name);
   startHomeFx(el, tod);
   renderSorin();
@@ -5205,7 +5222,7 @@ function dpFinish(id, feelEl) {
   const bd = bondAdd(el, 1);
   if (bd.to > bd.from) dpFinish.evolve = { el, ...bd };
   got.push([`img/${buddyWho(el)}.jpg`, `+1 Bond for ${BUDDY[el].name}`]);
-  if (featOn('breath', reached())) { S.warm = Math.min(3, (S.warm || 0) + 1); got.push(['img/faces/luma-happy.jpg', "Luma's Aura starts warm in your next episode"]); }
+  if (featOn('breath', reached())) { S.warm = Math.min(3, (S.warm || 0) + 1); got.push(['img/faces/luma-happy.jpg', "Luma's Aura starts warm in your next puzzle"]); }
   if (first) {
     S.dpDays = [...new Set([...(S.dpDays || []), today])].slice(-180);
     const fl = feelEl || TYPES[((daysBetween('2026-01-01', today) % 5) + 5) % 5];
@@ -5224,7 +5241,7 @@ function dpFinish(id, feelEl) {
   if (dpWeekDays() >= 3 && S.dpGiftWk !== wk) {
     S.dpGiftWk = wk; S.coins += 300; S.warm = 3;
     if (featEver('charms')) CHARMS.forEach(c => { S.charms[c.id] = (S.charms[c.id] || 0) + 1; });
-    got.push(['img/ui/coins.png', `Sorin's weekly gift: 300 coins${featEver('charms') ? ', a charm of each kind' : ''} and a warm Aura for your next 3 episodes`]);
+    got.push(['img/ui/coins.png', `Sorin's weekly gift: 300 coins${featEver('charms') ? ', a charm of each kind' : ''} and a warm Aura for your next 3 puzzles`]);
   }
   save(); syncWallet(); bumpTally('practice');
   return got;
@@ -5260,18 +5277,143 @@ async function babyInterlude(pal) {
   box.classList.remove('on'); await wait(700); box.hidden = true; v.pause();
 }
 
+/* ---------- Story rescues ----------
+   On a story episode the match-3 board powers a little scene above it, in the spirit of Royal Kingdom's rescue
+   levels but calm: the child guides something good to someone who needs it. Collecting the goal orbs opens the
+   path gate by gate; Luma's breath pushes the flow along. Prototype: Episode 1 (Puzzle 3, Valley of Echoes, Fire).
+   The story line (say) is a placeholder until Demaris and the counselor review it. */
+const RESCUES = {
+  3: { bg: 'img/vista/fire.jpg', crop: .46, cap: 'Guide the fireflies to your lantern',
+    say: "When you're this fizzy, slow light helps. Fireflies love it. Match the Fire orbs to open the path, and guide them to your lantern.",
+    glow: [255, 214, 110], faceFrom: 'cheer', faceTo: 'calm',
+    path: [[.06, .22], [.22, .16], [.4, .22], [.44, .38], [.3, .5], [.18, .62], [.3, .8], [.5, .84], [.62, .7], [.74, .62]],
+    gates: [.2, .42, .63, .84], need: 16 }
+};
+let RS = null, rsRun = 0;
+function rescueStop() { rsRun++; RS = null; $('#rescue').hidden = true; $('#game').classList.remove('rescuing'); }
+function rescueStart() {
+  const cfg = RESCUES[LI + 1];
+  if (!cfg || babyOn() || practice) { rescueStop(); return; }
+  const box = $('#rescue'); box.hidden = false; $('#game').classList.add('rescuing');
+  $('#peekRow').hidden = true; $('#peek').hidden = true; $('#pkPerk').hidden = true;
+  $('#rsKid').src = faceSrc(heroId(), cfg.faceFrom); $('.rskid').classList.remove('joy');
+  $('#rsCap').textContent = cfg.cap;
+  const bg = new Image(); bg.src = cfg.bg;
+  RS = { cfg, bg, flies: [], opened: 0, gateFx: [], fill: 0, push: 0, sparks: [], t: 0, run: ++rsRun, done: false };
+  let last = performance.now();
+  const tick = now => {
+    if (!RS || RS.run !== rsRun) return;
+    const dt = Math.min(50, now - last) / 1000; last = now;
+    rsStep(dt); rsDraw();
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+function rsGeom() {
+  const cv = $('#rsCv'), dpr = Math.min(2, devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
+  if (cv.width !== Math.round(W * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+  const pts = RS.cfg.path.map(([x, y]) => [x * W, y * H]), seg = []; let L0 = 0;
+  for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); seg.push(d); L0 += d; }
+  return { cv, dpr, W, H, pts, seg, len: L0 };
+}
+function rsAt(g, s) {                                   // point and direction at fraction s of the path
+  let d = Math.max(0, Math.min(1, s)) * g.len;
+  for (let i = 0; i < g.seg.length; i++) {
+    if (d <= g.seg[i] || i === g.seg.length - 1) { const a = g.pts[i], b = g.pts[i + 1], k = g.seg[i] ? Math.min(1, d / g.seg[i]) : 0;
+      return [a[0] + (b[0] - a[0]) * k, a[1] + (b[1] - a[1]) * k, Math.atan2(b[1] - a[1], b[0] - a[0])]; }
+    d -= g.seg[i];
+  }
+  return [...g.pts[g.pts.length - 1], 0];
+}
+const rsProgress = () => { if (!RS || !L) return 0; if (typeof goalsDone === 'function' && goalsDone()) return 1; return L.gems ? Math.min(1, (levelTally[L.elem] || 0) / L.gems) : 0; };
+function rsStep(dt) {
+  const c = RS.cfg; RS.t += dt;
+  const want = Math.min(c.gates.length, Math.floor(rsProgress() * c.gates.length + 1e-6));
+  while (RS.opened < want) {                            // the next gate parts
+    RS.gateFx.push({ i: RS.opened, t: 0 }); RS.opened++;
+    bell(659.25 + RS.opened * 60, 0, 0.05); boop(4 + RS.opened, 0.05);
+    RS.push = Math.max(RS.push, 1.2); setTimeout(() => { if (RS) RS.push = Math.max(0, RS.push - 1.2); }, 1400);
+  }
+  const limit = RS.opened < c.gates.length ? c.gates[RS.opened] - 0.015 : 1;
+  while (RS.flies.length < 30) RS.flies.push({ s: Math.random() * 0.05, v: 0.5 + Math.random() * 0.6, ph: Math.random() * 6.28, off: (Math.random() - 0.5) * 12 });
+  RS.flies.forEach(f => {
+    f.ph += dt * (2 + f.v);
+    const sp = 0.035 * f.v * (1 + RS.push * 2.2);
+    if (f.s < limit) f.s = Math.min(limit - Math.random() * 0.025, f.s + sp * dt);
+    else f.s -= dt * 0.004;                            // waiting at a gate, gently milling
+    if (limit >= 1 && f.s >= 0.985) { f.arrived = true; RS.fill = Math.min(1, RS.fill + 1 / 18); }
+  });
+  RS.flies = RS.flies.filter(f => !f.arrived);
+  RS.gateFx.forEach(g => g.t += dt); RS.gateFx = RS.gateFx.filter(g => g.t < 0.9);
+}
+function rsDraw() {
+  const g = rsGeom(), x = g.cv.getContext('2d'), c = RS.cfg, [gr, gg, gb] = c.glow;
+  x.setTransform(g.dpr, 0, 0, g.dpr, 0, 0); x.clearRect(0, 0, g.W, g.H);
+  if (RS.bg.complete && RS.bg.naturalWidth) {          // a band of the place's vista, gently drifting
+    const iw = RS.bg.naturalWidth, ih = RS.bg.naturalHeight, sw = iw, sh = iw * g.H / g.W, sy = Math.max(0, Math.min(ih - sh, ih * c.crop - sh / 2 + Math.sin(RS.t * 0.2) * 6));
+    x.drawImage(RS.bg, 0, sy, sw, sh, 0, 0, g.W, g.H);
+  }
+  x.fillStyle = 'rgba(10,14,20,.28)'; x.fillRect(0, 0, g.W, g.H);
+  // the path: a soft groove, lit as far as the flow can reach
+  const trace = (to) => { x.beginPath(); const n = 60; for (let k = 0; k <= n; k++) { const [px, py] = rsAt(g, to * k / n); k ? x.lineTo(px, py) : x.moveTo(px, py); } };
+  x.lineCap = 'round'; x.lineJoin = 'round';
+  trace(1); x.strokeStyle = 'rgba(30,16,8,.45)'; x.lineWidth = 16; x.stroke();
+  trace(1); x.strokeStyle = 'rgba(255,236,200,.16)'; x.lineWidth = 8; x.stroke();
+  const reach = RS.opened < c.gates.length ? c.gates[RS.opened] : 1;
+  trace(reach); x.strokeStyle = `rgba(${gr},${gg},${gb},.35)`; x.lineWidth = 8; x.shadowColor = `rgba(${gr},${gg},${gb},.9)`; x.shadowBlur = 12; x.stroke(); x.shadowBlur = 0;
+  // the meadow the fireflies come from
+  const [sx, sy0] = rsAt(g, 0), mg = x.createRadialGradient(sx, sy0, 2, sx, sy0, 30);
+  mg.addColorStop(0, `rgba(${gr},${gg},${gb},.55)`); mg.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = mg; x.beginPath(); x.arc(sx, sy0, 30, 0, 6.3); x.fill();
+  // gates still closed: soft bramble knots; opening ones burst into sparkles
+  c.gates.forEach((gs, i) => {
+    const [px, py] = rsAt(g, gs), fx = RS.gateFx.find(e => e.i === i);
+    if (i < RS.opened && !fx) return;
+    const k = fx ? fx.t / 0.9 : 0, sc = 1 + k * 0.6, al = 1 - k;
+    x.save(); x.translate(px, py); x.scale(sc, sc); x.globalAlpha = al;
+    [[-6, 2, 8, '#6B4A2A'], [6, 2, 8, '#7A5530'], [0, -5, 9, '#5E4226'], [0, 4, 7, '#8A6238']].forEach(([ox, oy, r, col]) => { x.fillStyle = col; x.beginPath(); x.arc(ox, oy, r, 0, 6.3); x.fill(); });
+    [[-9, -6], [9, -5], [0, -12], [-3, 8], [7, 7]].forEach(([ox, oy]) => { x.fillStyle = '#7FBF6A'; x.beginPath(); x.ellipse(ox, oy, 4, 2.4, ox * .1, 0, 6.3); x.fill(); });
+    if (fx) for (let s = 0; s < 8; s++) { const a = s / 8 * 6.28, r = 6 + k * 26; x.fillStyle = `rgba(${gr},${gg},${gb},${al})`; x.beginPath(); x.arc(Math.cos(a) * r, Math.sin(a) * r, 2.2, 0, 6.3); x.fill(); }
+    x.restore();
+  });
+  // the lantern at the end of the path, filling with light
+  const [lx, ly] = rsAt(g, 1), f = RS.fill;
+  if (f > 0) { const hg = x.createRadialGradient(lx, ly, 2, lx, ly, 26 + f * 26); hg.addColorStop(0, `rgba(${gr},${gg},${gb},${.35 + f * .45})`); hg.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = hg; x.beginPath(); x.arc(lx, ly, 52, 0, 6.3); x.fill(); }
+  x.fillStyle = '#5E3616'; x.fillRect(lx - 7, ly - 17, 14, 4); x.fillRect(lx - 7, ly + 13, 14, 4);
+  const lg = x.createLinearGradient(0, ly - 14, 0, ly + 14); lg.addColorStop(0, `rgba(${Math.round(120 + f * 135)},${Math.round(70 + f * 160)},${Math.round(40 + f * 120)},1)`); lg.addColorStop(1, `rgba(${Math.round(90 + f * 150)},${Math.round(40 + f * 150)},${Math.round(30 + f * 60)},1)`);
+  x.fillStyle = lg; x.beginPath(); x.ellipse(lx, ly, 12, 14, 0, 0, 6.3); x.fill();
+  x.strokeStyle = 'rgba(94,54,22,.6)'; x.lineWidth = 1; [-5, 0, 5].forEach(o => { x.beginPath(); x.ellipse(lx, ly, Math.abs(o) ? 12 - Math.abs(o) : 1, 14, 0, 0, 6.3); x.stroke(); });
+  // fireflies
+  RS.flies.forEach(fl => {
+    const [px, py, an] = rsAt(g, fl.s), w = Math.sin(fl.ph) * 5 + fl.off * 0.5, qx = px - Math.sin(an) * w, qy = py + Math.cos(an) * w, bl = 0.55 + 0.45 * Math.sin(fl.ph * 1.7);
+    const fg = x.createRadialGradient(qx, qy, 0, qx, qy, 13); fg.addColorStop(0, `rgba(${gr},${gg},${gb},${bl})`); fg.addColorStop(.35, `rgba(${gr},${gg},${gb},${.45 * bl})`); fg.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = fg; x.beginPath(); x.arc(qx, qy, 13, 0, 6.3); x.fill();
+    x.fillStyle = `rgba(255,253,236,${.6 + .4 * bl})`; x.beginPath(); x.arc(qx, qy, 2.6, 0, 6.3); x.fill();
+  });
+}
+// the last gate opens: every firefly settles into the lantern, it glows, and you calm
+async function rescueFinish() {
+  if (!RS || RS.done) return; RS.done = true; clearHints(); say('');
+  RS.push = 3; const t0 = performance.now();
+  while (RS && RS.fill < 1 && performance.now() - t0 < 3200) await wait(80);
+  if (!RS) return;
+  RS.fill = 1; RS.flies.forEach(f => { f.s = 0.99; });
+  $('#rsKid').src = faceSrc(heroId(), RS.cfg.faceTo); $('.rskid').classList.add('joy');
+  chord([523.25, 659.25, 783.99, 1046.5], 0.09);
+  await wait(reduce ? 200 : 1200);
+}
+
 /* ---------- Sections that open as you play ---------- */
 const SEC_SEL = { practice: '[data-open="dpOpen"]', streak: '[data-open="streakChip"]', quests: '[data-open="questCard"]', wheel: '[data-open="wheelCard"]', buddy: '[data-open="buddyCard"]', seals: '[data-open="sealCard"]', collection: '#tabbar [data-tab="collection"]', harmony: '#tabbar [data-tab="harmony"]', pass: '.homepass' };
 const SEC_CARD = {
-  practice: ["Today's practice", 'img/sorin-3d.jpg', 'Sorin has three tiny practices for you every day. Each one helps your companion grow and warms up Luma for your next episode.'],
-  streak: ['Daily streak', 'img/icons/icon-streak-3d.jpg', 'Practise or play one episode a day to grow your streak. Every few days brings a gift.'],
+  practice: ["Today's practice", 'img/sorin-3d.jpg', 'Sorin has three tiny practices for you every day. Each one helps your companion grow and warms up Luma for your next puzzle.'],
+  streak: ['Daily streak', 'img/icons/icon-streak-3d.jpg', 'Practise or play one puzzle a day to grow your streak. Every few days brings a gift.'],
   quests: ["Today's quests", 'img/icons/icon-quests-3d.jpg', 'Three small things to try each day. Finish all three for a chest.'],
   collection: ['Collection', 'img/ui/journal.png', 'Everything you find on your journey is kept here, ready to look back on.'],
   buddy: ['Your companion', 'img/icons/icon-buddy-3d.jpg', 'Your companion has a home of its own now. Visit, breathe together and watch it grow.'],
   harmony: ['Harmony', null, 'See how your five elements are glowing, and which one could use a little care.'],
   seals: ['Spirit Seals', 'img/icons/icon-seal-3d.jpg', 'Special seals for special moments. Collect them all in your book.'],
   wheel: ['Daily wheel', 'img/icons/icon-wheel-3d.jpg', "Spin once a day to choose today's element and find a small gift."],
-  pass: ['Season Pass', 'img/pass/trophy-lotus.png', 'Every episode now earns Spirit Stars. Spend them on pages of rewards all season long.']
+  pass: ['Season Pass', 'img/pass/trophy-lotus.png', 'Every puzzle now earns Spirit Stars. Spend them on pages of rewards all season long.']
 };
 function applySections() {
   Object.entries(SEC_SEL).forEach(([k, sel]) => $$(sel).forEach(x => { x.hidden = !secOn(k); }));
@@ -5551,19 +5693,23 @@ async function runStory() {
   stBgFront = 0; $('#stBg').style.opacity = 1; $('#stBg2').style.opacity = 0;
   $('#stBg').style.backgroundImage = `url(${storyBg(0, 'hero')})`;
   const dd = DIFF[epDifficulty(LI + 1)];
-  $('#stVerb').textContent = `Chapter 1 · Episode ${LI + 1}${dd.name ? ` · ⚡ ${dd.name} (${dd.label})` : ''} · ${EMO_VERB[L.elem]}`;
+  $('#stVerb').textContent = `Chapter 1 · ${lvLabel(LI + 1, true)}${dd.name ? ` · ⚡ ${dd.name} (${dd.label})` : ''} · ${EMO_VERB[L.elem]}`;
   $('#stName').textContent = L.place;
   st.style.setProperty('--sg', ELEM[L.elem].glow);
   const g = goalNums();
-  const beats = [
+  const epi = isEpisode(LI + 1), rs = RESCUES[LI + 1];
+  const beats = !epi ? [] : [
     { who: heroId(), voice: 'hero', name: 'You', text: storyLines(L).you[0], face: storyLines(L).you[1] },
     // the friend who makes you feel seen; if you're playing as Kai, Luma is that friend
     heroId() === 'kai'
       ? { who: 'luma', voice: 'luma', name: 'Luma', text: storyLines(L).kai[0], face: 'happy' }
       : { who: 'kai', voice: 'hero', name: 'Kai', text: storyLines(L).kai[0], face: storyLines(L).kai[1] },
     { who: 'sorin', voice: 'sorin', name: 'Sorin', text: storyLines(L).sorin, face: 'calm' },
-    { who: 'luma', voice: 'luma', name: 'Luma', goal: g.clouds > 0 && (L.intro === 'clouds' || !(S.seen || {}).goaldemo), text: GOAL_LINE(g.clouds, g.moves) }
+    rs ? { who: 'luma', voice: 'luma', name: 'Luma', face: 'happy', text: rs.say }
+      : { who: 'luma', voice: 'luma', name: 'Luma', goal: g.clouds > 0 && (L.intro === 'clouds' || !(S.seen || {}).goaldemo), text: GOAL_LINE(g.clouds, g.moves) }
   ];
+  // puzzles between episodes go straight to the board; they only stop to show a goal the first time
+  if (!epi && g.clouds > 0 && !(S.seen || {}).goaldemo) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', goal: true, text: GOAL_LINE(g.clouds, g.moves) });
   if (featOn('feed') && !(S.seen || {}).feed) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', demo: 'feed', text: {
     '2-4': "Look! Wood makes Fire glow. Match Wood, then pop the glowing Fire!",
     '5-7': "Here's a secret: the elements help each other. Wood feeds Fire, Fire makes Earth, and so on. Match one, and the next one lights up. Lit orbs make me glow twice as much.",
@@ -5829,7 +5975,7 @@ function eqHTML(n, sp) {
 function introCardHTML(k) {
   const c = INTRO_CARD[k]; if (!c) return '';
   const art = c.pw ? `<img class="icimg" src="img/ui/pw-${PW_IMG[c.pw]}.png" alt=""><span class="icfree">×3 free</span>` : c.art();
-  return `<div class="introcard ${c.pw ? 'pw' : ''}"><span class="icnew">New!</span><div class="icart">${art}</div><b class="display">${c.t}</b><small>Episode ${LI + 1}</small></div>`;
+  return `<div class="introcard ${c.pw ? 'pw' : ''}"><span class="icnew">New!</span><div class="icart">${art}</div><b class="display">${c.t}</b><small>${lvLabel(LI + 1)}</small></div>`;
 }
 function grantIntro(k) {
   const c = INTRO_CARD[k]; if (!c || !c.pw || babyOn()) return;
@@ -5893,7 +6039,7 @@ function showLoadout() {
   $('#loOrb').innerHTML = orbHTML(L.elem);
   $('#loVerb').textContent = EMO_VERB[L.elem];
   $('#loName').textContent = L.place;
-  $('#loEp').textContent = `Episode ${LI + 1}`;
+  $('#loEp').textContent = lvLabel(LI + 1, true);
   $('#loCharmT').hidden = $('#loCharmTray').hidden = !featOn('charms'); if (!featOn('charms')) charmPick.clear();
   renderCharms(); renderGoal();
   lo.hidden = false; void lo.offsetWidth; lo.classList.add('up'); $('#story').classList.add('lo-up');
@@ -5906,7 +6052,7 @@ function renderGoal() {
   if (d.name) { S.seen['diff-' + g.diff] = 1; save(); }
   $('#loadout').classList.toggle('stormy', !!d.name);
   const st = $('#loStorm'); st.hidden = !d.name;
-  if (d.name) st.innerHTML = `<img src="img/pass/goal-cloud.png" alt=""><b>⚡ ${d.name} episode</b><span>${d.label} · rewards ×${d.coin}</span>${firstStorm ? `<em>A little harder, and it pays ${d.coin === 2 ? 'double' : 'triple'}. Take your time. If it doesn't work out, Luma lends you extra moves next try.</em>` : ''}`;
+  if (d.name) st.innerHTML = `<img src="img/pass/goal-cloud.png" alt=""><b>⚡ ${d.name} ${isEpisode(LI + 1) ? 'episode' : 'puzzle'}</b><span>${d.label} · rewards ×${d.coin}</span>${firstStorm ? `<em>A little harder, and it pays ${d.coin === 2 ? 'double' : 'triple'}. Take your time. If it doesn't work out, Luma lends you extra moves next try.</em>` : ''}`;
   $('#loMoves').innerHTML = `<i>↻</i>${g.moves} moves`;
   const tile = (img, n, label) => `<div class="lotile"><span class="gimg">${img}</span><b>${n}</b><small>${label}</small></div>`;
   $('#loGoal').innerHTML = (g.clouds ? tile('<img src="img/pass/goal-cloud.png" alt="">', g.clouds, 'storm clouds') : '')
@@ -6702,7 +6848,7 @@ async function settle() {
   hud();
   if (practice) { busy = false; const f = practice.onSettle; practice.onSettle = null; if (f) f(); return; }
   if (lab) { busy = false; return; }
-  if (goalsDone()) { busy = true; await winLevel(); return; }
+  if (goalsDone()) { busy = true; await rescueFinish(); await winLevel(); return; }
   if (moves <= 0 && charge < 100 && !babyOn()) { busy = true; await wait(400); loseLevel(); return; }
   if (!hasMove()) { say('No swaps left, so Luma is stirring the orbs.'); await shuffle(); }
   busy = false;
@@ -7128,6 +7274,7 @@ function lumaAim(d) {
   });
 }
 async function lumaDive(t, d) {
+  if (RS) { RS.push = 3; setTimeout(() => { if (RS) RS.push = 0; }, 2600); }   // Luma's breath pushes the rescue flow along
   boardEl.classList.remove('aiming', 'diving'); clearPreview();
   const bar = $('#flowBar'); bar.hidden = true; bar.innerHTML = '<span id="flowText"></span>';
   if (!t) return;
@@ -7575,6 +7722,7 @@ function setPose(pose) { const im = $('#pkImg'); if (im) im.style.setProperty('-
 function sinkStatic() { $$('.chold .hsprite').forEach(x => { const m = /holds\/([a-z-]+)\.png/.exec(x.style.backgroundImage); if (m) x.style.setProperty('--sink', HOLD_SINK[m[1]] ?? .06); }); }
 function placePeek() {
   const row = $('#peekRow'), pk = $('#peek'), rail = $('#pkPerk'); if (!row || $('#game').hidden) return;
+  if (RS) { row.hidden = pk.hidden = rail.hidden = true; return; }        // a story rescue uses this space
   row.hidden = false; pk.hidden = false; rail.hidden = false; $('#buddyWrap').hidden = true;
   const gm = $('#game'); [...gm.classList].filter(c => c.startsWith('bs-')).forEach(c => gm.classList.remove(c)); if (S.bstyle) gm.classList.add('bs-' + S.bstyle);
   const tc = $('#todayChip'); if (tc && tc.parentNode !== row) row.appendChild(tc);
@@ -8040,7 +8188,7 @@ function shockwave(arr, juice) {
   }
 }
 // ?fx=1 exposes the effects so a demo can fire them on cue
-if (/[?&]fx=1/.test(location.search)) window.kcqFx = { dpTry: id => { try { const pr = runDaily(id); return pr.then(() => 'done', e => String(e && e.stack)).then(x => x); } catch (e) { return String(e.stack); } }, babyInter: pal => babyInterlude(pal), babyState: () => ({ babyIx, busy, charge, shape: L && L.shape, R, C, pal: peekWho(), peekHidden: $('#peek').hidden, clouds: clouds().length, bubble: getComputedStyle($('#bubble')).display }), fillAura: () => { charge = 100; hud(); }, hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
+if (/[?&]fx=1/.test(location.search)) window.kcqFx = { rsSet: n => { levelTally[L.elem] = n; hud(); return { gems: L.gems, opened: RS && RS.opened, fill: RS && RS.fill }; }, rsWin: async () => { levelTally[L.elem] = L.gems; hud(); await settle(); return 'won'; }, dpTry: id => { try { const pr = runDaily(id); return pr.then(() => 'done', e => String(e && e.stack)).then(x => x); } catch (e) { return String(e.stack); } }, babyInter: pal => babyInterlude(pal), babyState: () => ({ babyIx, busy, charge, shape: L && L.shape, R, C, pal: peekWho(), peekHidden: $('#peek').hidden, clouds: clouds().length, bubble: getComputedStyle($('#bubble')).display }), fillAura: () => { charge = 100; hud(); }, hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
   TYPES.forEach((t, i) => setTimeout(() => elemSound(t, (i - 2) * 0.35, 4, 0), i * 70));
@@ -8541,7 +8689,7 @@ function startLevel() {
   makeRig($('#kaiFace'), heroId()); applyLooks();
   paintBuddyGame();
   syncBoosts();
-  placePeek();
+  placePeek(); rescueStart();
   const gateDone = playGate();
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); const warmed = dpWarm(); hud();
@@ -8673,7 +8821,7 @@ async function openWorld(i = 0, dir = 0) {
   $('#wSeason').hidden = season === 1;
   $('#wSeason').innerHTML = `<span>Season ${season}<small>coming after Season 1</small></span>`;
   $('#wName').textContent = WI === 0 ? 'First Breaths' : ch.name;
-  $('#wCount').textContent = `Ep ${WI * 60 + 1}–${WI * 60 + 60}`;
+  $('#wCount').textContent = `Puzzles ${WI * 60 + 1}–${WI * 60 + 60}`;
   $('#wVerb').textContent = ch.verb;
   const n = chapterBoard(WI);
   $('#wMeta').textContent = WI === 0 ? `Meet all five feelings · ${n}×${n} board · earn ${ch.reward}` : `Goes deeper each episode: notice → name → why → what helps → help a friend · earn ${ch.reward}`;
@@ -8688,7 +8836,7 @@ async function openWorld(i = 0, dir = 0) {
     const real = pn <= LEVELS.length, open = real && pn <= (S.unlocked || 1), st = (S.stars || {})[pn] || 0;
     const isCur = real && pn === cur && WI === 0;
     const df = epDifficulty(pn);
-    return `<button class="wnode ${open ? '' : 'locked'} ${isCur ? 'current' : ''} ${df !== 'normal' ? df : ''}" data-place="${pn}" style="left:${WPTS[k][0]}%;top:${WPTS[k][1]}%">${df !== 'normal' ? `<span class="wdiff">${df === 'super' ? '⚡⚡' : '⚡'}</span>` : ''}${pn}${open && st ? `<span class="wst">${'★'.repeat(st)}</span>` : ''}${open ? '' : '<span class="wlock">🔒</span>'}</button>`;
+    return `<button class="wnode ${open ? '' : 'locked'} ${isCur ? 'current' : ''} ${df !== 'normal' ? df : ''} ${isEpisode(pn) ? 'ep' : ''}" data-place="${pn}" style="left:${WPTS[k][0]}%;top:${WPTS[k][1]}%">${isEpisode(pn) ? '<span class="wep">Story</span>' : ''}${df !== 'normal' ? `<span class="wdiff">${df === 'super' ? '⚡⚡' : '⚡'}</span>` : ''}${pn}${open && st ? `<span class="wst">${'★'.repeat(st)}</span>` : ''}${open ? '' : '<span class="wlock">🔒</span>'}</button>`;
   }).join('') + (WI === 0 ? (() => { const k = cur - 1; return k < WPTS.length ? `<span class="wme" style="left:${WPTS[k][0]}%;top:${WPTS[k][1]}%"><img src="${faceSrc(heroId(), 'happy')}" alt=""></span>` : ''; })() : '');
   // the feeling at the top
   const boss = $('#wBoss'), known = WI === 0 || FEEL_ART[ch.name] || WI === 15;
@@ -8740,7 +8888,7 @@ $('#wNodes').addEventListener('click', async e => {
     b.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-5px)' }, { transform: 'translateX(5px)' }, { transform: 'translateX(0)' }], { duration: 260 });
     bell(392, 0, 0.05);
     const layer = LAYERS[(pn - 1) % 60 < 8 ? (pn - 1) % 60 : 7];
-    toast(pn <= LEVELS.length ? `Finish episode ${pn - 1} to open this one.` : WI === 0 ? `Episode ${pn} opens as the season grows.` : `Episode ${pn} · ${layer}: ${CHAPTERS[WI].name}. Opens as the season grows.`);
+    toast(pn <= LEVELS.length ? `Finish puzzle ${pn - 1} to open this one.` : WI === 0 ? `${lvLabel(pn)} opens as the season grows.` : `${lvLabel(pn)} · ${layer}: ${CHAPTERS[WI].name}. Opens as the season grows.`);
     return;
   }
   chord([659.25, 783.99, 1046.5], 0.05);
@@ -8752,7 +8900,7 @@ $('#wBoss').addEventListener('click', () => {
   img.src = $('#wBossImg').src; img.className = WI === 0 || WI === 15 ? 'wide' : '';
   img.style.filter = known ? '' : 'brightness(.12) saturate(0)';
   $('.bosscard').style.setProperty('--bg', ch.elem === 'all' ? '#FFE9A8' : ELEM[ch.elem].glow);
-  $('#bossEyebrow').textContent = `Chapter ${WI + 1} finale · episode ${WI * 60 + 60}`;
+  $('#bossEyebrow').textContent = `Chapter ${WI + 1} finale · ${lvLabel(WI * 60 + 60, true)}`;
   $('#bossTitle').textContent = WI === 0 ? 'The Round Table' : known ? ch.name : 'A new feeling';
   $('#bossText').textContent = WI === 0
     ? 'At the end of this world, all five feelings meet you at once: Anger, the Fizzies, Worry, Sadness and Fear. Calm sits with them too. Every one of them is welcome at the table.'
@@ -9056,7 +9204,7 @@ function renderWhy() {
   const fmt = d => new Date(d + 'T12:00:00').toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
   $('#wkRange').textContent = `${fmt(days[0])} – ${fmt(days[6])}`;
   const first = S.firstDay || Object.keys(S.wk || {}).sort()[0], weekIn = first && daysBetween(first, dayKey()) >= 6;
-  $('#wkCard').innerHTML = !weekIn ? `<div class="wkempty">Your first weekly calm summary arrives after a week of play.<br>Every calm breath, episode and bedtime will show up here.</div>` : !active ? `<div class="wkempty">This week's summary starts with the first breath.<br>Every calm breath, episode and bedtime shows up here.</div>` :
+  $('#wkCard').innerHTML = !weekIn ? `<div class="wkempty">Your first weekly calm summary arrives after a week of play.<br>Every calm breath, puzzle and bedtime will show up here.</div>` : !active ? `<div class="wkempty">This week's summary starts with the first breath.<br>Every calm breath, episode and bedtime shows up here.</div>` :
     `<div class="wkbars">${rows.map((r, i) => { const v = r.b + r.c, day = new Date(days[i] + 'T12:00:00').toLocaleDateString(undefined, { weekday: 'narrow' }); return `<div class="wkbar ${i === 6 ? 'today' : ''}"><small>${v || ''}</small><i class="${v ? '' : 'zero'}" style="height:${Math.max(4, v / max * 80)}px"></i><span>${day}</span></div>`; }).join('')}</div>
     <div class="wkstats"><div><b>${tot('b') + tot('c')}</b><small>calm breaths</small></div><div><b>${tot('d')}</b><small>deep breaths</small></div><div><b>${tot('e')}</b><small>episodes</small></div><div><b>${active}/7</b><small>days practised</small></div></div>
     ${top.length ? `<div class="wkfeel">Feelings explored this week<div class="chips">${top.map(([k, v]) => `<span style="--c:${ELEM[k].glow}">${FEEL_OF[k]} · ${v}</span>`).join('')}</div></div>
@@ -9356,9 +9504,9 @@ async function enterJourney() {
 async function playGate() {
   if (babyOn()) return;
   const g = $('#gate'), el = L.elem, v = $('#gateVid'), bg = $('#gateBg'), tap = $('#gateTap');
-  const ep = LI + 1, dz = DIFF[epDifficulty(ep)], cap = w => w[0].toUpperCase() + w.slice(1), [from, to] = L.shift.split(' → ');
+  const ep = LI + 1, dz = DIFF[epDifficulty(ep)], cap = w => ({ 'too much': 'the Fizzies' }[w] || w[0].toUpperCase() + w.slice(1)), [from, to] = L.shift.split(' → ');
   $('#gateOrb').innerHTML = orbHTML(el);
-  $('#gateEy').textContent = `Chapter ${Math.floor(LI / 60) + 1} · Episode ${ep}${dz.name ? ` · ⚡ ${dz.name}` : ''}`;
+  $('#gateEy').textContent = `Chapter ${Math.floor(LI / 60) + 1} · ${lvLabel(ep, true)}${dz.name ? ` · ⚡ ${dz.name}` : ''}`;
   $('#gateTitle').textContent = L.place;
   $('#gateSub').textContent = `Where ${cap(from)} becomes ${cap(to)}`;
   g.querySelector('.gatein').style.setProperty('--gc', ELEM[el].hue);
@@ -9383,7 +9531,7 @@ function toMap() {
   if (practice) { practice = null; document.body.classList.remove('practicing'); pClearFocus(); clearPreview(); }
   setGroove('home');
   running = false; busy = true;
-  brRun++; closeMic(); breathing = false; babyRun++;
+  brRun++; closeMic(); breathing = false; babyRun++; rescueStop();
   $('#babyBar').hidden = true;
   tut = null; clearHints(); hideTip();
   $('#game').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderBal(); teaseBal(); renderWheel(); renderBuddy(); renderQuests(); renderSeals(); renderHome();
@@ -9399,7 +9547,8 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
   heroImg.src = faceSrc(heroId(), 'cheer'); lumaImg.src = faceSrc('luma', 'cheer');
   const dzz = DIFF[epDifficulty(LI + 1)];
   $('#pWord').textContent = dzz.name ? `${dzz.name} cleared!` : stars === 3 ? 'Radiant!' : stars === 2 ? 'Wonderful!' : 'You did it!';
-  $('#pFeel').innerHTML = `You turned ${from[0].toUpperCase() + from.slice(1)} into <b>${to[0].toUpperCase() + to.slice(1)}</b>`;
+  const fromW = { 'too much': 'the Fizzies' }[from] || from[0].toUpperCase() + from.slice(1);
+  $('#pFeel').innerHTML = `You turned ${fromW} into <b>${to[0].toUpperCase() + to.slice(1)}</b>`;
   $$('#pStars i').forEach(s => s.classList.remove('lit'));
   $('#pCoins').textContent = '0';
   [$('#pWord'), $('#pFeel'), $('.pcoins'), $('#pPass'), $('#pGo')].forEach(e => e.style.opacity = 0);
@@ -9499,7 +9648,7 @@ async function winLevel() {
   $('#wLeft').innerHTML = [smooth ? `<b>Smooth flow!</b> +${flowBonus} bonus coins` : '',
     breathStar ? '' : easy ? 'Breathing with Luma earns a star.' : 'One slow, deep breath earns a star.', !smooth ? 'A smoother flow earns a bonus.' : ''].filter(Boolean).join(' · ') || '<b>Every star earned.</b>';
   $('#wXp').textContent = `+${Math.round((100 + stars * 25) * dz.xp)}`;
-  if (dz.name) $('#wLeft').innerHTML = `<b>⚡ ${dz.name} episode cleared!</b> Rewards ×${dz.coin}, plus a ${CHARMS[LI % CHARMS.length].name} charm${dz === DIFF.super ? ' and a Bear Stomp' : ''}. ` + $('#wLeft').innerHTML;
+  if (dz.name) $('#wLeft').innerHTML = `<b>⚡ ${dz.name} ${isEpisode(LI + 1) ? 'episode' : 'puzzle'} cleared!</b> Rewards ×${dz.coin}, plus a ${CHARMS[LI % CHARMS.length].name} charm${dz === DIFF.super ? ' and a Bear Stomp' : ''}. ` + $('#wLeft').innerHTML;
   $('#pTitle').textContent = `${L.power} · the ${SOUND[L.elem].verb}`;
   $('#pSteps').innerHTML = L.steps.map(s => `<li>${s}</li>`).join('');
   $('#pLine').textContent = L.line;
