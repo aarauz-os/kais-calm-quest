@@ -697,6 +697,9 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
 #game{color:#FBF3E2}
 .scene{position:absolute;inset:0;overflow:hidden;z-index:0}
 .sky{position:absolute;inset:0;background:linear-gradient(#FFE0A8 0%,#FFC178 34%,#E89A6A 58%,#8FB682 100%)}
+/* A: the puzzle happens in the place it's named after (Sky Temple looks like the Sky Temple), never a generic sky */
+.scene.vista .sky{background:var(--vista) var(--vpos,center 34%)/var(--vsize,cover) no-repeat,linear-gradient(#FFE0A8,#8FB682)}
+.scene.vista .hills{display:none}
 .hills{position:absolute;left:-10%;right:-10%;bottom:0;height:40%;background:
   radial-gradient(60% 70% at 20% 100%,#44784F 60%,transparent 61%),
   radial-gradient(55% 60% at 80% 100%,#2E6349 60%,transparent 61%),
@@ -2790,7 +2793,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
           <p class="clede">The puzzle game kids win by breathing. Clear the storm with a real, slow breath, then understand the feeling behind it.</p>
           <div class="cfaces"><img src="img/faces/hero-g1-happy.jpg" alt=""><img src="img/faces/hero-b3-happy.jpg" alt=""><img src="img/faces/hero-g4-happy.jpg" alt=""><img src="img/faces/kai-happy.jpg" alt=""><img src="img/faces/hero-g6-happy.jpg" alt=""><img src="img/faces/hero-b5-happy.jpg" alt=""><img class="cluma" src="img/faces/luma-happy.jpg" alt="Luma"><img src="img/faces/hero-g2-happy.jpg" alt=""><img src="img/faces/hero-b2-happy.jpg" alt=""><img src="img/faces/hero-g5-happy.jpg" alt=""><img src="img/faces/hero-b4-happy.jpg" alt=""><img src="img/faces/hero-g3-happy.jpg" alt=""><img src="img/faces/hero-b6-happy.jpg" alt=""></div>
           <button class="btn gold big" data-play>Play the demo</button>
-          <p class="cnote">60 puzzles and 20 story episodes · free forever · best with the sound on</p>
+          <p class="cnote">60 puzzles and 7 story episodes · free forever · best with the sound on</p>
         </div>
       </header>
 
@@ -2836,8 +2839,8 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <ul class="cfacts">
           <li><b>12 heroes</b> kids pick to look like them, with no labels</li>
           <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
-          <li><b>A real conversation</b> every third puzzle, in a story episode: you feel it, Kai gets it, Sorin helps</li>
-          <li><b>One new thing at a time.</b> Puzzle 1 is just matching. Every third puzzle is a story episode that brings one new piece, obstacle or helper, and its board powers a little story rescue above it. Puzzles 27, 36 and 45 are harder Stormy episodes, with a Thunderstorm at 54</li>
+          <li><b>A real conversation</b> every ninth puzzle, in a story episode: you feel it, Kai gets it, Sorin helps</li>
+          <li><b>One new thing at a time.</b> Every third puzzle brings one new piece, obstacle or helper. Story episodes open on puzzle 1 and return every nine puzzles, with a breath and a little story rescue powered by the board. Puzzles 27, 36 and 45 are harder Stormy puzzles, with a Thunderstorm at 54</li>
           <li><b>The game opens up as you play.</b> A new player starts with just Home, the Journey and the Shop. The streak, quests, Collection, companion, Harmony, seals, daily wheel and Season Pass arrive one at a time over the first 24 episodes, each with its own welcome</li>
           <li><b>Boards in many shapes</b>: hearts, lotus flowers, arches, towers, waves, and gentle difficulty with Luma lending extra moves when a level feels hard</li>
         </ul>
@@ -2876,7 +2879,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="ckick">What funding builds</div>
         <h2 class="display">From prototype to a household name</h2>
         <div class="cgrid">
-          <div><b>Season 1, complete</b><em>240 puzzles and 80 story episodes across four chapters, each with its own obstacle and finale</em></div>
+          <div><b>Season 1, complete</b><em>240 puzzles and 27 story episodes across four chapters, each with its own obstacle and finale</em></div>
           <div><b>Voices</b><em>Sorin guiding each breath, plus the heroes and their families</em></div>
           <div><b>iPhone &amp; Android</b><em>Native apps with real mic breath-sensing and haptics</em></div>
           <div><b>Kai's village</b><em>Ten friends from every kind of family, as Season Pass story cards</em></div>
@@ -3566,7 +3569,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <button class="btn gold big" id="pGo">Continue</button>
   </div>
   <div class="arrive arscene" id="arrive" hidden>
-    <div id="arScene"><img id="arPoster" src="img/luma/scene-rest.jpg?v=80" alt=""></div>
+    <div id="arScene"><img id="arPoster" src="img/luma/place/earth-rest.jpg?v=89" alt=""></div>
     <div class="arin">
       <div class="artop"><div class="areyebrow" id="arPlace"></div><div class="artitle display" id="arTitle"></div></div>
       <div class="arcircle" hidden><span class="arring" id="arRing"></span><img id="arLuma" src="img/faces/luma-calm.jpg" alt="Luma"></div>
@@ -3678,9 +3681,13 @@ const BASE_LEVELS = [
 // else is spaced so each new thing gets several levels to settle before the next arrives.
 // every new thing lands on a multiple of 3; multiples of 9 from 27 are Stormy episodes, so the two never meet
 const FEAT_AT = { breath: 3, row: 6, clouds: 9, monkey: 12, bomb: 15, charms: 18, knots: 21, fly: 24, tiger: 30, storm: 33, feed: 39, bear: 42, glow: 48, spirit: 51, crane: 57, deer: 60 };
-// A's structure (2026-09-18): every level is a Puzzle; every 3rd puzzle is a story Episode (story + story rescue).
-const isEpisode = n => n % 3 === 0;
-const lvLabel = (n, long) => isEpisode(n) ? `Episode ${n / 3}${long ? ` · Puzzle ${n}` : ''}` : `Puzzle ${n}`;
+// A's structure (2026-09-19): every level is a Puzzle; a story Episode (story + rescue) opens the season on puzzle 1,
+// then comes every 9 puzzles after it (1, 10, 19, 28…). The breath with Luma plays only right before a rescue,
+// so the puzzles in between keep their rhythm.
+const isEpisode = n => n % 9 === 1;
+const epNo = n => (n - 1) / 9 + 1;
+const lvLabel = (n, long) => isEpisode(n) ? `Episode ${epNo(n)}${long ? ` · Puzzle ${n}` : ''}` : `Puzzle ${n}`;
+const arrivalNow = () => isEpisode((typeof LI === 'number' ? LI : 0) + 1) && !practice && !babyOn() && !(L && L.again);
 const INTRO_AT = Object.fromEntries(Object.entries(FEAT_AT).map(([k, v]) => [v, k]));
 const reached = () => Math.max(S && S.unlocked || 1, (typeof LI === 'number' ? LI : 0) + 1);
 const featOn = (k, ep = (typeof LI === 'number' ? LI : 0) + 1) => babyOn() || ep >= FEAT_AT[k];   // baby mode has everything, no waiting
@@ -4478,7 +4485,12 @@ function awardSeal(id) {
   const sl = SEALS.find(x => x.id === id);
   S.sealsEarned[id] = dayKey(); S.seals = sealCount(); save(); addXP(50);
   renderSeals();
-  showSealWin(sl);
+  // seals wait their turn: never behind the celebration, never two on one card
+  awardSeal.q = (awardSeal.q || Promise.resolve()).then(async () => {
+    while (!$('#party').hidden || !$('#arrive').hidden) await wait(250);
+    await showSealWin(sl);
+    while (!$('#sealwin').hidden) await wait(250);
+  }).catch(e => console.warn(e));
   return sl;
 }
 async function showSealWin(sl) {
@@ -5641,7 +5653,8 @@ function applySections() {
 }
 async function secIntro() {
   const k = Object.keys(SEC_AT).find(x => secOn(x) && !S.secSeen[x]);
-  if (!k || $('#map').hidden || tabPageOpen() || $$('.ov.show').length) return;
+  if (k && openLevel.on) { clearTimeout(secIntro.t); secIntro.t = setTimeout(secIntro, 1500); return; }   // wait until they're back Home
+  if (!k || $('#map').hidden || tabPageOpen() || $$('.ov.show').length || !$('#story').hidden || !$('#game').hidden || !$('#gate').hidden || !$('#arrive').hidden || !$('#party').hidden) return;   // only on a clear Home, never under a story or a puzzle
   S.secSeen[k] = 1; save();
   const [t, img, say] = SEC_CARD[k];
   $('#secArt').innerHTML = img ? `<img src="${img}" alt="">` : `<span class="secorb"></span>`;
@@ -5807,7 +5820,7 @@ $('#shopOpen1').addEventListener('click', () => { ac(); tick(); openWhy(); });
 let LI = 0, L = LEVELS[0];
 function openLevel(i) {
   if (S.hearts <= 0) { toast('Out of hearts. Refill them in the shop, or wait for them to come back.'); showOv('shop'); return; }
-  LI = i; L = LEVELS[i];
+  LI = i; L = LEVELS[i]; openLevel.on = true;
   // first time only: the Practice Grove walkthrough, then episode 1
   runStory();
 }
@@ -5993,7 +6006,7 @@ async function runStory() {
     '12-15': "New obstacle: knots. They're Earth, so they follow the control cycle: a Wood match right next to one breaks it loose, the way roots split soil. Or build a match straight through it." }[band()] });
   const intro = L.intro && INTRO_CARD[L.intro];
   if (intro && L.intro !== 'knots' && L.intro !== 'feed') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', intro: L.intro, text: intro.say });
-  if (LI === 0 || !S.tutDone) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: (featOn('breath') ? HOWTO : HOWTO_MATCH)[band()] });
+  if ((LI === 0 || !S.tutDone) && L.intro !== 'match') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: (featOn('breath') ? HOWTO : HOWTO_MATCH)[band()] });   // the Match 3 card already says it
   $('#stPips').innerHTML = beats.map(() => '<i></i>').join('') + '<i></i>';
   $('#loadout').hidden = true; $('#loadout').classList.remove('up');
   $('#stStage').hidden = false;
@@ -6267,7 +6280,7 @@ async function obstacleDemo(host, kind) {
 const PW_OF = { monkey: 'monkey', tiger: 'tiger', bear: 'bear', crane: 'crane', deer: 'deer' };
 const PW_IMG = { deer: 'deer', crane: 'hawk', monkey: 'monkey', tiger: 'tiger', bear: 'bear' };
 const INTRO_CARD = {
-  match: { t: 'Match 3', say: 'Swap two orbs to line up 3 of the same element. That is all you need today!', art: () => `<span class="icrow">${['water', 'water', 'water'].map(e => `<span class="ico">${orbHTML(e)}</span>`).join('')}</span>` },
+  match: { t: 'Match 3', say: 'Swap two orbs to line up 3 of the same element.', art: () => `<span class="icrow">${['water', 'water', 'water'].map(e => `<span class="ico">${orbHTML(e)}</span>`).join('')}</span>` },
   breath: { t: "Luma's Breath", say: "Every match fills my Aura. When I glow, hold me and breathe slowly with me. The slower you breathe, the bigger my dive!", art: () => `<img class="icimg rnd" src="img/faces/luma-breath.jpg" alt="">` },
   row: { t: 'Lantern', say: 'Line up 4 in a row to make a Lantern. Tap it and it lights up the whole line!', art: () => eqHTML(4, 'row') },
   clouds: { t: 'Storm clouds', say: 'Clouds cover some orbs. Match right beside a cloud to clear it and let the sun out.', art: () => `<img class="icimg" src="img/pass/goal-cloud.png" alt="">` },
@@ -6364,7 +6377,7 @@ function showLoadout() {
   $('#loOrb').innerHTML = orbHTML(L.elem);
   $('#loVerb').textContent = EMO_VERB[L.elem];
   $('#loName').textContent = L.place;
-  $('#loEp').innerHTML = isEpisode(LI + 1) ? `Episode ${(LI + 1) / 3}<small>Puzzle ${LI + 1}</small>` : `Puzzle ${LI + 1}`;   // two clean lines, never a stray number
+  $('#loEp').innerHTML = isEpisode(LI + 1) ? `Episode ${epNo(LI + 1)}<small>Puzzle ${LI + 1}</small>` : `Puzzle ${LI + 1}`;   // two clean lines, never a stray number
   $('#loCharmT').hidden = $('#loCharmTray').hidden = !featOn('charms'); if (!featOn('charms')) charmPick.clear();
   renderCharms(); renderGoal();
   lo.hidden = false; void lo.offsetWidth; lo.classList.add('up'); $('#story').classList.add('lo-up');
@@ -6787,6 +6800,23 @@ function hasMove() {
   }
   return false;
 }
+// Guarantees one real swap: X X _ in a row with an X just below or above the gap. Tries every free spot and colour
+// until the board has a move and nothing is already matched.
+function plantMove(tiles) {
+  const free = (r, c) => board[r] && board[r][c] && !board[r][c].knot && !board[r][c].cloud && board[r][c].type !== 'spirit';
+  const have = [...new Set(tiles.map(t => t.type))], cols = have.length >= 2 ? have : TYPES.slice(0, 3);
+  for (let r = 0; r < R; r++) for (let c = 0; c + 2 < C; c++) for (const dr of [1, -1]) {
+    if (![[r, c], [r, c + 1], [r, c + 2], [r + dr, c + 2]].every(([y, x]) => free(y, x))) continue;
+    for (const X of cols) {
+      const keep = [board[r][c].type, board[r][c + 1].type, board[r][c + 2].type, board[r + dr][c + 2].type];
+      board[r][c].type = board[r][c + 1].type = board[r + dr][c + 2].type = X;
+      if (board[r][c + 2].type === X) board[r][c + 2].type = cols.find(y => y !== X);
+      if (!findMatches().clear.size && hasMove()) return true;
+      [board[r][c].type, board[r][c + 1].type, board[r][c + 2].type, board[r + dr][c + 2].type] = keep;
+    }
+  }
+  return false;
+}
 async function shuffle() {
   const tiles = all().filter(t => t.type !== 'spirit' && !t.cloud);
   tiles.forEach(t => { t.fed = false; });
@@ -6795,6 +6825,7 @@ async function shuffle() {
     tiles.forEach((t, i) => t.type = types[i]);
     if (!findMatches().clear.size && hasMove()) break;
   }
+  if (findMatches().clear.size || !hasMove()) plantMove(tiles);   // never leave a child with a board that can't move
   tiles.forEach(t => { paint(t); t.el.classList.add('born'); setTimeout(() => t.el.classList.remove('born'), 460); });
   swish(); chord([659.25, 783.99, 1046.5], 0.05);
   await wait(460);
@@ -6809,7 +6840,21 @@ function swapCells(a, b) {
 }
 const adjacent = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
 
+// Watchdog: if the board stays locked for 15 seconds with nothing on screen that explains it (no card, story, title,
+// breath, rescue ending or win), something broke. Hand the board back rather than leave a child stuck.
+setInterval(() => {
+  const g = $('#game');
+  const quiet = busy && !SIM && g && !g.hidden && !winLevel.on && !breathing && !lumaAiming && !mode && !practice && !(RS && RS.done) && !$$('.ov').some(o => !o.hidden)
+    && $('#story').hidden && $('#gate').hidden && $('#arrive').hidden && !$('#game .giftstage');
+  if (!quiet) { trySwap.lock = 0; return; }
+  if ((trySwap.lock = (trySwap.lock || 0) + 1) >= 8) { trySwap.lock = 0; console.warn('watchdog: board unlocked'); busy = false; hud(); }
+}, 2000);
+// a turn that hits an error recovers instead of freezing the board: settle what's there and hand control back
 async function trySwap(a, b) {
+  try { return await swapTurn(a, b); }
+  catch (e) { console.warn('turn recovered', e); try { await settle(); } catch (e2) { console.warn(e2); } busy = false; }
+}
+async function swapTurn(a, b) {
   if (practice && !pAllowSwap(a, b)) { pNudge(); bump(a.el); return; }
   if (moves <= 0) { if (featOn('breath')) say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
   if (a.knot || b.knot) { say('Worry tied that orb in a knot. Make a match that includes it and the knot comes loose.'); bump((a.knot ? a : b).el); bell(392, 0, 0.05); return; }
@@ -7231,7 +7276,8 @@ function flowStep(el) {
   if (flow < 2) { bar.hidden = true; return; }
   const bonus = flow >= 3 ? 4 : 2;
   charge = Math.min(100, charge + bonus);
-  $('#flowText').innerHTML = `${ELEM[prevOf(el)].feeds} · <b>flow ×${flow}</b> · Luma +${bonus}`;
+  clearTimeout(bar._t);   // other messages borrow this bar; rebuild the line so a match can never crash the turn
+  bar.innerHTML = `<span id="flowText">${ELEM[prevOf(el)].feeds} · <b>flow ×${flow}</b> · Luma +${bonus}</span>`;
   bar.hidden = false;
   bar.animate([{ transform: 'scale(.85)', opacity: 0 }, { transform: 'scale(1)', opacity: 1 }], { duration: 260, easing: 'ease-out' });
   chord(flow >= 3 ? [659.25, 880, 1174.66] : [587.33, 783.99], 0.07);
@@ -7349,10 +7395,11 @@ function lumaGuide(host, clips = LUMA_CLIP) {
   if (!g) {
     g = document.createElement('span'); g.className = 'lguide';
     g.innerHTML = `<video class="lgin on" src="${clips.in}" muted playsinline preload="auto"></video><video class="lgout" src="${clips.out}" muted playsinline preload="auto"></video>`;
-    host.appendChild(g);
+    host.appendChild(g); g.dataset.k = clips.in;
     g.querySelectorAll('video').forEach(v => { v.onerror = () => g.classList.add('broken'); });
   }
   const vi = g.querySelector('.lgin'), vo = g.querySelector('.lgout');
+  if (g.dataset.k !== clips.in) { g.dataset.k = clips.in; g.classList.remove('broken'); vi.src = clips.in; vo.src = clips.out; }   // a new place, new clips
   const play = (v, other, secs) => {
     g.classList.add('on'); other.pause(); v.pause();
     try { v.currentTime = 0; } catch (e) {}
@@ -8246,7 +8293,7 @@ function hud() {
   $('#movesStat').style.boxShadow = moves <= 3 ? 'inset 0 0 0 2px #F2A07B' : '';
   if (moves === 3 && !hud.warned) { hud.warned = true; avatarReact('worry'); }
   if (moves > 3) hud.warned = false;
-  $('#storm').style.opacity = (0.85 * (1 - p)).toFixed(3);
+  $('#storm').style.opacity = (($('#game .scene.vista') ? 0.55 : 0.85) * (1 - p)).toFixed(3);   // light enough that the place always shows through
   $$('#lanterns .lantern').forEach((l, i) => l.classList.toggle('lit', p >= (i + 1) / 5));
   if (p >= 0.75) kaiFace('happy', 2600);
   const lw = $('#lumaWrap');
@@ -8570,7 +8617,7 @@ if (/[?&]fx=1/.test(location.search)) window.kcqFx = {
           if (m.clear.size) { m.clear.forEach(t => { if (t.type === L.elem && gemsLeft() > 0) sc += 2; if (t.knot) sc += 3; [[0, 1], [1, 0], [0, -1], [-1, 0]].forEach(([y, x]) => { const q = board[t.r + y] && board[t.r + y][t.c + x]; if (q && q.cloud) sc += 3; }); }); sc += m.clear.size * 0.3; }
           sw(r, c, r2, c2); if (m.clear.size) o.push([a, b, sc]); }
         return o; };
-      let guard = 0, dives = 0, stuckAt = 0, stalls = 0;
+      let guard = 0, dives = 0, stuckAt = 0, stalls = 0, dead = 0, shuf = 0;
       while (!goalsDone() && guard++ < 250) {
         if (busy) { if (!stuckAt) stuckAt = performance.now(); if (performance.now() - stuckAt > 4000) { busy = false; breathing = false; stalls++; } await wait(40); guard--; continue; }
         stuckAt = 0;
@@ -8578,17 +8625,20 @@ if (/[?&]fx=1/.test(location.search)) window.kcqFx = {
           busy = true; charge = 0; dives++;
           const set = new Set(all().filter(t => t.type === L.elem && !t.cloud).slice(0, 5)); clouds().slice(0, 2).forEach((t, i) => freeCloud(t, i));
           await wait(200); if (set.size) await resolve(set, [], null); await settle(); busy = false; continue; }
-        const all = swaps(); if (!all.length) { busy = true; await shuffle(); busy = false; continue; }
-        const [a, b] = mode === 'best' ? all.sort((x, y) => y[2] - x[2])[0] : all[Math.floor(Math.random() * all.length)];   // best: the move that clears the most goal pieces
+        const opts = swaps(); if (!opts.length) { busy = true; await shuffle(); busy = false; shuf++; if (!hasMove()) dead++; if (dead > 5) break; continue; }
+        const [a, b] = mode === 'best' ? opts.sort((x, y) => y[2] - x[2])[0] : opts[Math.floor(Math.random() * opts.length)];   // best: the move that clears the most goal pieces
         await Promise.race([trySwap(a, b), wait(8000)]);
         let t = 0; while (busy && t++ < 200) await wait(30); busy = false;
         window.__simAt = { n, used: movesUsed, left: [clouds().length, gemsLeft(), knotsLeft()] };
       }
       const sp = levelSpec(LI);
-      out.push({ n, mode, used: movesUsed, budget: sp.moves, gems: sp.gems, clouds: sp.clouds, knots: sp.knots, dives, stalls, charge: Math.round(charge), done: goalsDone() });
+      out.push({ n, mode, used: movesUsed, budget: sp.moves, gems: sp.gems, clouds: sp.clouds, knots: sp.knots, dives, stalls, dead, shuf, charge: Math.round(charge), done: goalsDone() });
     }
     SIM = false; return out;
   },
+  open: i => openLevel(i), unlock: n => { S.unlocked = Math.max(S.unlocked || 1, n); save(); return S.unlocked; },
+  st: () => ({ LI, busy, win: !!winLevel.on, moves, game: !$('#game').hidden, story: !$('#story').hidden, gate: !$('#gate').hidden, arrive: !$('#arrive').hidden, ovs: $$('.ov').filter(o => !o.hidden).map(o => o.id), rs: !!RS, goals: [clouds().length, gemsLeft(), knotsLeft()] }),
+  goalsNow: async () => { levelTally[L.elem] = L.gems || 0; all().forEach(t => { if (t.cloud || t.knot) { t.cloud = 0; t.knot = 0; paint(t); } }); busy = true; await settle(); return goalsDone(); },
   winFlow: () => winFlow(), rsSet: n => { levelTally[L.elem] = n; hud(); return { gems: L.gems, opened: RS && RS.opened, fill: RS && RS.fill }; }, rsWin: async () => { levelTally[L.elem] = L.gems; hud(); await settle(); return 'won'; }, dpTry: id => { try { const pr = runDaily(id); return pr.then(() => 'done', e => String(e && e.stack)).then(x => x); } catch (e) { return String(e.stack); } }, babyInter: pal => babyInterlude(pal), babyState: () => ({ babyIx, busy, charge, shape: L && L.shape, R, C, pal: peekWho(), peekHidden: $('#peek').hidden, clouds: clouds().length, bubble: getComputedStyle($('#bubble')).display }), fillAura: () => { charge = 100; hud(); }, hintState: () => ({ busy, idleMs: Math.round(performance.now() - idleAt), wrongSwaps, hintShown, tut, hints: document.querySelectorAll("#board .tile.hint").length }), breakRow: async (type, slow) => { if (slow) FX.slow = slow; const row = all().filter(t => !t.cloud && !t.knot && !t.sp && t.type !== "spirit" && (!type || t.type === type)).sort((a, b) => Math.abs(a.r - R / 2) - Math.abs(b.r - R / 2)).slice(0, 3); busy = true; await popSet(new Set(row)); gravity(); await wait(fallEnd); busy = false; return row.map(t => t.type); }, peek: (p, g) => peekReact(p, 4000, g), cloudTest: async () => { const cl = clouds().sort((a, b) => b.cloud - a.cloud)[0]; if (!cl) return "none"; const before = cl.cloud; const nb = plus(cl).find(x => !x.cloud && !x.knot && x.type !== "spirit"); busy = true; await resolve(new Set([nb]), [], null); busy = false; return [before, cl.cloud, clouds().length]; }, breathRes: q => { showOv("breathe"); $("#brChoose").hidden = true; showBreathResult(q); }, bigWord, shockwave, impact, elemSound, sparks, shards, shake, applyBreath, party, winLevel, groove: () => ({ want: gWant, level: gLevel, heat: +gHeat.toFixed(2), bpm: +gBpm.toFixed(1), step: gStep, chord: gChord, lv: gLv.map(v => +v.toFixed(2)), on: !!gTimer }), tiles: () => all(), letter: id => showLetter(id), friend: id => showFriend(id), charge: v => { charge = v; hud(); }, fire: t => fireTap(t), expandTest: t => { const c = new Set([t]); expand(c); const f = firing; firing = []; return { n: c.size, f: f.length }; }, practice: () => practice, step: i => pStep(i), finish: () => finishPractice(true), paint: t => paint(t) };
 function auraBurstFx() {
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.06);
@@ -9077,11 +9127,14 @@ function startLevel() {
   if (babyOn()) { const bi = LEVELS.findIndex(l => l.elem === babyBoard().elem); LI = Math.max(0, bi); }
   const bf = boardFor(LI), base = LEVELS[LI];
   R = bf.R; C = bf.C; POOL = boardPool(base.elem, bf.n);
-  L = Object.assign({ t0: Date.now() }, base, levelSpec(LI), babyOn() ? { shape: babyBoard().shape, clouds: 6, knots: 0, gems: 0, moves: 99, intro: null } : {});
+  L = Object.assign({ t0: Date.now(), again: !!startLevel.again }, base, levelSpec(LI), babyOn() ? { shape: babyBoard().shape, clouds: 6, knots: 0, gems: 0, moves: 99, intro: null } : {});
   document.body.classList.toggle('nobreath', !featOn('breath') && !babyOn());
   setMask(L.shape || null);
   $('#map').hidden = true; $('#welcome').hidden = true; $('#game').hidden = false;
-  $('#gPlace').textContent = L.place; $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
+  $('#gPlace').textContent = L.place;
+  { const sc = $('#game .scene'), v = !babyOn() && L.elem && ELEM[L.elem]; sc.classList.toggle('vista', !!v); sc.style.setProperty('--vista', v ? `url(img/vista/${L.elem}.jpg?v=80)` : 'none');
+    const fit = { metal: ['37% 94%', 'auto 145%'] }[L.elem];   // the Sky Temple sits mid-picture: lift it into the open band beside the companion
+    sc.style.setProperty('--vpos', fit ? fit[0] : 'center 34%'); sc.style.setProperty('--vsize', fit ? fit[1] : 'cover'); } $('#gShift').textContent = `${ELEM[L.elem].name} · ${L.shift}`;
   $('#lanterns').innerHTML = '<div class="lantern"><i></i></div>'.repeat(5);
   moves = L.moves; charge = 0; moveAura = 0; hud.rank = 0; wasReady = false; lastElem = null; flow = 0; $('#flowBar').hidden = true; combo = 0; mode = null; busy = true; sel = null;
   deepBreaths = 0; breathing = false; movesUsed = 0; cloudsFreed = 0; levelBreaths = 1;
@@ -9101,8 +9154,9 @@ function startLevel() {
     setTimeout(async () => {
       await gateDone;                                  // the title has its moment before anything asks for attention
       if (babyOn()) { busy = false; $('#babyBar').hidden = false; clearHints(); hideTip(); babyLoop(++babyRun); return; }
-      if (featOn('breath') && !SIM) await arrivalBreath();   // episode 1 is pure matching
-      await presentGifts();                              // streak gifts get their moment before play
+      // anything that goes wrong before play must never leave the board locked
+      try { if (arrivalNow() && !SIM) await arrivalBreath(); } catch (e) { console.warn(e); const ov = $('#arrive'); ov.classList.remove('show'); ov.hidden = true; setGroove('play'); }   // only before a rescue
+      try { await presentGifts(); } catch (e) { console.warn(e); $$('#game .giftstage,#game .gsfly').forEach(x => x.remove()); }   // streak gifts get their moment before play
       busy = false;
       coachStart();
     }, 700);
@@ -9117,7 +9171,9 @@ function startLevel() {
 // set the arrival up; 'instant' puts it in place fully drawn (used behind the title, so the title opens onto Luma)
 function arrivalPrep(instant) {
   const ov = $('#arrive');
-  const lg = lumaGuide($('#arScene'), { in: 'img/luma/scene-in.mp4?v=80', out: 'img/luma/scene-out.mp4?v=80' });
+  const pl = `img/luma/place/${L.elem}`;                   // Luma breathes in this puzzle's own place
+  const lg = lumaGuide($('#arScene'), { in: `${pl}-in.mp4?v=89`, out: `${pl}-out.mp4?v=89` });
+  $('#arPoster').src = `${pl}-rest.jpg?v=89`;
   if (!ov.hidden && ov.classList.contains('show')) return lg;
   $('#arPlace').textContent = L.place;
   $('#arTitle').textContent = EMO_VERB[L.elem];
@@ -9173,7 +9229,7 @@ async function arrivalBreath() {
   const starred = tier === 'deep' || (tier === 'good' && LI + 1 <= 50);
   charge = Math.max(charge, tier === 'deep' ? 25 : tier === 'good' ? 15 : 5, S.buddy === 'earth' ? [15, 25, 35, 50][giftTier('earth') - 1] : 0);
   cue.textContent = 'You have arrived.';
-  sub.textContent = tier === 'calm' ? 'Breathe along next time for a star.' : starred ? 'Star earned! Luma glows brighter.' : 'Luma glows brighter.';
+  sub.textContent = !featOn('breath') ? (tier === 'calm' ? 'Now let\'s help.' : 'Beautiful breathing.') : tier === 'calm' ? 'Breathe along next time for a star.' : starred ? 'Star earned! Luma glows brighter.' : 'Luma glows brighter.';
   if (tier !== 'calm') { const r = document.createElement('div'); r.className = 'arresult'; r.textContent = tier === 'deep' ? '★ Deep breath' : '★ Good breath'; $('#arrive .arbot').appendChild(r);
     if (!reduce) r.animate([{ transform: 'scale(.6)', opacity: 0 }, { transform: 'scale(1.08)', opacity: 1, offset: .6 }, { transform: 'scale(1)' }], { duration: 500, easing: 'cubic-bezier(.3,1.5,.5,1)' }); chord([523.25, 659.25, 783.99, 1046.5], 0.1); }
   else bell(523.25, 0, 0.05);
@@ -9915,7 +9971,8 @@ async function enterJourney() {
 // Each episode opens on a living vista of its place, with the title on a gold-rimmed plaque.
 // It stays long enough to read (about four seconds); a tap moves on sooner. Baby mode skips it (no words there).
 async function playGate() {
-  if (babyOn() || SIM) return;
+  startLevel.again = false;
+  if (babyOn() || SIM || L.again) return;
   const g = $('#gate'), el = L.elem, v = $('#gateVid'), bg = $('#gateBg'), tap = $('#gateTap');
   const ep = LI + 1, dz = DIFF[epDifficulty(ep)], cap = w => ({ 'too much': 'the Fizzies' }[w] || w[0].toUpperCase() + w.slice(1)), [from, to] = L.shift.split(' → ');
   $('#gateOrb').innerHTML = orbHTML(el);
@@ -9929,19 +9986,20 @@ async function playGate() {
   tap.classList.remove('on');
   g.hidden = false; g.style.clipPath = 'circle(150% at 50% 50%)';
   elemSound(el, 0, 2); bell(ELEM[el].tone, 0.15, 0.06);
-  if (reduce) { await wait(3000); if (featOn('breath') && !practice) arrivalPrep(true); g.hidden = true; v.pause(); return; }
+  if (reduce) { await wait(3000); if (arrivalNow()) arrivalPrep(true); g.hidden = true; v.pause(); return; }
   [bg, v].forEach(x => x.animate([{ transform: 'scale(1.14)' }, { transform: 'scale(1)' }], { duration: 5200, easing: 'cubic-bezier(.2,.6,.3,1)', fill: 'forwards' }));
   $('#gatePlate').animate([{ opacity: 0, transform: 'translateY(28px) scale(.95)' }, { opacity: 1, transform: 'none' }], { duration: 800, delay: 350, easing: 'cubic-bezier(.2,.9,.3,1.1)', fill: 'backwards' });
   $('#gateOrb').animate([{ transform: 'scale(.4) rotate(-90deg)', opacity: 0 }, { transform: 'scale(1.1) rotate(10deg)', opacity: 1, offset: .6 }, { transform: 'scale(1)' }], { duration: 800, delay: 650, easing: 'cubic-bezier(.2,.9,.3,1.2)', fill: 'backwards' });
   const tapped = new Promise(res => setTimeout(() => { tap.classList.add('on'); g.addEventListener('pointerdown', res, { once: true }); }, 1200));
   await Promise.race([wait(4200), tapped]);
   tap.classList.remove('on');
-  if (featOn('breath') && !practice) arrivalPrep(true);     // the title opens straight onto the arrival breath, never a glimpse of the board
+  if (arrivalNow()) arrivalPrep(true);     // the title opens straight onto the arrival breath, never a glimpse of the board
   const a = g.animate([{ clipPath: 'circle(150% at 50% 50%)' }, { clipPath: 'circle(0% at 50% 50%)' }], { duration: 620, easing: 'cubic-bezier(.6,0,.4,1)' });
   await a.finished.catch(() => {});
   g.hidden = true; v.pause();
 }
 function toMap() {
+  openLevel.on = false;
   if (practice) { practice = null; document.body.classList.remove('practicing'); pClearFocus(); clearPreview(); }
   setGroove('home');
   running = false; busy = true;
@@ -10188,7 +10246,7 @@ $('#lMore').addEventListener('click', async () => {
 });
 $('#lRetry').addEventListener('click', async () => {
   if (S.hearts <= 0) { showOv('shop'); return; }
-  loseRun++; await hideOv('lose'); startLevel();
+  loseRun++; await hideOv('lose'); startLevel.again = true; startLevel();   // a retry goes straight back to the board: no title, no breath
 });
 $('#lMap').addEventListener('click', async () => { loseRun++; await hideOv('lose'); toMap(); });
 
