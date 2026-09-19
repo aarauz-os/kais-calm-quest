@@ -8994,7 +8994,7 @@ function startLevel() {
   paintBuddyGame();
   syncBoosts();
   placePeek(); rescueStart();
-  winLevel.on = false;
+  winLevel.on = false; contUsed = 0;
   const gateDone = playGate();
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); const warmed = dpWarm(); hud();
@@ -10055,6 +10055,9 @@ $('#wNext').addEventListener('click', async () => { await hideOv('win'); toMap()
 $('#wMap').addEventListener('click', async () => { await hideOv('win'); toMap(); });
 
 // Not yet: no shame and no rush. Show how close they got, invite one breath with Luma, and make trying again easy.
+// +9 moves for earned coins (A): 90, then 180, then 300, then tripling; counted within one attempt at a puzzle
+let contUsed = 0;
+const contCost = () => contUsed === 0 ? 90 : contUsed === 1 ? 180 : 300 * Math.pow(3, contUsed - 2);
 const NOT_YET = ['Mistakes help us learn.', 'Every try makes you stronger.', 'Take a breath. Then try again.', 'You are getting closer.'];
 let loseRun = 0;
 function loseLevel() {
@@ -10071,16 +10074,19 @@ function loseLevel() {
   $('#lChips').innerHTML = chips.map(c => `<span>${c}</span>`).join('');
   $('#lText').textContent = NOT_YET[(S.fails[LI + 1] - 1) % NOT_YET.length];
   $('#lRetry').textContent = S.hearts > 0 ? 'Try again' : 'Refill hearts';
+  const cc = contCost(); $('#lMore').hidden = babyOn() || S.coins < cc;   // only when they have the coins: never a push to the shop
+  $('#lMore').innerHTML = `+9 moves · <i class="coin"></i> ${cc.toLocaleString()}`;
   showOv('lose').then(() => { void bar.offsetWidth; bar.style.transition = ''; bar.style.width = `${Math.round(frac * 100)}%`; });
   // Luma breathes slowly on the card, as long as it is open
   const run = ++loseRun, lg = lumaGuide($('#lsLuma'));
   (async () => { await wait(600); while (run === loseRun && !$('#lose').hidden) { lg.in(4); await wait(4600); if (run !== loseRun || $('#lose').hidden) break; lg.out(6); await wait(6200); } lg.hide(); })();
 }
 $('#lMore').addEventListener('click', async () => {
-  if (!spend(60)) return;
+  if (S.coins < contCost() || !spend(contCost())) return;
+  contUsed++; loseRun++;
   S.hearts = Math.min(5, S.hearts + 1); save();
-  moves += 5; await hideOv('lose'); busy = false; hud();
-  say('Five more moves. Take your time.');
+  moves += 9; await hideOv('lose'); busy = false; hud();
+  say('Nine more moves. Take your time.');
 });
 $('#lRetry').addEventListener('click', async () => {
   if (S.hearts <= 0) { showOv('shop'); return; }
