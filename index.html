@@ -2368,14 +2368,12 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .whyprom li:last-child{border-bottom:0}
 /* School Edition: everything that sells or gambles is gone; a quiet badge says which edition this is */
 body.school [data-tab="shop"],body.school [data-shopfor="hearts"],body.school #shopOpen2 em,body.school #lMore,body.school #lAd,body.school #spGold,body.school [data-open="wheelCard"]{display:none!important}
-.schoolchip{display:none;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#FFE9A8;background:rgba(16,43,36,.85);box-shadow:0 0 0 1.5px #E3BC6A}
-body.school .schoolchip{display:inline-flex}
-.schoolset{margin:0 0 4px;padding:14px;border-radius:20px;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.3);color:#FBF3E2}
+.schoolset{margin:14px 0 4px;padding:12px 14px;border-radius:20px;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.3);color:#FBF3E2}
 .schoolset p{margin:0 0 8px;font-size:13.5px;font-weight:700;line-height:1.45}
 .schoolset ul{margin:0 0 12px;padding-left:18px;font-size:13px;line-height:1.5}
 .schoolset .schrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.schoolset .schlbl{display:flex;flex-direction:column;font-weight:900;font-size:15px;white-space:nowrap}
-.schoolset .schlbl small{font-size:12px;color:#F4D78C}
+.schoolset .schlbl{display:flex;flex-direction:column;gap:2px;min-width:0;font-weight:900;font-size:15px}
+.schoolset .schlbl small{font-size:12px;font-weight:800;line-height:1.35;color:#F4D78C}
 .schoolset .schrow .btn{flex:none;white-space:nowrap;min-width:112px}
 body.school .whyprom .buyline{display:none}
 .whyprom li::before{content:"✓";position:absolute;left:0;top:10px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:900;color:#fff;background:linear-gradient(#7FD06A,#2F8A3C)}
@@ -2856,7 +2854,6 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <ul class="cfacts">
           <li><b>12 heroes</b> kids pick to look like them, with no labels</li>
           <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
-          <li><b>School Edition</b> for classrooms: nothing to buy, no ads, unlimited tries, and nothing about a student leaves the device</li>
           <li><b>A real conversation</b> every ninth puzzle, in a story episode: you feel it, Kai gets it, Sorin helps</li>
           <li><b>One new thing at a time.</b> Every third puzzle brings one new piece, obstacle or helper. Story episodes open on puzzle 1 and return every nine puzzles, with a breath and a little story rescue powered by the board. Puzzles 27, 36 and 45 are harder Stormy puzzles, with a Thunderstorm at 54</li>
           <li><b>The game opens up as you play.</b> A new player starts with just Home, the Journey and the Shop. The streak, quests, Collection, companion, Harmony, seals, daily wheel and Season Pass arrive one at a time over the first 24 episodes, each with its own welcome</li>
@@ -2928,7 +2925,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       <div class="row">
         <button class="herobtn" id="heroOpen" aria-label="Choose your hero"><img id="heroBtnImg" src="img/faces/kai-calm.jpg" alt=""></button>
         <button class="chip" data-shopfor="coins" aria-label="Coins: open the shop"><i class="coin"></i><span data-coins>0</span></button>
-        <button class="chip" data-shopfor="hearts" aria-label="Hearts: open the shop"><span class="heart">♥</span><span data-hearts>5</span></button><span class="schoolchip">School Edition</span>
+        <button class="chip" data-shopfor="hearts" aria-label="Hearts: open the shop"><span class="heart">♥</span><span data-hearts>5</span></button>
       </div>
       <div class="row">
         <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
@@ -3185,7 +3182,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
   <div class="ov" id="meov" hidden><div class="card rewardcard mecard" role="dialog" aria-labelledby="meTitle">
     <div class="mehead"><img id="meFace" alt=""><div><div class="eyebrow">My calm journey</div><h2 class="display" id="meTitle">Look how you've grown</h2></div>
       <button class="ibtn" data-more aria-label="About this page">i</button></div>
-    <p class="more mewhy" hidden>This page shows what your child has done and explored: breaths, practice, feelings and places. It never grades, times or compares them, in the spirit of a Montessori portfolio.</p>
+    <p class="more mewhy" hidden>This page shows what your child has done and explored: breaths, practice, feelings and places. It never grades, times or compares them, like a portfolio of their work.</p>
     <div id="meBody"></div>
     <div class="stack"><button class="btn gold" id="meClose">Close</button><button class="linkbtn dark" id="meHero">Change my hero</button></div>
   </div></div>
@@ -3488,10 +3485,6 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       </div>
       <div class="csec"><h3>Grows with your child</h3></div>
       <div class="whyages" id="whyAges"></div>
-      <div class="csec"><h3>In the classroom</h3></div>
-      <div class="schoolset"><p>School Edition is the same game with nothing to buy.</p>
-        <ul><li>No shop, no purchases, no ads</li><li>Unlimited tries, no coin continues</li><li>No daily wheel</li><li>No accounts or names. Progress stays on this device</li></ul>
-        <div class="schrow"><span class="schlbl">School Edition<small id="schoolState">Off</small></span><button class="btn" id="schoolBtn">Turn on</button></div></div>
       <div class="csec"><h3>Our promises</h3></div>
       <ul class="whyprom">
         <li><b>Free to play, always.</b> No forced ads, no timers that pressure your child.</li>
@@ -3506,6 +3499,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <em>Breathe in for 4, out for 6. Three times. Ask what felt different.</em>
         <button class="btn gold" id="whyBed">Bedtime with Luma</button>
       </div>
+      <div class="schoolset"><div class="schrow"><span class="schlbl">School Edition<small id="schoolState">Off</small></span><button class="btn" id="schoolBtn">Turn on</button></div></div>
     </div>
   </div>
   <nav class="tabbar off" id="tabbar" aria-label="Main">
@@ -3851,7 +3845,7 @@ const school = () => !!S.school;
 function applySchool() {
   document.body.classList.toggle('school', school());
   if (school()) { S.hearts = 5; const sh = $('#shop'); if (sh && !sh.hidden) { sh.classList.remove('show'); sh.hidden = true; } }
-  const b = $('#schoolBtn'); if (b) { b.textContent = school() ? 'Turn off' : 'Turn on'; $('#schoolState').textContent = school() ? 'On, on this device' : 'Off'; }
+  const b = $('#schoolBtn'); if (b) { b.textContent = school() ? 'Turn off' : 'Turn on'; $('#schoolState').textContent = school() ? 'On · no Shop, Spin, ads or coin continues' : 'Turns off the Shop, Spin, ads and coin continues'; }
 }
 function save() { try { localStorage.setItem('kcq-v1', JSON.stringify(S)); } catch (e) {} }
 
