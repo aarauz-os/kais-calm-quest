@@ -1,5 +1,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- iPhone only for now (A, 2026-09-18): iPhone 15 through 16 Pro Max, 393 to 440 points wide -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<meta name="theme-color" content="#0F2A22">
 <title>MorQi Kids · Season 1: Kai's Calm Quest</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -277,6 +282,35 @@ body.baby #babyBar span{display:none}
 .meseal{text-align:center;flex:none !important}.meseal b{font-size:20px;color:#FFE9A8}
 .mefoot{margin:14px 0 4px;text-align:center;font-weight:800;color:#EAF2EE}
 #meov .linkbtn{color:#E4EFE8 !important}
+/* iPhone 15 / 16 / 16 Pro (852-874 tall): the Home icon columns fit between the Season Pass and Play */
+@media (max-height:900px){
+  .rails{top:calc(230px + var(--sat)) !important}
+  .rails .hicon .hart{width:52px;height:52px;border-radius:16px}
+  .rails .rail{gap:2px}
+  .rescue{height:124px !important}
+}
+/* the board gets the room on every iPhone: compact faces, no aura caption, the rescue scene sized to the phone */
+.rescue{height:168px !important}
+@media (max-height:900px){.rescue{height:124px !important}}
+#game .breathlbl{display:none}
+#game .boardwrap{padding-bottom:16px}
+#game .avwrap{width:48px;height:48px}
+#game .lumawrap,#game .breathbtn{width:64px;height:64px}
+#game .gbot{padding-top:2px}
+#loEp{display:flex;flex-direction:column;line-height:1.05}
+#loEp small{font-family:Nunito,system-ui,sans-serif;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;opacity:.8;margin-top:3px}
+/* Shop: a compact banner, the offer at a glance */
+.shophero{height:104px !important}
+.shophero img{width:88px !important;height:88px !important;margin-top:18px !important}
+.shopfree{margin:-2px 0 12px;position:relative;z-index:1;text-align:center}
+.calmtop b{font-size:22px !important;white-space:nowrap}
+.calmhero .perks{display:flex;flex-wrap:wrap;gap:6px}
+.calmhero .perks li{flex:1 1 auto;justify-content:center}
+.calmhero .calmi{position:absolute;right:12px;top:12px}
+.calmhero .calmmore{margin:8px 0 0;font-size:13px;color:#EAF2EE}
+#balov .ibtn{display:inline-grid;vertical-align:middle;margin-left:4px;width:24px;height:24px;font-size:13px}
+#balov .more{display:block;margin-top:6px;font-size:14px}
+#balNote{text-align:center}
 /* baby mode: no words on screen (they can't read yet); only the grown-up Stop bar */
 body.baby #bubble, body.baby #flowBar, body.baby #toast, body.baby #todayChip, body.baby #toMap, body.baby #pkPerk, body.baby #pwBar [id^="pwc-"], body.baby .tipbox{display:none!important}
 #babyBloom{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(12,22,40,0) 25%,rgba(12,22,40,.38) 100%);opacity:0;transition:opacity .6s ease}
@@ -293,7 +327,7 @@ body{background:var(--night);color:var(--ink);font-family:Nunito,ui-rounded,"SF 
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
 button:focus-visible{outline:3px solid var(--gold2);outline-offset:2px}
 .display{font-family:"Marcellus SC","Cinzel",Georgia,serif;letter-spacing:.02em}
-#app{position:relative;max-width:460px;height:100%;margin:0 auto;overflow:hidden;background:var(--parch)}
+#app{position:relative;max-width:440px;height:100%;margin:0 auto;overflow:hidden;background:var(--parch)}
 .screen{position:absolute;inset:0;display:flex;flex-direction:column}
 
 /* ---------- chips / buttons ---------- */
@@ -1571,7 +1605,8 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
 .rails{top:calc(188px + var(--sat));bottom:calc(196px + var(--sab))}
 .homefoot{padding-bottom:calc(14px + var(--sab))}
 .gtop{padding-top:calc(12px + var(--sat))}
-.gbot{padding-bottom:calc(14px + var(--sab))}
+.gbot{padding-bottom:6px}
+.gbot + .gbot{padding-bottom:calc(12px + var(--sab))}   /* the home bar only needs room under the last row */
 .toast{top:calc(14px + var(--sat))}
 .ov{padding-top:calc(16px + var(--sat));padding-bottom:calc(16px + var(--sab))}
 .sttop{top:calc(14px + var(--sat))}
@@ -2078,8 +2113,8 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .tab.on .tdot{display:none}
 .tab.pop .ti{animation:tabpop .42s cubic-bezier(.3,1.6,.5,1)}
 @keyframes tabpop{0%{transform:translateY(-16px) scale(1.28)}30%{transform:translateY(-10px) scale(1.42,1.1)}60%{transform:translateY(-20px) scale(1.2,1.36)}100%{transform:translateY(-16px) scale(1.28)}}
-body.tabs .homefoot{padding-bottom:calc(22px + var(--tabh) + var(--sab))}
-body.tabs .rails{bottom:calc(184px + var(--tabh) + var(--sab))}
+body.tabs .homefoot{padding-bottom:calc(48px + var(--tabh) + var(--sab))}   /* clears the raised Home disc on every iPhone */
+body.tabs .rails{bottom:calc(200px + var(--tabh) + var(--sab))}
 body.tabs .homesorin{bottom:calc(184px + var(--tabh) + var(--sab))}
 body.tabs #journeyOpen{display:none}
 body.tabs .homeduo{grid-template-columns:1fr}
@@ -3070,17 +3105,9 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="lschips" id="lChips"></div>
     <p class="lsay" id="lText"></p>
     <button class="btn gold" id="lRetry" style="width:100%">Try again</button>
-    <button class="btn ghost lsmore" id="lMore">+5 moves · <i class="coin"></i> 60</button>
+    <button class="btn ghost lsmore" id="lMore">+9 moves</button>
     <button class="btn ghost" id="lAd" hidden>Watch</button>
     <button class="linkbtn dark" id="lMap">Back to the map</button>
-  </div></div>
-    <p id="lText" style="margin-top:12px"></p>
-    <div class="stack">
-      <button class="btn gold" id="lMore">+5 moves · <i class="coin"></i> 60</button>
-      <button class="btn ghost" id="lAd">▶ Watch a short video for +5 moves (optional)</button>
-      <button class="btn" id="lRetry">Try again</button>
-      <button class="btn ghost" id="lMap">Back to map</button>
-    </div>
   </div></div>
 
   <div class="ov" id="bedov" hidden style="align-items:center"><div class="card bedcardov" role="dialog" aria-labelledby="bedText">
@@ -3191,7 +3218,6 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       <button class="btn gold" id="balGo" hidden></button>
       <button class="btn" id="balClose">Close</button>
     </div>
-    <div class="note">Every place you play makes one light glow brighter, and lights rest when you're away. Keep all five glowing in the same week for a harmony bonus.</div>
   </div></div>
 
   <div class="ov" id="streakov" hidden><div class="card" role="dialog" aria-labelledby="stTitle">
@@ -3230,9 +3256,8 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       <img src="img/luma-3d.jpg" alt="Luma">
       <div class="shopfloat" id="shopFloat"></div>
     </div>
-    <div class="eyebrow">Free to play, always · no forced ads</div>
     <h2 class="display" id="sTitle">Luma's Shop</h2>
-    <p class="shopline">The whole game is free. These are extras, for when you want a little more.</p>
+    <div class="eyebrow shopfree">Free to play, always</div>
 
     <div class="calmhero" id="calmHero"></div>
 
@@ -4211,9 +4236,9 @@ function renderBal() {
     note.innerHTML = `<b>You're in harmony.</b> All five lights are glowing together. ${S.balBonusDay === dayKey() ? 'Harmony bonus collected today.' : 'Balance is the goal, not more.'}`;
     go.hidden = true;
   } else {
-    note.innerHTML = `<b>Your ${ELEM[st.top.t].name} light is ${harmWord(st.top.v).toLowerCase()}.</b> ${ELEM[low.t].name} could use some care. When it glows, your ${ELEM[low.t].body} can feel ${ELEM[low.t].bright}.`;
+    note.innerHTML = `<b>${ELEM[low.t].name} needs a little care.</b> <button class="ibtn" data-more aria-label="Why">i</button><span class="more" hidden>Your ${ELEM[st.top.t].name} light is ${harmWord(st.top.v).toLowerCase()}. When ${ELEM[low.t].name} glows, your ${ELEM[low.t].body} can feel ${ELEM[low.t].bright}. Every place you play makes one light glow; keep all five glowing in the same week for a harmony bonus.</span>`;
     go.hidden = false;
-    go.textContent = locked ? `${ELEM[low.t].name} opens at ${LEVELS[lvl].place}` : `Play ${LEVELS[lvl].place} for ${ELEM[low.t].name}`;
+    go.textContent = locked ? `Opens at ${LEVELS[lvl].place}` : `Play ${LEVELS[lvl].place}`;
     go.disabled = locked;
     go.onclick = () => { if (!locked) { hideOv('balov'); openLevel(lvl); } };
   }
@@ -5920,6 +5945,7 @@ function levelSpec(i = LI) {
   // Luma helps after a loss: +3 moves per try on the same puzzle (up to +9), so nobody gets stuck and quits
   const help = babyOn() ? 0 : Math.min(9, 3 * ((S.fails || {})[ep] || 0));
   moves += help;
+  moves = Math.min(60, moves);                          // A: never more than 60, or winning and losing lose their meaning
   return { moves, clouds, knots, gems, diff, help, need, challenge: challengeNow(ep) };
 }
 const goalNums = () => levelSpec();
@@ -5929,7 +5955,7 @@ async function runStory() {
   stBgFront = 0; $('#stBg').style.opacity = 1; $('#stBg2').style.opacity = 0;
   $('#stBg').style.backgroundImage = `url(${storyBg(0, 'hero')})`;
   const dd = DIFF[epDifficulty(LI + 1)];
-  $('#stVerb').textContent = `Chapter 1 · ${lvLabel(LI + 1, true)}${dd.name ? ` · ⚡ ${dd.name} (${dd.label})` : ''} · ${EMO_VERB[L.elem]}`;
+  $('#stVerb').textContent = `${lvLabel(LI + 1)}${dd.name ? ` · ⚡ ${dd.name} (${dd.label})` : ''} · ${EMO_VERB[L.elem]}`;
   $('#stName').textContent = L.place;
   st.style.setProperty('--sg', ELEM[L.elem].glow);
   const g = goalNums();
@@ -6329,7 +6355,7 @@ function showLoadout() {
   $('#loOrb').innerHTML = orbHTML(L.elem);
   $('#loVerb').textContent = EMO_VERB[L.elem];
   $('#loName').textContent = L.place;
-  $('#loEp').textContent = lvLabel(LI + 1, true);
+  $('#loEp').innerHTML = isEpisode(LI + 1) ? `Episode ${(LI + 1) / 3}<small>Puzzle ${LI + 1}</small>` : `Puzzle ${LI + 1}`;   // two clean lines, never a stray number
   $('#loCharmT').hidden = $('#loCharmTray').hidden = !featOn('charms'); if (!featOn('charms')) charmPick.clear();
   renderCharms(); renderGoal();
   lo.hidden = false; void lo.offsetWidth; lo.classList.add('up'); $('#story').classList.add('lo-up');
@@ -6349,7 +6375,7 @@ function renderGoal() {
     + (g.gems ? tile(`<span class="orbw">${orbHTML(L.elem)}</span>`, g.gems, `${ELEM[L.elem].name} orbs`) : '')
     + (g.knots ? tile('<img src="img/pass/goal-knot.png" alt="">', g.knots, 'knots') : '');
   const fresh = bf.tier > 1 && (S.boardTier || 1) < bf.tier;
-  $('#loBoard').innerHTML = `<span class="mg"></span>${bf.R}×${bf.C} board · ${bf.n} elements${fresh ? '<span class="new">Bigger board!</span>' : ''}`;
+  $('#loBoard').innerHTML = fresh ? '<span class="new">Bigger board!</span>' : ''; $('#loBoard').hidden = !fresh;   // board sizes are for grown-ups; only say it when it's news
   if (bf.tier > (S.boardTier || 1)) { S.boardTier = bf.tier; save(); }
   $('#loExtra').innerHTML = (g.help ? `<span class="pill help">💛 Luma’s help +${g.help} moves</span>` : '')
     + ((S.glow || 0) > 0 && glowOn() ? `<span class="pill glow">🔥 Glow ×${Math.min(3, S.glow)}: ${['', 'a lantern', 'lantern + Blossom', 'lantern, Blossom, spirit star'][Math.min(3, S.glow)]}</span>` : '');
@@ -9201,7 +9227,7 @@ async function openWorld(i = 0, dir = 0) {
   $('#wCount').textContent = `Puzzles ${WI * 60 + 1}–${WI * 60 + 60}`;
   $('#wVerb').textContent = ch.verb;
   const n = chapterBoard(WI);
-  $('#wMeta').textContent = WI === 0 ? `Meet all five feelings · ${n}×${n} board · earn ${ch.reward}` : `Goes deeper each episode: notice → name → why → what helps → help a friend · earn ${ch.reward}`;
+  $('#wMeta').textContent = WI === 0 ? `Meet all five feelings · earn ${ch.reward}` : `Goes deeper each episode: notice → name → why → what helps → help a friend · earn ${ch.reward}`;
   $('#wdPrev').disabled = WI === 0; $('#wdNext').disabled = WI === CHAPTERS.length - 1;
   w.style.setProperty('--bg', glow);
   // path
@@ -10212,12 +10238,12 @@ function renderShop() {
   $('#calmHero').innerHTML = `
     <div class="calmtop"><span class="nine">9</span><span><small>Featured · ${left ? 'active' : 'best value'}</small><b>Nine Days of Calm</b><em>${left ? `${left} of 9 days left. Enjoy them.` : 'Everything good in the game, doubled, for nine days.'}</em></span></div>
     <ul class="perks">
-      <li><i>2×</i>Double coins from every win and every breath</li>
-      ${secOn('pass') ? '<li><i>2×</i>Double Season Pass XP</li>' : ''}
-      <li><i>♥</i>Hearts refill every morning</li>
-      ${featEver('charms') ? '<li><i>✦</i>A free charm every day</li>' : ''}
-      <li><i>✺</i>The Golden Nine aura, yours to keep</li>
+      <li><i>2×</i>Double coins</li>
+      <li><i>♥</i>Daily hearts</li>
+      <li><i>✺</i>Golden aura</li>
     </ul>
+    <button class="ibtn calmi" data-more aria-label="Everything included">i</button>
+    <p class="more calmmore" hidden>Double coins from every win and breath${secOn('pass') ? ', double Season Pass XP' : ''}, hearts refilled every morning${featEver('charms') ? ', a free charm every day' : ''}, and the Golden Nine aura to keep.</p>
     <div class="lanterns9">${Array.from({ length: CALM_DAYS }, (_, i) => `<span class="${left && i < CALM_DAYS - left + 1 ? 'lit' : ''}"></span>`).join('')}</div>
     ${left ? `<div class="calmactive">Active · day ${CALM_DAYS - left + 1} of 9</div>` : `<button class="calmbuy" data-buyid="calm"><span>$1.99 · 9 days</span><small>about 22¢ a day</small></button>`}`;
   const bl = shopBundles();
