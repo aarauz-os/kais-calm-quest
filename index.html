@@ -2465,6 +2465,7 @@ body.school .whyprom .buyline{display:none}
 .cpows img{width:100%;max-width:58px;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(80,50,10,.3))}
 .cpows b{font-size:10.5px;line-height:1.15;color:#1D5044}
 .crew{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.crew > div:last-child:nth-child(odd){grid-column:1 / -1}   /* an odd last card spans the row instead of sitting alone */
 .crew div{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:14px 10px;border-radius:18px;background:linear-gradient(#24463B,#132A23);color:#FFF6DE;box-shadow:0 0 0 2px var(--gold-mid),0 4px 0 2px var(--wood)}
 .crew img{width:62px;height:62px;object-fit:contain;filter:drop-shadow(0 4px 5px rgba(0,0,0,.4))}
 .crew img.rnd{border-radius:50%;object-fit:cover;filter:none;box-shadow:0 0 0 2px #F4D78C}
@@ -2879,8 +2880,8 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="ckick">How it plays</div>
         <h2 class="display">Match. Breathe. Understand.</h2>
         <div class="cloop">
-          <div class="cstep"><span class="cvis"><span class="orbrow" data-types="wood wood wood"></span></span><b>Match</b><em>Line up 3 or more. Bigger shapes make Lanterns, Lotus blooms, Fireflies and the Spirit Star, one new piece at a time.</em></div>
-          <div class="cstep"><span class="cvis"><img src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe</b><em>A real, slow breath blows the storm clouds away and sends Luma diving. Rushing doesn't work.</em></div>
+          <div class="cstep"><span class="cvis"><span class="orbrow" data-types="wood wood wood"></span></span><b>Match</b><em>Line up 3 or more. Bigger shapes make Lanterns, Lotus blooms, Fireflies and the Spirit Star. A missed swap shows the two that almost lined up, so kids fix it themselves.</em></div>
+          <div class="cstep"><span class="cvis"><img src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe</b><em>A real, slow breath blows the storm clouds away and sends Luma diving. Before each story rescue, Luma breathes with you in that very place. Rushing doesn't work.</em></div>
           <div class="cstep"><span class="cvis"><img src="img/journey/feel-worry.jpg" alt=""></span><b>Understand</b><em>Every win shows what your breathing did, and why a calm head helped.</em></div>
         </div>
       </section>
@@ -2919,8 +2920,10 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
           <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
           <li><b>A real conversation</b> every ninth puzzle, in a story episode: you feel it, Kai gets it, Sorin helps</li>
           <li><b>One new thing at a time.</b> Every third puzzle brings one new piece, obstacle or helper. Story episodes open on puzzle 1 and return every nine puzzles, with a breath and a little story rescue powered by the board. Puzzles 27, 36 and 45 are harder Stormy puzzles, with a Thunderstorm at 54</li>
-          <li><b>The game opens up as you play.</b> A new player starts with just Home, the Journey and the Shop. The streak, quests, Collection, companion, Harmony, seals, daily wheel and Season Pass arrive one at a time over the first 24 episodes, each with its own welcome</li>
-          <li><b>Boards in many shapes</b>: hearts, lotus flowers, arches, towers, waves, and gentle difficulty with Luma lending extra moves when a level feels hard</li>
+          <li><b>Playing in seconds.</b> A new child is breathing and matching within about 15 seconds; choosing a hero and an age comes after the first win</li>
+          <li><b>The game opens up as you play.</b> Practice with Sorin, the streak, Collection, companion, Harmony, seals, daily wheel and Season Pass arrive one at a time over the first 24 puzzles, each with its own welcome</li>
+          <li><b>Every puzzle happens in its place</b>: the Root Grounds' great tree, the bamboo of the Whispering Forest, the lantern canyon, the Sky Temple above the clouds, the moonlit Lantern River</li>
+          <li><b>Boards in many shapes</b>: hearts, lotus flowers, arches, towers, waves, and gentle difficulty with Luma lending extra moves when a puzzle feels hard</li>
         </ul>
       </section>
 
@@ -2930,7 +2933,8 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="crew">
           <div><img src="img/pass/trophy-lotus.png" alt=""><b>Free Season Pass</b><em>5 pages of rewards. Earn Spirit Stars and choose what to unlock, including Board Styles your companion shows off.</em></div>
           <div><img src="img/ui/journal.png" alt=""><b>Collection</b><em>Story cards from Kai's village, Spirit Seals and every companion stage.</em></div>
-          <div><img src="img/icons/icon-streak-3d.jpg" alt="" class="rnd"><b>Daily rhythm</b><em>Today's practice with Sorin: three tiny breath and qigong moments a day that grow your companion, warm up Luma and plant a flower in Kai's garden.</em></div>
+          <div><img src="img/sorin-3d.jpg" alt="" class="rnd"><b>Practice with Sorin</b><em>A sunrise breath, Lift the Sky and an evening check-in. Sorin does each one with your child, breath by breath.</em></div>
+          <div><img src="img/faces/luma-happy.jpg" alt="" class="rnd"><b>Calm Corner</b><em>Any time a big feeling shows up: pick how you feel, breathe with Luma in that feeling's place, then say how you feel now. Never scored.</em></div>
           <div><img src="img/pass/aura-moon.png" alt=""><b>Bedtime with Luma</b><em>No game, no score. Just slow breathing before sleep.</em></div>
         </div>
       </section>
@@ -2962,7 +2966,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
           <div><b>iPhone &amp; Android</b><em>Native apps with real mic breath-sensing and haptics</em></div>
           <div><b>Kai's village</b><em>Ten friends from every kind of family, as Season Pass story cards</em></div>
           <div><b>Family missions</b><em>Breathe together as a family, with voices for every age</em></div>
-          <div><b>Schools edition</b><em>Group classes and a classroom mode for social-emotional learning</em></div>
+          <div><b>Group classes</b><em>Sorin-led breathing classes for families and groups</em></div>
         </div>
         <p class="cp">Then MorQi for ages 16+, and one ecosystem for the healer's path: breath, feelings and medicine, learned through play.</p>
       </section>
