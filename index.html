@@ -2933,8 +2933,8 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="crew">
           <div><img src="img/pass/trophy-lotus.png" alt=""><b>Free Season Pass</b><em>5 pages of rewards. Earn Spirit Stars and choose what to unlock, including Board Styles your companion shows off.</em></div>
           <div><img src="img/ui/journal.png" alt=""><b>Collection</b><em>Story cards from Kai's village, Spirit Seals and every companion stage.</em></div>
-          <div><img src="img/sorin-3d.jpg" alt="" class="rnd"><b>Practice with Sorin</b><em>A sunrise breath, Lift the Sky and an evening check-in. Sorin does each one with your child, breath by breath.</em></div>
-          <div><img src="img/faces/luma-happy.jpg" alt="" class="rnd"><b>Calm Corner</b><em>Any time a big feeling shows up: pick how you feel, breathe with Luma in that feeling's place, then say how you feel now. Never scored.</em></div>
+          <div><img src="img/sorin-3d.jpg" alt="" class="rnd"><b>Practice with Sorin</b><em>A sunrise breath, Lift the Sky and an evening wind-down. Sorin does each one with your child, breath by breath.</em></div>
+          <div><img src="img/faces/luma-happy.jpg" alt="" class="rnd"><b>Calm Corner</b><em>Any time a big feeling shows up: pick how you feel, breathe with Luma in that feeling's place, then say how you feel now. Never scored, never rewarded.</em></div>
           <div><img src="img/pass/aura-moon.png" alt=""><b>Bedtime with Luma</b><em>No game, no score. Just slow breathing before sleep.</em></div>
         </div>
       </section>
@@ -5386,7 +5386,7 @@ function renderHome() {
 const DP = [
   { id: 'sun', when: 'Morning', name: 'Sunrise breath', sx: '0%', tx: '10%', say: 'Three slow breaths.' },
   { id: 'sky', when: 'Afternoon', name: 'Lift the Sky', sx: '50%', tx: '50%', say: 'Reach up, float down.' },
-  { id: 'feel', when: 'Evening', name: 'How does your body feel?', sx: '100%', tx: '90%', say: 'Check in, then breathe.' }
+  { id: 'feel', when: 'Evening', name: 'Wind-down breath', sx: '100%', tx: '90%', say: 'Slower each time, ready for sleep.' }
 ];
 const FEELS = [
   { el: 'wood', word: 'Frustrated', face: 'frustrated', breath: 'Cooling breath', how: 'Breathe out long and slow, like wind through the trees.' },
@@ -5478,7 +5478,7 @@ async function openPractice() {
 async function runDaily(id) {
   const run = ++dpRunId, p = DP.find(x => x.id === id), el = dpCompanion();
   const title = $('#dpRunTitle'), txt = $('#dpText'), art = $('#dpArt');
-  const scene = id === 'fam' ? dpSlot() : id, stage = $('#dps');
+  const scene = id === 'fam' || id === 'calm' ? dpSlot() : id, stage = $('#dps');
   await hideOv('dpov');
   $('#dpsPoster').style.backgroundPosition = `${DP.find(x => x.id === scene).sx} 50%`;
   dpLg = lumaGuide($('#dpsScene'), { in: `img/sorin/practice/${scene}-in.mp4?v=97`, out: `img/sorin/practice/${scene}-out.mp4?v=97` });
@@ -5488,8 +5488,8 @@ async function runDaily(id) {
   $('#dpFeel').hidden = $('#dpGrown').hidden = $('#dpGot').hidden = $('#dpGo').hidden = true; $('#dpStop').hidden = false;
   $('#dpRing').style.transition = 'none'; $('#dpRing').style.transform = 'scale(.62)';
   $('#dpBuddy').innerHTML = holdSprite(buddyWho(el).replace('buddy-', ''), 'idle') + '<i class="dprail"></i>';
-  $('#dpRunEy').textContent = id === 'fam' ? 'Breathe together' : `${p.when} practice`;
-  title.textContent = id === 'fam' ? 'You and a grown-up' : p.name;
+  $('#dpRunEy').textContent = id === 'fam' ? 'Breathe together' : id === 'calm' ? 'Calm Corner' : `${p.when} practice`;
+  title.textContent = id === 'fam' ? 'You and a grown-up' : id === 'calm' ? 'Breathe with Sorin' : p.name;
   let feelEl = null, ok = false;
   if (id === 'sun') {
     txt.textContent = `Sit tall and soft. ${BUDDY[el].name} will breathe with you.`; await wait(reduce ? 300 : 2400);
@@ -5498,14 +5498,14 @@ async function runDaily(id) {
     txt.textContent = 'Stand tall. Link your fingers together in front of you.'; await wait(reduce ? 300 : 3000);
     ok = run === dpRunId && await dpBreath(run, 3, 4, 5, ['Breathe in and lift your hands up to the sky…', 'Breathe out and float them back down…']);
   } else if (id === 'feel') {
-    txt.textContent = 'How does your body feel right now? Every feeling is okay.';
-    const fb = $('#dpFeel'); fb.hidden = false;
-    fb.innerHTML = FEELS.map((f, i) => `<button data-f="${i}" style="--c:${f.el ? ELEM[f.el].glow : '#FFE9A8'}"><img src="${faceSrc(heroId(), f.face)}" onerror="this.onerror=null;this.src='img/faces/kai-${f.face}.jpg'" alt="">${f.word}</button>`).join('');
-    const f = await new Promise(res => { fb.onclick = e => { const b = e.target.closest('[data-f]'); if (b) { tick(); res(FEELS[+b.dataset.f]); } }; });
-    if (run !== dpRunId) return;
-    fb.hidden = true; feelEl = f.el; title.textContent = f.breath;
-    txt.textContent = f.how; await wait(reduce ? 300 : 2600);
-    ok = run === dpRunId && await dpBreath(run, 2, 4, 6);
+    // Sorin's evening wind-down: hands on chest and belly, each out-breath a little longer, ready for sleep
+    txt.textContent = 'Sit comfy. One hand on your chest, one on your belly.'; await wait(reduce ? 300 : 2800);
+    ok = run === dpRunId;
+    for (const out of [5, 6, 7]) { if (!ok) break; ok = run === dpRunId && await dpBreath(run, 1, 4, out, ['Breathe in… feel your belly rise', 'Breathe out, a little slower…']); }
+  } else if (id === 'calm') {
+    // from the Calm Corner: Sorin breathes with a child whose feeling is still big. A real breath, never a reward.
+    txt.textContent = 'Sorin is right here. Breathe with him.'; await wait(reduce ? 300 : 2400);
+    ok = run === dpRunId && await dpBreath(run, 3, 4, 6);
   } else if (id === 'fam') {
     txt.textContent = 'You and a grown-up each hold a circle. When you both hold, breathe together.';
     const gb = $('#dpGrown'); gb.hidden = false;
@@ -5523,6 +5523,13 @@ async function runDaily(id) {
   }
   if (!ok || run !== dpRunId) return;
   if (dpLg) dpLg.rest(); $('#dpsBar').parentNode.hidden = true;   // Sorin settles back to rest for the thank-you
+  if (id === 'calm') {
+    txt.textContent = 'You breathed through it together.'; bell(523.25, 0, 0.05);
+    $('#dpStop').hidden = true; $('#dpGo').textContent = 'Done'; $('#dpGo').hidden = false;
+    await new Promise(res => { $('#dpGo').onclick = () => { tick(); res(); }; });
+    $('#dpGo').textContent = 'Lovely'; await closeDps(); if (runDaily.back) { const b = runDaily.back; runDaily.back = null; b(); }
+    return;
+  }
   dpPose('cheer'); chord([523.25, 659.25, 783.99, 1046.5], 0.08);
   const got = dpFinish(id, feelEl);
   txt.textContent = id === 'fam' ? 'Breathing together is a superpower.' : 'Beautiful. Your body will remember this.';
@@ -9454,12 +9461,14 @@ function calmAfter(el, run) {
   a.innerHTML = `<div class="row3"><button data-now="better"><span>🙂</span>Better</button><button data-now="bit"><span>😌</span>A bit better</button><button data-now="big"><span>😣</span>Still big</button></div>`;
   a.onclick = e => {
     const b = e.target.closest('[data-now]'), go = e.target.closest('[data-go]'); if (run !== calmRun) return;
-    if (go) { tick(); if (go.dataset.go === 'again') calmBreathe(el, 3, run); else if (go.dataset.go === 'other') openCalm(); else closeCalm(); return; }
+    if (go) { tick(); if (go.dataset.go === 'again') calmBreathe(el, 3, run); else if (go.dataset.go === 'sorin') { runDaily.back = () => calmAfter(el, run); runDaily('calm'); } else if (go.dataset.go === 'other') openCalm(); else closeCalm(); return; }
     if (!b) return; tick();
     const now = b.dataset.now;
     const msg = { better: 'You calmed your body yourself. That is a real skill.', bit: 'A little calmer is still calmer. One more breath can help.', big: 'Big feelings are okay. Find a grown-up and tell them how you feel. You can breathe together.' }[now];
     $('#cmTitle').textContent = now === 'better' ? 'Well done' : now === 'bit' ? 'That helped' : 'That\'s okay';
-    a.innerHTML = `<p>${msg}</p><button class="btn gold" data-go="${now === 'better' ? 'done' : 'again'}">${now === 'better' ? 'Done' : 'Breathe again'}</button><button class="linkbtn" data-go="${now === 'better' ? 'other' : 'done'}" style="color:#FFE9A8">${now === 'better' ? 'Another feeling' : 'Done'}</button>`;
+    a.innerHTML = now === 'big'
+      ? `<p>${msg}</p><button class="btn gold" data-go="sorin">Breathe with Sorin</button><button class="linkbtn" data-go="done" style="color:#FFE9A8">Done</button>`
+      : `<p>${msg}</p><button class="btn gold" data-go="${now === 'better' ? 'done' : 'again'}">${now === 'better' ? 'Done' : 'Breathe again'}</button><button class="linkbtn" data-go="${now === 'better' ? 'other' : 'done'}" style="color:#FFE9A8">${now === 'better' ? 'Another feeling' : 'Done'}</button>`;
   };
 }
 async function closeCalm() {
