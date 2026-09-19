@@ -753,6 +753,11 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
 #board.aiming{box-shadow:inset 0 0 0 3px var(--gold2),0 0 24px rgba(231,194,122,.5)}
 
 .tile{position:absolute;left:0;top:0;width:var(--t);height:var(--t);transition:transform .2s cubic-bezier(.3,.7,.4,1.12);will-change:transform}
+/* the mistake shows itself: two that almost lined up glow, a soft ring marks where the third would go */
+.tile.near{z-index:4;filter:drop-shadow(0 0 7px var(--ng)) brightness(1.12)}
+.nearspot{position:absolute;left:0;top:0;z-index:3;pointer-events:none}
+.nearspot::after{content:"";position:absolute;inset:8%;border-radius:50%;border:3px dashed var(--nh,var(--ng));box-shadow:0 0 10px 2px var(--ng),0 0 12px var(--ng) inset;background:color-mix(in srgb,var(--ng) 22%,transparent);animation:nearspot 1.1s ease-out both}
+@keyframes nearspot{0%{opacity:0;transform:scale(.6)}25%{opacity:1;transform:scale(1.06)}70%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
 .tile::before{content:"";position:absolute;inset:3%;border-radius:28%;
   background:linear-gradient(rgba(255,255,255,.07),rgba(0,0,0,.14));
   box-shadow:inset 0 1px 2px rgba(0,0,0,.28),inset 0 -1px 0 rgba(255,255,255,.07);pointer-events:none;z-index:-1}
@@ -6854,6 +6859,31 @@ async function trySwap(a, b) {
   try { return await swapTurn(a, b); }
   catch (e) { console.warn('turn recovered', e); try { await settle(); } catch (e2) { console.warn(e2); } busy = false; }
 }
+// the best 'almost': a moved orb with one same-element neighbour in a line, and the free spot that would make three
+function nearMiss(a, b) {
+  const ok = (r, c) => board[r] && board[r][c] && !board[r][c].cloud && !board[r][c].knot;
+  let best = null;
+  for (const t of [a, b]) {
+    if (!ELEM[t.type] || t.sp) continue;
+    for (const [dr, dc] of [[0, 1], [1, 0]]) {
+      const run = [t];
+      for (const s of [1, -1]) { let r = t.r + dr * s, c = t.c + dc * s; while (ok(r, c) && board[r][c].type === t.type) { run.push(board[r][c]); r += dr * s; c += dc * s; } }
+      if (run.length < 2) continue;
+      const rs = run.map(x => x.r), cs = run.map(x => x.c);
+      const lo = [Math.min(...rs) - dr, Math.min(...cs) - dc], hi = [Math.max(...rs) + dr, Math.max(...cs) + dc];
+      const spot = [hi, lo].find(([r, c]) => ok(r, c) && !(r === a.r && c === a.c) && !(r === b.r && c === b.c));
+      if (spot && (!best || run.length > best.run.length)) best = { run, spot, type: t.type };
+    }
+  }
+  return best;
+}
+function showNear(n) {
+  const host = n.run[0].el.parentNode, g = ELEM[n.type].glow;
+  n.run.forEach(t => { t.el.style.setProperty('--ng', g); t.el.classList.add('near'); setTimeout(() => t.el.classList.remove('near'), 1100); });
+  const d = document.createElement('div'); d.className = 'nearspot'; d.style.setProperty('--ng', g); d.style.setProperty('--nh', ELEM[n.type].hue);
+  d.style.cssText += `;width:${T}px;height:${T}px;transform:translate(${n.spot[1] * T}px,${n.spot[0] * T}px)`;
+  host.appendChild(d); setTimeout(() => d.remove(), 1100);
+}
 async function swapTurn(a, b) {
   if (practice && !pAllowSwap(a, b)) { pNudge(); bump(a.el); return; }
   if (moves <= 0) { if (featOn('breath')) say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
@@ -6908,10 +6938,14 @@ async function swapTurn(a, b) {
   } else {
     const m = findMatches();
     if (!m.clear.size) {
+      // Montessori's control of error: the mistake shows itself. For a moment the child sees the two that almost
+      // lined up and the spot a third would need, then the orbs slide home. No buzzer, no words.
+      const near = babyOn() ? null : nearMiss(a, b);
+      if (near) { showNear(near); bell(ELEM[near.type] ? ELEM[near.type].tone : 392, 0, 0.03); await wait(reduce ? 250 : 650); }
       swapCells(a, b); await wait(220);
       if (babyOn()) { babyWiggle(a, b); busy = false; return; }
       wrongSwaps++;
-      if (wrongSwaps < HINT_WRONG) say('Those two don\'t make a line. Try another swap.');
+      if (!near && wrongSwaps < HINT_WRONG) { bump(a.el); bump(b.el); }
       busy = false; return;
     }
     useMove(); wrongSwaps = 0;
@@ -8140,7 +8174,7 @@ function placePeek() {
   const gm = $('#game'); [...gm.classList].filter(c => c.startsWith('bs-')).forEach(c => gm.classList.remove(c)); if (S.bstyle) gm.classList.add('bs-' + S.bstyle);
   const tc = $('#todayChip'); if (tc && tc.parentNode !== row) row.appendChild(tc);
   const el = S.buddy || 'fire', wr = wrap.getBoundingClientRect(), br = boardEl.getBoundingClientRect();
-  const RH = 22, top = br.top - wr.top - RH + 5;                 // the ledge overlaps the board's frame a little
+  const RH = 22, top = br.top - wr.top - RH;                     // the ledge sits on the board's edge, never over the top row of orbs
   rail.style.left = `${br.left - wr.left - 8}px`; rail.style.width = `${br.width + 16}px`; rail.style.top = `${top}px`;
   rail.innerHTML = `<small>${BUDDY[el].name}'s gift</small>${giftName(el)}`;
   const room = br.top - $('.stats').getBoundingClientRect().bottom - RH - 2;   // never reaches the Goals/Moves bar
@@ -8636,6 +8670,10 @@ if (/[?&]fx=1/.test(location.search)) window.kcqFx = {
     }
     SIM = false; return out;
   },
+  nearTest: (minRow = 0) => { const sw = (x, y) => { const r1 = x.r, c1 = x.c, r2 = y.r, c2 = y.c; board[r1][c1] = y; board[r2][c2] = x; x.r = r2; x.c = c2; y.r = r1; y.c = c1; };
+    for (const x of all().filter(t => t.r >= minRow)) for (const [dr, dc] of [[0, 1], [1, 0]]) { const y = board[x.r + dr] && board[x.r + dr][x.c + dc]; if (!y || x.knot || y.knot || x.cloud || y.cloud || x.sp || y.sp || x.type === y.type) continue;
+      sw(x, y); const bad = !findMatches().clear.size, n = bad && nearMiss(x, y); sw(x, y); if (n) { trySwap(x, y); return { a: [x.r, x.c], b: [y.r, y.c], run: n.run.length, spot: n.spot, type: n.type }; } }
+    return null; },
   open: i => openLevel(i), unlock: n => { S.unlocked = Math.max(S.unlocked || 1, n); save(); return S.unlocked; },
   st: () => ({ LI, busy, win: !!winLevel.on, moves, game: !$('#game').hidden, story: !$('#story').hidden, gate: !$('#gate').hidden, arrive: !$('#arrive').hidden, ovs: $$('.ov').filter(o => !o.hidden).map(o => o.id), rs: !!RS, goals: [clouds().length, gemsLeft(), knotsLeft()] }),
   goalsNow: async () => { levelTally[L.elem] = L.gems || 0; all().forEach(t => { if (t.cloud || t.knot) { t.cloud = 0; t.knot = 0; paint(t); } }); busy = true; await settle(); return goalsDone(); },
