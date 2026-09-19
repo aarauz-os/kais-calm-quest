@@ -6093,6 +6093,8 @@ async function runStory() {
   const intro = L.intro && INTRO_CARD[L.intro];
   if (intro && L.intro !== 'knots' && L.intro !== 'feed') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', intro: L.intro, text: intro.say });
   if ((LI === 0 || !S.tutDone) && L.intro !== 'match') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: (featOn('breath') ? HOWTO : HOWTO_MATCH)[band()] });   // the Match 3 card already says it
+  const quick = quickStart && LI === 0;
+  if (quick) beats.splice(0, beats.length, ...beats.filter(b => b.rescueDemo));   // first launch: one line, then play
   $('#stPips').innerHTML = beats.map(() => '<i></i>').join('') + '<i></i>';
   $('#loadout').hidden = true; $('#loadout').classList.remove('up');
   $('#stStage').hidden = false;
@@ -6111,6 +6113,7 @@ async function runStory() {
   // loadout
   $$('#stPips i').forEach(p => p.classList.add('on'));
   $('#stStage').hidden = true; tapped = null;
+  if (quick) { st.classList.remove('show'); await wait(380); st.hidden = true; startLevel(); return; }
   showLoadout();
 }
 // backdrops: the place itself first, then the rest of Kai's world, rotating by episode
@@ -9309,6 +9312,8 @@ function arrivalPrep(instant) {
   return lg;
 }
 async function arrivalBreath() {
+  // the very first breath of a new player is a little shorter (3 in, 4 out): still slow, out longer than in
+  const first = quickStart && LI === 0, IN = first ? 3 : L.inhale, OUT = first ? 4 : L.exhale;
   setGroove('calm');
   const ov = $('#arrive'), cue = $('#arCue'), sub = $('#arSub'), bar = $('#arBar'), mic = $('#arMic');
   const lg = arrivalPrep();
@@ -9319,7 +9324,7 @@ async function arrivalBreath() {
   let mh = null;
   try { if (S.breathMode === 'mic' && navigator.permissions && (await navigator.permissions.query({ name: 'microphone' })).state === 'granted') mh = await openMic(); } catch (e) {}
   mic.hidden = !mh;
-  await wait(1400);
+  await wait(first ? 700 : 1400);
   const phase = async (secs, want, onTick) => {
     let hit = 0, n = 0;
     bar.style.transition = 'none'; bar.style.width = want ? '0%' : '100%'; void bar.offsetWidth;
@@ -9330,14 +9335,14 @@ async function arrivalBreath() {
   };
   let floor = 0, fn = 0, loud = 0, ln = 0;
   cue.textContent = 'Breathe in'; sub.textContent = 'Nice and slow.';
-  lg.in(L.inhale); breathSound('in', L.inhale);
-  const qi = await phase(L.inhale, true, () => { if (mh) { floor += mh.level(); fn++; } });
+  lg.in(IN); breathSound('in', IN);
+  const qi = await phase(IN, true, () => { if (mh) { floor += mh.level(); fn++; } });
   cue.textContent = 'Hold…'; sub.textContent = '';
   await wait(800);
   cue.textContent = 'Breathe out'; sub.textContent = SOUND[L.elem].say;
-  lg.out(L.exhale); breathSound('out', L.exhale);
+  lg.out(OUT); breathSound('out', OUT);
   const fl = Math.max(0.006, fn ? floor / fn * 2.2 : 0.012);
-  const qo = await phase(L.exhale, false, () => { if (mh) { ln++; if (mh.level() > fl) loud++; } });
+  const qo = await phase(OUT, false, () => { if (mh) { ln++; if (mh.level() > fl) loud++; } });
   ov.removeEventListener('pointerdown', on); removeEventListener('pointerup', off); removeEventListener('pointercancel', off);
   if (mh) { mh.close(); }
   ov.classList.remove('good');
@@ -9354,7 +9359,7 @@ async function arrivalBreath() {
     if (!reduce) r.animate([{ transform: 'scale(.6)', opacity: 0 }, { transform: 'scale(1.08)', opacity: 1, offset: .6 }, { transform: 'scale(1)' }], { duration: 500, easing: 'cubic-bezier(.3,1.5,.5,1)' }); chord([523.25, 659.25, 783.99, 1046.5], 0.1); }
   else bell(523.25, 0, 0.05);
   hud();
-  await wait(2200);
+  await wait(first ? 1600 : 2200);
   lg.hide(); ov.classList.remove('show'); await wait(400); ov.hidden = true;
   setGroove('play');
 }
@@ -10160,6 +10165,7 @@ async function enterJourney() {
 // It stays long enough to read (about four seconds); a tap moves on sooner. Baby mode skips it (no words there).
 async function playGate() {
   startLevel.again = false;
+  if (quickStart && LI === 0) { if (arrivalNow()) arrivalPrep(true); return; }   // first launch: straight to the breath
   if (babyOn() || SIM || L.again) return;
   const g = $('#gate'), el = L.elem, v = $('#gateVid'), bg = $('#gateBg'), tap = $('#gateTap');
   const ep = LI + 1, dz = DIFF[epDifficulty(ep)], cap = w => ({ 'too much': 'the Fizzies' }[w] || w[0].toUpperCase() + w.slice(1)), [from, to] = L.shift.split(' → ');
@@ -10395,8 +10401,8 @@ document.addEventListener('click', e => {
   tick(); m.hidden = !m.hidden; b.classList.toggle('on', !m.hidden);
   if (!m.hidden && !reduce) m.animate([{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }], { duration: 240 });
 });
-$('#wNext').addEventListener('click', async () => { await hideOv('win'); toMap(); openLevel(LI + 1); });
-$('#wMap').addEventListener('click', async () => { await hideOv('win'); toMap(); });
+$('#wNext').addEventListener('click', async () => { await hideOv('win'); toMap(); const n = LI + 1; afterFirstWin(() => openLevel(n)); });
+$('#wMap').addEventListener('click', async () => { await hideOv('win'); toMap(); if (!S.hero) afterFirstWin(); });
 
 // Not yet: no shame and no rush. Show how close they got, invite one breath with Luma, and make trying again easy.
 // +9 moves for earned coins (A): 90, then 180, then 300, then tripling; counted within one attempt at a puzzle
@@ -10436,7 +10442,7 @@ $('#lRetry').addEventListener('click', async () => {
   if (S.hearts <= 0 && !school()) { showOv('shop'); return; }
   loseRun++; await hideOv('lose'); startLevel.again = true; startLevel();   // a retry goes straight back to the board: no title, no breath
 });
-$('#lMap').addEventListener('click', async () => { loseRun++; await hideOv('lose'); toMap(); });
+$('#lMap').addEventListener('click', async () => { loseRun++; await hideOv('lose'); toMap(); if (!S.hero) afterFirstWin(); });
 
 /* ---------- shop ---------- */
 /* ---------- Luma's Shop: a generous featured offer, honest bundles, a grown-up gate ---------- */
@@ -10695,9 +10701,20 @@ $('#gDone').addEventListener('click', () => { guideRun++; breathSound('out', 0.3
 if (/[?&]safe=1/.test(location.search)) { document.documentElement.style.setProperty('--sat', '59px'); document.documentElement.style.setProperty('--sab', '34px'); }
 document.documentElement.style.setProperty('--scene', `url(img/home/${HOME_SCENE[homeElement()]}.jpg)`);
 syncHero(); syncPassBtn(); applyLooks(); calmDaily(); syncMusic();
+// The first 60 seconds: a brand-new player plays before any setup. Play → one line from Luma → a breath that
+// earns a star → the board with the hand showing the first swap. Hero, age and the Journey come after the first win.
+let quickStart = false;
+const isNewPlayer = () => !S.hero && !((S.stars || {})[1]) && !babyOn();
+async function afterFirstWin(next) {
+  if (S.hero || babyOn()) { quickStart = false; return next && next(); }
+  await pickHero(); quickStart = false;
+  if (next) return next();
+  S.enteredJourney ? openWorld(0) : enterJourney();
+}
 $$('[data-play]').forEach(b => b.addEventListener('click', () => {
   ac();
   $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome();
+  if (isNewPlayer()) { quickStart = true; openLevel(0); return; }
   (S.hero && S.band ? Promise.resolve() : pickHero()).then(() => S.enteredJourney ? openWorld(0) : enterJourney());
 }));
 $('#retut').addEventListener('click', () => { ac(); runPractice(); });
