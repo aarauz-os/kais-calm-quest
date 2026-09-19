@@ -157,6 +157,38 @@ body.baby #babyBar span{display:none}
 .arbar i{display:block;height:100%;width:0;border-radius:3px;background:linear-gradient(90deg,#FFE9A8,#F2C45A)}
 .armic{font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;background:rgba(0,0,0,.3);color:#FFE9A8}
 .arresult{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:900;background:linear-gradient(#FFF1C4,#E8C063);color:#4A300A;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+/* Calm Corner: any time a big feeling shows up. Pick how you feel, breathe with Luma in that feeling's place */
+.calm{position:fixed;inset:0;z-index:40;color:#FFF6DE;opacity:0;transition:opacity .35s}
+.calm.show{opacity:1}
+#cmScene{position:absolute;inset:0;z-index:0;background:#0B1A16 center/cover no-repeat}
+#cmScene::before{content:"";position:absolute;inset:0;background:inherit;filter:blur(10px) brightness(.55) saturate(1.1);transform:scale(1.1)}
+.calm.breathing #cmScene::before{display:none}
+#cmScene img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none}
+.calm.breathing #cmScene img{display:block}
+#cmScene > .lguide{border-radius:0;inset:0;background:none;position:absolute}
+#cmScene > .lguide video{transform:none}
+.calm::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(6,16,20,.62),rgba(6,16,20,0) 24%,rgba(6,16,20,0) 58%,rgba(6,16,20,.72))}
+.cmin{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-start;padding:calc(var(--sat,0px) + 14px) 20px calc(var(--sab,0px) + 30px)}
+.cmtop{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:34px}
+.cmx{position:absolute;left:0;top:0}
+.calm .areyebrow,.calm .artitle,.calm .arcue,.calm .arsub{text-shadow:0 2px 8px rgba(0,0,0,.55)}
+.cmpick{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:360px;width:100%;margin:auto;align-self:center}
+#cmBot{margin-top:auto}
+.cmafter{margin-top:auto !important}
+.cmpick button{display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 8px 12px;border-radius:22px;color:#FFF6DE;font-weight:900;font-size:16px;
+  background:linear-gradient(180deg,rgba(31,74,61,.9),rgba(16,43,36,.94));box-shadow:0 0 0 2px color-mix(in srgb,var(--fc) 70%,#E3BC6A),0 8px 18px rgba(0,0,0,.35)}
+.cmpick button:last-child:nth-child(odd){grid-column:1 / -1;flex-direction:row;justify-content:center}
+.cmpick img{width:72px;height:72px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px var(--fc),0 0 18px color-mix(in srgb,var(--fc) 60%,transparent)}
+.cmpick button:last-child:nth-child(odd) img{width:48px;height:48px}
+.cmpick button:active{transform:scale(.97)}
+.cmdots{display:flex;gap:8px;margin-top:4px}.cmdots i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25)}.cmdots i.on{background:#FFE9A8;box-shadow:0 0 8px #FFE9A8}
+.cmafter{display:flex;flex-direction:column;gap:10px;max-width:340px;width:100%;margin:0 auto}
+.cmafter p{margin:0 0 4px;padding:12px 16px;border-radius:18px;text-align:center;font-weight:800;font-size:15px;line-height:1.45;background:rgba(8,20,18,.62);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(255,233,168,.25)}
+.calm .arsub{padding:4px 12px;border-radius:12px;background:rgba(8,20,18,.45)}
+.calm .arsub:empty{display:none}
+.cmafter .row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.cmafter .row3 button{padding:12px 4px;border-radius:18px;font-weight:900;font-size:13.5px;color:#FFF6DE;background:linear-gradient(180deg,rgba(31,74,61,.92),rgba(16,43,36,.95));box-shadow:0 0 0 2px #E3BC6A}
+.cmafter .row3 button span{display:block;font-size:26px;margin-bottom:2px}
 /* story rescue: on story episodes the board powers a little scene above it */
 .rescue{position:relative;z-index:6;flex:none;height:min(236px,27vh);margin:4px 16px 0;border-radius:22px;overflow:hidden;background:#241B3A;
   box-shadow:0 0 0 2px #E3BC6A,0 0 0 5px rgba(60,38,8,.5),0 10px 24px rgba(0,0,0,.35)}
@@ -2943,7 +2975,6 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="rails">
       <div class="rail">
         <button class="hicon" data-open="streakChip"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-streak.mp4?v=60" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Streak</b><i class="hbadge" id="bStreak"></i></button>
-        <button class="hicon" data-open="questCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-quests.mp4?v=60" poster="img/icons/icon-quests-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Quests</b><i class="hbadge" id="bQuests"></i></button>
         <button class="hicon" data-open="wheelCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-wheel.mp4?v=60" poster="img/icons/icon-wheel-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Spin</b><i class="hbadge" id="bWheel"></i></button>
         <button class="hicon" data-open="buddyCard"><span class="hart h3d"><video id="buddyCoin" class="hvid" src="img/icons/anim/icon-buddy.mp4?v=60" poster="img/icons/icon-buddy-3d.jpg" muted loop playsinline autoplay preload="auto"></video><img id="buddyIcon" alt="" hidden></span><b>Companion</b><i class="hbadge" id="bBuddy"></i></button>
         <button class="hicon" data-open="sealCard"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-seal.mp4?v=60" poster="img/icons/icon-seal-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Seals</b><i class="hbadge" id="bSeals"></i></button>
@@ -2951,6 +2982,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       </div>
       <div class="rail">
         <button class="hicon dpicon" data-open="dpOpen"><span class="hart h3d"><video class="hvid" src="img/sorin/sorin-breath.mp4?v=78" poster="img/sorin-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Practice</b><i class="hbadge" id="bPractice"></i></button>
+        <button class="hicon calmicon" id="calmOpen"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-calm.mp4?v=93" poster="img/icons/icon-calm-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Calm</b></button>
         <button class="hicon" data-open="babyToggle"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-baby.mp4?v=60" poster="img/icons/icon-baby-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Baby</b><i class="hbadge" id="bBaby"></i></button>
         <button class="hicon" data-open="bedOpen"><span class="hart h3d"><video class="hvid" src="img/icons/anim/icon-bedtime.mp4?v=60" poster="img/icons/icon-bedtime-3d.jpg" muted loop playsinline autoplay preload="auto"></video></span><b>Bedtime</b></button>
       </div>
@@ -3596,6 +3628,21 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="armic" id="arMic" hidden>🎤 Luma can hear your breath</div>
         <div class="arstart" id="arStart" hidden></div>
       </div>
+    </div>
+  </div>
+  <div class="calm" id="calm" hidden role="dialog" aria-labelledby="cmTitle">
+    <div id="cmScene"><img id="cmPoster" alt=""></div>
+    <div class="cmin">
+      <div class="cmtop"><button class="iconbtn cmx" id="cmClose" aria-label="Close">✕</button>
+        <div class="areyebrow" id="cmEy">Calm Corner</div><div class="artitle display" id="cmTitle">How do you feel?</div></div>
+      <div class="cmpick" id="cmPick"></div>
+      <div class="arbot" id="cmBot" hidden>
+        <div class="arcue display" id="cmCue"></div>
+        <div class="arbar"><i id="cmBar"></i></div>
+        <div class="arsub" id="cmSub"></div>
+        <div class="cmdots" id="cmDots"></div>
+      </div>
+      <div class="cmafter" id="cmAfter" hidden></div>
     </div>
   </div>
   <div class="ov" id="journeyov" hidden><div class="card" role="dialog" aria-labelledby="journeyTitle">
@@ -5258,8 +5305,7 @@ function renderHome() {
   // badges
   $('#bStreak').textContent = S.streak ? S.streak : '';
   const q = ensureQuests(), done = q.items.filter(i => i.done).length;
-  $('#bQuests').textContent = done === 3 ? '✓' : `${done}/3`;
-  $('#bQuests').className = 'hbadge' + (done === 3 ? ' ok' : '');
+  const bq = $('#bQuests'); if (bq) { bq.textContent = done === 3 ? '✓' : `${done}/3`; bq.className = 'hbadge' + (done === 3 ? ' ok' : ''); }
   $('#bWheel').textContent = spunToday() ? '' : '!';
   const lit = balState().lit;
   $('#bLights').textContent = `${lit}/5`;
@@ -5663,7 +5709,7 @@ const SEC_SEL = { practice: '[data-open="dpOpen"]', streak: '[data-open="streakC
 const SEC_CARD = {
   practice: ["Today's practice", 'img/sorin-3d.jpg', 'Three tiny practices a day with Sorin.'],
   streak: ['Daily streak', 'img/icons/icon-streak-3d.jpg', 'Come back each day. Gifts await.'],
-  quests: ["Today's quests", 'img/icons/icon-quests-3d.jpg', 'Three small things to try each day.'],
+  quests: ["Today's quests", null, 'Three small things to try each day.'],
   collection: ['Collection', 'img/ui/journal.png', 'Everything you find, kept safe.'],
   buddy: ['Your companion', 'img/icons/icon-buddy-3d.jpg', 'Breathe together and watch it grow.'],
   harmony: ['Harmony', null, 'See how your five elements glow.'],
@@ -9298,6 +9344,68 @@ async function arrivalBreath() {
   lg.hide(); ov.classList.remove('show'); await wait(400); ov.hidden = true;
   setGroove('play');
 }
+/* ---------- Calm Corner ----------
+   A place to go any time a big feeling shows up, not a level and never scored. The child picks how they feel
+   (their own hero's face, one word), then breathes three times with Luma in that feeling's place, on that
+   element's timing, then says how they feel now. "Still big" gently points them to a grown-up.
+   Wording is from Sorin's practice (FEELS); the after-check lines are placeholders for Demaris and the counselor. */
+let calmRun = 0;
+const CALM_BASE = el => BASE_LEVELS.find(b => b.elem === el) || BASE_LEVELS[0];
+async function openCalm() {
+  const run = ++calmRun, c = $('#calm');
+  c.classList.remove('breathing'); $('#cmBot').hidden = true; $('#cmAfter').hidden = true; $('#cmPick').hidden = false;
+  $('#cmEy').textContent = 'Calm Corner'; $('#cmTitle').textContent = 'How do you feel?';
+  $('#cmScene').style.backgroundImage = `url(img/world/s1g-${WORLD_OF[timeOfDay()] || 'day'}.jpg)`;
+  $('#cmPick').innerHTML = FEELS.filter(f => f.el).map(f => `<button data-el="${f.el}" style="--fc:${ELEM[f.el].hue}"><img src="${faceSrc(heroId(), f.face)}" alt="">${f.word}</button>`).join('');
+  c.hidden = false; void c.offsetWidth; c.classList.add('show'); setGroove('calm');
+  $('#cmPick').onclick = e => { const b = e.target.closest('[data-el]'); if (!b || run !== calmRun) return; tick(); calmBreathe(b.dataset.el, 3, run); };
+}
+async function calmBreathe(el, n, run) {
+  const f = FEELS.find(x => x.el === el), base = CALM_BASE(el), c = $('#calm');
+  $('#cmPick').hidden = true; $('#cmAfter').hidden = true; $('#cmBot').hidden = false;
+  $('#cmEy').textContent = base.place; $('#cmTitle').textContent = f.breath;
+  const pl = `img/luma/place/${el}`;
+  $('#cmPoster').src = `${pl}-rest.jpg?v=89`;
+  const lg = lumaGuide($('#cmScene'), { in: `${pl}-in.mp4?v=89`, out: `${pl}-out.mp4?v=89` });
+  c.classList.add('breathing'); lg.rest();
+  $('#cmDots').innerHTML = '<i></i>'.repeat(n);
+  const cue = $('#cmCue'), sub = $('#cmSub'), bar = $('#cmBar');
+  const fill = (secs, to) => { bar.style.transition = 'none'; bar.style.width = to ? '0%' : '100%'; void bar.offsetWidth; bar.style.transition = `width ${secs}s linear`; bar.style.width = to ? '100%' : '0%'; };
+  cue.textContent = 'Breathe with Luma'; sub.textContent = f.how;
+  await wait(2200);
+  for (let i = 0; i < n; i++) {
+    if (run !== calmRun) return;
+    cue.textContent = 'Breathe in'; sub.textContent = i ? '' : f.how; fill(base.inhale, true); lg.in(base.inhale); breathSound('in', base.inhale);
+    await wait(base.inhale * 1000); if (run !== calmRun) return;
+    cue.textContent = 'Breathe out'; sub.textContent = SOUND[el].say; fill(base.exhale, false); lg.out(base.exhale); breathSound('out', base.exhale);
+    await wait(base.exhale * 1000); if (run !== calmRun) return;
+    $$('#cmDots i')[i].classList.add('on'); logDay('b', 1, i === 0 ? el : undefined);
+  }
+  cue.textContent = ''; sub.textContent = ''; bell(ELEM[el].tone, 0, 0.05);
+  calmAfter(el, run);
+}
+function calmAfter(el, run) {
+  if (run !== calmRun) return;
+  $('#cmBot').hidden = true; const a = $('#cmAfter'); a.hidden = false;
+  $('#cmTitle').textContent = 'How do you feel now?';
+  a.innerHTML = `<div class="row3"><button data-now="better"><span>🙂</span>Better</button><button data-now="bit"><span>😌</span>A bit better</button><button data-now="big"><span>😣</span>Still big</button></div>`;
+  a.onclick = e => {
+    const b = e.target.closest('[data-now]'), go = e.target.closest('[data-go]'); if (run !== calmRun) return;
+    if (go) { tick(); if (go.dataset.go === 'again') calmBreathe(el, 3, run); else if (go.dataset.go === 'other') openCalm(); else closeCalm(); return; }
+    if (!b) return; tick();
+    const now = b.dataset.now;
+    const msg = { better: 'You calmed your body yourself. That is a real skill.', bit: 'A little calmer is still calmer. One more breath can help.', big: 'Big feelings are okay. Find a grown-up and tell them how you feel. You can breathe together.' }[now];
+    $('#cmTitle').textContent = now === 'better' ? 'Well done' : now === 'bit' ? 'That helped' : 'That\'s okay';
+    a.innerHTML = `<p>${msg}</p><button class="btn gold" data-go="${now === 'better' ? 'done' : 'again'}">${now === 'better' ? 'Done' : 'Breathe again'}</button><button class="linkbtn" data-go="${now === 'better' ? 'other' : 'done'}" style="color:#FFE9A8">${now === 'better' ? 'Another feeling' : 'Done'}</button>`;
+  };
+}
+async function closeCalm() {
+  calmRun++; const c = $('#calm'); c.classList.remove('show');
+  const g = $('#cmScene .lguide'); if (g) g.querySelectorAll('video').forEach(v => v.pause());
+  await wait(360); c.hidden = true; c.classList.remove('breathing'); setGroove('home'); renderHome();
+}
+$('#calmOpen').addEventListener('click', () => { ac(); tick(); openCalm(); });
+$('#cmClose').addEventListener('click', () => { tick(); closeCalm(); });
 function renderJourney() {
   let start = 1;
   $('#jList').innerHTML = CHAPTERS.map((ch, i) => {
