@@ -105,6 +105,7 @@ body.baby #babyBar span{display:none}
 .babyinter.fallback video{display:none}
 .babyinter .hsprite{display:block;width:100%;background-size:500% 100%;background-position:var(--bx,0%) 0}
 @keyframes bibreath{0%,100%{transform:scale(.92)}45%{transform:scale(1.1)}}
+#bubble:empty{visibility:hidden}
 /* baby mode: no words on screen (they can't read yet); only the grown-up Stop bar */
 body.baby #bubble, body.baby #flowBar, body.baby #toast, body.baby #todayChip, body.baby #toMap, body.baby #pkPerk, body.baby #pwBar [id^="pwc-"], body.baby .tipbox{display:none!important}
 #babyBloom{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(12,22,40,0) 25%,rgba(12,22,40,.38) 100%);opacity:0;transition:opacity .6s ease}
@@ -2793,7 +2794,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       <div class="kai">
         <span class="avwrap"><img id="kaiFace" src="img/kai-3d.jpg" alt="Kai"></span>
         <span class="avwrap buddy" id="buddyWrap" hidden><img id="buddyGame" alt=""></span>
-        <div class="bubble" id="bubble">Swap two orbs to make a line of three.</div>
+        <div class="bubble" id="bubble"></div>
       </div>
       <div class="tools">
         <div class="lumawrap" id="lumaWrap">
@@ -3096,10 +3097,10 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="eyebrow">How to play</div>
     <h2 class="display" id="howTitle">Calm the storm</h2>
     <div class="howsteps">
-      <div><span class="hv"><span class="dots3"><i></i><i></i><i></i></span></span><b>Match 3 or more</b><em>Swap orbs to make lines. Every match grows Luma's Aura.</em></div>
+      <div data-how="match"><span class="hv"><span class="dots3"><i></i><i></i><i></i></span></span><b>Match 3 or more</b><em>Swap orbs to make lines. Every match grows Luma's Aura.</em></div>
       <div><span class="hv"><img src="img/pass/goal-cloud.png" alt=""></span><b>Clear the goals</b><em>Clear the storm clouds, collect orbs and untie knots before you run out of moves.</em></div>
-      <div><span class="hv"><img class="rnd" src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe with Luma</b><em>When Luma glows, take a real slow breath. The slower you breathe, the bigger Luma's Dive.</em></div>
-      <div><span class="hv"><img src="img/ui/pw-bear.png" alt=""></span><b>Call the animals</b><em>Deer, Hawk, Monkey, Tiger and Bear each help in their own way. Tap one to see it work.</em></div>
+      <div data-how="breath"><span class="hv"><img class="rnd" src="img/faces/luma-breath.jpg" alt=""></span><b>Breathe with Luma</b><em>When Luma glows, take a real slow breath. The slower you breathe, the bigger Luma's Dive.</em></div>
+      <div data-how="monkey"><span class="hv"><img src="img/ui/pw-bear.png" alt=""></span><b>Call the animals</b><em>Deer, Hawk, Monkey, Tiger and Bear each help in their own way. Tap one to see it work.</em></div>
     </div>
     <div class="stack"><button class="btn gold" id="howDone">Let's play</button><button class="linkbtn" id="howPractice">Practise in the Grove</button></div>
   </div></div>
@@ -5512,7 +5513,7 @@ async function runStory() {
     '12-15': "New obstacle: knots. They're Earth, so they follow the control cycle: a Wood match right next to one breaks it loose, the way roots split soil. Or build a match straight through it." }[band()] });
   const intro = L.intro && INTRO_CARD[L.intro];
   if (intro && L.intro !== 'knots' && L.intro !== 'feed') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', intro: L.intro, text: intro.say });
-  if (LI === 0 || !S.tutDone || band() === '2-4') beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: (featOn('breath') ? HOWTO : HOWTO_MATCH)[band()] });
+  if (LI === 0 || !S.tutDone) beats.push({ who: 'luma', voice: 'luma', name: 'Luma', text: (featOn('breath') ? HOWTO : HOWTO_MATCH)[band()] });
   $('#stPips').innerHTML = beats.map(() => '<i></i>').join('') + '<i></i>';
   $('#loadout').hidden = true; $('#loadout').classList.remove('up');
   $('#stStage').hidden = false;
@@ -6086,7 +6087,7 @@ const glowOn = () => !babyOn() && LI + 1 >= GLOW_FROM;
 function applyGlow() {
   const n = Math.min(3, S.glow || 0); if (!n || !glowOn()) return;
   placeGifts(['row', 'bomb', 'spirit'].slice(0, n));
-  setTimeout(() => say(`Glow streak ×${n}. Luma left you ${n === 1 ? 'a gift' : n + ' gifts'} on the board.`), 900);
+  setTimeout(() => sayOnce('glow', `Glow streak! Win in a row and Luma leaves gifts on the board.`), 900);
 }
 function addClouds(n, quiet) {
   // clouds settle anywhere in the upper two-thirds; matches beside them peel them away
@@ -6235,7 +6236,7 @@ const adjacent = (a, b) => Math.abs(a.r - b.r) + Math.abs(a.c - b.c) === 1;
 
 async function trySwap(a, b) {
   if (practice && !pAllowSwap(a, b)) { pNudge(); bump(a.el); return; }
-  if (moves <= 0) { say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
+  if (moves <= 0) { if (featOn('breath')) say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
   if (a.knot || b.knot) { say('Worry tied that orb in a knot. Make a match that includes it and the knot comes loose.'); bump((a.knot ? a : b).el); bell(392, 0, 0.05); return; }
   busy = true; swish();
   swapCells(a, b);
@@ -6463,7 +6464,7 @@ async function playFiring(fx) {
 async function fireTap(t) {
   if (busy || !t || t.knot || t.cloud) return;
   if (practice && !pAllowTap(t)) { pNudge(); return; }
-  if (moves <= 0 && !babyOn()) { say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
+  if (moves <= 0 && !babyOn()) { if (featOn('breath')) say('No moves left. Tap Luma and breathe to clear one more cloud.'); return; }
   busy = true; clearHints(); clearPreview();
   useMove(); tick();
   if (!reduce) t.el.animate([{ transform: `translate(${t.c * T}px,${t.r * T}px) scale(1)` }, { transform: `translate(${t.c * T}px,${t.r * T}px) scale(1.25)` }, { transform: `translate(${t.c * T}px,${t.r * T}px) scale(1)` }], { duration: 160 });
@@ -6528,7 +6529,7 @@ async function resolve(clear, groups, moved) {
       bell(m.kind === 'spirit' ? 1046.5 : 783.99, 0, 0.09); bell(m.kind === 'spirit' ? 1318.5 : 1046.5, 0.09, 0.07);
       if (!reduce) sparkleAt(boardEl, m.t.c * T + T / 2, m.t.r * T + T / 2, ['#FFF6DE', '#FFE08A', '#FFFFFF'], 12);
       questBump('special'); peekReact('gasp', 1300);
-      if (!practice) say(SP_HOW[m.kind]);
+      if (!practice) sayOnce('how-' + m.kind, SP_HOW[m.kind]);
       setTimeout(() => { if (board[m.t.r] && board[m.t.r][m.t.c] === m.t) spCallout(m.t); }, 500);
     });
     gravity();
@@ -6586,7 +6587,7 @@ async function popSet(set) {
   if (arr.length >= 4) avatarReact('happy', arr.length + combo * 2);
   if (S.buddy && arr.some(t => t.type === S.buddy)) peekReact('cheer', 1300, true);
   else if (arr.length >= 5 || combo >= 2) peekReact('cheer', 1200);
-  if (combo >= 1 && performance.now() - cheerAt > 2500) { cheerAt = performance.now(); say(rnd(CHEERS)); }
+
   hud();
   await wait(reduce ? 40 : 105 + maxPd);          // the next orbs start falling while the pieces are still flying
 }
@@ -6662,7 +6663,7 @@ function flowStep(el) {
   buddyHop();
   avatarReact('cheer');
   if (flow >= 3) { questBump('flow'); bumpTally('flow3'); }
-  say(flow >= 3 ? 'The whole cycle is flowing. Luma filled up fast.' : `${ELEM[prevOf(el)].feeds}. Luma filled faster.`);
+  if (flow >= 3) sayOnce('flow3', 'The whole cycle is flowing. Luma filled up fast.'); else sayOnce('flow', `${ELEM[prevOf(el)].feeds}. Match in the cycle's order and Luma fills faster.`);
   clearTimeout(bar._t); bar._t = setTimeout(() => { bar.hidden = true; }, 4500);
   hud();
 }
@@ -7026,7 +7027,7 @@ function lumaAim(d) {
     const best = bestDiveSpot(d);
     if (best) showPreview(lumaArea(best, d));
     const size = { small: 'a small patch', nice: 'a patch and a cross', deep: 'a huge patch' }[d.tier];
-    say(`Where should Luma dive? Tap the board. Her breath made ${size}. The glow shows the best spot.`);
+    sayOnce('aim', `Where should Luma dive? Tap the board. The glow shows the best spot.`);
     const bar = $('#flowBar'); bar.innerHTML = '<span><b>Luma’s Dive</b> · tap where she should land</span>'; bar.hidden = false; clearTimeout(bar._t);
   });
 }
@@ -7077,7 +7078,6 @@ async function applyBreath(q) {
   const extra = (stillDrop ? 2 : 0) + (S.buddy === 'metal' && !babyOn() ? Math.min(3, giftTier('metal')) : 0);
   if (extra) { clouds().sort((a, b) => b.r - a.r || a.c - b.c).slice(0, extra).forEach((t, i) => freeCloud(t, i)); await wait(reduce ? 60 : 900); gravity(); await wait(reduce ? 60 : 300); await collectClouds(); }
   const left = clouds().length;
-  say(left ? `${left} ${left === 1 ? 'cloud' : 'clouds'} left. Keep matching to fill Luma again.` : 'The last cloud floated away.');
   // a deeper breath leaves power pieces behind where she landed
   if (!babyOn()) {
     if (p.tier === 'deep') { placeGifts(['fly', 'bomb']); if (!reduce) confetti('#board'); }
@@ -7154,7 +7154,7 @@ function cycleCheck(pw) {
   if (lastPower && CREATES[lastPower] === pw.elem) {
     charge = Math.min(100, charge + 10);
     if (!babyOn()) { S.coins += COIN_RULES.cycle; save(); }
-    say(`${ELEM[lastPower].feeds}. You followed the creation cycle.`);
+    sayOnce('pwcycle', `${ELEM[lastPower].feeds}. Using helpers in the cycle's order pays.`);
     chord([ELEM[lastPower].tone, ELEM[pw.elem].tone, ELEM[pw.elem].tone * 1.5], 0.08);
     hud();
   }
@@ -7171,7 +7171,7 @@ $('#pwBar').addEventListener('click', async e => {
   if (!S.seenPw[pw.id]) { const go = await pwDemo(pw); S.seenPw[pw.id] = 1; save(); if (!go) return; }
   if (pwCount(pw.id) <= 0 && S.coins < pw.cost) { spend(pw.cost); return; }
   if (pw.aim) {
-    setAim(pw.id); monkeyFirst = null; say(pw.how + (pw.id === 'monkey' ? '' : ' Slide your finger to aim, lift to use it.')); powerCaption(pw);
+    setAim(pw.id); monkeyFirst = null; if (pw.id === 'monkey') say(pw.how); else sayOnce('aim-' + pw.id, pw.how + ' Slide your finger to aim, lift to use it.'); powerCaption(pw);
     if (pw.id !== 'monkey') { const mid = board[R >> 1] && board[R >> 1][C >> 1]; if (mid) { showPreview(powerArea(pw.id, mid)); setTimeout(() => { if (!aimT) clearPreview(); }, 1100); } }
     return;
   }
@@ -7451,6 +7451,9 @@ function clawMarks(row) {
 /* ---------- hud / scene ---------- */
 const kai = $('#kaiFace');
 let bubbleT;
+// dialogue rule (A, 2026-09-18): Luma only speaks to introduce something the first time, to remind, or to hint.
+// Never just to fill silence, and never about something the player hasn't met yet.
+function sayOnce(key, msg) { S.seenSay = S.seenSay || {}; if (S.seenSay[key]) return; S.seenSay[key] = 1; save(); say(msg); }
 function say(msg) {
   const b = $('#bubble');
   b.classList.add('fade');
@@ -7642,10 +7645,9 @@ function hud() {
   if (!ready && rank > (hud.rank ?? 0) && !breathing && !reduce) {
     bell(ELEM[L.elem].tone * (1 + rank * 0.25), 0, 0.06);
     lw.animate([{ transform: 'scale(1)' }, { transform: 'scale(1.15)' }, { transform: 'scale(1)' }], { duration: 420, easing: 'cubic-bezier(.3,1.6,.5,1)' });
-    say(`Luma's Aura is ${tier}.`);
   }
   hud.rank = rank;
-  if (ready && !wasReady && !breathing) { say('Luma is ready. Tap her and breathe with her.'); coachReady(); }
+  if (ready && !wasReady && !breathing) { sayOnce('ready', 'Luma is ready. Tap her and breathe with her.'); coachReady(); }
   wasReady = ready;
   syncWallet();
 }
@@ -8203,15 +8205,16 @@ function coachStart() {
   if (LI !== 0 || S.tutDone) { tut = null; clearHints(); hideTip(); return; }
   tut = 'swap';
   showSwapHint();
-  tip('Step 1 of 3', 'Slide the glowing orb where the hand shows. 3 in a row pops.', 0);
+  tip('How to play', 'Slide the glowing orb where the hand shows. 3 in a row pops.', 0);
 }
 // called after every finished turn
 function coachAfterTurn() {
   idleAt = performance.now(); hintShown = false;
   if (tut === 'swap') {
-    if (charge >= 100) return;
     clearHints();
-    tip('Step 1 of 3', `Nice! Keep matching.`, 0);
+    tip('How to play', 'Nice! Keep matching to clear the clouds.', 0);
+    tut = null; S.tutDone = true; save();                // the breath gets its own welcome in episode 3
+    setTimeout(() => { if (!tut) hideTip(); }, 2600);
   } else if (tut === 'loop') {
     clearHints(); wrongSwaps = 0;
   } else if (!tut) clearHints();
@@ -8441,9 +8444,8 @@ function startLevel() {
   playGate();
   setTimeout(() => {
     sizeBoard(); sizeRain(); fill(); applyCharms(); applyGlow(); buddyLevelGifts(); const warmed = dpWarm(); hud();
-    if (warmed) say('Your practice with Sorin warmed up Luma. Her Aura is already glowing.'); else say(S.buddy === L.elem
-      ? `${BUDDY[S.buddy].name} is at home here. Match 3 of the same element to grow Luma's Aura.`
-      : featOn('breath') ? 'Swipe to match 3 of the same element. Each match grows Luma’s Aura.' : 'Swipe two orbs to line up 3 of the same element!');
+    // a new board starts quiet: Luma speaks only when there is something to say
+    say(warmed ? 'Your practice with Sorin warmed up Luma. Her Aura is already glowing.' : '');
     if (!running) { running = true; rainLoop(); }
     setTimeout(async () => {
       if (babyOn()) { busy = false; $('#babyBar').hidden = false; clearHints(); hideTip(); babyLoop(++babyRun); return; }
@@ -9270,7 +9272,7 @@ async function party(stars, coins, xpFrom = 0, xpGain = 0) {
   heroImg.src = faceSrc(heroId(), 'cheer'); lumaImg.src = faceSrc('luma', 'cheer');
   const dzz = DIFF[epDifficulty(LI + 1)];
   $('#pWord').textContent = dzz.name ? `${dzz.name} cleared!` : stars === 3 ? 'Radiant!' : stars === 2 ? 'Wonderful!' : 'You did it!';
-  $('#pFeel').innerHTML = `${from[0].toUpperCase() + from.slice(1)} → <b>${to[0].toUpperCase() + to.slice(1)}</b> · you earned ${to[0].toUpperCase() + to.slice(1)}`;
+  $('#pFeel').innerHTML = `You turned ${from[0].toUpperCase() + from.slice(1)} into <b>${to[0].toUpperCase() + to.slice(1)}</b>`;
   $$('#pStars i').forEach(s => s.classList.remove('lit'));
   $('#pCoins').textContent = '0';
   [$('#pWord'), $('#pFeel'), $('.pcoins'), $('#pPass'), $('#pGo')].forEach(e => e.style.opacity = 0);
@@ -9344,7 +9346,6 @@ async function winLevel() {
     return;
   }
   chord([523.25, 659.25, 783.99, 1046.5, 1318.5], 0.13);
-  say('The storm passed. You can breathe again.');
   await wait(1400);
   const n = LI + 1;
   // hidden par: never shown. Finishing within it earns a star and bonus coins that grow the more
@@ -9697,7 +9698,13 @@ $$('[data-play]').forEach(b => b.addEventListener('click', () => {
 }));
 $('#retut').addEventListener('click', () => { ac(); runPractice(); });
 $('#toMapFromWelcome').addEventListener('click', () => { ac(); $('#welcome').hidden = true; $('#map').hidden = false; renderMap(); renderStreak(); renderHome(); });
-$('#howOpen').addEventListener('click', () => { ac(); tick(); showOv('howov'); });
+$('#howOpen').addEventListener('click', () => {
+  ac(); tick();
+  // the guide only explains what this player has already met
+  $$('#howov [data-how]').forEach(r => { r.hidden = r.dataset.how !== 'match' && !featOn(r.dataset.how, reached()); });
+  const m = $('#howov [data-how="match"] em'); if (m) m.textContent = featOn('breath', reached()) ? "Swap orbs to make lines. Every match grows Luma's Aura." : 'Swap orbs to make lines of three or more.';
+  showOv('howov');
+});
 $('#howDone').addEventListener('click', () => hideOv('howov'));
 $('#howPractice').addEventListener('click', async () => { await hideOv('howov'); runPractice(); });
 $$('.orbrow[data-types]').forEach(r => r.innerHTML = r.dataset.types.split(' ').map(t => `<span>${orbHTML(t)}</span>`).join(''));
