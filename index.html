@@ -286,7 +286,7 @@ body.baby #babyBar span{display:none}
 @media (max-height:900px){
   .rails{top:calc(230px + var(--sat)) !important}
   .rails .hicon .hart{width:52px;height:52px;border-radius:16px}
-  .rails .rail{gap:2px}
+  .rails .rail{gap:2px;justify-content:space-between}
   .rescue{height:124px !important}
 }
 /* the board gets the room on every iPhone: compact faces, no aura caption, the rescue scene sized to the phone */
@@ -311,6 +311,14 @@ body.baby #babyBar span{display:none}
 #balov .ibtn{display:inline-grid;vertical-align:middle;margin-left:4px;width:24px;height:24px;font-size:13px}
 #balov .more{display:block;margin-top:6px;font-size:14px}
 #balNote{text-align:center}
+/* tab bar: tabs you're not on rest dimmed on frosted glass; the one you're on lights up in full colour */
+.tab:not(.on) .ti::before{content:"";position:absolute;inset:-3px;border-radius:50%;
+  background:radial-gradient(circle at 50% 30%,rgba(255,255,255,.2),rgba(255,255,255,.06) 60%,rgba(255,255,255,.03));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 0 0 1px rgba(255,255,255,.14),0 2px 6px rgba(0,0,0,.2);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
+.tab:not(.on) .ti > *{position:relative;filter:grayscale(.7) brightness(.82) saturate(.7);opacity:.7;transition:filter .3s,opacity .3s}
+.tab:not(.on) b{opacity:.55}
+.tab.on .ti > *{filter:saturate(1.35) brightness(1.08) drop-shadow(0 0 8px rgba(255,236,170,.75)) drop-shadow(0 3px 2px rgba(0,0,0,.35));opacity:1}
+.tab.on b{text-shadow:0 0 10px rgba(255,226,150,.8)}
 /* baby mode: no words on screen (they can't read yet); only the grown-up Stop bar */
 body.baby #bubble, body.baby #flowBar, body.baby #toast, body.baby #todayChip, body.baby #toMap, body.baby #pkPerk, body.baby #pwBar [id^="pwc-"], body.baby .tipbox{display:none!important}
 #babyBloom{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(12,22,40,0) 25%,rgba(12,22,40,.38) 100%);opacity:0;transition:opacity .6s ease}
@@ -1275,7 +1283,7 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
 .wme{position:absolute;width:46px;height:46px;margin:-86px 0 0 -23px;border-radius:50%;overflow:hidden;pointer-events:none;box-shadow:0 0 0 3px #fff,0 0 0 6px var(--gold-mid),0 8px 14px rgba(0,0,0,.5);animation:mebob 1.4s ease-in-out infinite}
 .wme img{width:100%;height:100%;object-fit:cover}
 @keyframes mebob{50%{transform:translateY(-8px)}}
-.wboss{position:absolute;left:50%;top:17.5%;transform:translate(-50%,-50%);display:grid;justify-items:center;gap:6px;padding:0;background:none}
+.wboss{position:absolute;left:50%;top:calc(var(--sat) + 64px);transform:translateX(-50%);display:grid;justify-items:center;gap:6px;padding:0;background:none}
 .wbglow{position:absolute;left:50%;top:44%;width:210px;height:210px;margin:-105px 0 0 -105px;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--bg,#FFE9A8) 75%,transparent),transparent 65%);animation:glowpulse 2.6s ease-in-out infinite}
 .wbimg{position:relative;width:112px;height:112px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 4px var(--gold-hi),0 0 0 8px var(--gold-lo),0 10px 24px rgba(0,0,0,.55)}
 .wboss.wide .wbimg{width:176px;height:100px;border-radius:22px}
@@ -2005,12 +2013,13 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
   box-shadow:inset 0 2px 0 rgba(255,255,255,.25),inset 0 -4px 0 rgba(0,0,0,.3),0 0 0 2.5px #E3BC6A,0 6px 14px rgba(0,0,0,.4) !important}
 .journeybtn::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 45%,rgba(255,255,255,.28) 50%,transparent 55%);transform:translateX(-120%);animation:pwshine 8s ease-in-out infinite;pointer-events:none}
 .passbtn::after{animation-delay:2.5s}
-#playNext{position:relative;overflow:hidden;min-height:64px;font-size:22px !important;letter-spacing:.01em;border-radius:24px !important;
-  background:linear-gradient(180deg,#8FE06A 0%,#4DB34A 45%,#2E8A3A 100%) !important;color:#fff !important;text-shadow:0 2px 0 rgba(20,70,20,.8) !important;
-  box-shadow:inset 0 3px 0 rgba(255,255,255,.55),inset 0 -6px 0 rgba(20,80,30,.55),0 0 0 3px #E3BC6A,0 0 0 5.5px rgba(80,50,10,.5),0 10px 22px rgba(0,0,0,.45) !important;animation:playPulse 2.6s ease-in-out infinite}
-#playNext::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 45%,rgba(255,255,255,.45) 50%,transparent 55%);transform:translateX(-120%);animation:pwshine 4.5s ease-in-out infinite;pointer-events:none}
+/* Play: the same refined gold as every primary button, slim, no heavy rim, no pulsing */
+#playNext{position:relative;overflow:hidden;min-height:56px;font-size:21px !important;letter-spacing:.02em;border-radius:20px !important;
+  background:linear-gradient(180deg,#FFEBB4 0%,#F2C766 50%,#D39B38 100%) !important;color:#3A2408 !important;text-shadow:0 1px 0 rgba(255,255,255,.55) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 -3px 0 rgba(140,90,20,.3),0 0 0 1.5px rgba(120,80,20,.5),0 8px 18px rgba(0,0,0,.35) !important;animation:none}
+#playNext::after{content:"";position:absolute;inset:-40%;background:linear-gradient(115deg,transparent 46%,rgba(255,255,255,.35) 50%,transparent 54%);transform:translateX(-120%);animation:pwshine 7s ease-in-out infinite;pointer-events:none}
 #playNext{flex-direction:column !important;gap:0 !important;line-height:1.05}
-#playNext small{display:block;font-size:12px;font-weight:900;opacity:.95;letter-spacing:.04em;margin-top:1px}
+#playNext small{display:block;font-size:12px;font-weight:800;color:rgba(58,36,8,.72);letter-spacing:.04em;margin-top:2px;text-shadow:none}
 #playNext.stormy{background:linear-gradient(180deg,#B98CFF 0%,#7A4ED8 45%,#4E2A9A 100%) !important;box-shadow:inset 0 3px 0 rgba(255,255,255,.5),inset 0 -6px 0 rgba(40,10,90,.55),0 0 0 3px #FFD45A,0 0 0 5.5px rgba(60,20,90,.5),0 10px 22px rgba(0,0,0,.45),0 0 24px rgba(180,120,255,.6) !important}
 @keyframes playPulse{50%{transform:scale(1.025)}}
 /* ---------- MorQi UI kit v2: every panel feels like a treasure, not a form ---------- */
@@ -2092,7 +2101,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .xpchips img.rnd{border-radius:50%;object-fit:cover}
 
 /* ================= Bottom tab bar + Collection (v55) ================= */
-:root{--tabh:74px}
+:root{--tabh:74px;--barh:calc(var(--tabh) + var(--sab) + var(--sab))}   /* the bar's true height on screen */
 .tabbar{position:absolute;left:0;right:0;bottom:0;z-index:25;height:calc(var(--tabh) + var(--sab));padding:0 4px var(--sab);display:flex;align-items:stretch;
   background:linear-gradient(180deg,#2F6E58,#1A4536 70%,#143A2E);border-radius:24px 24px 0 0;
   box-shadow:inset 0 3px 0 #F4D78C,inset 0 5px 0 #A9782E,inset 0 8px 10px rgba(0,0,0,.25),0 -10px 26px rgba(0,0,0,.32);transition:transform .38s cubic-bezier(.3,1.25,.5,1)}
@@ -2113,21 +2122,21 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .tab.on .tdot{display:none}
 .tab.pop .ti{animation:tabpop .42s cubic-bezier(.3,1.6,.5,1)}
 @keyframes tabpop{0%{transform:translateY(-16px) scale(1.28)}30%{transform:translateY(-10px) scale(1.42,1.1)}60%{transform:translateY(-20px) scale(1.2,1.36)}100%{transform:translateY(-16px) scale(1.28)}}
-body.tabs .homefoot{padding-bottom:calc(48px + var(--tabh) + var(--sab))}   /* clears the raised Home disc on every iPhone */
+body.tabs .homefoot{padding-bottom:calc(64px + var(--tabh) + var(--sab))}   /* Play sits fully above the tab bar and its raised disc, on every iPhone */
 body.tabs .rails{bottom:calc(200px + var(--tabh) + var(--sab))}
 body.tabs .homesorin{bottom:calc(184px + var(--tabh) + var(--sab))}
 body.tabs #journeyOpen{display:none}
 body.tabs .homeduo{grid-template-columns:1fr}
 body.tabs #playNext small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11.5px}
 body.tabs #map .promise{display:none}
-body.tabs .wfoot{bottom:calc(14px + var(--tabh) + var(--sab))}
+body.tabs .wfoot{bottom:calc(30px + var(--barh))}   /* clear of the bar and its raised disc */
 body.tabs .wnav{margin-top:-34px}
-body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--tabh) + var(--sab))}
-.ov.pagemode{z-index:24;align-items:stretch;padding-bottom:calc(var(--tabh) + var(--sab) + 10px) !important;background:rgba(10,18,15,.55)}
+body.tabs .snin{box-sizing:border-box;padding-bottom:calc(20px + var(--barh))}
+.ov.pagemode{z-index:24;align-items:stretch;padding-bottom:calc(var(--barh) + 12px) !important;background:rgba(10,18,15,.55)}
 .ov.pagemode .card{max-height:none;height:100%}
 .ov.pagemode .cardx{display:none}
 .collect{position:absolute;inset:0;z-index:24;overflow:hidden;color:#FFF6DE}
-.cin{position:relative;z-index:2;height:100%;box-sizing:border-box;overflow-y:auto;padding:calc(12px + var(--sat)) 16px calc(24px + var(--tabh) + var(--sab))}
+.cin{position:relative;z-index:2;height:100%;box-sizing:border-box;overflow-y:auto;padding:calc(12px + var(--sat)) 16px calc(24px + var(--barh))}
 .cin .wtop{position:relative;top:0;left:0;right:0}
 .cprog{margin:12px 0 4px;padding:14px 14px 12px;border-radius:20px;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.4)}
 .cprog .ctop{display:flex;justify-content:space-between;align-items:baseline;font-weight:900}
@@ -2307,7 +2316,7 @@ body.tabs .homeduo{max-width:320px}
 #map #homeEyebrow{display:none}
 .homepass{margin-top:18px !important}
 .homepass{margin-top:16px !important}
-body.tabs .rails{bottom:calc(112px + var(--tabh) + var(--sab))}
+body.tabs .rails{bottom:calc(134px + var(--tabh) + var(--sab))}   /* the icon columns end above Play, labels included */
 body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .gupbtn img{width:26px;height:26px;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))}
 .whypage .stbg::after{background:radial-gradient(120% 70% at 50% 25%,rgba(8,16,14,.35),rgba(8,16,14,.85) 70%)}
@@ -5234,7 +5243,7 @@ function renderHome() {
   const next = Math.min(S.unlocked, LEVELS.length) - 1;
   $('#places').innerHTML = LEVELS.map((l, i) => `<button class="lvmed ${i + 1 > S.unlocked ? 'locked' : ''} ${i === next ? 'next' : ''}" data-lv="${i}" aria-label="${l.place}">${orbHTML(l.elem)}<span class="st">${'★'.repeat(S.stars[i + 1] || 0)}</span></button>`).join('');
   const dz = DIFF[epDifficulty(next + 1)];
-  $('#playNext').innerHTML = `Play<small>${lvLabel(next + 1, true)} · ${LEVELS[next].place}${dz.name ? ` · ⚡ ${dz.name}` : ''}</small>`;
+  $('#playNext').innerHTML = `Play<small>${lvLabel(next + 1, true)}${dz.name ? ` · ⚡ ${dz.name}` : ''}</small>`;
   $('#playNext').classList.toggle('stormy', !!dz.name);
   startHomeFx(el, tod);
   renderSorin();
@@ -9191,7 +9200,8 @@ $('#journeyClose').addEventListener('click', () => hideOv('journeyov'));
 const WORLD_MAP = { earth: 'map-earth', wood: 'map-wood', fire: 'map-fire', metal: 'map-metal', water: 'map-water', all: 'map-first' };
 const FEEL_ART = { Anger: 'feel-anger', Fear: 'feel-fear', Worry: 'feel-worry', Sadness: 'feel-sadness', 'The Fizzies': 'feel-fizzies' };
 // nine stops up the valley (x%, y%): eight places, then the feeling waiting at the top
-const WPTS = [[50, 79], [28, 71], [52, 64], [74, 57], [52, 50], [27, 43], [44, 36.5], [68, 31]];
+// the eight stops sit between the Round Table and the caption card, so nothing on the map is ever covered
+const WPTS = [[50, 67.4], [28, 62.6], [52, 58], [74, 53.4], [52, 48.5], [27, 43.5], [44, 38.9], [68, 35]];
 let WI = 0;
 function wpathD(pts) {
   const P = [...pts, [50, 17]];
