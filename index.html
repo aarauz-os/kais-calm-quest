@@ -51,7 +51,9 @@ body.baby #babyBar span{display:none}
 .dpicon.due .hart{box-shadow:0 0 0 3px #FFE9A8,0 0 22px 6px rgba(255,226,150,.85);animation:dpdue 2.2s ease-in-out infinite}
 @keyframes dpdue{50%{transform:scale(1.07)}}
 .dpcard{text-align:left}
-.dphead{display:flex;gap:14px;align-items:center}
+.dphead{display:flex;gap:14px;align-items:center;padding-right:44px}
+/* any card with a corner close button keeps its top lines clear of it (symmetric, so centred text stays centred) */
+.card:has(.cardx) > .eyebrow,.card:has(.cardx) > h2:first-of-type,.card:has(.cardx) > .display:first-of-type{padding-inline:46px !important}   /* the corner close button never sits on the heading */
 .dpsorin{flex:none;width:84px;height:84px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #E3BC6A,0 8px 18px rgba(0,0,0,.35)}
 .dpsorin video{width:100%;height:100%;object-fit:cover;display:block}
 .dphead h2{margin:2px 0}.dphead p{margin:0;font-size:13px;color:#D8E6DF}
@@ -1629,7 +1631,7 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
 .snlock b{display:grid;place-items:center;width:84px;height:84px;border-radius:50%;font-size:13px;font-weight:900;line-height:1.1;text-align:center;
   background:conic-gradient(var(--gold-hi) calc(var(--p,0)*1%),rgba(255,255,255,.18) 0);-webkit-mask:radial-gradient(circle,transparent 34px,#000 35px);mask:radial-gradient(circle,transparent 34px,#000 35px)}
 .snlock em{position:absolute;font-style:normal;font-size:13px;font-weight:900;text-shadow:0 1px 3px rgba(0,0,0,.8)}
-.sndots{display:flex;gap:8px;margin:14px 0 4px}
+.sndots{display:flex;gap:8px;margin:22px 0 4px}   /* clear of the portrait's glowing ring */
 .sndots i{width:12px;height:12px;border-radius:50%;opacity:.4;box-shadow:0 0 0 2px rgba(255,255,255,.5)}
 .sndots i.on{opacity:1;transform:scale(1.25);box-shadow:0 0 0 2px #fff,0 0 10px currentColor}
 .snname{display:flex;flex-direction:column;align-items:center;gap:6px;margin-top:6px}
@@ -1649,7 +1651,6 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
 .sngrow span.on i{box-shadow:0 0 0 2px #fff,0 0 12px rgba(255,220,130,.8)}
 .sngrow small{font-size:10px;font-weight:800;opacity:.8}
 .sanct .btn.big{width:100%;max-width:340px;margin-top:14px}
-.sanct .btn.big.with{background:linear-gradient(#9BE07F,#3E9A48) !important;color:#fff !important}
 .snpass{margin-top:10px;padding:8px 16px;border-radius:99px;font-weight:900;font-size:13px;color:#FFF6DE;background:rgba(0,0,0,.4);box-shadow:inset 0 0 0 1.5px rgba(255,233,168,.55)}
 /* ================= safe areas: notch, Dynamic Island, home indicator =================
    Every bar that touches the top or bottom edge moves inside the phone's safe area. On phones
@@ -1693,7 +1694,7 @@ body.baby .boosters, body.baby #shopOpen2{display:none}
   .sngift{margin-top:10px;padding:10px 14px}
   .sngrow{margin-top:8px}
   .sanct .btn.big{margin-top:10px}
-  .sndots{margin:10px 0 2px}
+  .sndots{margin:18px 0 2px}
 }
 @media (max-height:760px){
   .snhero{width:150px;height:150px}
@@ -2095,7 +2096,7 @@ body.practicing #pwBar,body.practicing .boosters{visibility:hidden}
 .sthero{display:flex;align-items:center;justify-content:center;gap:12px;margin:4px 0 10px}
 .sthero .stflame{position:relative;width:86px;height:86px}
 .sthero .stflame video,.sthero .stflame img{width:100%;height:100%;object-fit:cover;border-radius:24px;box-shadow:0 0 0 3px #E3BC6A,0 0 18px rgba(255,160,60,.5)}
-.sthero .stnum{font:400 46px/1 "Marcellus SC",Georgia,serif;color:#C0561C;text-shadow:0 3px 0 rgba(120,50,0,.25)}
+.sthero .stnum{font:900 46px/1 Nunito,system-ui,sans-serif;font-variant-numeric:tabular-nums;color:#C0561C;text-shadow:0 3px 0 rgba(120,50,0,.25)}
 .sthero .stnum small{display:block;font-family:inherit;font-size:12px;line-height:1.2;font-weight:900;color:#5A3A08;letter-spacing:.05em;font-family:'Nunito',system-ui,sans-serif;text-transform:none}
 .stweek{display:flex;justify-content:center;gap:6px;margin:0 0 10px}
 .stweek i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:15px;background:#EFE3C8;box-shadow:inset 0 2px 3px rgba(0,0,0,.12)}
@@ -2405,7 +2406,7 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .whyprom li{position:relative;padding:10px 0 10px 28px;font-size:13.5px;font-weight:700;line-height:1.45;border-bottom:1px solid rgba(255,233,168,.15)}
 .whyprom li:last-child{border-bottom:0}
 /* School Edition: everything that sells or gambles is gone; a quiet badge says which edition this is */
-body.school [data-tab="shop"],body.school [data-shopfor="hearts"],body.school #shopOpen2 em,body.school #lMore,body.school #lAd,body.school #spGold,body.school [data-open="wheelCard"]{display:none!important}
+body.school [data-tab="shop"],body.school #snPass,body.school #earlyPass,body.school .calmbuy,body.school [data-shopfor="hearts"],body.school #shopOpen2 em,body.school #lMore,body.school #lAd,body.school #spGold,body.school [data-open="wheelCard"]{display:none!important}
 .schoolset{margin:14px 0 4px;padding:12px 14px;border-radius:20px;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.3);color:#FBF3E2}
 .schoolset p{margin:0 0 8px;font-size:13.5px;font-weight:700;line-height:1.45}
 .schoolset ul{margin:0 0 12px;padding-left:18px;font-size:13px;line-height:1.5}
@@ -2668,7 +2669,7 @@ body.school .whyprom .buyline{display:none}
 .spstars{position:relative;flex:none;display:flex;align-items:center;gap:6px;padding:6px 12px 6px 6px;border-radius:18px;background:radial-gradient(circle at 30% 40%,rgba(255,226,150,.35),transparent 70%)}
 .spstar{width:40px;height:40px;background:radial-gradient(circle at 40% 35%,#FFFBEA,#F2CC6A 55%,#C08A26);clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:drop-shadow(0 0 6px rgba(255,214,120,.9));animation:spstar 3s ease-in-out infinite}
 @keyframes spstar{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.1)}}
-.spstars b{font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:30px;line-height:1;color:#FFF3CF;text-shadow:0 2px 0 rgba(40,24,6,.8)}
+.spstars b{font-family:Nunito,system-ui,sans-serif;font-weight:900;font-variant-numeric:tabular-nums;font-size:28px;line-height:1;color:#FFF3CF;text-shadow:0 2px 0 rgba(40,24,6,.8)}
 .spstars small{font-size:9.5px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-hi);line-height:1.1}
 .splevel{flex:1;min-width:0}
 .splvl{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
@@ -2682,18 +2683,21 @@ body.school .whyprom .buyline{display:none}
 .sppg.on{background:linear-gradient(180deg,color-mix(in srgb,var(--eh) 45%,#1B3F33),#123028);box-shadow:inset 0 0 0 2px var(--eg),0 0 14px color-mix(in srgb,var(--eg) 60%,transparent)}
 .sppg.locked{opacity:.55}
 .sphero{position:relative;margin:8px 0 12px;border-radius:24px;overflow:hidden;background:radial-gradient(90% 90% at 50% 20%,color-mix(in srgb,var(--sg) 45%,transparent),transparent 70%),linear-gradient(180deg,#1F4A3D,#10291F);box-shadow:0 0 0 2px #F4D78C,0 0 0 6px rgba(30,58,48,.9),0 0 0 7.5px rgba(227,188,106,.6),0 0 34px color-mix(in srgb,var(--sg) 45%,transparent)}
-.shstage{position:relative;height:150px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:18px}
+.shstage{position:relative;height:186px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:var(--shb,44px)}
 .shrays{position:absolute;left:50%;top:40%;width:260px;height:260px;margin:-130px;background:repeating-conic-gradient(color-mix(in srgb,var(--sg) 55%,transparent) 0 7deg,transparent 7deg 20deg);-webkit-mask-image:radial-gradient(circle,#000 20%,transparent 66%);mask-image:radial-gradient(circle,#000 20%,transparent 66%);animation:rays 24s linear infinite}
 .shbud{position:relative;width:118px;margin-bottom:-2px;animation:pkcheer .9s ease-in-out infinite;filter:drop-shadow(0 0 12px color-mix(in srgb,var(--sg) 80%,transparent))}
 .shrail{position:relative;width:78%;height:22px;display:flex;align-items:center;justify-content:center;gap:6px;border-radius:9px 9px 5px 5px;font-family:"Marcellus SC",Georgia,serif;font-size:12px;color:var(--rt,#FFE9A8);text-shadow:0 1px 0 rgba(0,0,0,.6);background:var(--rail);box-shadow:inset 0 2px 0 rgba(255,255,255,.45),inset 0 -2px 0 rgba(0,0,0,.3),0 0 0 1.5px var(--rim,#E3BC6A),0 4px 0 rgba(0,0,0,.35)}
 .shrail small{font-family:Nunito,system-ui,sans-serif;font-size:9px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;opacity:.85}
-.shboard{position:absolute;bottom:0;left:11%;right:11%;height:18px;border-radius:0 0 10px 10px;background:repeating-linear-gradient(90deg,#123028 0 22px,#16382E 22px 44px);box-shadow:0 0 0 1.5px var(--rim,#E3BC6A)}
+.shboard{position:absolute;bottom:0;left:11%;right:11%;height:var(--shb,44px);box-sizing:border-box;display:grid;grid-template-columns:repeat(7,1fr);align-items:center;gap:4px;padding:4px 7px;border-radius:0 0 12px 12px;
+  background:repeating-linear-gradient(90deg,#123028 0 14.28%,#16382E 14.28% 28.56%);box-shadow:0 0 0 2px var(--rim,#E3BC6A),0 0 22px color-mix(in srgb,var(--sg,#FFE9A8) 55%,transparent)}
+.shboard .sbo{position:relative;height:100%;aspect-ratio:1;justify-self:center;max-height:32px}
 .shtx{padding:12px 16px 16px;text-align:center}
 .shtx small{display:block;font-size:10.5px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-hi)}
 .shtx b{display:block;margin:3px 0 4px;font-family:"Marcellus SC",Georgia,serif;font-weight:400;font-size:22px;color:#FFF3CF;text-shadow:0 2px 0 rgba(40,24,6,.8)}
 .shtx em{display:block;font-style:normal;font-size:13px;font-weight:700;opacity:.9;line-height:1.4}
 .shbtn,.ssgo{margin-top:10px;padding:10px 22px;border-radius:99px;font-weight:900;font-size:15px;color:#3A2408;background:linear-gradient(#FFF1B8,#E6B24A);box-shadow:inset 0 2px 0 rgba(255,255,255,.8),0 4px 0 #8A5A1C,0 0 18px rgba(255,214,120,.5)}
 .sphero.done .shbtn{color:#fff;background:linear-gradient(#9BE07F,#2F8A3C);box-shadow:inset 0 2px 0 rgba(255,255,255,.5),0 4px 0 #1E5A2A}
+.sphero .shbtn.short{opacity:.6;filter:saturate(.6);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),0 3px 0 #8A5A1C}
 .sphero.locked .shbtn{color:rgba(255,246,222,.75);background:rgba(0,0,0,.3);box-shadow:none}
 .spgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .sptile{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px 26px;border-radius:18px;color:#FFF6DE;text-align:center;background:linear-gradient(180deg,rgba(36,84,68,.96),rgba(16,42,34,.97));box-shadow:0 0 0 1.5px rgba(244,215,140,.7),0 6px 14px rgba(0,0,0,.35)}
@@ -3286,15 +3290,15 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
   </div></div>
 
   <div class="ov" id="streakov" hidden><div class="card" role="dialog" aria-labelledby="stTitle">
-    <div class="eyebrow">One level a day</div>
+    <div class="eyebrow">One puzzle a day</div>
     <h2 class="display" id="stTitle">Your streak</h2>
     <div class="sthero"><span class="stflame"><video src="img/icons/anim/icon-streak.mp4?v=60" poster="img/icons/icon-streak-3d.jpg" muted loop playsinline autoplay></video></span><span class="stnum" id="stBig">0<small>days in a row</small></span></div>
     <div class="stweek" id="stWeek"></div>
     <div class="row" style="flex-wrap:wrap;gap:6px;justify-content:center" id="streakStats"></div>
-    <p style="margin-top:10px;text-align:center;font-weight:800">Play one level a day to keep the flame. A Streak Shield saves one missed day.</p>
+    <p style="margin-top:10px;text-align:center;font-weight:800">Play one puzzle a day. A shield saves a missed day.</p>
     <div class="ladder" id="ladder"></div>
     <div class="stack">
-      <button class="btn ghost" id="demoDay">Demo: skip to tomorrow</button>
+      <button class="btn ghost" id="demoDay" hidden>Demo: skip to tomorrow</button>
       <button class="btn" id="streakClose">Close</button>
     </div>
   </div></div>
@@ -3311,7 +3315,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="row" style="gap:12px;align-items:center"><img src="img/luma-3d.jpg" alt="Luma" style="width:74px;height:74px;border-radius:50%;object-fit:cover"><div><div class="eyebrow">Welcome back</div><h2 class="display" id="cbTitle" style="margin:0">Luma waited.</h2></div></div>
     <p id="cbText" style="margin-top:12px"></p>
     <div class="goalline"><b id="cbGift"></b></div>
-    <p class="small" style="text-align:left">Play one level today and your streak starts again.</p>
+    <p class="small" style="text-align:left">Play one puzzle today and your streak starts again.</p>
     <div class="stack"><button class="btn gold" id="cbGo">Take the gift</button></div>
   </div></div>
 
@@ -3555,7 +3559,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <div class="wtitle"><small>Season 1 · Kai's Calm Quest</small><b class="display">Season Pass</b></div><span></span></div>
       <div class="sphead">
         <div class="spstars"><i class="spstar"></i><b id="spStars">0</b><small>Spirit<br>Stars</small></div>
-        <div class="splevel"><div class="splvl"><b>Level <span id="spLvl">1</span></b><em id="spXp"></em></div><div class="passbar"><i id="spFill"></i></div><small>Every level gives a Spirit Star. Spend them on the rewards you want.</small></div>
+        <div class="splevel"><div class="splvl"><b>Level <span id="spLvl">1</span></b><em id="spXp"></em></div><div class="passbar"><i id="spFill"></i></div><small>Every puzzle gives a Spirit Star. Spend them on the rewards you want.</small></div>
       </div>
       <div class="sppages" id="spPages"></div>
       <div class="pscroll" id="passScroll">
@@ -4718,7 +4722,7 @@ const ROMAN = ['I', 'II', 'III', 'IV'];
 const GIFT_TIERS = {
   water: ['+3 moves in every puzzle', '+4 moves in every puzzle', '+5 moves in every puzzle', '+6 moves and a free Bear Stomp in every puzzle'],
   wood: ['A free Deer Leap every day you practise', 'A free Deer Leap every day, and a Lantern waiting on the board', 'Two free Deer Leaps every day, and a Lantern on the board', 'Two free Deer Leaps every day, and a Lantern and a Blossom on the board'],
-  fire: ['Every match lights 1 extra orb for the Creation Cycle', 'Every match lights 2 extra orbs', 'Every match lights 3 extra orbs', '3 extra lit orbs, and a free Hawk Dive in every episode'],
+  fire: ['Every match lights 1 extra orb', 'Every match lights 2 extra orbs', 'Every match lights 3 extra orbs', '3 extra lit orbs, and a free Hawk Dive in every episode'],
   earth: ["Luma's Aura never starts below 15%", "Luma's Aura never starts below 25%", "Luma's Aura never starts below 35%", 'Luma starts at 50%, and a free Monkey Swap in every episode'],
   metal: ['Every breath lifts 1 extra cloud', 'Every breath lifts 2 extra clouds', 'Every breath lifts 3 extra clouds', "3 extra clouds, and Luma's Dive always adds a cross"]
 };
@@ -4883,7 +4887,7 @@ function renderSanct(dir = 0) {
   $('#snTag').textContent = `${ELEM[el].name} · ${ORGAN_OF[el]}`;
   $('#snNote').textContent = b.note;
   const st = careStage(el), bd = bondOf(el), nxt = STAGES[st + 1];
-  $('#snGift').innerHTML = `<span class="gi">${gift.icon}</span><span><small>${b.name}'s gift</small><b>${giftName(el)}</b><em>${giftText(el)}${have ? '' : ' (once you meet)'}</em>${nxt ? `<em class="nexttier">At ${nxt.name}: ${giftText(el, st + 2)}</em>` : ''}</span>`;
+  $('#snGift').innerHTML = `<span class="gi">${gift.icon}</span><span><small>${b.name}'s gift</small><b>${giftName(el)}</b><em>${giftText(el)}${have ? '' : ' (once you meet)'}</em>${nxt ? `<em class="nexttier more" hidden>At ${nxt.name}: ${giftText(el, st + 2)}</em>` : ''}</span>${nxt ? '<button class="ibtn" data-more aria-label="What comes next">i</button>' : ''}`;
   $('#snGrow').innerHTML = STAGES.map((x, i) => `<span class="${i <= st ? 'on' : 'mystery'}"><i style="background-image:url(${buddyArt(el, i)})"></i>${i <= st ? x.name : '???'}<small>${x.at ? `${x.at} Bond` : 'start'}</small></span>`).join('')
     + (have ? `<div class="snbond"><div class="bondbar"><i style="width:${nxt ? Math.round(Math.min(1, (bd.care - STAGES[st].at) / (nxt.at - STAGES[st].at)) * 100) : 100}%"></i></div><small>${nxt ? `${nxt.at - bd.care} more Bond to grow` : 'Fully grown · Spirit Guardian'}${bd.streak >= 2 ? ` · 🔥 ${bd.streak} days in a row` : ''}</small></div>` : '');
   const go = $('#snGo');
@@ -5055,14 +5059,14 @@ function renderStreak() {
     banner.className = 'banner';
     banner.innerHTML = S.lost
       ? `<b>Your ${S.lost}-day streak ended.</b> Start again today — day 3 pays ${rewardText(MILES[0])}.`
-      : `<b>Play one level a day.</b> Day 3 pays ${rewardText(MILES[0])}.`;
+      : `<b>Play one puzzle a day.</b> Day 3 pays ${rewardText(MILES[0])}.`;
   }
   $('#ladder').innerHTML = MILES.map(x => {
     const done = S.claimed.includes(x.d) || S.streak >= x.d, next = x.d === m.d && !done;
     return `<div class="rung ${done ? 'done' : ''} ${next ? 'next' : ''}"><b>Day ${x.d}</b><span>${rewardIcons(x)}</span><i>${done ? '✓' : next ? `${left} to go` : ''}</i></div>`;
   }).join('');
   if ($('#stBig')) { const on = S.streak ? (S.streak % 7 || 7) : 0; $('#stBig').innerHTML = `${S.streak}<small>day${S.streak === 1 ? '' : 's'} in a row</small>`; $('#stWeek').innerHTML = [...Array(7)].map((_, i) => `<i class="${i < on ? 'on' : ''}">${i < on ? '🔥' : ''}</i>`).join(''); }
-  $('#streakStats').innerHTML = `<span class="chip">🔥 ${S.streak} day${S.streak === 1 ? '' : 's'}</span><span class="chip">best ${S.best || 0}</span><span class="chip">🛡 ${S.shields}</span><span class="chip">◈ ${sealCount()}/${SEALS.length} seals</span>`;
+  $('#streakStats').innerHTML = `<span class="chip">Best ${S.best || 0}</span><span class="chip">🛡 ${S.shields} shield${S.shields === 1 ? '' : 's'}</span>`;   // the big number already says the streak
 }
 function showComeback(days) {
   $('#cbText').textContent = `You have been away ${days} days. Luma kept your lantern lit the whole time.`;
@@ -5076,6 +5080,7 @@ $('#balOpen').addEventListener('click', () => switchTab('harmony'));
 $('#wheelCard').addEventListener('click', spinWheel);
 $('#balClose').addEventListener('click', () => hideOv('balov'));
 $('#streakClose').addEventListener('click', () => hideOv('streakov'));
+if (/[?&]fx=1/.test(location.search)) $('#demoDay').hidden = false;   // a test tool, never shown to real players
 $('#demoDay').addEventListener('click', () => {
   S.demoOffset = (S.demoOffset || 0) + 1; save();
   streakOnOpen();
@@ -8750,6 +8755,7 @@ if (/[?&]fx=1/.test(location.search)) window.kcqFx = {
     for (const x of all().filter(t => t.r >= minRow)) for (const [dr, dc] of [[0, 1], [1, 0]]) { const y = board[x.r + dr] && board[x.r + dr][x.c + dc]; if (!y || x.knot || y.knot || x.cloud || y.cloud || x.sp || y.sp || x.type === y.type) continue;
       sw(x, y); const bad = !findMatches().clear.size, n = bad && nearMiss(x, y); sw(x, y); if (n) { trySwap(x, y); return { a: [x.r, x.c], b: [y.r, y.c], run: n.run.length, spot: n.spot, type: n.type }; } }
     return null; },
+  ov: id => showOv(id), unov: id => hideOv(id),
   open: i => openLevel(i), unlock: n => { S.unlocked = Math.max(S.unlocked || 1, n); save(); return S.unlocked; },
   st: () => ({ LI, busy, win: !!winLevel.on, moves, game: !$('#game').hidden, story: !$('#story').hidden, gate: !$('#gate').hidden, arrive: !$('#arrive').hidden, ovs: $$('.ov').filter(o => !o.hidden).map(o => o.id), rs: !!RS, goals: [clouds().length, gemsLeft(), knotsLeft()] }),
   goalsNow: async () => { levelTally[L.elem] = L.gems || 0; all().forEach(t => { if (t.cloud || t.knot) { t.cloud = 0; t.knot = 0; paint(t); } }); busy = true; await settle(); return goalsDone(); },
@@ -9709,9 +9715,9 @@ function renderPass(fresh) {
     return `<button class="sppg ${pi === PGI ? 'on' : ''} ${open ? '' : 'locked'}" data-pg="${pi}" style="--eh:${ELEM[pg.el].hue};--eg:${ELEM[pg.el].glow}"><span class="o">${open ? orbHTML(pg.el) : '🔒'}</span><b>Page ${pi + 1}</b><small>${f}/7</small></button>`; }).join('');
   const pg = PAGES[PGI], open = pageOpen(PGI), hk = isClaimed(PGI, 'h'), bs = BSTYLES[pg.style], worn = S.bstyle === pg.style;
   $('#spHero').className = `sphero bs-${pg.style} ${open ? '' : 'locked'} ${hk ? 'done' : ''}`;
-  $('#spHero').innerHTML = `<div class="shstage"><i class="shrays"></i>${holdSprite(peekWho(), 'cheer', 'shbud')}<span class="shrail"><small>${BUDDY[S.buddy || 'fire'].name}'s gift</small>${giftName(S.buddy || 'fire')}</span><span class="shboard"></span></div>
+  $('#spHero').innerHTML = `<div class="shstage"><i class="shrays"></i>${holdSprite(peekWho(), 'cheer', 'shbud')}<span class="shrail"><small>${BUDDY[S.buddy || 'fire'].name}'s gift</small>${giftName(S.buddy || 'fire')}</span><span class="shboard">${['water', 'fire', pg.el, pg.el, pg.el, 'metal', 'earth'].map(e => `<span class="sbo">${orbHTML(e)}</span>`).join('')}</span></div>
     <div class="shtx"><small>Page ${PGI + 1} headline · ${ELEM[pg.el].name}</small><b>${bs.name}</b><em>${bs.note}</em>
-    <button class="shbtn" data-key="h">${!open ? '🔒 Opens after Page ' + PGI : hk ? (worn ? 'Using it ✓' : 'Use this style') : `Claim · ★ ${pg.head}`}</button></div>`;
+    <button class="shbtn ${open && !hk && st < pg.head ? 'short' : ''}" data-key="h">${!open ? '🔒 Opens after Page ' + PGI : hk ? (worn ? 'Using it ✓' : 'Use this style') : `Claim · ★ ${pg.head}`}</button></div>`;
   $('#spGrid').innerHTML = pg.items.map((r, k) => tileHTML(PGI, String(k), fitReward(r), open)).join('');
   const c = pageClaims(PGI);
   $('#spUnlock').innerHTML = PGI < PAGES.length - 1 ? `<div class="sppips">${[0, 1, 2, 3].map(i => `<i class="${i < c ? 'on' : ''}"></i>`).join('')}</div><span>${c >= 4 ? `Page ${PGI + 2} is open!` : `Claim ${4 - c} more to open <b>Page ${PGI + 2}</b>`}</span>` : `<span>The last page. Finish it for the whole season's collection.</span>`;
@@ -10513,6 +10519,7 @@ function renderShop() {
 }
 // a grown-up check before any purchase: a question young children can't answer
 function grownUpGate(label, why, easy) {
+  if (school() && !easy) return Promise.resolve(false);     // School Edition: no purchase can even start
   return new Promise(res => {
     // purchases ask a times-table question; leaving baby mode asks simple addition, so an older sibling can do it
     const k = (new Date().getMinutes() + (S.bought || []).length);
