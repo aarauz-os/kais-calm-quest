@@ -2366,6 +2366,18 @@ body.tabs .homesorin{bottom:calc(120px + var(--tabh) + var(--sab))}
 .whyprom{list-style:none;margin:0;padding:6px 14px;border-radius:20px;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.4)}
 .whyprom li{position:relative;padding:10px 0 10px 28px;font-size:13.5px;font-weight:700;line-height:1.45;border-bottom:1px solid rgba(255,233,168,.15)}
 .whyprom li:last-child{border-bottom:0}
+/* School Edition: everything that sells or gambles is gone; a quiet badge says which edition this is */
+body.school [data-tab="shop"],body.school [data-shopfor="hearts"],body.school #shopOpen2 em,body.school #lMore,body.school #lAd,body.school #spGold,body.school [data-open="wheelCard"]{display:none!important}
+.schoolchip{display:none;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#FFE9A8;background:rgba(16,43,36,.85);box-shadow:0 0 0 1.5px #E3BC6A}
+body.school .schoolchip{display:inline-flex}
+.schoolset{margin:0 0 4px;padding:14px;border-radius:20px;background:linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A,0 8px 18px rgba(0,0,0,.3);color:#FBF3E2}
+.schoolset p{margin:0 0 8px;font-size:13.5px;font-weight:700;line-height:1.45}
+.schoolset ul{margin:0 0 12px;padding-left:18px;font-size:13px;line-height:1.5}
+.schoolset .schrow{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.schoolset .schlbl{display:flex;flex-direction:column;font-weight:900;font-size:15px;white-space:nowrap}
+.schoolset .schlbl small{font-size:12px;color:#F4D78C}
+.schoolset .schrow .btn{flex:none;white-space:nowrap;min-width:112px}
+body.school .whyprom .buyline{display:none}
 .whyprom li::before{content:"✓";position:absolute;left:0;top:10px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:900;color:#fff;background:linear-gradient(#7FD06A,#2F8A3C)}
 .whyprom b{color:#FFE9A8}
 .whytry{margin-top:18px;padding:16px;border-radius:22px;text-align:center;background:radial-gradient(120% 90% at 50% 0%,rgba(180,218,247,.25),transparent 60%),linear-gradient(180deg,rgba(31,74,61,.94),rgba(16,43,36,.96));box-shadow:0 0 0 2.5px #E3BC6A}
@@ -2844,6 +2856,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
         <ul class="cfacts">
           <li><b>12 heroes</b> kids pick to look like them, with no labels</li>
           <li><b>Ages 2–15</b> in four bands; the same feeling goes deeper as they grow</li>
+          <li><b>School Edition</b> for classrooms: nothing to buy, no ads, unlimited tries, and nothing about a student leaves the device</li>
           <li><b>A real conversation</b> every ninth puzzle, in a story episode: you feel it, Kai gets it, Sorin helps</li>
           <li><b>One new thing at a time.</b> Every third puzzle brings one new piece, obstacle or helper. Story episodes open on puzzle 1 and return every nine puzzles, with a breath and a little story rescue powered by the board. Puzzles 27, 36 and 45 are harder Stormy puzzles, with a Thunderstorm at 54</li>
           <li><b>The game opens up as you play.</b> A new player starts with just Home, the Journey and the Shop. The streak, quests, Collection, companion, Harmony, seals, daily wheel and Season Pass arrive one at a time over the first 24 episodes, each with its own welcome</li>
@@ -2915,7 +2928,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       <div class="row">
         <button class="herobtn" id="heroOpen" aria-label="Choose your hero"><img id="heroBtnImg" src="img/faces/kai-calm.jpg" alt=""></button>
         <button class="chip" data-shopfor="coins" aria-label="Coins: open the shop"><i class="coin"></i><span data-coins>0</span></button>
-        <button class="chip" data-shopfor="hearts" aria-label="Hearts: open the shop"><span class="heart">♥</span><span data-hearts>5</span></button>
+        <button class="chip" data-shopfor="hearts" aria-label="Hearts: open the shop"><span class="heart">♥</span><span data-hearts>5</span></button><span class="schoolchip">School Edition</span>
       </div>
       <div class="row">
         <button class="iconbtn" data-mute aria-label="Sound on">♪</button>
@@ -3475,11 +3488,15 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
       </div>
       <div class="csec"><h3>Grows with your child</h3></div>
       <div class="whyages" id="whyAges"></div>
+      <div class="csec"><h3>In the classroom</h3></div>
+      <div class="schoolset"><p>School Edition is the same game with nothing to buy.</p>
+        <ul><li>No shop, no purchases, no ads</li><li>Unlimited tries, no coin continues</li><li>No daily wheel</li><li>No accounts or names. Progress stays on this device</li></ul>
+        <div class="schrow"><span class="schlbl">School Edition<small id="schoolState">Off</small></span><button class="btn" id="schoolBtn">Turn on</button></div></div>
       <div class="csec"><h3>Our promises</h3></div>
       <ul class="whyprom">
         <li><b>Free to play, always.</b> No forced ads, no timers that pressure your child.</li>
         <li><b>No chat, no leaderboards, no strangers.</b> Your child only plays with Kai's village.</li>
-        <li><b>Small extras only, behind a grown-up gate.</b> $0.99, $1.99 or $4.99, never pushed.</li>
+        <li class="buyline"><b>Small extras only, behind a grown-up gate.</b> $0.99, $1.99 or $4.99, never pushed.</li>
         <li><b>Feelings are never "bad".</b> School-safe language throughout.</li>
         <li><b>Written by people.</b> Stories are written ahead of time and checked with a qigong teacher and a school counselor, never generated on your child's device.</li>
         <li><b>Baby mode</b> for the littlest ones: five gentle boards play themselves with no words on screen, Luma breathes right over the board, and every touch, swipe and helper makes something happen.</li>
@@ -3701,7 +3718,7 @@ const featEver = k => babyOn() || reached() >= FEAT_AT[k];
 // Like Royal Kingdom holding back Teams (21) and its pass (31): a new player sees only what they need.
 // Grown-up things (Why MorQi, Baby mode, Bedtime, the Shop) are always there.
 const SEC_AT = { practice: 3, streak: 6, collection: 9, buddy: 12, harmony: 15, seals: 18, wheel: 21, pass: 24 };   // Sorin's practice took the quests' place
-const secOn = k => (S.unlocked || 1) > SEC_AT[k];
+const secOn = k => !(k === 'wheel' && school()) && (S.unlocked || 1) > SEC_AT[k];   // no chance rewards in School Edition
 // rewards never hand out a booster before gameplay has introduced it; until then it comes as coins
 const BOOST_COIN = 80, PW_KEY = { lanterns: 'tiger', swirls: 'deer' };
 function fitReward(m) {
@@ -3826,6 +3843,16 @@ const MILES = [
 ];
 let S;
 try { S = Object.assign({}, DEF, JSON.parse(localStorage.getItem('kcq-v1')) || {}); } catch (e) { S = { ...DEF }; }
+// School Edition: a classroom build of the same game. No shop, no purchases, no ads, no coin continues, no daily
+// wheel (chance rewards), unlimited hearts. Nothing about a student is collected; progress stays on this device.
+// A teacher can link straight to it with ?school=1 (and ?school=0 turns it off), or a grown-up switches it on the Why MorQi page.
+{ const q = /[?&]school=([01])/.exec(location.search); if (q) { S.school = q[1] === '1'; try { localStorage.setItem('kcq-v1', JSON.stringify(S)); } catch (e) {} } }
+const school = () => !!S.school;
+function applySchool() {
+  document.body.classList.toggle('school', school());
+  if (school()) { S.hearts = 5; const sh = $('#shop'); if (sh && !sh.hidden) { sh.classList.remove('show'); sh.hidden = true; } }
+  const b = $('#schoolBtn'); if (b) { b.textContent = school() ? 'Turn off' : 'Turn on'; $('#schoolState').textContent = school() ? 'On, on this device' : 'Off'; }
+}
 function save() { try { localStorage.setItem('kcq-v1', JSON.stringify(S)); } catch (e) {} }
 
 /* ---------- audio ---------- */
@@ -4171,6 +4198,7 @@ function syncWallet() {
   $$('[data-hearts]').forEach(e => e.textContent = S.hearts);
 }
 async function showOv(id) {
+  if (id === 'shop' && school()) return;                   // School Edition has no shop
   if (id === 'shop') renderShop();
   const o = $('#' + id); if (!o.classList.contains('pagemode') && !o.style.zIndex && tabPageOpen()) o.style.zIndex = 28;
   o.hidden = false; o.querySelectorAll('.card').forEach(c => { c.scrollTop = 0; }); void o.offsetWidth; await wait(20); o.classList.add('show');
@@ -5264,7 +5292,7 @@ function renderHome() {
   $('#playNext').classList.toggle('stormy', !!dz.name);
   startHomeFx(el, tod);
   renderSorin();
-  applySections();
+  applySchool(); applySections();
   renderPracticeHome();
 }
 
@@ -5824,7 +5852,7 @@ $('#shopOpen1').addEventListener('click', () => { ac(); tick(); openWhy(); });
 /* ---------- level intro ---------- */
 let LI = 0, L = LEVELS[0];
 function openLevel(i) {
-  if (S.hearts <= 0) { toast('Out of hearts. Refill them in the shop, or wait for them to come back.'); showOv('shop'); return; }
+  if (S.hearts <= 0 && !school()) { toast('Out of hearts. Refill them in the shop, or wait for them to come back.'); showOv('shop'); return; }
   LI = i; L = LEVELS[i]; openLevel.on = true;
   // first time only: the Practice Grove walkthrough, then episode 1
   runStory();
@@ -7782,7 +7810,7 @@ bBtn.addEventListener('click', openBreath);
 
 /* ---------- boosters ---------- */
 function spend(n) {
-  if (S.coins < n) { toast('Not enough coins yet. Luma\'s shop has more.'); showOv('shop'); return false; }
+  if (S.coins < n) { toast(school() ? 'Not enough coins yet. Keep playing to earn more.' : 'Not enough coins yet. Luma\'s shop has more.'); showOv('shop'); return false; }
   S.coins -= n; save(); syncWallet(); return true;
 }
 const pwCount = id => id === 'tiger' ? (S.lanterns || 0) : id === 'deer' ? (S.swirls || 0) : ((S.pw || {})[id] || 0);
@@ -9730,6 +9758,12 @@ async function openWhy() {
 }
 async function closeWhy() { const p = $('#why'); tick(); if (!reduce) await p.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220 }).finished; p.hidden = true; }
 $('#whyBack').addEventListener('click', closeWhy);
+$('#schoolBtn').addEventListener('click', async () => {
+  const on = !school();
+  if (!await grownUpGate(on ? 'Turn on School Edition' : 'Turn off School Edition', on ? 'Removes the shop, ads, coin continues and the daily wheel on this device.' : 'Brings back the shop and the usual rewards.', true)) return;
+  S.school = on; save(); applySchool(); applySections(); syncTabbar(); tick();
+  toast(on ? 'School Edition is on.' : 'School Edition is off.');
+});
 $('#whyBed').addEventListener('click', async () => { await closeWhy(); bedtime(); });
 
 /* ---------- bottom tab bar: Shop · Companions · Home · Journey · Collection ----------
@@ -10256,19 +10290,19 @@ const NOT_YET = ['Mistakes help us learn.', 'Every try makes you stronger.', 'Ta
 let loseRun = 0;
 function loseLevel() {
   peekReact('worried', 4000);
-  S.hearts = Math.max(0, S.hearts - 1); save(); syncWallet();
+  if (!school()) { S.hearts = Math.max(0, S.hearts - 1); save(); syncWallet(); }   // School Edition: unlimited tries
   bell(392, 0, 0.06); bell(329.63, 0.3, 0.05);
   S.glow = 0; S.fails = S.fails || {}; S.fails[LI + 1] = (S.fails[LI + 1] || 0) + 1;
   S.hist = [...(S.hist || []), { n: LI + 1, win: 0, used: movesUsed, need: L.need || 15, stars: 0 }].slice(-20); S.winStreak = 0; save();   // the next puzzles ease off
   const tot = (L.clouds || 0) + (L.gems || 0) + (L.knots || 0), left = clouds().length + gemsLeft() + knotsLeft(), frac = tot ? Math.max(0.05, 1 - left / tot) : 0.5;
   const bar = $('#lBar'); bar.style.transition = 'none'; bar.style.width = '0%';
   const chips = [`${Math.round(frac * 100)}% there`];
-  if (S.hearts > 0) chips.push(`♥ ${S.hearts}`);
+  if (S.hearts > 0 && !school()) chips.push(`♥ ${S.hearts}`);
   chips.push(`Next try: +${Math.min(9, 3 * S.fails[LI + 1])} moves`);
   $('#lChips').innerHTML = chips.map(c => `<span>${c}</span>`).join('');
   $('#lText').textContent = NOT_YET[(S.fails[LI + 1] - 1) % NOT_YET.length];
-  $('#lRetry').textContent = S.hearts > 0 ? 'Try again' : 'Refill hearts';
-  const cc = contCost(); $('#lMore').hidden = babyOn() || S.coins < cc;   // only when they have the coins: never a push to the shop
+  $('#lRetry').textContent = S.hearts > 0 || school() ? 'Try again' : 'Refill hearts';
+  const cc = contCost(); $('#lMore').hidden = babyOn() || school() || S.coins < cc;   // only when they have the coins: never a push to the shop
   $('#lMore').innerHTML = `+9 moves · <i class="coin"></i> ${cc.toLocaleString()}`;
   showOv('lose').then(() => { void bar.offsetWidth; bar.style.transition = ''; bar.style.width = `${Math.round(frac * 100)}%`; });
   // Luma breathes slowly on the card, as long as it is open
@@ -10283,7 +10317,7 @@ $('#lMore').addEventListener('click', async () => {
   say('Nine more moves. Take your time.');
 });
 $('#lRetry').addEventListener('click', async () => {
-  if (S.hearts <= 0) { showOv('shop'); return; }
+  if (S.hearts <= 0 && !school()) { showOv('shop'); return; }
   loseRun++; await hideOv('lose'); startLevel.again = true; startLevel();   // a retry goes straight back to the board: no title, no breath
 });
 $('#lMap').addEventListener('click', async () => { loseRun++; await hideOv('lose'); toMap(); });
@@ -10436,6 +10470,7 @@ function calmDaily(force) {
 }
 // tapping your coins or hearts opens the shop at the matching item
 $$('[data-shopfor]').forEach(b => b.addEventListener('click', async () => {
+  if (school()) return;
   ac(); tick();
   await showOv('shop');
   const it = $(`#singles [data-buyid="${b.dataset.shopfor === 'hearts' ? 's-hearts' : 's-coins'}"]`);
