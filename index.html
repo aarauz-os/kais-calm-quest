@@ -153,15 +153,12 @@ body.baby #babyBar span{display:none}
 .armic{font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px;background:rgba(0,0,0,.3);color:#FFE9A8}
 .arresult{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:900;background:linear-gradient(#FFF1C4,#E8C063);color:#4A300A;box-shadow:0 4px 12px rgba(0,0,0,.35)}
 /* story rescue: on story episodes the board powers a little scene above it */
-.rescue{position:relative;z-index:6;flex:none;height:min(236px,27vh);margin:4px 16px 0;border-radius:22px;overflow:hidden;background:#1D2A26;
+.rescue{position:relative;z-index:6;flex:none;height:min(236px,27vh);margin:4px 16px 0;border-radius:22px;overflow:hidden;background:#241B3A;
   box-shadow:0 0 0 2px #E3BC6A,0 0 0 5px rgba(60,38,8,.5),0 10px 24px rgba(0,0,0,.35)}
 @media (max-height:760px){.rescue{height:min(190px,25vh)}}
 #game.rescuing .boardwrap{align-items:flex-start;padding-top:10px}
-.rescue canvas{position:absolute;inset:0;width:100%;height:100%}
-.rskid{position:absolute;right:10px;bottom:10px;width:56px;height:56px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 3px #FBF3E2,0 6px 14px rgba(0,0,0,.45);transition:transform .4s}
-.rskid img{width:100%;height:100%;object-fit:cover}
-.rskid.joy{animation:rsjoy .8s ease-in-out 3}
-@keyframes rsjoy{50%{transform:translateY(-8px) scale(1.08)}}
+.rescue canvas,.rescue video{position:absolute;inset:0;width:100%;height:100%}
+.rescue video{object-fit:cover;opacity:0;transition:opacity .45s ease}.rescue video.on{opacity:1}
 .rscap{position:absolute;left:10px;top:9px;padding:4px 11px;border-radius:999px;background:rgba(8,18,14,.58);color:#FFE9A8;font-size:11px;font-weight:900;letter-spacing:.04em;max-width:70%}
 .wnode.ep{box-shadow:0 0 0 3px #FFE9A8,0 0 18px 4px rgba(255,220,140,.7) !important}
 .wnode .wep{position:absolute;left:50%;top:-13px;transform:translateX(-50%);padding:1px 7px;border-radius:999px;font-size:9px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;background:linear-gradient(#FFF1C4,#E8C063);color:#4A300A;box-shadow:0 2px 4px rgba(0,0,0,.35);white-space:nowrap}
@@ -2844,7 +2841,7 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     <div class="todaychip" id="todayChip" hidden></div>
     <div class="babybar" id="babyBar" hidden><span>Baby mode · watching and breathing together</span><button id="babyStop">Stop</button></div>
     <div class="flowbar" id="flowBar" hidden><span id="flowText"></span></div>
-    <div class="rescue" id="rescue" hidden><canvas id="rsCv"></canvas><span class="rskid"><img id="rsKid" alt=""></span><div class="rscap" id="rsCap"></div></div>
+    <div class="rescue" id="rescue" hidden><video id="rsVidA" muted playsinline loop preload="auto"></video><video id="rsVidB" muted playsinline preload="auto"></video><canvas id="rsCv"></canvas><div class="rscap" id="rsCap"></div></div>
     <div class="boardwrap" id="boardwrap">
       <div id="board" aria-label="Puzzle board"></div>
       <div class="peek" id="peek" hidden aria-hidden="true"><span class="pkglow"></span><span class="pkclip"><span id="pkImg" class="pksprite"></span></span></div>
@@ -5283,23 +5280,26 @@ async function babyInterlude(pal) {
    path gate by gate; Luma's breath pushes the flow along. Prototype: Episode 1 (Puzzle 3, Valley of Echoes, Fire).
    The story line (say) is a placeholder until Demaris and the counselor review it. */
 const RESCUES = {
-  3: { bg: 'img/vista/fire.jpg', crop: .46, cap: 'Guide the fireflies to your lantern',
-    say: "When you're this fizzy, slow light helps. Fireflies love it. Match the Fire orbs to open the path, and guide them to your lantern.",
-    glow: [255, 214, 110], faceFrom: 'cheer', faceTo: 'calm',
-    path: [[.06, .22], [.22, .16], [.4, .22], [.44, .38], [.3, .5], [.18, .62], [.3, .8], [.5, .84], [.62, .7], [.74, .62]],
-    gates: [.2, .42, .63, .84], need: 16 }
+  3: { cap: "Guide the fireflies to Kai's lantern",
+    say: "Kai is so fizzy he can't keep still. Fireflies love slow, calm light. Match the Fire orbs to open the path, and guide them to his lantern.",
+    vid: { idle: 'img/rescue/fire-fizzy.mp4', arrive: 'img/rescue/fire-arrive.mp4', calm: 'img/rescue/fire-calm.mp4', poster: 'img/rescue/fire-fizzy.jpg' },
+    // path in video coordinates (0..1 of the 16:9 frame): from the firefly meadow to Kai's lantern
+    path: [[.13, .2], [.2, .3], [.17, .44], [.22, .6], [.34, .7], [.46, .66], [.5, .54], [.57, .46], [.62, .47], [.665, .5]],
+    gates: [.2, .42, .63, .84],
+    fly: [255, 214, 120], bud: [236, 92, 170], stoneOff: [182, 170, 230] }
 };
 let RS = null, rsRun = 0;
-function rescueStop() { rsRun++; RS = null; $('#rescue').hidden = true; $('#game').classList.remove('rescuing'); }
+function rescueStop() { rsRun++; RS = null; $('#rescue').hidden = true; $('#game').classList.remove('rescuing'); $$('#rescue video').forEach(v => { v.pause(); v.classList.remove('on'); }); }
 function rescueStart() {
   const cfg = RESCUES[LI + 1];
   if (!cfg || babyOn() || practice) { rescueStop(); return; }
   const box = $('#rescue'); box.hidden = false; $('#game').classList.add('rescuing');
   $('#peekRow').hidden = true; $('#peek').hidden = true; $('#pkPerk').hidden = true;
-  $('#rsKid').src = faceSrc(heroId(), cfg.faceFrom); $('.rskid').classList.remove('joy');
   $('#rsCap').textContent = cfg.cap;
-  const bg = new Image(); bg.src = cfg.bg;
-  RS = { cfg, bg, flies: [], opened: 0, gateFx: [], fill: 0, push: 0, sparks: [], t: 0, run: ++rsRun, done: false };
+  const a = $('#rsVidA'), b = $('#rsVidB');
+  a.poster = cfg.vid.poster; a.src = cfg.vid.idle + '?v=82'; a.loop = true; a.classList.add('on'); a.play().catch(() => {});
+  b.classList.remove('on'); b.removeAttribute('src');
+  RS = { cfg, flies: [], opened: 0, gateFx: [], fill: 0, push: 0, t: 0, run: ++rsRun, done: false };
   let last = performance.now();
   const tick = now => {
     if (!RS || RS.run !== rsRun) return;
@@ -5311,12 +5311,14 @@ function rescueStart() {
 }
 function rsGeom() {
   const cv = $('#rsCv'), dpr = Math.min(2, devicePixelRatio || 1), W = cv.clientWidth, H = cv.clientHeight;
-  if (cv.width !== Math.round(W * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
-  const pts = RS.cfg.path.map(([x, y]) => [x * W, y * H]), seg = []; let L0 = 0;
+  if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(H * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); }
+  // the video is shown object-fit: cover at 16:9, so map its frame to the box
+  const sc = Math.max(W / 16, H / 9), vw = 16 * sc, vh = 9 * sc, ox = (W - vw) / 2, oy = (H - vh) / 2;
+  const pts = RS.cfg.path.map(([u, v]) => [ox + u * vw, oy + v * vh]), seg = []; let L0 = 0;
   for (let i = 1; i < pts.length; i++) { const d = Math.hypot(pts[i][0] - pts[i - 1][0], pts[i][1] - pts[i - 1][1]); seg.push(d); L0 += d; }
-  return { cv, dpr, W, H, pts, seg, len: L0 };
+  return { cv, dpr, W, H, pts, seg, len: L0, sc };
 }
-function rsAt(g, s) {                                   // point and direction at fraction s of the path
+function rsAt(g, s) {
   let d = Math.max(0, Math.min(1, s)) * g.len;
   for (let i = 0; i < g.seg.length; i++) {
     if (d <= g.seg[i] || i === g.seg.length - 1) { const a = g.pts[i], b = g.pts[i + 1], k = g.seg[i] ? Math.min(1, d / g.seg[i]) : 0;
@@ -5329,77 +5331,82 @@ const rsProgress = () => { if (!RS || !L) return 0; if (typeof goalsDone === 'fu
 function rsStep(dt) {
   const c = RS.cfg; RS.t += dt;
   const want = Math.min(c.gates.length, Math.floor(rsProgress() * c.gates.length + 1e-6));
-  while (RS.opened < want) {                            // the next gate parts
+  while (RS.opened < want) {
     RS.gateFx.push({ i: RS.opened, t: 0 }); RS.opened++;
     bell(659.25 + RS.opened * 60, 0, 0.05); boop(4 + RS.opened, 0.05);
     RS.push = Math.max(RS.push, 1.2); setTimeout(() => { if (RS) RS.push = Math.max(0, RS.push - 1.2); }, 1400);
   }
-  const limit = RS.opened < c.gates.length ? c.gates[RS.opened] - 0.015 : 1;
-  while (RS.flies.length < 30) RS.flies.push({ s: Math.random() * 0.05, v: 0.5 + Math.random() * 0.6, ph: Math.random() * 6.28, off: (Math.random() - 0.5) * 12 });
+  const limit = RS.opened < c.gates.length ? c.gates[RS.opened] - 0.02 : 1;
+  while (RS.flies.length < (RS.done ? 0 : 34)) RS.flies.push({ s: Math.random() * 0.04, v: 0.5 + Math.random() * 0.6, ph: Math.random() * 6.28, off: (Math.random() - 0.5) * 14, tr: [] });
   RS.flies.forEach(f => {
     f.ph += dt * (2 + f.v);
     const sp = 0.035 * f.v * (1 + RS.push * 2.2);
-    if (f.s < limit) f.s = Math.min(limit - Math.random() * 0.025, f.s + sp * dt);
-    else f.s -= dt * 0.004;                            // waiting at a gate, gently milling
+    if (f.s < limit - 0.1 * (1 - f.v / 1.2)) { f.s = Math.min(limit, f.s + sp * dt); f.wait = Math.max(0, (f.wait || 0) - dt); }
+    else { f.s += (limit - 0.02 - (f.off + 7) * 0.006 - f.s) * dt * 0.8; f.wait = Math.min(1, (f.wait || 0) + dt); }   // waiting at a gate: spread out along the trail, milling
     if (limit >= 1 && f.s >= 0.985) { f.arrived = true; RS.fill = Math.min(1, RS.fill + 1 / 18); }
   });
   RS.flies = RS.flies.filter(f => !f.arrived);
-  RS.gateFx.forEach(g => g.t += dt); RS.gateFx = RS.gateFx.filter(g => g.t < 0.9);
+  RS.gateFx.forEach(g => g.t += dt); RS.gateFx = RS.gateFx.filter(g => g.t < 1.1);
 }
 function rsDraw() {
-  const g = rsGeom(), x = g.cv.getContext('2d'), c = RS.cfg, [gr, gg, gb] = c.glow;
+  const g = rsGeom(), x = g.cv.getContext('2d'), c = RS.cfg, [fr, fg, fb] = c.fly, [br, bg, bb] = c.bud, [sr, sg, sb] = c.stoneOff;
   x.setTransform(g.dpr, 0, 0, g.dpr, 0, 0); x.clearRect(0, 0, g.W, g.H);
-  if (RS.bg.complete && RS.bg.naturalWidth) {          // a band of the place's vista, gently drifting
-    const iw = RS.bg.naturalWidth, ih = RS.bg.naturalHeight, sw = iw, sh = iw * g.H / g.W, sy = Math.max(0, Math.min(ih - sh, ih * c.crop - sh / 2 + Math.sin(RS.t * 0.2) * 6));
-    x.drawImage(RS.bg, 0, sy, sw, sh, 0, 0, g.W, g.H);
+  const reach = RS.opened < c.gates.length ? c.gates[RS.opened] : 1, k = g.sc / 20;
+  // the trail: glowing stepping-stones, warm gold where the light has reached, soft lavender ahead
+  const n = Math.max(14, Math.round(g.len / (13 * k)));
+  for (let i = 0; i <= n; i++) {
+    const s0 = i / n, [px, py, an] = rsAt(g, s0), lit = s0 <= reach, tw = 0.75 + 0.25 * Math.sin(RS.t * 2 + i);
+    x.save(); x.translate(px, py); x.rotate(an);
+    if (lit) { x.globalCompositeOperation = 'lighter'; const h = x.createRadialGradient(0, 0, 0, 0, 0, 9 * k); h.addColorStop(0, `rgba(${fr},${fg},${fb},${.55 * tw})`); h.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = h; x.beginPath(); x.arc(0, 0, 9 * k, 0, 6.3); x.fill(); x.globalCompositeOperation = 'source-over'; }
+    x.fillStyle = lit ? `rgba(255,${226 + Math.round(20 * tw)},170,.95)` : `rgba(${sr},${sg},${sb},.85)`;
+    if (!lit) { x.shadowColor = 'rgba(200,190,255,.8)'; x.shadowBlur = 5 * k; }
+    x.beginPath(); x.ellipse(0, 0, 4.2 * k, 2.8 * k, 0, 0, 6.3); x.fill(); x.shadowBlur = 0;
+    x.restore();
   }
-  x.fillStyle = 'rgba(10,14,20,.28)'; x.fillRect(0, 0, g.W, g.H);
-  // the path: a soft groove, lit as far as the flow can reach
-  const trace = (to) => { x.beginPath(); const n = 60; for (let k = 0; k <= n; k++) { const [px, py] = rsAt(g, to * k / n); k ? x.lineTo(px, py) : x.moveTo(px, py); } };
-  x.lineCap = 'round'; x.lineJoin = 'round';
-  trace(1); x.strokeStyle = 'rgba(30,16,8,.45)'; x.lineWidth = 16; x.stroke();
-  trace(1); x.strokeStyle = 'rgba(255,236,200,.16)'; x.lineWidth = 8; x.stroke();
-  const reach = RS.opened < c.gates.length ? c.gates[RS.opened] : 1;
-  trace(reach); x.strokeStyle = `rgba(${gr},${gg},${gb},.35)`; x.lineWidth = 8; x.shadowColor = `rgba(${gr},${gg},${gb},.9)`; x.shadowBlur = 12; x.stroke(); x.shadowBlur = 0;
-  // the meadow the fireflies come from
-  const [sx, sy0] = rsAt(g, 0), mg = x.createRadialGradient(sx, sy0, 2, sx, sy0, 30);
-  mg.addColorStop(0, `rgba(${gr},${gg},${gb},.55)`); mg.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = mg; x.beginPath(); x.arc(sx, sy0, 30, 0, 6.3); x.fill();
-  // gates still closed: soft bramble knots; opening ones burst into sparkles
+  // gates: closed twilight buds that bloom open
   c.gates.forEach((gs, i) => {
     const [px, py] = rsAt(g, gs), fx = RS.gateFx.find(e => e.i === i);
     if (i < RS.opened && !fx) return;
-    const k = fx ? fx.t / 0.9 : 0, sc = 1 + k * 0.6, al = 1 - k;
-    x.save(); x.translate(px, py); x.scale(sc, sc); x.globalAlpha = al;
-    [[-6, 2, 8, '#6B4A2A'], [6, 2, 8, '#7A5530'], [0, -5, 9, '#5E4226'], [0, 4, 7, '#8A6238']].forEach(([ox, oy, r, col]) => { x.fillStyle = col; x.beginPath(); x.arc(ox, oy, r, 0, 6.3); x.fill(); });
-    [[-9, -6], [9, -5], [0, -12], [-3, 8], [7, 7]].forEach(([ox, oy]) => { x.fillStyle = '#7FBF6A'; x.beginPath(); x.ellipse(ox, oy, 4, 2.4, ox * .1, 0, 6.3); x.fill(); });
-    if (fx) for (let s = 0; s < 8; s++) { const a = s / 8 * 6.28, r = 6 + k * 26; x.fillStyle = `rgba(${gr},${gg},${gb},${al})`; x.beginPath(); x.arc(Math.cos(a) * r, Math.sin(a) * r, 2.2, 0, 6.3); x.fill(); }
+    const t = fx ? fx.t / 1.1 : 0, open = Math.min(1, t * 1.6), al = fx ? Math.max(0, 1 - Math.max(0, t - .45) / .55) : 1, sway = Math.sin(RS.t * 1.6 + i) * .08;
+    x.save(); x.translate(px, py - 4 * k); x.rotate(sway); x.globalAlpha = al; const r = 11 * k;
+    x.globalCompositeOperation = 'lighter'; const h = x.createRadialGradient(0, 0, 0, 0, 0, r * 2.2); h.addColorStop(0, `rgba(${br},${bg},${bb},.5)`); h.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = h; x.beginPath(); x.arc(0, 0, r * 2.2, 0, 6.3); x.fill(); x.globalCompositeOperation = 'source-over';
+    for (let p = 0; p < 5; p++) {
+      const a = -Math.PI / 2 + (p - 2) * (0.32 + open * 0.55), pl = r * (1 + open * 0.35);
+      x.save(); x.rotate(a + Math.PI / 2);
+      const pg = x.createLinearGradient(0, 0, 0, -pl); pg.addColorStop(0, 'rgba(120,40,120,1)'); pg.addColorStop(1, `rgba(${br},${bg},${bb},1)`);
+      x.fillStyle = pg; x.beginPath(); x.ellipse(0, -pl * .5, r * .42, pl * .55, 0, 0, 6.3); x.fill(); x.restore();
+    }
+    x.fillStyle = `rgba(255,236,160,${open})`; x.beginPath(); x.arc(0, -2 * k, 3.2 * k * open, 0, 6.3); x.fill();
+    if (fx) { x.globalCompositeOperation = 'lighter'; for (let q = 0; q < 10; q++) { const a = q / 10 * 6.28, rr = 8 * k + t * 34 * k; x.fillStyle = `rgba(255,${200 + q * 5},150,${al})`; x.beginPath(); x.arc(Math.cos(a) * rr, Math.sin(a) * rr, 2.2 * k, 0, 6.3); x.fill(); } }
     x.restore();
   });
-  // the lantern at the end of the path, filling with light
-  const [lx, ly] = rsAt(g, 1), f = RS.fill;
-  if (f > 0) { const hg = x.createRadialGradient(lx, ly, 2, lx, ly, 26 + f * 26); hg.addColorStop(0, `rgba(${gr},${gg},${gb},${.35 + f * .45})`); hg.addColorStop(1, 'rgba(0,0,0,0)'); x.fillStyle = hg; x.beginPath(); x.arc(lx, ly, 52, 0, 6.3); x.fill(); }
-  x.fillStyle = '#5E3616'; x.fillRect(lx - 7, ly - 17, 14, 4); x.fillRect(lx - 7, ly + 13, 14, 4);
-  const lg = x.createLinearGradient(0, ly - 14, 0, ly + 14); lg.addColorStop(0, `rgba(${Math.round(120 + f * 135)},${Math.round(70 + f * 160)},${Math.round(40 + f * 120)},1)`); lg.addColorStop(1, `rgba(${Math.round(90 + f * 150)},${Math.round(40 + f * 150)},${Math.round(30 + f * 60)},1)`);
-  x.fillStyle = lg; x.beginPath(); x.ellipse(lx, ly, 12, 14, 0, 0, 6.3); x.fill();
-  x.strokeStyle = 'rgba(94,54,22,.6)'; x.lineWidth = 1; [-5, 0, 5].forEach(o => { x.beginPath(); x.ellipse(lx, ly, Math.abs(o) ? 12 - Math.abs(o) : 1, 14, 0, 0, 6.3); x.stroke(); });
-  // fireflies
+  // fireflies: bright cores, warm halos, little light trails
+  x.globalCompositeOperation = 'lighter';
   RS.flies.forEach(fl => {
-    const [px, py, an] = rsAt(g, fl.s), w = Math.sin(fl.ph) * 5 + fl.off * 0.5, qx = px - Math.sin(an) * w, qy = py + Math.cos(an) * w, bl = 0.55 + 0.45 * Math.sin(fl.ph * 1.7);
-    const fg = x.createRadialGradient(qx, qy, 0, qx, qy, 13); fg.addColorStop(0, `rgba(${gr},${gg},${gb},${bl})`); fg.addColorStop(.35, `rgba(${gr},${gg},${gb},${.45 * bl})`); fg.addColorStop(1, 'rgba(0,0,0,0)');
-    x.fillStyle = fg; x.beginPath(); x.arc(qx, qy, 13, 0, 6.3); x.fill();
-    x.fillStyle = `rgba(255,253,236,${.6 + .4 * bl})`; x.beginPath(); x.arc(qx, qy, 2.6, 0, 6.3); x.fill();
+    const [px, py, an] = rsAt(g, fl.s), w = Math.sin(fl.ph) * (6 + 8 * (fl.wait || 0)) * k + fl.off * (0.5 + 0.8 * (fl.wait || 0)) * k, qx = px - Math.sin(an) * w, qy = py + Math.cos(an) * w - Math.abs(Math.sin(fl.ph * .7)) * 4 * k, bl = 0.6 + 0.4 * Math.sin(fl.ph * 1.7);
+    fl.tr.push([qx, qy]); if (fl.tr.length > 6) fl.tr.shift();
+    fl.tr.forEach(([tx, ty], ti) => { x.fillStyle = `rgba(${fr},${fg},${fb},${.08 * ti * bl})`; x.beginPath(); x.arc(tx, ty, 2.4 * k, 0, 6.3); x.fill(); });
+    const h = x.createRadialGradient(qx, qy, 0, qx, qy, 10 * k); h.addColorStop(0, `rgba(${fr},${fg},${fb},${.7 * bl})`); h.addColorStop(.35, `rgba(${fr},${Math.round(fg * .8)},${Math.round(fb * .6)},${.22 * bl})`); h.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = h; x.beginPath(); x.arc(qx, qy, 10 * k, 0, 6.3); x.fill();
+    x.fillStyle = `rgba(255,255,240,${.7 + .3 * bl})`; x.beginPath(); x.arc(qx, qy, 2.4 * k, 0, 6.3); x.fill();
   });
+  x.globalCompositeOperation = 'source-over';
 }
-// the last gate opens: every firefly settles into the lantern, it glows, and you calm
+// the last gate opens: the fireflies pour into Kai's lantern, it lights, and he settles into calm
 async function rescueFinish() {
   if (!RS || RS.done) return; RS.done = true; clearHints(); say('');
   RS.push = 3; const t0 = performance.now();
-  while (RS && RS.fill < 1 && performance.now() - t0 < 3200) await wait(80);
+  while (RS && RS.flies.length && performance.now() - t0 < 2600) await wait(80);
   if (!RS) return;
-  RS.fill = 1; RS.flies.forEach(f => { f.s = 0.99; });
-  $('#rsKid').src = faceSrc(heroId(), RS.cfg.faceTo); $('.rskid').classList.add('joy');
+  const a = $('#rsVidA'), b = $('#rsVidB'), v = RS.cfg.vid;
+  b.src = v.arrive + '?v=82'; b.loop = false; b.currentTime = 0;
+  await new Promise(res => { b.oncanplay = res; setTimeout(res, 1200); });
+  b.classList.add('on'); a.classList.remove('on'); b.play().catch(() => {});
   chord([523.25, 659.25, 783.99, 1046.5], 0.09);
-  await wait(reduce ? 200 : 1200);
+  await new Promise(res => { b.onended = res; setTimeout(res, 5600); });
+  if (!RS) return;
+  a.src = v.calm + '?v=82'; a.loop = true; a.play().catch(() => {}); a.classList.add('on'); b.classList.remove('on');
+  await wait(reduce ? 300 : 2600);                       // let the calm moment land before the win screen
 }
 
 /* ---------- Sections that open as you play ---------- */
