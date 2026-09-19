@@ -253,6 +253,30 @@ body.baby #babyBar span{display:none}
 .gssub{font-size:13px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#FFE9A8}
 .gsfly{position:absolute;z-index:41;display:grid;place-items:center;pointer-events:none}
 
+/* My Journey */
+.mecard{text-align:left}
+.mehead{display:flex;align-items:center;gap:12px}
+.mehead img{flex:none;width:68px;height:68px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 3px #E3BC6A,0 6px 14px rgba(0,0,0,.35)}
+.mehead > div{flex:1}.mehead h2{margin:2px 0 0;font-size:22px}
+.mewhy{margin:10px 0 0;font-size:13px;color:#EAF2EE}
+.mesec{margin-top:14px}
+.mesec h3{margin:0 0 8px;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#FFE7A8}
+.megrid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.metile{display:flex;flex-direction:column;align-items:center;gap:1px;padding:8px 2px;border-radius:14px;text-align:center;background:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.04));box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 0 0 1px rgba(227,188,106,.45)}
+.meic{font-size:20px;line-height:1.2}
+.metile b{font-size:19px;color:#FFE9A8;font-variant-numeric:tabular-nums}
+.metile small{font-size:10px;font-weight:800;line-height:1.15;color:#CFE3DA}
+.mefeel{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.mefeel span{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 2px;border-radius:14px;background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1.5px color-mix(in srgb,var(--c) 70%,transparent)}
+.mefeel i{position:relative;width:30px;height:30px;font-style:normal}
+.mefeel b{font-size:10px;font-weight:900;color:#EAF2EE;text-transform:capitalize;text-align:center;line-height:1.1}
+.mefeel em{font-style:normal;font-size:16px;font-weight:900;color:#FFE9A8}
+.mebuddy{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:16px;background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(227,188,106,.45)}
+.mebuddy img{width:52px;height:52px;border-radius:50%;object-fit:cover}
+.mebuddy > div{flex:1}.mebuddy b{display:block;color:#FFF3D6}.mebuddy small{color:#CFE3DA;font-weight:800}
+.meseal{text-align:center;flex:none !important}.meseal b{font-size:20px;color:#FFE9A8}
+.mefoot{margin:14px 0 4px;text-align:center;font-weight:800;color:#EAF2EE}
+#meov .linkbtn{color:#E4EFE8 !important}
 /* baby mode: no words on screen (they can't read yet); only the grown-up Stop bar */
 body.baby #bubble, body.baby #flowBar, body.baby #toast, body.baby #todayChip, body.baby #toMap, body.baby #pkPerk, body.baby #pwBar [id^="pwc-"], body.baby .tipbox{display:none!important}
 #babyBloom{position:absolute;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;pointer-events:none;background:radial-gradient(circle,rgba(12,22,40,0) 25%,rgba(12,22,40,.38) 100%);opacity:0;transition:opacity .6s ease}
@@ -3101,6 +3125,13 @@ body.nobreath #lumaWrap,body.nobreath #breathLbl{visibility:hidden}
     </div>
   </div></div>
   <div class="babyinter" id="babyInter" hidden><video id="biVid" muted playsinline preload="auto"></video><span class="bispr" id="biSpr"></span></div>
+  <div class="ov" id="meov" hidden><div class="card rewardcard mecard" role="dialog" aria-labelledby="meTitle">
+    <div class="mehead"><img id="meFace" alt=""><div><div class="eyebrow">My calm journey</div><h2 class="display" id="meTitle">Look how you've grown</h2></div>
+      <button class="ibtn" data-more aria-label="About this page">i</button></div>
+    <p class="more mewhy" hidden>This page shows what your child has done and explored: breaths, practice, feelings and places. It never grades, times or compares them, in the spirit of a Montessori portfolio.</p>
+    <div id="meBody"></div>
+    <div class="stack"><button class="btn gold" id="meClose">Close</button><button class="linkbtn dark" id="meHero">Change my hero</button></div>
+  </div></div>
   <div class="ov" id="askov" hidden style="align-items:center"><div class="card rewardcard seccard" role="dialog" aria-labelledby="askName">
     <div class="eyebrow" style="color:var(--gold2)">Just checking</div>
     <div id="askArt" class="askart"></div>
@@ -4436,6 +4467,7 @@ function logDay(k, n = 1, el) {
   const d = dayKey(); S.wk = S.wk || {}; S.firstDay = S.firstDay || Object.keys(S.wk).sort()[0] || d;
   const r = S.wk[d] = S.wk[d] || { b: 0, d: 0, e: 0, c: 0, bed: 0, f: {} };
   r[k] = (r[k] || 0) + n; if (el) r.f[el] = (r.f[el] || 0) + 1;
+  S.tot = S.tot || meBackfill(); S.tot[k] = (S.tot[k] || 0) + n; if (el) S.tot.f[el] = (S.tot.f[el] || 0) + 1;
   const keys = Object.keys(S.wk).sort(); while (keys.length > 21) delete S.wk[keys.shift()];
   save();
 }
@@ -5806,7 +5838,37 @@ function sparkleAt(host, x, y, colors, n = 14) {
       { duration: 520 + Math.random() * 300, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => d.remove();
   }
 }
-$('#heroOpen').addEventListener('click', () => { ac(); pickHero(); });
+$('#heroOpen').addEventListener('click', () => { ac(); openMe(); });
+/* ---------- My Journey: the child's own growth, Montessori style ----------
+   Only what describes effort, experience and growth: breaths, practice, feelings explored, places, companion, seals.
+   Never grades, speed, win rates, coins, losses, skill levels or comparison with anyone else (see wiki decision 2026-09-18). */
+function meBackfill() {                                 // the first time: start the lifetime totals from the weekly log
+  const t = { f: {} };
+  Object.values(S.wk || {}).forEach(r => { Object.entries(r).forEach(([k, v]) => { if (k === 'f') Object.entries(v || {}).forEach(([e, c]) => { t.f[e] = (t.f[e] || 0) + c; }); else t[k] = (t[k] || 0) + (v || 0); }); });
+  return t;
+}
+function renderMe() {
+  const t = S.tot || meBackfill(), done = Object.keys(S.stars || {}).map(Number).filter(n => n <= LEVELS.length);
+  const eps = done.filter(isEpisode).length, places = new Set(done.map(n => LEVELS[n - 1] && LEVELS[n - 1].elem)).size;
+  const breaths = (t.b || 0) + (t.c || 0), peace = Math.round((breaths * 10 + (t.bed || 0) * 60) / 60);
+  const el = S.buddy || 'fire', st = STAGES[careStage(el)];
+  const met = Object.keys(FEAT_AT).filter(k => featEver(k) && INTRO_CARD[k]).length;
+  const tile = (icon, n, label) => `<div class="metile"><span class="meic">${icon}</span><b>${Number(n).toLocaleString()}</b><small>${label}</small></div>`;
+  $('#meFace').src = faceSrc(heroId(), 'happy');
+  $('#meBody').innerHTML = `
+    <div class="mesec"><h3>Breathing</h3><div class="megrid">
+      ${tile('🌬', breaths, 'calm breaths')}${tile('💨', t.d || 0, 'deep breaths')}${tile('🕊', peace, 'peace minutes')}${tile('🌙', t.bed || 0, 'bedtime breaths')}</div></div>
+    <div class="mesec"><h3>Practice</h3><div class="megrid">
+      ${tile('🧘', (S.dpDays || []).length, 'days practised')}${tile('✨', S.dpTotal || 0, 'practices')}${tile('🌷', (S.garden || []).length, 'garden flowers')}${tile('👫', t.fam || 0, 'with a grown-up')}</div></div>
+    <div class="mesec"><h3>Feelings I've met</h3><div class="mefeel">${TYPES.map(e => `<span style="--c:${ELEM[e].glow}"><i>${orbHTML(e)}</i><b>${e === 'fire' ? 'fizzies' : FEEL_OF[e]}</b><em>${(t.f || {})[e] || 0}</em></span>`).join('')}</div></div>
+    <div class="mesec"><h3>My journey</h3><div class="megrid">
+      ${tile('🧩', done.length, 'puzzles')}${tile('📖', eps, 'story episodes')}${tile('🗺', places, 'places visited')}${tile('🌟', met, 'new things found')}</div></div>
+    <div class="mesec"><h3>Growing together</h3><div class="mebuddy"><img src="img/${buddyWho(el)}.jpg" alt=""><div><b>${BUDDY[el].name} the ${BUDDY[el].animal}</b><small>${st.name}</small></div><div class="meseal"><b>${sealCount()}</b><small>seals</small></div></div></div>
+    <p class="mefoot">No scores. No comparing. Just you, growing.</p>`;
+}
+async function openMe() { renderMe(); await showOv('meov'); }
+$('#meHero').addEventListener('click', () => { tick(); hideOv('meov'); pickHero(); });
+$('#meClose').addEventListener('click', () => hideOv('meov'));
 
 /* ---------- story intro: tap through one line at a time, then the loadout ---------- */
 const VOICE = { hero: 520, sorin: 290, luma: 780 };
